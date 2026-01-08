@@ -19,6 +19,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late List<int> _repeatDays;
   late String _sound;
   late bool _snooze;
+  late bool _vibrate;
 
   @override
   void initState() {
@@ -29,6 +30,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _repeatDays = List.from(widget.alarm!.repeatDays);
       _sound = widget.alarm!.sound;
       _snooze = widget.alarm!.snooze;
+      _vibrate = widget.alarm!.vibrate;
     } else {
       final now = DateTime.now();
       _selectedTime = DateTime(now.year, now.month, now.day, 8, 0);
@@ -36,6 +38,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _repeatDays = [];
       _sound = 'Radar';
       _snooze = true;
+      _vibrate = true;
     }
   }
 
@@ -49,6 +52,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       repeatDays: _repeatDays,
       sound: _sound,
       snooze: _snooze,
+      vibrate: _vibrate,
     );
 
     if (widget.alarm != null) {

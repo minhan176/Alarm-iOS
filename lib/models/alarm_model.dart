@@ -6,6 +6,7 @@ class AlarmModel {
   final List<int> repeatDays; // 1=Monday, 2=Tuesday, ..., 7=Sunday
   final String sound;
   final bool snooze;
+  final bool vibrate;
 
   AlarmModel({
     required this.id,
@@ -15,6 +16,7 @@ class AlarmModel {
     this.repeatDays = const [],
     this.sound = 'Radar',
     this.snooze = true,
+    this.vibrate = true,
   });
 
   // Copy with method
@@ -26,6 +28,7 @@ class AlarmModel {
     List<int>? repeatDays,
     String? sound,
     bool? snooze,
+    bool? vibrate,
   }) {
     return AlarmModel(
       id: id ?? this.id,
@@ -35,6 +38,7 @@ class AlarmModel {
       repeatDays: repeatDays ?? this.repeatDays,
       sound: sound ?? this.sound,
       snooze: snooze ?? this.snooze,
+      vibrate: vibrate ?? this.vibrate,
     );
   }
 
@@ -48,6 +52,7 @@ class AlarmModel {
       'repeatDays': repeatDays,
       'sound': sound,
       'snooze': snooze,
+      'vibrate': vibrate,
     };
   }
 
@@ -61,6 +66,7 @@ class AlarmModel {
       repeatDays: List<int>.from(json['repeatDays'] ?? []),
       sound: json['sound'] ?? 'Radar',
       snooze: json['snooze'] ?? true,
+      vibrate: json['vibrate'] ?? true,
     );
   }
 

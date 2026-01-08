@@ -5,8 +5,15 @@ import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import 'edit_alarm_screen.dart';
 
-class AlarmListScreen extends StatelessWidget {
+class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({super.key});
+
+  @override
+  State<AlarmListScreen> createState() => _AlarmListScreenState();
+}
+
+class _AlarmListScreenState extends State<AlarmListScreen> {
+  bool _isEditMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +24,17 @@ class AlarmListScreen extends StatelessWidget {
         border: null,
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
-          child: const Text(
-            'Edit',
-            style: TextStyle(color: CupertinoColors.systemOrange, fontSize: 17),
+          child: Text(
+            _isEditMode ? 'Done' : 'Edit',
+            style: const TextStyle(
+              color: CupertinoColors.systemOrange,
+              fontSize: 17,
+            ),
           ),
           onPressed: () {
-            // TODO: Implement edit mode
+            setState(() {
+              _isEditMode = !_isEditMode;
+            });
           },
         ),
         middle: const Text(
@@ -68,12 +80,15 @@ class AlarmListScreen extends StatelessWidget {
                 final alarm = alarmProvider.alarms[index];
                 return AlarmListItem(
                   alarm: alarm,
+                  isEditMode: _isEditMode,
                   onTap: () {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (context) => EditAlarmScreen(alarm: alarm),
-                      ),
-                    );
+                    if (!_isEditMode) {
+                      Navigator.of(context).push(
+                        CupertinoPageRoute(
+                          builder: (context) => EditAlarmScreen(alarm: alarm),
+                        ),
+                      );
+                    }
                   },
                   onToggle: () {
                     alarmProvider.toggleAlarm(alarm.id);
@@ -93,6 +108,7 @@ class AlarmListScreen extends StatelessWidget {
 
 class AlarmListItem extends StatelessWidget {
   final AlarmModel alarm;
+  final bool isEditMode;
   final VoidCallback onTap;
   final VoidCallback onToggle;
   final VoidCallback onDelete;
@@ -100,6 +116,7 @@ class AlarmListItem extends StatelessWidget {
   const AlarmListItem({
     super.key,
     required this.alarm,
+    required this.isEditMode,
     required this.onTap,
     required this.onToggle,
     required this.onDelete,
@@ -111,18 +128,64 @@ class AlarmListItem extends StatelessWidget {
     final hasLabel = alarm.label.isNotEmpty && alarm.label != 'Alarm';
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1C1C1E),
-        borderRadius: BorderRadius.circular(12),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
+        ),
       ),
       child: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
             children: [
+              // Delete button in edit mode
+              if (isEditMode) ...[
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    showCupertinoDialog(
+                      context: context,
+                      builder: (context) => CupertinoAlertDialog(
+                        title: const Text('Delete Alarm'),
+                        content: const Text('Are you sure you want to delete this alarm?'),
+                        actions: [
+                          CupertinoDialogAction(
+                            child: const Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            isDestructiveAction: true,
+                            child: const Text('Delete'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              onDelete();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                      color: CupertinoColors.systemRed,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.minus,
+                      color: CupertinoColors.white,
+                      size: 18,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+              ],
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,16 +234,18 @@ class AlarmListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              Transform.scale(
-                scale: 0.8,
-                child: CupertinoSwitch(
-                  value: alarm.isEnabled,
-                  activeColor: CupertinoColors.systemGreen,
-                  onChanged: (value) {
-                    onToggle();
-                  },
+              // Hide toggle in edit mode
+              if (!isEditMode)
+                Transform.scale(
+                  scale: 0.8,
+                  child: CupertinoSwitch(
+                    value: alarm.isEnabled,
+                    activeColor: CupertinoColors.systemGreen,
+                    onChanged: (value) {
+                      onToggle();
+                    },
+                  ),
                 ),
-              ),
             ],
           ),
         ),

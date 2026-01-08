@@ -43,13 +43,16 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
   Future<void> _startAlarm() async {
     try {
-      // Start vibration pattern
-      if (await Vibration.hasVibrator()) {
+      // Start vibration pattern only if enabled
+      if (widget.alarm.vibrate && await Vibration.hasVibrator()) {
         // Vibrate in pattern: wait 500ms, vibrate 1000ms, repeat
         Vibration.vibrate(
           pattern: [500, 1000, 500, 1000],
           repeat: 0, // Repeat from index 0
         );
+        print('Vibration enabled for alarm');
+      } else {
+        print('Vibration disabled for alarm');
       }
 
       // Play alarm sound based on user selection

@@ -154,6 +154,27 @@ class AlarmService {
       scheduledTime = scheduledTime.add(const Duration(days: 1));
     }
 
+    // For repeating alarms, find the next valid day
+    if (alarm.repeatDays.isNotEmpty) {
+      int daysToAdd = 0;
+      int maxDays = 7; // Check up to 7 days ahead
+
+      while (daysToAdd < maxDays) {
+        final checkTime = scheduledTime.add(Duration(days: daysToAdd));
+        final weekday = checkTime.weekday; // Monday = 1, Sunday = 7
+
+        if (alarm.repeatDays.contains(weekday)) {
+          scheduledTime = checkTime;
+          break;
+        }
+        daysToAdd++;
+      }
+
+      print(
+        'Next repeat alarm scheduled for: $scheduledTime (${_getDayName(scheduledTime.weekday)})',
+      );
+    }
+
     final alarmId = alarm.id.hashCode;
 
     if (alarm.repeatDays.isEmpty) {
@@ -168,6 +189,7 @@ class AlarmService {
         allowWhileIdle: true,
         params: alarm.toJson(),
       );
+      print('One-time alarm scheduled for: $scheduledTime');
     } else {
       // Repeating alarm - schedule daily and check repeat days in callback
       await AndroidAlarmManager.periodic(
@@ -181,9 +203,23 @@ class AlarmService {
         allowWhileIdle: true,
         params: alarm.toJson(),
       );
+      print('Repeating alarm scheduled, checking daily from: $scheduledTime');
     }
 
     print('Alarm scheduled: ${alarm.label} at ${alarm.getFormattedTime()}');
+  }
+
+  static String _getDayName(int weekday) {
+    const days = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
+    return days[weekday - 1];
   }
 
   // Cancel an alarm
@@ -249,8 +285,10 @@ class AlarmService {
       importance: Importance.max,
       priority: Priority.max,
       playSound: true,
-      enableVibration: true,
-      vibrationPattern: Int64List.fromList([0, 1000, 500, 1000]),
+      enableVibration: alarm.vibrate,
+      vibrationPattern: alarm.vibrate
+          ? Int64List.fromList([0, 1000, 500, 1000])
+          : null,
       fullScreenIntent: true,
       category: AndroidNotificationCategory.alarm,
       visibility: NotificationVisibility.public,
