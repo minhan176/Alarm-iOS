@@ -70,16 +70,24 @@ class AlarmModel {
     );
   }
 
-  // Get formatted time string
-  String getFormattedTime() {
-    final hour = time.hour == 0
-        ? 12
-        : time.hour > 12
-        ? time.hour - 12
-        : time.hour;
-    final minute = time.minute.toString().padLeft(2, '0');
-    final period = time.hour >= 12 ? 'PM' : 'AM';
-    return '$hour:$minute $period';
+  // Get formatted time string based on device setting
+  String getFormattedTime({bool use24HourFormat = false}) {
+    if (use24HourFormat) {
+      // 24-hour format
+      final hour = time.hour.toString().padLeft(2, '0');
+      final minute = time.minute.toString().padLeft(2, '0');
+      return '$hour:$minute';
+    } else {
+      // 12-hour format with AM/PM
+      final hour = time.hour == 0
+          ? 12
+          : time.hour > 12
+          ? time.hour - 12
+          : time.hour;
+      final minute = time.minute.toString().padLeft(2, '0');
+      final period = time.hour >= 12 ? 'PM' : 'AM';
+      return '$hour:$minute $period';
+    }
   }
 
   // Get repeat description

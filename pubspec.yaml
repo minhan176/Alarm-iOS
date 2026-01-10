@@ -18,6 +18,10 @@ dependencies:
   timezone: ^0.9.4
   audioplayers: ^6.1.0
   vibration: ^2.0.0
+  liquid_glass_renderer: ^0.2.0-dev.4
+  flutter_hooks: ^0.21.2
+  motor: ^1.0.0-dev.3
+  modal_bottom_sheet: ^3.0.0
 
 dev_dependencies:
   flutter_test:

@@ -12,38 +12,30 @@ class _TimerScreenState extends State<TimerScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
-      navigationBar: const CupertinoNavigationBar(
-        backgroundColor: CupertinoColors.black,
-        border: null,
-        leading: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Text(
-            'Cancel',
-            style: TextStyle(color: CupertinoColors.systemOrange, fontSize: 17),
-          ),
-          onPressed: null,
-        ),
-        middle: Text(
-          'Timer',
-          style: TextStyle(
-            color: CupertinoColors.white,
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Text(
-            'Start',
-            style: TextStyle(color: CupertinoColors.systemOrange, fontSize: 17),
-          ),
-          onPressed: null,
-        ),
-      ),
-      child: Center(
-        child: Text(
-          'Timer',
-          style: TextStyle(color: CupertinoColors.white, fontSize: 24),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+              child: Text(
+                'Timer',
+                style: TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: Text(
+                  'Timer',
+                  style: TextStyle(color: CupertinoColors.white, fontSize: 24),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

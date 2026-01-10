@@ -97,10 +97,12 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
+
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.black,
+      backgroundColor: const Color(0xFF1C1C1E),
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: const Color(0xFF1C1C1E),
+        backgroundColor: const Color(0xFF2C2C2E),
         border: null,
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
@@ -140,7 +142,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 initialDateTime: _selectedTime,
-                use24hFormat: false,
+                use24hFormat: use24HourFormat,
                 onDateTimeChanged: (DateTime newTime) {
                   setState(() {
                     _selectedTime = newTime;

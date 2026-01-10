@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import 'dart:math' as math;
 import 'providers/alarm_provider.dart';
 import 'screens/alarm_list_screen.dart';
 import 'screens/world_clock_screen.dart';
@@ -8,6 +10,7 @@ import 'screens/stopwatch_screen.dart';
 import 'screens/timer_screen.dart';
 import 'screens/alarm_ring_screen.dart';
 import 'services/alarm_service.dart';
+import 'widgets/liquid_glass_bottom_bar.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -76,43 +79,61 @@ class _MainTabScreenState extends State<MainTabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        backgroundColor: const Color(0xFF1C1C1E),
-        activeColor: CupertinoColors.systemOrange,
-        inactiveColor: CupertinoColors.systemGrey,
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.globe),
-            label: 'World Clock',
+    final brightness = MediaQuery.platformBrightnessOf(context);
+    final isDark = brightness == Brightness.dark;
+
+    return Stack(
+      children: [
+        // Main content
+        IndexedStack(
+          index: _currentIndex,
+          children: _screens,
+        ),
+        // Liquid Glass Bottom Bar
+        SafeArea(
+          bottom: false,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: LiquidGlassBottomBar(
+              fake: true,
+              tabs: const [
+                LiquidGlassBottomBarTab(
+                  label: 'World Clock',
+                  icon: CupertinoIcons.globe,
+                ),
+                LiquidGlassBottomBarTab(
+                  label: 'Alarm',
+                  icon: CupertinoIcons.alarm,
+                ),
+                LiquidGlassBottomBarTab(
+                  label: 'Stopwatch',
+                  icon: CupertinoIcons.stopwatch,
+                ),
+                LiquidGlassBottomBarTab(
+                  label: 'Timer',
+                  icon: CupertinoIcons.timer,
+                ),
+              ],
+              selectedIndex: _currentIndex,
+              onTabSelected: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              glassSettings: LiquidGlassSettings(
+                refractiveIndex: 1.21,
+                thickness: 30,
+                blur: 8,
+                saturation: 1.5,
+                lightIntensity: isDark ? .7 : 1,
+                ambientStrength: isDark ? .2 : .5,
+                lightAngle: math.pi / 4,
+                glassColor: const Color(0xFF1C1C1E).withValues(alpha: 0.6),
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.alarm),
-            label: 'Alarm',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.stopwatch),
-            label: 'Stopwatch',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.timer),
-            label: 'Timer',
-          ),
-        ],
-      ),
-      tabBuilder: (context, index) {
-        return CupertinoTabView(
-          builder: (context) {
-            return _screens[index];
-          },
-        );
-      },
+        ),
+      ],
     );
   }
 }

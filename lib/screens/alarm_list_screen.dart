@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import 'edit_alarm_screen.dart';
@@ -22,6 +23,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
       navigationBar: CupertinoNavigationBar(
         backgroundColor: CupertinoColors.black,
         border: null,
+        automaticallyImplyLeading: false,
         leading: CupertinoButton(
           padding: EdgeInsets.zero,
           child: Text(
@@ -37,14 +39,6 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
             });
           },
         ),
-        middle: const Text(
-          'Alarm',
-          style: TextStyle(
-            color: CupertinoColors.white,
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
         trailing: CupertinoButton(
           padding: EdgeInsets.zero,
           child: const Icon(
@@ -53,8 +47,10 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
             size: 28,
           ),
           onPressed: () {
-            Navigator.of(context).push(
-              CupertinoPageRoute(builder: (context) => const EditAlarmScreen()),
+            showCupertinoModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => const EditAlarmScreen(),
             );
           },
         ),
@@ -62,19 +58,32 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
       child: SafeArea(
         child: Consumer<AlarmProvider>(
           builder: (context, alarmProvider, child) {
-            if (alarmProvider.alarms.isEmpty) {
-              return const Center(
-                child: Text(
-                  'No alarms',
-                  style: TextStyle(
-                    color: CupertinoColors.systemGrey,
-                    fontSize: 17,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                  child: Text(
+                    'Alarm',
+                    style: TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              );
-            }
-
-            return ListView.builder(
+                Expanded(
+                  child: alarmProvider.alarms.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'No alarms',
+                            style: TextStyle(
+                              color: CupertinoColors.systemGrey,
+                              fontSize: 17,
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
               itemCount: alarmProvider.alarms.length,
               itemBuilder: (context, index) {
                 final alarm = alarmProvider.alarms[index];
@@ -83,10 +92,10 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   isEditMode: _isEditMode,
                   onTap: () {
                     if (!_isEditMode) {
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          builder: (context) => EditAlarmScreen(alarm: alarm),
-                        ),
+                      showCupertinoModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => EditAlarmScreen(alarm: alarm),
                       );
                     }
                   },
@@ -98,6 +107,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   },
                 );
               },
+            ),
+                ),
+              ],
             );
           },
         ),
@@ -126,6 +138,7 @@ class AlarmListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final repeatDescription = alarm.getRepeatDescription();
     final hasLabel = alarm.label.isNotEmpty && alarm.label != 'Alarm';
+    final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -195,7 +208,7 @@ class AlarmListItem extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          alarm.getFormattedTime(),
+                          alarm.getFormattedTime(use24HourFormat: use24HourFormat),
                           style: TextStyle(
                             color: alarm.isEnabled
                                 ? CupertinoColors.white
