@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'dart:math' as math;
 import 'providers/alarm_provider.dart';
+import 'providers/world_clock_provider.dart';
 import 'screens/alarm_list_screen.dart';
 import 'screens/world_clock_screen.dart';
 import 'screens/stopwatch_screen.dart';
@@ -24,7 +27,7 @@ void main() async {
   AlarmService.onAlarmRing = (alarm) {
     // Navigate to alarm ring screen
     navigatorKey.currentState?.push(
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => AlarmRingScreen(alarm: alarm),
         fullscreenDialog: true,
       ),
@@ -39,8 +42,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AlarmProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AlarmProvider()),
+        ChangeNotifierProvider(create: (context) => WorldClockProvider()),
+      ],
       child: CupertinoApp(
         navigatorKey: navigatorKey,
         title: 'Alarm',
@@ -53,7 +59,14 @@ class MainApp extends StatelessWidget {
             primaryColor: CupertinoColors.white,
           ),
         ),
-        home: const MainTabScreen(),
+        home: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: CupertinoScaffold(
+            topRadius: const Radius.circular(12),
+            transitionBackgroundColor: CupertinoColors.black,
+            body: const MainTabScreen(),
+          ),
+        ),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -84,19 +97,22 @@ class _MainTabScreenState extends State<MainTabScreen> {
 
     return Stack(
       children: [
-        // Main content
-        IndexedStack(
-          index: _currentIndex,
-          children: _screens,
+        // Main content with SafeArea
+        SafeArea(
+          bottom: true,
+          child: IndexedStack(
+            index: _currentIndex,
+            children: _screens,
+          ),
         ),
         // Liquid Glass Bottom Bar
-        SafeArea(
-          bottom: false,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: LiquidGlassBottomBar(
-              fake: true,
-              tabs: const [
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: LiquidGlassBottomBar(
+            fake: true,
+            barHeight: 64,
+            bottomPadding: MediaQuery.of(context).padding.bottom + 16,
+            tabs: const [
                 LiquidGlassBottomBarTab(
                   label: 'World Clock',
                   icon: CupertinoIcons.globe,
@@ -128,12 +144,11 @@ class _MainTabScreenState extends State<MainTabScreen> {
                 lightIntensity: isDark ? .7 : 1,
                 ambientStrength: isDark ? .2 : .5,
                 lightAngle: math.pi / 4,
-                glassColor: const Color(0xFF1C1C1E).withValues(alpha: 0.6),
+                glassColor: const Color(0xFF3C3C3E).withValues(alpha: 0.5),
               ),
             ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
+    }
 }

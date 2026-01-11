@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
+import '../widgets/glass_button.dart';
 
 class EditAlarmScreen extends StatefulWidget {
   final AlarmModel? alarm;
@@ -102,14 +103,11 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     return CupertinoPageScaffold(
       backgroundColor: const Color(0xFF1C1C1E),
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: const Color(0xFF2C2C2E),
+        backgroundColor: const Color(0xFF1C1C1E),
         border: null,
-        leading: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: CupertinoColors.systemOrange, fontSize: 17),
-          ),
+        transitionBetweenRoutes: false,
+        leading: GlassTextButton(
+          text: 'Cancel',
           onPressed: () => Navigator.of(context).pop(),
         ),
         middle: Text(
@@ -120,16 +118,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: const Text(
-            'Save',
-            style: TextStyle(
-              color: CupertinoColors.systemOrange,
-              fontSize: 17,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+        trailing: GlassTextButton(
+          text: 'Save',
+          fontWeight: FontWeight.w600,
           onPressed: _saveAlarm,
         ),
       ),
@@ -179,15 +170,23 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                   ]),
                   if (widget.alarm != null) ...[
                     const SizedBox(height: 40),
-                    CupertinoButton(
-                      child: const Text(
-                        'Delete Alarm',
-                        style: TextStyle(
-                          color: CupertinoColors.systemRed,
-                          fontSize: 17,
-                        ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2C2C2E),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      onPressed: _deleteAlarm,
+                      child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        child: const Text(
+                          'Delete Alarm',
+                          style: TextStyle(
+                            color: CupertinoColors.systemRed,
+                            fontSize: 17,
+                          ),
+                        ),
+                        onPressed: _deleteAlarm,
+                      ),
                     ),
                   ],
                 ],
@@ -203,7 +202,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF1C1C1E),
+        color: const Color(0xFF2C2C2E),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(children: children),

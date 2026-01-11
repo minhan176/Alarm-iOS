@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
+import '../widgets/glass_button.dart';
 import 'edit_alarm_screen.dart';
 
 class AlarmListScreen extends StatefulWidget {
@@ -23,32 +24,22 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
       navigationBar: CupertinoNavigationBar(
         backgroundColor: CupertinoColors.black,
         border: null,
+        transitionBetweenRoutes: false,
         automaticallyImplyLeading: false,
-        leading: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Text(
-            _isEditMode ? 'Done' : 'Edit',
-            style: const TextStyle(
-              color: CupertinoColors.systemOrange,
-              fontSize: 17,
-            ),
-          ),
+        leading: GlassTextButton(
+          text: _isEditMode ? 'Done' : 'Edit',
           onPressed: () {
             setState(() {
               _isEditMode = !_isEditMode;
             });
           },
         ),
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: const Icon(
-            CupertinoIcons.add,
-            color: CupertinoColors.systemOrange,
-            size: 28,
-          ),
+        trailing: GlassIconButton(
+          icon: CupertinoIcons.add,
           onPressed: () {
-            showCupertinoModalBottomSheet(
+            CupertinoScaffold.showCupertinoModalBottomSheet(
               context: context,
+              expand: true,
               backgroundColor: Colors.transparent,
               builder: (context) => const EditAlarmScreen(),
             );
@@ -92,8 +83,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   isEditMode: _isEditMode,
                   onTap: () {
                     if (!_isEditMode) {
-                      showCupertinoModalBottomSheet(
+                      CupertinoScaffold.showCupertinoModalBottomSheet(
                         context: context,
+                        expand: true,
                         backgroundColor: Colors.transparent,
                         builder: (context) => EditAlarmScreen(alarm: alarm),
                       );
