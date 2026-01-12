@@ -1,10 +1,7 @@
-import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
-import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
-/// A glass-effect text button for navigation bars (Edit/Done style)
-/// Uses same structure as LiquidGlassBottomBar for identical appearance
-class GlassTextButton extends StatefulWidget {
+/// A simple text button for navigation bars (Edit/Done style)
+class GlassTextButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final Color textColor;
@@ -23,69 +20,25 @@ class GlassTextButton extends StatefulWidget {
   });
 
   @override
-  State<GlassTextButton> createState() => _GlassTextButtonState();
-}
-
-class _GlassTextButtonState extends State<GlassTextButton> {
-  bool _isPressed = false;
-
-  @override
   Widget build(BuildContext context) {
-    final effectiveOpacity = widget.enabled ? (_isPressed ? 0.5 : 1.0) : 0.4;
-    final brightness = MediaQuery.platformBrightnessOf(context);
-    final isDark = brightness == Brightness.dark;
-
-    final glassSettings = LiquidGlassSettings(
-      refractiveIndex: 1.21,
-      thickness: 30,
-      blur: 8,
-      saturation: 1.5,
-      lightIntensity: isDark ? .7 : 1,
-      ambientStrength: isDark ? .2 : .5,
-      lightAngle: math.pi / 4,
-      glassColor: const Color(0xFF48484A).withValues(alpha: 0.8),
-    );
-    
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: widget.enabled ? (_) => setState(() => _isPressed = true) : null,
-      onTapUp: widget.enabled ? (_) => setState(() => _isPressed = false) : null,
-      onTapCancel: widget.enabled ? () => setState(() => _isPressed = false) : null,
-      onTap: widget.enabled ? widget.onPressed : null,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-        child: LiquidGlassLayer(
-          settings: glassSettings,
-          child: LiquidGlassBlendGroup(
-            blend: 10,
-            child: LiquidGlass.grouped(
-              clipBehavior: Clip.none,
-              shape: const LiquidRoundedSuperellipse(borderRadius: 20),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF48484A),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  widget.text,
-                  style: TextStyle(
-                    color: widget.textColor.withOpacity(effectiveOpacity),
-                    fontSize: widget.fontSize,
-                    fontWeight: widget.fontWeight,
-                  ),
-                ),
-              ),
-            ),
-          ),
+    return CupertinoButton(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      minSize: 0,
+      onPressed: enabled ? onPressed : null,
+      child: Text(
+        text,
+        style: TextStyle(
+          color: enabled ? textColor : textColor.withOpacity(0.4),
+          fontSize: fontSize,
+          fontWeight: fontWeight,
         ),
       ),
     );
   }
 }
 
-/// A glass-effect icon button for navigation bars (Add button style) - circular/oval
-class GlassIconButton extends StatefulWidget {
+/// A simple icon button for navigation bars (Add button style)
+class GlassIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
   final Color iconColor;
@@ -102,68 +55,22 @@ class GlassIconButton extends StatefulWidget {
   });
 
   @override
-  State<GlassIconButton> createState() => _GlassIconButtonState();
-}
-
-class _GlassIconButtonState extends State<GlassIconButton> {
-  bool _isPressed = false;
-
-  @override
   Widget build(BuildContext context) {
-    final effectiveOpacity = widget.enabled ? (_isPressed ? 0.5 : 1.0) : 0.4;
-    final brightness = MediaQuery.platformBrightnessOf(context);
-    final isDark = brightness == Brightness.dark;
-
-    final glassSettings = LiquidGlassSettings(
-      refractiveIndex: 1.21,
-      thickness: 30,
-      blur: 8,
-      saturation: 1.5,
-      lightIntensity: isDark ? .7 : 1,
-      ambientStrength: isDark ? .2 : .5,
-      lightAngle: math.pi / 4,
-      glassColor: const Color(0xFF48484A).withValues(alpha: 0.8),
-    );
-    
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: widget.enabled ? (_) => setState(() => _isPressed = true) : null,
-      onTapUp: widget.enabled ? (_) => setState(() => _isPressed = false) : null,
-      onTapCancel: widget.enabled ? () => setState(() => _isPressed = false) : null,
-      onTap: widget.enabled ? widget.onPressed : null,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-        child: LiquidGlassLayer(
-          settings: glassSettings,
-          child: LiquidGlassBlendGroup(
-            blend: 10,
-            child: LiquidGlass.grouped(
-              clipBehavior: Clip.none,
-              shape: const LiquidOval(),
-              child: Container(
-                width: 36,
-                height: 36,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF48484A),
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  widget.icon,
-                  color: widget.iconColor.withOpacity(effectiveOpacity),
-                  size: widget.iconSize,
-                ),
-              ),
-            ),
-          ),
-        ),
+    return CupertinoButton(
+      padding: const EdgeInsets.all(6),
+      minSize: 0,
+      onPressed: enabled ? onPressed : null,
+      child: Icon(
+        icon,
+        color: enabled ? iconColor : iconColor.withOpacity(0.4),
+        size: iconSize,
       ),
     );
   }
 }
 
-/// A large glass-effect action button (for screens like alarm ring)
-class GlassActionButton extends StatefulWidget {
+/// A large action button (for screens like alarm ring)
+class GlassActionButton extends StatelessWidget {
   final Widget child;
   final VoidCallback? onPressed;
   final double borderRadius;
@@ -182,56 +89,15 @@ class GlassActionButton extends StatefulWidget {
   });
 
   @override
-  State<GlassActionButton> createState() => _GlassActionButtonState();
-}
-
-class _GlassActionButtonState extends State<GlassActionButton> {
-  bool _isPressed = false;
-
-  @override
   Widget build(BuildContext context) {
-    final baseColor = widget.glassColor ?? const Color(0xFF48484A);
-    final effectiveOpacity = widget.enabled ? (_isPressed ? 0.7 : 1.0) : 0.4;
-    final brightness = MediaQuery.platformBrightnessOf(context);
-    final isDark = brightness == Brightness.dark;
-
-    final glassSettings = LiquidGlassSettings(
-      refractiveIndex: 1.21,
-      thickness: 30,
-      blur: 8,
-      saturation: 1.5,
-      lightIntensity: isDark ? .7 : 1,
-      ambientStrength: isDark ? .2 : .5,
-      lightAngle: math.pi / 4,
-      glassColor: baseColor.withValues(alpha: 0.85),
-    );
-    
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: widget.enabled ? (_) => setState(() => _isPressed = true) : null,
-      onTapUp: widget.enabled ? (_) => setState(() => _isPressed = false) : null,
-      onTapCancel: widget.enabled ? () => setState(() => _isPressed = false) : null,
-      onTap: widget.enabled ? widget.onPressed : null,
-      child: LiquidGlassLayer(
-        settings: glassSettings,
-        child: LiquidGlassBlendGroup(
-          blend: 10,
-          child: LiquidGlass.grouped(
-            clipBehavior: Clip.none,
-            shape: LiquidRoundedSuperellipse(borderRadius: widget.borderRadius),
-            child: Container(
-              padding: widget.padding,
-              decoration: BoxDecoration(
-                color: baseColor,
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-              ),
-              child: Opacity(
-                opacity: effectiveOpacity,
-                child: widget.child,
-              ),
-            ),
-          ),
-        ),
+    return CupertinoButton(
+      padding: padding,
+      borderRadius: BorderRadius.circular(borderRadius),
+      color: glassColor ?? const Color(0xFF48484A),
+      onPressed: enabled ? onPressed : null,
+      child: Opacity(
+        opacity: enabled ? 1.0 : 0.4,
+        child: child,
       ),
     );
   }

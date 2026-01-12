@@ -237,15 +237,13 @@ class _BottomBarTab extends StatelessWidget {
                                   ..rotateZ(-math.pi)),
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 300),
-                            opacity: selected ? 1 : 0,
+                            opacity: 0,
                             child: Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: tab.glowColor!.withOpacity(
-                                      selected ? 0.6 : 0,
-                                    ),
+                                    color: tab.glowColor!.withOpacity(0),
                                     blurRadius: 32,
                                     spreadRadius: 8,
                                   ),

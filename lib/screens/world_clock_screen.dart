@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../providers/world_clock_provider.dart';
 import '../models/world_clock_model.dart';
-import '../widgets/glass_button.dart';
+import '../widgets/custom_buttons.dart';
 import 'add_city_screen.dart';
 
 class WorldClockScreen extends StatefulWidget {
@@ -57,24 +57,22 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: CupertinoColors.black,
-        border: null,
-        transitionBetweenRoutes: false,
-        automaticallyImplyLeading: false,
-        leading: GlassTextButton(
-          text: _isEditMode ? 'Done' : 'Edit',
-          onPressed: _toggleEditMode,
-        ),
-        trailing: GlassIconButton(
-          icon: CupertinoIcons.add,
-          onPressed: _addCity,
-        ),
-      ),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Custom Navigation Bar
+            CustomNavBar(
+              backgroundColor: CupertinoColors.black,
+              leading: NavTextButton(
+                text: _isEditMode ? 'Done' : 'Edit',
+                onPressed: _toggleEditMode,
+              ),
+              trailing: NavIconButton(
+                icon: CupertinoIcons.add,
+                onPressed: _addCity,
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
               child: Text(
@@ -215,10 +213,18 @@ class _WorldClockItem extends StatelessWidget {
               padding: const EdgeInsets.only(right: 12),
               child: GestureDetector(
                 onTap: onDelete,
-                child: const Icon(
-                  CupertinoIcons.minus_circle_fill,
-                  color: CupertinoColors.white,
-                  size: 24,
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: const BoxDecoration(
+                    color: CupertinoColors.systemRed,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    CupertinoIcons.minus,
+                    color: CupertinoColors.white,
+                    size: 16,
+                  ),
                 ),
               ),
             ),

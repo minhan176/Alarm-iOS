@@ -250,6 +250,30 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     );
   }
 
+  String _getEndTime() {
+    final now = DateTime.now();
+    final endTime = now.add(Duration(seconds: _remainingSeconds));
+    final hour = endTime.hour;
+    final minute = endTime.minute;
+    
+    return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  }
+
+  String _getCountdownDisplay() {
+    final hours = _remainingSeconds ~/ 3600;
+    final minutes = (_remainingSeconds % 3600) ~/ 60;
+    final seconds = _remainingSeconds % 60;
+    
+    // If total time is less than 60 minutes, show only MM:SS
+    if (_totalSeconds < 3600) {
+      final totalMinutes = _remainingSeconds ~/ 60;
+      return '${totalMinutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+    }
+    
+    // Otherwise show HH:MM:SS
+    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
+
   Widget _buildRunningTimer() {
     final progress = _totalSeconds > 0 ? _remainingSeconds / _totalSeconds : 0.0;
     
@@ -284,15 +308,42 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                       strokeWidth: 6,
                     ),
                   ),
-                  // Time text
-                  Text(
-                    _formatTime(_remainingSeconds),
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 48,
-                      fontWeight: FontWeight.w200,
-                      height: 1,
-                    ),
+                  // Center content with time and end time
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Countdown time text
+                      Text(
+                        _getCountdownDisplay(),
+                        style: const TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 48,
+                          fontWeight: FontWeight.w200,
+                          height: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      // End time with bell icon
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            CupertinoIcons.bell_fill,
+                            color: CupertinoColors.systemGrey,
+                            size: 14,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            _getEndTime(),
+                            style: const TextStyle(
+                              color: CupertinoColors.systemGrey,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -386,7 +437,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                     height: 35,
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF2C2C2E),
+                      color: const Color(0xFF1C1C1E),
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),

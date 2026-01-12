@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
-import '../widgets/glass_button.dart';
+import '../widgets/custom_buttons.dart';
 import 'edit_alarm_screen.dart';
 
 class AlarmListScreen extends StatefulWidget {
@@ -21,37 +21,35 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: CupertinoColors.black,
-        border: null,
-        transitionBetweenRoutes: false,
-        automaticallyImplyLeading: false,
-        leading: GlassTextButton(
-          text: _isEditMode ? 'Done' : 'Edit',
-          onPressed: () {
-            setState(() {
-              _isEditMode = !_isEditMode;
-            });
-          },
-        ),
-        trailing: GlassIconButton(
-          icon: CupertinoIcons.add,
-          onPressed: () {
-            CupertinoScaffold.showCupertinoModalBottomSheet(
-              context: context,
-              expand: true,
-              backgroundColor: Colors.transparent,
-              builder: (context) => const EditAlarmScreen(),
-            );
-          },
-        ),
-      ),
       child: SafeArea(
         child: Consumer<AlarmProvider>(
           builder: (context, alarmProvider, child) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Custom Navigation Bar
+                CustomNavBar(
+                  backgroundColor: CupertinoColors.black,
+                  leading: NavTextButton(
+                    text: _isEditMode ? 'Done' : 'Edit',
+                    onPressed: () {
+                      setState(() {
+                        _isEditMode = !_isEditMode;
+                      });
+                    },
+                  ),
+                  trailing: NavIconButton(
+                    icon: CupertinoIcons.add,
+                    onPressed: () {
+                      CupertinoScaffold.showCupertinoModalBottomSheet(
+                        context: context,
+                        expand: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => const EditAlarmScreen(),
+                      );
+                    },
+                  ),
+                ),
                 const Padding(
                   padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
                   child: Text(

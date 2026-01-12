@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
-import '../widgets/glass_button.dart';
+import '../widgets/custom_buttons.dart';
 
 class AlarmRingScreen extends StatefulWidget {
   final AlarmModel alarm;
@@ -266,8 +266,8 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
                     // Dismiss button
                     Expanded(
-                      child: GlassActionButton(
-                        glassColor: CupertinoColors.systemOrange,
+                      child: ActionButton(
+                        backgroundColor: CupertinoColors.systemOrange,
                         onPressed: _dismissAlarm,
                         child: const Column(
                           mainAxisSize: MainAxisSize.min,

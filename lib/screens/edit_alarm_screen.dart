@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
-import '../widgets/glass_button.dart';
+import '../widgets/custom_buttons.dart';
 
 class EditAlarmScreen extends StatefulWidget {
   final AlarmModel? alarm;
@@ -34,7 +34,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _vibrate = widget.alarm!.vibrate;
     } else {
       final now = DateTime.now();
-      _selectedTime = DateTime(now.year, now.month, now.day, 8, 0);
+      _selectedTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
       _label = '';
       _repeatDays = [];
       _sound = 'Radar';
@@ -102,31 +102,33 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
     return CupertinoPageScaffold(
       backgroundColor: const Color(0xFF1C1C1E),
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: const Color(0xFF1C1C1E),
-        border: null,
-        transitionBetweenRoutes: false,
-        leading: GlassTextButton(
-          text: 'Cancel',
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        middle: Text(
-          widget.alarm != null ? 'Edit Alarm' : 'Add Alarm',
-          style: const TextStyle(
-            color: CupertinoColors.white,
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        trailing: GlassTextButton(
-          text: 'Save',
-          fontWeight: FontWeight.w600,
-          onPressed: _saveAlarm,
-        ),
-      ),
       child: SafeArea(
         child: Column(
           children: [
+            // Custom Navigation Bar
+            SizedBox(height: 5,),
+            CustomNavBar(
+              backgroundColor: const Color(0xFF1C1C1E),
+              leading: NavIconButton(
+                icon: CupertinoIcons.xmark,
+                iconColor: CupertinoColors.white,
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              middle: Text(
+                widget.alarm != null ? 'Edit Alarm' : 'Add Alarm',
+                style: const TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              trailing: NavIconButton(
+                icon: CupertinoIcons.checkmark,
+                iconColor: CupertinoColors.white,
+                backgroundColor: CupertinoColors.systemOrange,
+                onPressed: _saveAlarm,
+              ),
+            ),
             // Time Picker
             SizedBox(
               height: 216,
@@ -285,18 +287,20 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     return _repeatDays.map((day) => dayNames[day - 1]).join(', ');
   }
 
-  void _showRepeatDialog() {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) => RepeatSelector(
-        selectedDays: _repeatDays,
-        onChanged: (days) {
-          setState(() {
-            _repeatDays = days;
-          });
-        },
+  void _showRepeatDialog() async {
+    final result = await Navigator.of(context).push<List<int>>(
+      CupertinoPageRoute(
+        builder: (context) => RepeatSelector(
+          selectedDays: _repeatDays,
+        ),
       ),
     );
+    
+    if (result != null) {
+      setState(() {
+        _repeatDays = result;
+      });
+    }
   }
 
   void _showLabelDialog() {
@@ -438,12 +442,10 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
 class RepeatSelector extends StatefulWidget {
   final List<int> selectedDays;
-  final Function(List<int>) onChanged;
 
   const RepeatSelector({
     super.key,
     required this.selectedDays,
-    required this.onChanged,
   });
 
   @override
@@ -471,95 +473,80 @@ class _RepeatSelectorState extends State<RepeatSelector> {
       'Sunday',
     ];
 
-    return Container(
-      height: 400,
-      color: const Color(0xFF1C1C1E),
-      child: Column(
-        children: [
-          Container(
-            height: 44,
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
+    return CupertinoPageScaffold(
+      backgroundColor: const Color(0xFF1C1C1E),
+      child: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 5),
+            CustomNavBar(
+              backgroundColor: const Color(0xFF1C1C1E),
+              leading: NavIconButton(
+                icon: CupertinoIcons.xmark,
+                iconColor: CupertinoColors.white,
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              middle: const Text(
+                'Repeat',
+                style: TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CupertinoButton(
-                  child: const Text('Cancel'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                const Text(
-                  'Repeat',
-                  style: TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                CupertinoButton(
-                  child: const Text('Done'),
-                  onPressed: () {
-                    widget.onChanged(_selectedDays);
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: days.length,
-              itemBuilder: (context, index) {
-                final dayIndex = index + 1;
-                final isSelected = _selectedDays.contains(dayIndex);
-                return Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
+            Expanded(
+              child: ListView.builder(
+                itemCount: days.length,
+                itemBuilder: (context, index) {
+                  final dayIndex = index + 1;
+                  final isSelected = _selectedDays.contains(dayIndex);
+                  return Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
+                      ),
                     ),
-                  ),
-                  child: CupertinoButton(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        if (isSelected) {
-                          _selectedDays.remove(dayIndex);
-                        } else {
-                          _selectedDays.add(dayIndex);
-                        }
-                        _selectedDays.sort();
-                      });
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          days[index],
-                          style: const TextStyle(
-                            color: CupertinoColors.white,
-                            fontSize: 17,
+                    child: CupertinoButton(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (isSelected) {
+                            _selectedDays.remove(dayIndex);
+                          } else {
+                            _selectedDays.add(dayIndex);
+                          }
+                          _selectedDays.sort();
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            days[index],
+                            style: const TextStyle(
+                              color: CupertinoColors.white,
+                              fontSize: 17,
+                            ),
                           ),
-                        ),
-                        if (isSelected)
-                          const Icon(
-                            CupertinoIcons.check_mark,
-                            color: CupertinoColors.systemOrange,
-                            size: 24,
-                          ),
-                      ],
+                          if (isSelected)
+                            const Icon(
+                              CupertinoIcons.check_mark,
+                              color: CupertinoColors.systemOrange,
+                              size: 24,
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import '../models/world_clock_model.dart';
-import '../widgets/glass_button.dart';
+import '../widgets/custom_buttons.dart';
 
 class AddCityScreen extends StatefulWidget {
   const AddCityScreen({super.key});
@@ -81,25 +81,25 @@ class _AddCityScreenState extends State<AddCityScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: CupertinoColors.black,
-        border: null,
-        leading: GlassTextButton(
-          text: 'Cancel',
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        middle: const Text(
-          'Choose a City',
-          style: TextStyle(
-            color: CupertinoColors.white,
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
       child: SafeArea(
         child: Column(
           children: [
+            // Custom Navigation Bar
+            CustomNavBar(
+              backgroundColor: CupertinoColors.black,
+              leading: NavTextButton(
+                text: 'Cancel',
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              middle: const Text(
+                'Choose a City',
+                style: TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
             // Search bar
             Padding(
               padding: const EdgeInsets.all(16),
