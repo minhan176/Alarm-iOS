@@ -11,7 +11,7 @@ class TimerScreen extends StatefulWidget {
 
 class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin {
   int _hours = 0;
-  int _minutes = 1;
+  int _minutes = 45;
   int _seconds = 0;
   int _remainingSeconds = 0;
   int _totalSeconds = 0;
@@ -452,6 +452,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 width: 70,
                 child: CupertinoPicker(
                   backgroundColor: CupertinoColors.transparent,
+                  selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+                    background: CupertinoColors.transparent,
+                  ),
                   scrollController: FixedExtentScrollController(
                     initialItem: _hours,
                   ),
@@ -490,6 +493,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 width: 70,
                 child: CupertinoPicker(
                   backgroundColor: CupertinoColors.transparent,
+                  selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+                    background: CupertinoColors.transparent,
+                  ),
                   scrollController: FixedExtentScrollController(
                     initialItem: _minutes,
                   ),
@@ -528,6 +534,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 width: 70,
                 child: CupertinoPicker(
                   backgroundColor: CupertinoColors.transparent,
+                  selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+                    background: CupertinoColors.transparent,
+                  ),
                   scrollController: FixedExtentScrollController(
                     initialItem: _seconds,
                   ),

@@ -197,7 +197,8 @@ class _WorldClockItem extends StatelessWidget {
     final timeDiff = _getTimeDifference();
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(

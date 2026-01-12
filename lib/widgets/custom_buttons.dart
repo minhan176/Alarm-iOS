@@ -34,7 +34,7 @@ class NavTextButton extends StatelessWidget {
                 behavior: HitTestBehavior.opaque,
                 onTap: enabled ? onPressed : null,
                 child: SizedBox(
-                  height: 40,
+                  height: 35,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                     child: Center(
@@ -87,8 +87,8 @@ class NavIconButton extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: enabled ? onPressed : null,
             child: Container(
-              width: 44,
-              height: 44,
+              width: 35,
+              height: 35,
               decoration: backgroundColor != null
                   ? BoxDecoration(
                       color: backgroundColor,
@@ -208,7 +208,7 @@ class CustomNavBar extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 4),
+                    padding: const EdgeInsets.only(left: 16),
                     child: leading ?? const SizedBox.shrink(),
                   ),
                 ),
@@ -225,7 +225,7 @@ class CustomNavBar extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.only(right: 16),
                     child: trailing ?? const SizedBox.shrink(),
                   ),
                 ),
