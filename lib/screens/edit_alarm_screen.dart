@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
@@ -63,7 +62,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       provider.addAlarm(alarm);
     }
 
-    Navigator.of(context).pop();
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   void _deleteAlarm() {
@@ -88,7 +87,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                   listen: false,
                 ).deleteAlarm(widget.alarm!.id);
                 Navigator.of(context).pop(); // Close dialog
-                Navigator.of(context).pop(); // Close edit screen
+                Navigator.of(context, rootNavigator: true).pop(); // Close edit screen
               },
             ),
           ],
@@ -101,103 +100,101 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   Widget build(BuildContext context) {
     final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
 
-    return CupertinoScaffold(
-      body: CupertinoPageScaffold(
-        backgroundColor: const Color(0xFF1C1C1E),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Custom Navigation Bar
-              SizedBox(height: 5,),
-              CustomNavBar(
-                backgroundColor: const Color(0xFF1C1C1E),
-                leading: NavIconButton(
-                  icon: CupertinoIcons.xmark,
-                  iconColor: CupertinoColors.white,
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                middle: Text(
-                  widget.alarm != null ? 'Edit Alarm' : 'Add Alarm',
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: NavIconButton(
-                  icon: CupertinoIcons.checkmark,
-                  iconColor: CupertinoColors.white,
-                  backgroundColor: CupertinoColors.systemOrange,
-                  onPressed: _saveAlarm,
+    return CupertinoPageScaffold(
+      backgroundColor: const Color(0xFF1C1C1E),
+      child: SafeArea(
+        child: Column(
+          children: [
+            // Custom Navigation Bar
+            SizedBox(height: 5,),
+            CustomNavBar(
+              backgroundColor: const Color(0xFF1C1C1E),
+              leading: NavIconButton(
+                icon: CupertinoIcons.xmark,
+                iconColor: CupertinoColors.white,
+                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+              ),
+              middle: Text(
+                widget.alarm != null ? 'Edit Alarm' : 'Add Alarm',
+                style: const TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              // Time Picker
-              SizedBox(
-                height: 216,
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.time,
-                  initialDateTime: _selectedTime,
-                  use24hFormat: use24HourFormat,
-                  onDateTimeChanged: (DateTime newTime) {
-                    setState(() {
-                      _selectedTime = newTime;
-                    });
-                  },
-                ),
+              trailing: NavIconButton(
+                icon: CupertinoIcons.checkmark,
+                iconColor: CupertinoColors.white,
+                backgroundColor: CupertinoColors.systemOrange,
+                onPressed: _saveAlarm,
               ),
-              const SizedBox(height: 20),
-              // Settings List
-              Expanded(
-                child: ListView(
-                  children: [
-                    _buildSettingGroup([
-                      _buildSettingItem(
-                        'Repeat',
-                        _getRepeatText(),
-                        () => _showRepeatDialog(),
+            ),
+            // Time Picker
+            SizedBox(
+              height: 216,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                initialDateTime: _selectedTime,
+                use24hFormat: use24HourFormat,
+                onDateTimeChanged: (DateTime newTime) {
+                  setState(() {
+                    _selectedTime = newTime;
+                  });
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Settings List
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildSettingGroup([
+                    _buildSettingItem(
+                      'Repeat',
+                      _getRepeatText(),
+                      () => _showRepeatDialog(),
+                    ),
+                    _buildSettingItem(
+                      'Label',
+                      _label.isEmpty ? 'Alarm' : _label,
+                      () => _showLabelDialog(),
+                    ),
+                    _buildSettingItem(
+                      'Sound',
+                      _sound,
+                      () => _showSoundDialog(),
+                    ),
+                    _buildSwitchItem(
+                      'Snooze',
+                      _snooze,
+                      (value) => setState(() => _snooze = value),
+                    ),
+                  ]),
+                  if (widget.alarm != null) ...[
+                    const SizedBox(height: 40),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2C2C2E),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      _buildSettingItem(
-                        'Label',
-                        _label.isEmpty ? 'Alarm' : _label,
-                        () => _showLabelDialog(),
-                      ),
-                      _buildSettingItem(
-                        'Sound',
-                        _sound,
-                        () => _showSoundDialog(),
-                      ),
-                      _buildSwitchItem(
-                        'Snooze',
-                        _snooze,
-                        (value) => setState(() => _snooze = value),
-                      ),
-                    ]),
-                    if (widget.alarm != null) ...[
-                      const SizedBox(height: 40),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF2C2C2E),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          child: const Text(
-                            'Delete Alarm',
-                            style: TextStyle(
-                              color: CupertinoColors.systemRed,
-                              fontSize: 17,
-                            ),
+                      child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        child: const Text(
+                          'Delete Alarm',
+                          style: TextStyle(
+                            color: CupertinoColors.systemRed,
+                            fontSize: 17,
                           ),
-                          onPressed: _deleteAlarm,
                         ),
+                        onPressed: _deleteAlarm,
                       ),
-                    ],
+                    ),
                   ],
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -291,19 +288,19 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   }
 
   void _showRepeatDialog() async {
-    showCupertinoModalBottomSheet(
-      context: context,
-      expand: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => RepeatSelector(
-        selectedDays: _repeatDays,
-        onDaysChanged: (days) {
-          setState(() {
-            _repeatDays = days;
-          });
-        },
+    final result = await Navigator.of(context).push<List<int>>(
+      CupertinoPageRoute(
+        builder: (context) => RepeatSelector(
+          selectedDays: _repeatDays,
+        ),
       ),
     );
+    
+    if (result != null) {
+      setState(() {
+        _repeatDays = result;
+      });
+    }
   }
 
   void _showLabelDialog() {
@@ -445,12 +442,10 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
 class RepeatSelector extends StatefulWidget {
   final List<int> selectedDays;
-  final Function(List<int>) onDaysChanged;
 
   const RepeatSelector({
     super.key,
     required this.selectedDays,
-    required this.onDaysChanged,
   });
 
   @override
@@ -478,102 +473,81 @@ class _RepeatSelectorState extends State<RepeatSelector> {
       'Sunday',
     ];
 
-    return Material(
-      type: MaterialType.transparency,
-      child: Container(
-        height: 500,
-        decoration: const BoxDecoration(
-          color: Color(0xFF1C1C1E),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                height: 44,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
-                  ),
+    return CupertinoPageScaffold(
+      backgroundColor: const Color(0xFF1C1C1E),
+      child: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 5),
+            CustomNavBar(
+              backgroundColor: const Color(0xFF1C1C1E),
+              leading: NavTextIconButton(
+                icon: CupertinoIcons.chevron_left,
+                text: 'Back',
+                iconColor: CupertinoColors.white,
+                textColor: CupertinoColors.white,
+                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+              ),
+              middle: const Text(
+                'Repeat',
+                style: TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CupertinoButton(
-                      child: const Text('Cancel'),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                    const Text(
-                      'Repeat',
-                      style: TextStyle(
-                        color: CupertinoColors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: days.length,
+                itemBuilder: (context, index) {
+                  final dayIndex = index + 1;
+                  final isSelected = _selectedDays.contains(dayIndex);
+                  return Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
                       ),
                     ),
-                    CupertinoButton(
-                      child: const Text('Done'),
+                    child: CupertinoButton(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       onPressed: () {
-                        widget.onDaysChanged(_selectedDays);
-                        Navigator.of(context).pop();
+                        setState(() {
+                          if (isSelected) {
+                            _selectedDays.remove(dayIndex);
+                          } else {
+                            _selectedDays.add(dayIndex);
+                          }
+                          _selectedDays.sort();
+                        });
                       },
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: days.length,
-                  itemBuilder: (context, index) {
-                    final dayIndex = index + 1;
-                    final isSelected = _selectedDays.contains(dayIndex);
-                    return Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
-                        ),
-                      ),
-                      child: CupertinoButton(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (isSelected) {
-                              _selectedDays.remove(dayIndex);
-                            } else {
-                              _selectedDays.add(dayIndex);
-                            }
-                            _selectedDays.sort();
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              days[index],
-                              style: const TextStyle(
-                                color: CupertinoColors.white,
-                                fontSize: 17,
-                              ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            days[index],
+                            style: const TextStyle(
+                              color: CupertinoColors.white,
+                              fontSize: 17,
                             ),
-                            if (isSelected)
-                              const Icon(
-                                CupertinoIcons.check_mark,
-                                color: CupertinoColors.systemOrange,
-                                size: 24,
-                              ),
-                          ],
-                        ),
+                          ),
+                          if (isSelected)
+                            const Icon(
+                              CupertinoIcons.check_mark,
+                              color: CupertinoColors.systemOrange,
+                              size: 24,
+                            ),
+                        ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

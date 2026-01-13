@@ -110,6 +110,74 @@ class NavIconButton extends StatelessWidget {
   }
 }
 
+/// A navigation button with both icon and text, styled similarly to NavIconButton
+class NavTextIconButton extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final VoidCallback? onPressed;
+  final Color iconColor;
+  final double iconSize;
+  final Color textColor;
+  final double textSize;
+  final bool enabled;
+  final Color? backgroundColor;
+
+  const NavTextIconButton({
+    super.key,
+    required this.icon,
+    required this.text,
+    this.onPressed,
+    this.iconColor = CupertinoColors.systemOrange,
+    this.iconSize = 24.0,
+    this.textColor = CupertinoColors.systemOrange,
+    this.textSize = 17.0,
+    this.enabled = true,
+    this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LiquidStretch(
+      child: LiquidGlass.grouped(
+        shape: const LiquidRoundedSuperellipse(borderRadius: 12),
+        child: GlassGlow(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: enabled ? onPressed : null,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: backgroundColor != null
+                  ? BoxDecoration(
+                      color: backgroundColor,
+                      borderRadius: BorderRadius.circular(12),
+                    )
+                  : null,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    icon,
+                    color: enabled ? iconColor : iconColor.withOpacity(0.4),
+                    size: iconSize,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    text,
+                    style: TextStyle(
+                      color: enabled ? textColor : textColor.withOpacity(0.4),
+                      fontSize: textSize,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// A large action button with liquid glass effect (for screens like alarm ring)
 class ActionButton extends StatelessWidget {
   final Widget child;

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
@@ -41,12 +40,11 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   trailing: NavIconButton(
                     icon: CupertinoIcons.add,
                     onPressed: () {
-                      CupertinoScaffold.showCupertinoModalBottomSheet(
+                       showCupertinoSheet<void>(
                         context: context,
-                        expand: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) => const EditAlarmScreen(),
-                      );
+                        useNestedNavigation: true,
+                        builder: (BuildContext context) => const EditAlarmScreen(),
+                  );
                     },
                   ),
                 ),
@@ -81,12 +79,11 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   isEditMode: _isEditMode,
                   onTap: () {
                     if (!_isEditMode) {
-                      CupertinoScaffold.showCupertinoModalBottomSheet(
+                      showCupertinoSheet<void>(
                         context: context,
-                        expand: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) => EditAlarmScreen(alarm: alarm),
-                      );
+                        useNestedNavigation: true,
+                        builder: (BuildContext context) => EditAlarmScreen(alarm: alarm),
+                );
                     }
                   },
                   onToggle: () {
