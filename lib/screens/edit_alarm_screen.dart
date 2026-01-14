@@ -21,6 +21,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late String _sound;
   late bool _snooze;
   late bool _vibrate;
+  late TextEditingController _labelController;
+  late Duration _snoozeDuration;
+  late bool _showDurationOptions;
 
   @override
   void initState() {
@@ -41,6 +44,15 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _snooze = true;
       _vibrate = true;
     }
+    _labelController = TextEditingController(text: _label);
+    _snoozeDuration = widget.alarm?.snoozeDuration ?? const Duration(minutes: 5);
+    _showDurationOptions = false;
+  }
+
+  @override
+  void dispose() {
+    _labelController.dispose();
+    super.dispose();
   }
 
   void _saveAlarm() {
@@ -54,6 +66,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       sound: _sound,
       snooze: _snooze,
       vibrate: _vibrate,
+      snoozeDuration: _snoozeDuration,
     );
 
     if (widget.alarm != null) {
@@ -153,23 +166,28 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       'Repeat',
                       _getRepeatText(),
                       () => _showRepeatDialog(),
+                      valueColor: CupertinoColors.white,
                     ),
-                    _buildSettingItem(
-                      'Label',
-                      _label.isEmpty ? 'Alarm' : _label,
-                      () => _showLabelDialog(),
-                    ),
+                    _buildLabelItem(),
                     _buildSettingItem(
                       'Sound',
                       _sound,
                       () => _showSoundDialog(),
+                      valueColor: CupertinoColors.white,
                     ),
                     _buildSwitchItem(
                       'Snooze',
                       _snooze,
                       (value) => setState(() => _snooze = value),
                     ),
+                    _buildSettingItem(
+                      'Snooze Duration',
+                      '${_snoozeDuration.inMinutes} minutes',
+                      () => setState(() => _showDurationOptions = !_showDurationOptions),
+                      valueColor: CupertinoColors.white,
+                    ),
                   ]),
+                  if (_showDurationOptions) _buildDurationOptions(),
                   if (widget.alarm != null) ...[
                     const SizedBox(height: 40),
                     Container(
@@ -211,7 +229,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     );
   }
 
-  Widget _buildSettingItem(String title, String value, VoidCallback onTap) {
+  Widget _buildSettingItem(String title, String value, VoidCallback onTap, {Color valueColor = CupertinoColors.systemGrey}) {
     return CupertinoButton(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       onPressed: onTap,
@@ -226,8 +244,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
             children: [
               Text(
                 value,
-                style: const TextStyle(
-                  color: CupertinoColors.systemGrey,
+                style: TextStyle(
+                  color: valueColor,
                   fontSize: 17,
                 ),
               ),
@@ -267,6 +285,76 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     );
   }
 
+  Widget _buildLabelItem() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Label',
+            style: TextStyle(color: CupertinoColors.white, fontSize: 17),
+          ),
+          Expanded(
+            child: CupertinoTextField(
+              controller: _labelController,
+              placeholder: 'Alarm',
+              textAlign: TextAlign.right,
+              style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+              placeholderStyle: const TextStyle(color: CupertinoColors.systemGrey, fontSize: 17),
+              decoration: const BoxDecoration(),
+              onChanged: (value) {
+                setState(() {
+                  _label = value;
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDurationOptions() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: const Color(0xFF2C2C2E),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        children: List.generate(15, (index) {
+          final minutes = index + 1;
+          final isSelected = _snoozeDuration.inMinutes == minutes;
+          return CupertinoButton(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            onPressed: () {
+              setState(() {
+                _snoozeDuration = Duration(minutes: minutes);
+                _showDurationOptions = false;
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '$minutes minutes',
+                  style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+                ),
+                if (isSelected)
+                  const Icon(
+                    CupertinoIcons.check_mark,
+                    color: CupertinoColors.systemOrange,
+                    size: 24,
+                  ),
+              ],
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
   String _getRepeatText() {
     if (_repeatDays.isEmpty) return 'Never';
     if (_repeatDays.length == 7) return 'Every day';
@@ -301,40 +389,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
         _repeatDays = result;
       });
     }
-  }
-
-  void _showLabelDialog() {
-    final controller = TextEditingController(text: _label);
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: const Text('Label'),
-        content: Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: CupertinoTextField(
-            controller: controller,
-            placeholder: 'Alarm',
-            autofocus: true,
-          ),
-        ),
-        actions: [
-          CupertinoDialogAction(
-            child: const Text('Cancel'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: const Text('OK'),
-            onPressed: () {
-              setState(() {
-                _label = controller.text;
-              });
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
   }
 
   void _showSoundDialog() {
@@ -438,6 +492,79 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       ),
     );
   }
+
+  void _showSnoozeDurationDialog() {
+    final durations = [1, 5, 10, 15, 20, 30];
+
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => Container(
+        height: 300,
+        color: const Color(0xFF1C1C1E),
+        child: Column(
+          children: [
+            Container(
+              height: 44,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CupertinoButton(
+                    child: const Text('Cancel'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  const Text(
+                    'Snooze Duration',
+                    style: TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  CupertinoButton(
+                    child: const Text('Done'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: CupertinoPicker(
+                backgroundColor: const Color(0xFF1C1C1E),
+                itemExtent: 40,
+                scrollController: FixedExtentScrollController(
+                  initialItem: durations.indexOf(_snoozeDuration.inMinutes),
+                ),
+                onSelectedItemChanged: (index) {
+                  setState(() {
+                    _snoozeDuration = Duration(minutes: durations[index]);
+                  });
+                },
+                children: durations
+                    .map(
+                      (duration) => Center(
+                        child: Text(
+                          '$duration minutes',
+                          style: const TextStyle(
+                            color: CupertinoColors.white,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class RepeatSelector extends StatefulWidget {
@@ -473,7 +600,12 @@ class _RepeatSelectorState extends State<RepeatSelector> {
       'Sunday',
     ];
 
-    return CupertinoPageScaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(_selectedDays);
+        return false;
+      },
+      child: CupertinoPageScaffold(
       backgroundColor: const Color(0xFF1C1C1E),
       child: SafeArea(
         child: Column(
@@ -486,7 +618,7 @@ class _RepeatSelectorState extends State<RepeatSelector> {
                 text: 'Back',
                 iconColor: CupertinoColors.white,
                 textColor: CupertinoColors.white,
-                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+                onPressed: () => Navigator.of(context).pop(_selectedDays),
               ),
               middle: const Text(
                 'Repeat',
@@ -497,51 +629,58 @@ class _RepeatSelectorState extends State<RepeatSelector> {
                 ),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
+            Container(
+              margin: const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFF2C2C2E),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: ListView.separated(
+                shrinkWrap: true,
                 itemCount: days.length,
+                separatorBuilder: (context, index) => Divider(
+                  color: const Color(0xFF3C3C3E),
+                  height: 0.5,
+                  indent: 16,
+                  endIndent: 16,
+                ),
                 itemBuilder: (context, index) {
                   final dayIndex = index + 1;
                   final isSelected = _selectedDays.contains(dayIndex);
-                  return Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
-                      ),
+                  return CupertinoButton(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
                     ),
-                    child: CupertinoButton(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          if (isSelected) {
-                            _selectedDays.remove(dayIndex);
-                          } else {
-                            _selectedDays.add(dayIndex);
-                          }
-                          _selectedDays.sort();
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            days[index],
-                            style: const TextStyle(
-                              color: CupertinoColors.white,
-                              fontSize: 17,
-                            ),
+                    onPressed: () {
+                      setState(() {
+                        if (isSelected) {
+                          _selectedDays.remove(dayIndex);
+                        } else {
+                          _selectedDays.add(dayIndex);
+                        }
+                        _selectedDays.sort();
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          days[index],
+                          style: const TextStyle(
+                            color: CupertinoColors.white,
+                            fontSize: 17,
                           ),
-                          if (isSelected)
-                            const Icon(
-                              CupertinoIcons.check_mark,
-                              color: CupertinoColors.systemOrange,
-                              size: 24,
-                            ),
-                        ],
-                      ),
+                        ),
+                        if (isSelected)
+                          const Icon(
+                            CupertinoIcons.check_mark,
+                            color: CupertinoColors.systemOrange,
+                            size: 24,
+                          )
+                        else
+                          const SizedBox(width: 24, height: 24),
+                      ],
                     ),
                   );
                 },
@@ -550,6 +689,6 @@ class _RepeatSelectorState extends State<RepeatSelector> {
           ],
         ),
       ),
-    );
+    ));
   }
 }

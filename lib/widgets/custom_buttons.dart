@@ -34,7 +34,7 @@ class NavTextButton extends StatelessWidget {
                 behavior: HitTestBehavior.opaque,
                 onTap: enabled ? onPressed : null,
                 child: SizedBox(
-                  height: 35,
+                  height: 40,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                     child: Center(
@@ -87,8 +87,8 @@ class NavIconButton extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: enabled ? onPressed : null,
             child: Container(
-              width: 35,
-              height: 35,
+              width: 40,
+              height: 40,
               decoration: backgroundColor != null
                   ? BoxDecoration(
                       color: backgroundColor,
@@ -139,17 +139,18 @@ class NavTextIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LiquidStretch(
       child: LiquidGlass.grouped(
-        shape: const LiquidRoundedSuperellipse(borderRadius: 12),
+        shape: const LiquidRoundedSuperellipse(borderRadius: 16),
         child: GlassGlow(
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: enabled ? onPressed : null,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              height: 40,
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               decoration: backgroundColor != null
                   ? BoxDecoration(
                       color: backgroundColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     )
                   : null,
               child: Row(

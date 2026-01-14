@@ -7,6 +7,7 @@ class AlarmModel {
   final String sound;
   final bool snooze;
   final bool vibrate;
+  final Duration snoozeDuration;
 
   AlarmModel({
     required this.id,
@@ -17,6 +18,7 @@ class AlarmModel {
     this.sound = 'Radar',
     this.snooze = true,
     this.vibrate = true,
+    this.snoozeDuration = const Duration(minutes: 5),
   });
 
   // Copy with method
@@ -29,6 +31,7 @@ class AlarmModel {
     String? sound,
     bool? snooze,
     bool? vibrate,
+    Duration? snoozeDuration,
   }) {
     return AlarmModel(
       id: id ?? this.id,
@@ -39,6 +42,7 @@ class AlarmModel {
       sound: sound ?? this.sound,
       snooze: snooze ?? this.snooze,
       vibrate: vibrate ?? this.vibrate,
+      snoozeDuration: snoozeDuration ?? this.snoozeDuration,
     );
   }
 
@@ -53,6 +57,7 @@ class AlarmModel {
       'sound': sound,
       'snooze': snooze,
       'vibrate': vibrate,
+      'snoozeDuration': snoozeDuration.inMinutes,
     };
   }
 
@@ -67,6 +72,7 @@ class AlarmModel {
       sound: json['sound'] ?? 'Radar',
       snooze: json['snooze'] ?? true,
       vibrate: json['vibrate'] ?? true,
+      snoozeDuration: Duration(minutes: json['snoozeDuration'] ?? 5),
     );
   }
 
