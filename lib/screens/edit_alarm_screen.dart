@@ -186,8 +186,39 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       () => setState(() => _showDurationOptions = !_showDurationOptions),
                       valueColor: CupertinoColors.white,
                     ),
+                    AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: _showDurationOptions ? 216 : 0,
+                    curve: Curves.easeInOut,
+                    child: _showDurationOptions
+                        ? CupertinoPicker(
+                            backgroundColor: const Color(0xFF1C1C1E),
+                            itemExtent: 40,
+                            scrollController: FixedExtentScrollController(
+                              initialItem: _snoozeDuration.inMinutes - 1,
+                            ),
+                            onSelectedItemChanged: (index) {
+                              setState(() {
+                                _snoozeDuration = Duration(minutes: index + 1);
+                              });
+                            },
+                            children: List.generate(15, (index) {
+                              final minutes = index + 1;
+                              return Center(
+                                child: Text(
+                                  '$minutes minutes',
+                                  style: const TextStyle(
+                                    color: CupertinoColors.white,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              );
+                            }),
+                          )
+                        : null,
+                  ),
                   ]),
-                  if (_showDurationOptions) _buildDurationOptions(),
+                  
                   if (widget.alarm != null) ...[
                     const SizedBox(height: 40),
                     Container(
