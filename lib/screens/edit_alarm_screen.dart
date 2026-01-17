@@ -172,7 +172,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                     _buildSettingItem(
                       'Sound',
                       _sound,
-                      () => _showSoundDialog(),
+                      () => _showSoundPage(),
                       valueColor: CupertinoColors.white,
                     ),
                     _buildSwitchItem(
@@ -184,36 +184,47 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       'Snooze Duration',
                       '${_snoozeDuration.inMinutes} minutes',
                       () => setState(() => _showDurationOptions = !_showDurationOptions),
-                      valueColor: CupertinoColors.white,
+                      valueColor: CupertinoColors.systemOrange,
+                      showArrow: false,
+                      pressedOpacity: 1.0,
                     ),
                     AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     height: _showDurationOptions ? 216 : 0,
                     curve: Curves.easeInOut,
                     child: _showDurationOptions
-                        ? CupertinoPicker(
-                            backgroundColor: const Color(0xFF1C1C1E),
-                            itemExtent: 40,
-                            scrollController: FixedExtentScrollController(
-                              initialItem: _snoozeDuration.inMinutes - 1,
+                        ? Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF2C2C2E),
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(16),
+                                bottomRight: Radius.circular(16),
+                              ),
                             ),
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                _snoozeDuration = Duration(minutes: index + 1);
-                              });
-                            },
-                            children: List.generate(15, (index) {
-                              final minutes = index + 1;
-                              return Center(
-                                child: Text(
-                                  '$minutes minutes',
-                                  style: const TextStyle(
-                                    color: CupertinoColors.white,
-                                    fontSize: 17,
+                            child: CupertinoPicker(
+                              backgroundColor: Colors.transparent,
+                              itemExtent: 40,
+                              scrollController: FixedExtentScrollController(
+                                initialItem: _snoozeDuration.inMinutes - 1,
+                              ),
+                              onSelectedItemChanged: (index) {
+                                setState(() {
+                                  _snoozeDuration = Duration(minutes: index + 1);
+                                });
+                              },
+                              children: List.generate(15, (index) {
+                                final minutes = index + 1;
+                                return Center(
+                                  child: Text(
+                                    '$minutes minutes',
+                                    style: const TextStyle(
+                                      color: CupertinoColors.white,
+                                      fontSize: 17,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }),
+                                );
+                              }),
+                            ),
                           )
                         : null,
                   ),
@@ -225,7 +236,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
                         color: const Color(0xFF2C2C2E),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       child: CupertinoButton(
                         padding: EdgeInsets.zero,
@@ -254,15 +265,29 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xFF2C2C2E),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
       ),
-      child: Column(children: children),
+      child: Column(
+        children: [
+          for (int i = 0; i < children.length; i++) ...[
+            children[i],
+            if (i < children.length - 1)
+              Divider(
+                color: const Color(0xFF3C3C3E),
+                height: 0.5,
+                indent: 16,
+                endIndent: 16,
+              ),
+          ],
+        ],
+      ),
     );
   }
 
-  Widget _buildSettingItem(String title, String value, VoidCallback onTap, {Color valueColor = CupertinoColors.systemGrey}) {
+  Widget _buildSettingItem(String title, String value, VoidCallback onTap, {Color valueColor = CupertinoColors.systemGrey, bool showArrow = true, double pressedOpacity = 0.4}) {
     return CupertinoButton(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      pressedOpacity: pressedOpacity,
       onPressed: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -280,12 +305,14 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                   fontSize: 17,
                 ),
               ),
-              const SizedBox(width: 8),
-              const Icon(
-                CupertinoIcons.forward,
-                color: CupertinoColors.systemGrey3,
-                size: 20,
-              ),
+              if (showArrow) ...[
+                const SizedBox(width: 8),
+                const Icon(
+                  CupertinoIcons.forward,
+                  color: CupertinoColors.systemGrey3,
+                  size: 20,
+                ),
+              ],
             ],
           ),
         ],
@@ -422,106 +449,17 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     }
   }
 
-  void _showSoundDialog() {
-    final sounds = [
-      'Radar',
-      'Apex',
-      'Beacon',
-      'Bulletin',
-      'By The Seaside',
-      'Chimes',
-      'Circuit',
-      'Constellation',
-      'Cosmic',
-      'Crystals',
-      'Hillside',
-      'Illuminate',
-      'Night Owl',
-      'Opening',
-      'Playtime',
-      'Presto',
-      'Radar (Classic)',
-      'Reflection',
-      'Ripples',
-      'Sencha',
-      'Signal',
-      'Silk',
-      'Slow Rise',
-      'Stargaze',
-      'Summit',
-      'Twinkle',
-      'Uplift',
-      'Waves',
-    ];
-
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) => Container(
-        height: 300,
-        color: const Color(0xFF1C1C1E),
-        child: Column(
-          children: [
-            Container(
-              height: 44,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CupertinoButton(
-                    child: const Text('Cancel'),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  const Text(
-                    'Sound',
-                    style: TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  CupertinoButton(
-                    child: const Text('Done'),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: CupertinoPicker(
-                backgroundColor: const Color(0xFF1C1C1E),
-                itemExtent: 40,
-                scrollController: FixedExtentScrollController(
-                  initialItem: sounds.indexOf(_sound),
-                ),
-                onSelectedItemChanged: (index) {
-                  setState(() {
-                    _sound = sounds[index];
-                  });
-                },
-                children: sounds
-                    .map(
-                      (sound) => Center(
-                        child: Text(
-                          sound,
-                          style: const TextStyle(
-                            color: CupertinoColors.white,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ],
-        ),
+  void _showSoundPage() async {
+    final result = await Navigator.of(context).push<String>(
+      CupertinoPageRoute(
+        builder: (context) => SoundSelector(currentSound: _sound),
       ),
     );
+    if (result != null) {
+      setState(() {
+        _sound = result;
+      });
+    }
   }
 
   void _showSnoozeDurationDialog() {
@@ -721,5 +659,180 @@ class _RepeatSelectorState extends State<RepeatSelector> {
         ),
       ),
     ));
+  }
+}
+
+class SoundSelector extends StatefulWidget {
+  final String currentSound;
+
+  const SoundSelector({
+    super.key,
+    required this.currentSound,
+  });
+
+  @override
+  State<SoundSelector> createState() => _SoundSelectorState();
+}
+
+class _SoundSelectorState extends State<SoundSelector> {
+  late String _selectedSound;
+
+  final List<String> _sounds = [
+    'Radar',
+    'Apex',
+    'Beacon',
+    'Bulletin',
+    'By The Seaside',
+    'Chimes',
+    'Circuit',
+    'Constellation',
+    'Cosmic',
+    'Crystals',
+    'Hillside',
+    'Illuminate',
+    'Night Owl',
+    'Opening',
+    'Playtime',
+    'Presto',
+    'Radar (Classic)',
+    'Reflection',
+    'Ripples',
+    'Sencha',
+    'Signal',
+    'Silk',
+    'Slow Rise',
+    'Stargaze',
+    'Summit',
+    'Twinkle',
+    'Uplift',
+    'Waves',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedSound = widget.currentSound;
+  }
+
+  void _pickFromDevice() async {
+    // Note: This requires file_picker package
+    // For now, placeholder
+    // FilePickerResult? result = await FilePicker.platform.pickFiles(
+    //   type: FileType.audio,
+    // );
+    // if (result != null) {
+    //   String path = result.files.single.path!;
+    //   setState(() {
+    //     _selectedSound = path; // or extract name
+    //   });
+    // }
+    // For demo, just set a placeholder
+    setState(() {
+      _selectedSound = 'Custom Sound';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(_selectedSound);
+        return false;
+      },
+      child: CupertinoPageScaffold(
+        backgroundColor: const Color(0xFF1C1C1E),
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 5),
+              CustomNavBar(
+                backgroundColor: const Color(0xFF1C1C1E),
+                leading: NavTextIconButton(
+                  icon: CupertinoIcons.chevron_left,
+                  text: 'Back',
+                  iconColor: CupertinoColors.white,
+                  textColor: CupertinoColors.white,
+                  onPressed: () => Navigator.of(context).pop(_selectedSound),
+                ),
+                middle: const Text(
+                  'Sound',
+                  style: TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: _sounds.length + 1, // +1 for add button
+                  separatorBuilder: (context, index) => Divider(
+                    color: const Color(0xFF3C3C3E),
+                    height: 0.5,
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+                  itemBuilder: (context, index) {
+                    if (index == _sounds.length) {
+                      // Add from device button
+                      return CupertinoButton(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        onPressed: _pickFromDevice,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              CupertinoIcons.add,
+                              color: CupertinoColors.systemOrange,
+                              size: 24,
+                            ),
+                            const SizedBox(width: 8),
+                            const Text(
+                              'Add from Device',
+                              style: TextStyle(
+                                color: CupertinoColors.systemOrange,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    final sound = _sounds[index];
+                    final isSelected = _selectedSound == sound;
+                    return CupertinoButton(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      onPressed: () {
+                        setState(() {
+                          _selectedSound = sound;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            sound,
+                            style: const TextStyle(
+                              color: CupertinoColors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                          if (isSelected)
+                            const Icon(
+                              CupertinoIcons.check_mark,
+                              color: CupertinoColors.systemOrange,
+                              size: 24,
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
