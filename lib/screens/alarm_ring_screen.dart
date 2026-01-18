@@ -46,9 +46,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     try {
       // Start vibration pattern only if enabled
       if (widget.alarm.vibrate && await Vibration.hasVibrator()) {
-        // Vibrate in pattern: wait 500ms, vibrate 1000ms, repeat
+        // Vibrate in pattern: wait 1000ms, vibrate 500ms, repeat (less intense)
         Vibration.vibrate(
-          pattern: [500, 1000, 500, 1000],
+          pattern: [1000, 500, 1000, 500],
           repeat: 0, // Repeat from index 0
         );
         print('Vibration enabled for alarm');
@@ -57,21 +57,34 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       }
 
       // Play alarm sound based on user selection
-      try {
-        await _audioPlayer.setReleaseMode(ReleaseMode.loop);
-        await _audioPlayer.setVolume(1.0);
+      if (widget.alarm.sound != 'None') {
+        try {
+          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+          await _audioPlayer.setVolume(1.0);
 
-        // Convert sound name to lowercase for file name
-        final soundFileName = widget.alarm.sound.toLowerCase();
-        final soundPath = 'sounds/$soundFileName.mp3';
+          Source audioSource;
+          if (widget.alarm.sound.startsWith('/') || widget.alarm.sound.contains('\\')) {
+            // It's a file path from device
+            audioSource = DeviceFileSource(widget.alarm.sound);
+          } else {
+            // It's a built-in sound
+            final soundFileName = widget.alarm.sound.toLowerCase();
+            final soundPath = 'sounds/$soundFileName.mp3';
+            audioSource = AssetSource(soundPath);
+          }
 
-        await _audioPlayer.play(AssetSource(soundPath));
-        print('Playing alarm sound: ${widget.alarm.sound}');
-      } catch (e) {
-        print('Could not play alarm sound "${widget.alarm.sound}": $e');
-        print(
-          'Make sure the file assets/sounds/${widget.alarm.sound.toLowerCase()}.mp3 exists',
-        );
+          await _audioPlayer.play(audioSource);
+          print('Playing alarm sound: ${widget.alarm.sound}');
+        } catch (e) {
+          print('Could not play alarm sound "${widget.alarm.sound}": $e');
+          if (!widget.alarm.sound.startsWith('/') && !widget.alarm.sound.contains('\\')) {
+            print(
+              'Make sure the file assets/sounds/${widget.alarm.sound.toLowerCase()}.mp3 exists',
+            );
+          }
+        }
+      } else {
+        print('No sound selected for alarm');
       }
     } catch (e) {
       print('Error starting alarm: $e');

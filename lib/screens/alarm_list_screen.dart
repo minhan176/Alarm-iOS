@@ -20,86 +20,84 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
-      child: SafeArea(
-        child: Consumer<AlarmProvider>(
-          builder: (context, alarmProvider, child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Custom Navigation Bar
-                CustomNavBar(
-                  backgroundColor: CupertinoColors.black,
-                  leading: NavTextButton(
-                    text: _isEditMode ? 'Done' : 'Edit',
-                    onPressed: () {
-                      setState(() {
-                        _isEditMode = !_isEditMode;
-                      });
-                    },
-                  ),
-                  trailing: NavIconButton(
-                    icon: CupertinoIcons.add,
-                    onPressed: () {
-                       showCupertinoSheet<void>(
-                        context: context,
-                        useNestedNavigation: true,
-                        builder: (BuildContext context) => const EditAlarmScreen(),
-                  );
-                    },
+      child: Consumer<AlarmProvider>(
+        builder: (context, alarmProvider, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Custom Navigation Bar
+              CustomNavBar(
+                backgroundColor: CupertinoColors.black,
+                leading: NavTextButton(
+                  text: _isEditMode ? 'Done' : 'Edit',
+                  onPressed: () {
+                    setState(() {
+                      _isEditMode = !_isEditMode;
+                    });
+                  },
+                ),
+                trailing: NavIconButton(
+                  icon: CupertinoIcons.add,
+                  onPressed: () {
+                     showCupertinoSheet<void>(
+                      context: context,
+                      useNestedNavigation: true,
+                      builder: (BuildContext context) => const EditAlarmScreen(),
+                );
+                  },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                child: Text(
+                  'Alarms',
+                  style: TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
-                  child: Text(
-                    'Alarm',
-                    style: TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: alarmProvider.alarms.isEmpty
-                      ? const Center(
-                          child: Text(
-                            'No alarms',
-                            style: TextStyle(
-                              color: CupertinoColors.systemGrey,
-                              fontSize: 17,
-                            ),
+              ),
+              Expanded(
+                child: alarmProvider.alarms.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'No Alarm',
+                          style: TextStyle(
+                            color: CupertinoColors.systemGrey,
+                            fontSize: 24,
                           ),
-                        )
-                      : ListView.builder(
-              itemCount: alarmProvider.alarms.length,
-              itemBuilder: (context, index) {
-                final alarm = alarmProvider.alarms[index];
-                return AlarmListItem(
-                  alarm: alarm,
-                  isEditMode: _isEditMode,
-                  onTap: () {
-                    if (!_isEditMode) {
-                      showCupertinoSheet<void>(
-                        context: context,
-                        useNestedNavigation: true,
-                        builder: (BuildContext context) => EditAlarmScreen(alarm: alarm),
-                );
-                    }
-                  },
-                  onToggle: () {
-                    alarmProvider.toggleAlarm(alarm.id);
-                  },
-                  onDelete: () {
-                    alarmProvider.deleteAlarm(alarm.id);
-                  },
-                );
-              },
-            ),
-                ),
-              ],
-            );
-          },
-        ),
+                        ),
+                      )
+                    : ListView.builder(
+            itemCount: alarmProvider.alarms.length,
+            itemBuilder: (context, index) {
+              final alarm = alarmProvider.alarms[index];
+              return AlarmListItem(
+                alarm: alarm,
+                isEditMode: _isEditMode,
+                onTap: () {
+                  if (!_isEditMode) {
+                    showCupertinoSheet<void>(
+                      context: context,
+                      useNestedNavigation: true,
+                      builder: (BuildContext context) => EditAlarmScreen(alarm: alarm),
+              );
+                  }
+                },
+                onToggle: () {
+                  alarmProvider.toggleAlarm(alarm.id);
+                },
+                onDelete: () {
+                  alarmProvider.deleteAlarm(alarm.id);
+                },
+              );
+            },
+          ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

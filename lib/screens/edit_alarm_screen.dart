@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
@@ -171,7 +173,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                     _buildLabelItem(),
                     _buildSettingItem(
                       'Sound',
-                      _sound,
+                      _getSoundDisplayName(),
                       () => _showSoundPage(),
                       valueColor: CupertinoColors.white,
                     ),
@@ -271,7 +273,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
         children: [
           for (int i = 0; i < children.length; i++) ...[
             children[i],
-            if (i < children.length - 1)
+            if (i < children.length - 2)
               Divider(
                 color: const Color(0xFF3C3C3E),
                 height: 0.5,
@@ -296,24 +298,33 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
             title,
             style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
           ),
-          Row(
-            children: [
-              Text(
-                value,
-                style: TextStyle(
-                  color: valueColor,
-                  fontSize: 17,
+          const SizedBox(width: 16), // Add minimum gap
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 150),
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: valueColor,
+                      fontSize: 17,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              if (showArrow) ...[
-                const SizedBox(width: 8),
-                const Icon(
-                  CupertinoIcons.forward,
-                  color: CupertinoColors.systemGrey3,
-                  size: 20,
-                ),
+                if (showArrow) ...[
+                  const SizedBox(width: 8),
+                  const Icon(
+                    CupertinoIcons.forward,
+                    color: CupertinoColors.systemGrey3,
+                    size: 20,
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ],
       ),
@@ -322,7 +333,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   Widget _buildSwitchItem(String title, bool value, Function(bool) onChanged) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -450,16 +461,28 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   }
 
   void _showSoundPage() async {
-    final result = await Navigator.of(context).push<String>(
+    final result = await Navigator.of(context).push<Map<String, dynamic>>(
       CupertinoPageRoute(
-        builder: (context) => SoundSelector(currentSound: _sound),
+        builder: (context) => SoundSelector(currentSound: _sound, currentVibrate: _vibrate),
       ),
     );
     if (result != null) {
       setState(() {
-        _sound = result;
+        _sound = result['sound'];
+        _vibrate = result['vibrate'];
       });
     }
+  }
+
+  String _getSoundDisplayName() {
+    return _truncateSoundName(path.basename(_sound));
+  }
+
+  String _truncateSoundName(String soundName, {int maxLength = 25}) {
+    if (soundName.length <= maxLength) {
+      return soundName;
+    }
+    return '${soundName.substring(0, maxLength - 3)}...';
   }
 
   void _showSnoozeDurationDialog() {
@@ -664,10 +687,12 @@ class _RepeatSelectorState extends State<RepeatSelector> {
 
 class SoundSelector extends StatefulWidget {
   final String currentSound;
+  final bool currentVibrate;
 
   const SoundSelector({
     super.key,
     required this.currentSound,
+    required this.currentVibrate,
   });
 
   @override
@@ -676,8 +701,10 @@ class SoundSelector extends StatefulWidget {
 
 class _SoundSelectorState extends State<SoundSelector> {
   late String _selectedSound;
+  late bool _vibrate;
 
   final List<String> _sounds = [
+    'None',
     'Radar',
     'Apex',
     'Beacon',
@@ -712,31 +739,33 @@ class _SoundSelectorState extends State<SoundSelector> {
   void initState() {
     super.initState();
     _selectedSound = widget.currentSound;
+    _vibrate = widget.currentVibrate;
   }
 
   void _pickFromDevice() async {
-    // Note: This requires file_picker package
-    // For now, placeholder
-    // FilePickerResult? result = await FilePicker.platform.pickFiles(
-    //   type: FileType.audio,
-    // );
-    // if (result != null) {
-    //   String path = result.files.single.path!;
-    //   setState(() {
-    //     _selectedSound = path; // or extract name
-    //   });
-    // }
-    // For demo, just set a placeholder
-    setState(() {
-      _selectedSound = 'Custom Sound';
-    });
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['mp3', 'wav', 'm4a', 'aac', 'flac', 'ogg', 'aiff'],
+    );
+    if (result != null) {
+      setState(() {
+        _selectedSound = result.files.single.path!;
+      });
+    }
+  }
+
+  String _truncateSoundName(String soundName, {int maxLength = 25}) {
+    if (soundName.length <= maxLength) {
+      return soundName;
+    }
+    return '${soundName.substring(0, maxLength - 3)}...';
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pop(_selectedSound);
+        Navigator.of(context).pop({'sound': _selectedSound, 'vibrate': _vibrate});
         return false;
       },
       child: CupertinoPageScaffold(
@@ -747,15 +776,13 @@ class _SoundSelectorState extends State<SoundSelector> {
               const SizedBox(height: 5),
               CustomNavBar(
                 backgroundColor: const Color(0xFF1C1C1E),
-                leading: NavTextIconButton(
+                leading: NavIconButton(
                   icon: CupertinoIcons.chevron_left,
-                  text: 'Back',
                   iconColor: CupertinoColors.white,
-                  textColor: CupertinoColors.white,
-                  onPressed: () => Navigator.of(context).pop(_selectedSound),
+                  onPressed: () => Navigator.of(context).pop({'sound': _selectedSound, 'vibrate': _vibrate}),
                 ),
                 middle: const Text(
-                  'Sound',
+                  'Ringtone',
                   style: TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
@@ -763,70 +790,214 @@ class _SoundSelectorState extends State<SoundSelector> {
                   ),
                 ),
               ),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: _sounds.length + 1, // +1 for add button
-                  separatorBuilder: (context, index) => Divider(
-                    color: const Color(0xFF3C3C3E),
-                    height: 0.5,
-                    indent: 16,
-                    endIndent: 16,
+              // Vibrate toggle
+              Container(
+                margin: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2C2C2E),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Vibrate',
+                        style: TextStyle(color: CupertinoColors.white, fontSize: 17),
+                      ),
+                      Transform.scale(
+                        scale: 0.8,
+                        child: CupertinoSwitch(
+                          value: _vibrate,
+                          activeColor: CupertinoColors.systemGreen,
+                          onChanged: (value) => setState(() => _vibrate = value),
+                        ),
+                      ),
+                    ],
                   ),
-                  itemBuilder: (context, index) {
-                    if (index == _sounds.length) {
-                      // Add from device button
-                      return CupertinoButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        onPressed: _pickFromDevice,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CupertinoIcons.add,
-                              color: CupertinoColors.systemOrange,
-                              size: 24,
-                            ),
-                            const SizedBox(width: 8),
-                            const Text(
-                              'Add from Device',
-                              style: TextStyle(
-                                color: CupertinoColors.systemOrange,
-                                fontSize: 17,
+                ),
+              ),
+              // Section 2: Add from device
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                    child: Text(
+                      'SONGS',
+                      style: TextStyle(
+                        color: CupertinoColors.systemGrey,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2C2C2E),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: _sounds.contains(_selectedSound) ? 1 : 2,
+                      separatorBuilder: (context, index) => Divider(
+                        color: const Color(0xFF3C3C3E),
+                        height: 0.5,
+                        indent: 48,
+                        endIndent: 16,
+                      ),
+                      itemBuilder: (context, index) {
+                        if (!_sounds.contains(_selectedSound) && index == 0) {
+                          // Selected custom song
+                          return CupertinoButton(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            pressedOpacity: 1.0,
+                            onPressed: () {},
+                            child: SizedBox(
+                              //height: 44,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 24,
+                                    child: Icon(
+                                      CupertinoIcons.check_mark,
+                                      color: CupertinoColors.systemOrange,
+                                      size: 24,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Container(
+                                      constraints: const BoxConstraints(maxWidth: 200),
+                                      child: Text(
+                                        _truncateSoundName(path.basename(_selectedSound)),
+                                        style: const TextStyle(
+                                          color: CupertinoColors.white,
+                                          fontSize: 17,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      );
-                    }
-                    final sound = _sounds[index];
-                    final isSelected = _selectedSound == sound;
-                    return CupertinoButton(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      onPressed: () {
-                        setState(() {
-                          _selectedSound = sound;
-                        });
+                          );
+                        } else {
+                          // Pick a song
+                          return CupertinoButton(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            pressedOpacity: 1.0,
+                            onPressed: _pickFromDevice,
+                            child: SizedBox(
+                              //height: 44,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(width: 32),
+                                  const Text(
+                                    'Pick a song',
+                                    style: TextStyle(
+                                      color: CupertinoColors.white,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Icon(
+                                    CupertinoIcons.chevron_right,
+                                    color: CupertinoColors.systemGrey3,
+                                    size: 17,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            sound,
-                            style: const TextStyle(
-                              color: CupertinoColors.white,
-                              fontSize: 17,
-                            ),
-                          ),
-                          if (isSelected)
-                            const Icon(
-                              CupertinoIcons.check_mark,
-                              color: CupertinoColors.systemOrange,
-                              size: 24,
-                            ),
-                        ],
+                    ),
+                  ),
+                ],
+              ),
+              // Section 3: List of sounds
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                      child: Text(
+                        'RINGTONES',
+                        style: TextStyle(
+                          color: CupertinoColors.systemGrey,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    );
-                  },
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF2C2C2E),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: ListView.separated(
+                            itemCount: _sounds.length,
+                            separatorBuilder: (context, index) => Divider(
+                              color: const Color(0xFF3C3C3E),
+                              height: 0.5,
+                              indent: index == 0 ? 0 : 48, // No indent for divider under 'None'
+                              endIndent: index == 0 ? 0 : 16, // No endIndent for divider under 'None'
+                            ),
+                            itemBuilder: (context, index) {
+                              final sound = _sounds[index];
+                              final isSelected = _selectedSound == sound;
+                              return CupertinoButton(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                pressedOpacity: 1.0,
+                                onPressed: () {
+                                  setState(() {
+                                    _selectedSound = sound;
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 24,
+                                      child: isSelected
+                                          ? const Icon(
+                                              CupertinoIcons.check_mark,
+                                              color: CupertinoColors.systemOrange,
+                                              size: 18,
+                                            )
+                                          : null,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Container(
+                                        constraints: const BoxConstraints(maxWidth: 200),
+                                        child: Text(
+                                          _truncateSoundName(sound),
+                                          style: const TextStyle(
+                                            color: CupertinoColors.white,
+                                            fontSize: 17,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
