@@ -24,6 +24,7 @@ dependencies:
   motor: ^1.0.0-dev.3
   modal_bottom_sheet: ^3.0.0
   file_picker: ^10.3.8
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:

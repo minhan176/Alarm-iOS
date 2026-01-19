@@ -44,6 +44,24 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
   Future<void> _startAlarm() async {
     try {
+      // Set audio context to use alarm stream instead of media stream
+      final AudioContext audioContext = AudioContext(
+        android: AudioContextAndroid(
+          usageType: AndroidUsageType.alarm,
+          audioFocus: AndroidAudioFocus.gainTransientExclusive,
+          audioMode: AndroidAudioMode.normal,
+          contentType: AndroidContentType.music,
+        ),
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.playback,
+          options: {
+            AVAudioSessionOptions.mixWithOthers,
+            AVAudioSessionOptions.duckOthers,
+          },
+        ),
+      );
+      await _audioPlayer.setAudioContext(audioContext);
+
       // Start vibration pattern only if enabled
       if (widget.alarm.vibrate && await Vibration.hasVibrator()) {
         // Vibrate in pattern: wait 1000ms, vibrate 500ms, repeat (less intense)
@@ -151,160 +169,193 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false, // Prevent back button
-      child: Scaffold(
+      child: CupertinoPageScaffold(
         backgroundColor: CupertinoColors.black,
-        body: SafeArea(
-          child: Column(
+        child: SafeArea(
+          child: Stack(
             children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.alarm.getFormattedTime(),
-                      style: const TextStyle(
-                        color: CupertinoColors.systemGrey,
-                        fontSize: 17,
-                      ),
-                    ),
-                    const Icon(
-                      CupertinoIcons.bell_fill,
-                      color: CupertinoColors.systemOrange,
-                      size: 24,
-                    ),
-                  ],
+              // Background gradient
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF1C1C1E),
+                      Color(0xFF000000),
+                    ],
+                  ),
                 ),
               ),
 
-              const Spacer(),
+              Column(
+                children: [
+                  // Header with time and date
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _getCurrentTime(),
+                              style: const TextStyle(
+                                color: CupertinoColors.white,
+                                fontSize: 48,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            Text(
+                              _getCurrentDate(),
+                              style: const TextStyle(
+                                color: CupertinoColors.systemGrey,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            CupertinoIcons.bell_fill,
+                            color: CupertinoColors.systemOrange,
+                            size: 28,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-              // Animated alarm icon
-              Center(
-                child: AnimatedBuilder(
-                  animation: _pulseController,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: 1.0 + (_pulseController.value * 0.3),
-                      child: AnimatedBuilder(
-                        animation: _rotationController,
-                        builder: (context, child) {
-                          return Transform.rotate(
-                            angle: _rotationController.value * 0.5,
-                            child: Container(
-                              width: 200,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                color: CupertinoColors.systemOrange.withOpacity(
-                                  0.2,
+                  const Spacer(),
+
+                  // Alarm label
+                  if (widget.alarm.label.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        widget.alarm.label,
+                        style: const TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+
+                  const SizedBox(height: 40),
+
+                  // Animated alarm icon
+                  Center(
+                    child: AnimatedBuilder(
+                      animation: _pulseController,
+                      builder: (context, child) {
+                        return Transform.scale(
+                          scale: 1.0 + (_pulseController.value * 0.2),
+                          child: AnimatedBuilder(
+                            animation: _rotationController,
+                            builder: (context, child) {
+                              return Transform.rotate(
+                                angle: _rotationController.value * 0.3,
+                                child: Container(
+                                  width: 160,
+                                  height: 160,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: RadialGradient(
+                                      colors: [
+                                        CupertinoColors.systemOrange.withOpacity(0.3),
+                                        CupertinoColors.systemOrange.withOpacity(0.1),
+                                        Colors.transparent,
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    CupertinoIcons.alarm_fill,
+                                    color: CupertinoColors.systemOrange,
+                                    size: 80,
+                                  ),
                                 ),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                CupertinoIcons.alarm,
-                                size: 120,
-                                color: CupertinoColors.systemOrange,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 40),
-
-              // Alarm label
-              Text(
-                widget.alarm.label.isEmpty ? 'Alarm' : widget.alarm.label,
-                style: const TextStyle(
-                  color: CupertinoColors.white,
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 10),
-
-              // Current time
-              Text(
-                _getCurrentTime(),
-                style: const TextStyle(
-                  color: CupertinoColors.systemGrey,
-                  fontSize: 17,
-                ),
-              ),
-
-              const Spacer(),
-
-              // Action buttons
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Row(
-                  children: [
-                    // Snooze button
-                    Expanded(
-                      child: CupertinoButton(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        color: CupertinoColors.systemGrey.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(16),
-                        onPressed: _snoozeAlarm,
-                        child: const Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              CupertinoIcons.alarm_fill,
-                              size: 32,
-                              color: CupertinoColors.white,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Snooze',
-                              style: TextStyle(
-                                color: CupertinoColors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
+                  ),
 
-                    const SizedBox(width: 20),
+                  const Spacer(),
 
-                    // Dismiss button
-                    Expanded(
-                      child: ActionButton(
-                        backgroundColor: CupertinoColors.systemOrange,
-                        onPressed: _dismissAlarm,
-                        child: const Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              CupertinoIcons.check_mark_circled_solid,
-                              size: 32,
-                              color: CupertinoColors.white,
+                  // Action buttons
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    child: Row(
+                      children: [
+                        // Snooze button
+                        Expanded(
+                          child: CupertinoButton(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            color: CupertinoColors.systemGrey.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(20),
+                            onPressed: _snoozeAlarm,
+                            child: const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.alarm,
+                                  size: 32,
+                                  color: CupertinoColors.white,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'Snooze',
+                                  style: TextStyle(
+                                    color: CupertinoColors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Dismiss',
-                              style: TextStyle(
-                                color: CupertinoColors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+
+                        const SizedBox(width: 20),
+
+                        // Dismiss button
+                        Expanded(
+                          child: CupertinoButton(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            color: CupertinoColors.systemOrange,
+                            borderRadius: BorderRadius.circular(20),
+                            onPressed: _dismissAlarm,
+                            child: const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.check_mark_circled_solid,
+                                  size: 32,
+                                  color: CupertinoColors.white,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  'Dismiss',
+                                  style: TextStyle(
+                                    color: CupertinoColors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -321,7 +372,13 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
         ? now.hour - 12
         : now.hour;
     final minute = now.minute.toString().padLeft(2, '0');
-    final period = now.hour >= 12 ? 'PM' : 'AM';
-    return '$hour:$minute $period';
+    return '$hour:$minute';
+  }
+
+  String _getCurrentDate() {
+    final now = DateTime.now();
+    final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    final months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return '${days[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}';
   }
 }

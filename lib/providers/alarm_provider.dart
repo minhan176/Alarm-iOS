@@ -30,6 +30,14 @@ class AlarmProvider with ChangeNotifier {
           _alarms.where((alarm) => alarm.isEnabled).toList(),
         );
 
+        // Update system alarm icon
+        final nextAlarm = getNextAlarm();
+        if (nextAlarm != null) {
+          await AlarmService.showSystemAlarmIcon(nextAlarm);
+        } else {
+          await AlarmService.hideSystemAlarmIcon();
+        }
+
         notifyListeners();
       }
     } catch (e) {
@@ -70,6 +78,14 @@ class AlarmProvider with ChangeNotifier {
       await AlarmService.scheduleAlarm(alarm);
     }
 
+    // Update system alarm icon
+    final nextAlarm = getNextAlarm();
+    if (nextAlarm != null) {
+      await AlarmService.showSystemAlarmIcon(nextAlarm);
+    } else {
+      await AlarmService.hideSystemAlarmIcon();
+    }
+
     notifyListeners();
   }
 
@@ -89,6 +105,14 @@ class AlarmProvider with ChangeNotifier {
         await AlarmService.scheduleAlarm(updatedAlarm);
       }
 
+      // Update system alarm icon
+      final nextAlarm = getNextAlarm();
+      if (nextAlarm != null) {
+        await AlarmService.showSystemAlarmIcon(nextAlarm);
+      } else {
+        await AlarmService.hideSystemAlarmIcon();
+      }
+
       notifyListeners();
     }
   }
@@ -100,6 +124,15 @@ class AlarmProvider with ChangeNotifier {
 
     _alarms.removeWhere((alarm) => alarm.id == id);
     await _saveAlarms();
+
+    // Update system alarm icon
+    final nextAlarm = getNextAlarm();
+    if (nextAlarm != null) {
+      await AlarmService.showSystemAlarmIcon(nextAlarm);
+    } else {
+      await AlarmService.hideSystemAlarmIcon();
+    }
+
     notifyListeners();
   }
 
@@ -116,6 +149,14 @@ class AlarmProvider with ChangeNotifier {
         await AlarmService.scheduleAlarm(_alarms[index]);
       } else {
         await AlarmService.cancelAlarm(id);
+      }
+
+      // Update system alarm icon
+      final nextAlarm = getNextAlarm();
+      if (nextAlarm != null) {
+        await AlarmService.showSystemAlarmIcon(nextAlarm);
+      } else {
+        await AlarmService.hideSystemAlarmIcon();
       }
 
       notifyListeners();

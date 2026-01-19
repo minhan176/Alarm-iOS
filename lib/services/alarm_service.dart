@@ -1,10 +1,15 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:ui';
 import '../models/alarm_model.dart';
+import '../screens/alarm_ring_screen.dart';
+import '../main.dart'; // Import for navigatorKey
 
 // Top-level callback function for alarm manager (must be outside class)
 @pragma('vm:entry-point')
@@ -27,18 +32,22 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
     print('One-time alarm triggered, will be disabled after dismiss');
   }
 
+  // Save pending alarm to SharedPreferences so it persists across app restarts
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('pending_alarm', json.encode(alarm.toJson()));
+
   // Show notification with full screen intent
   await AlarmService.showAlarmNotification(alarm);
 
-  // Trigger alarm callback if available
-  if (AlarmService.onAlarmRing != null) {
-    AlarmService.onAlarmRing!(alarm);
-  }
+  // Try to show alarm screen immediately if app is running
+  AlarmService._showAlarmScreen(alarm);
 }
 
 class AlarmService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
 
   static bool _isInitialized = false;
   static Function(AlarmModel)? onAlarmRing;
@@ -71,12 +80,38 @@ class AlarmService {
     await _notificationsPlugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
+      onDidReceiveBackgroundNotificationResponse: _onNotificationAction,
     );
+
+    // Create notification channel for Android
+    await _createNotificationChannel();
 
     // Request permissions for Android 13+
     await _requestPermissions();
 
     _isInitialized = true;
+  }
+
+  // Create notification channel
+  static Future<void> _createNotificationChannel() async {
+    const androidChannel = AndroidNotificationChannel(
+      'alarm_channel',
+      'Alarm Notifications',
+      description: 'Notifications for alarms',
+      importance: Importance.max,
+      playSound: true,
+      enableVibration: true,
+      showBadge: true,
+      enableLights: true,
+      ledColor: const Color(0xFFFF9500), // Orange color
+    );
+
+    final androidPlugin = _notificationsPlugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+
+    if (androidPlugin != null) {
+      await androidPlugin.createNotificationChannel(androidChannel);
+    }
   }
 
   // Request notification permissions
@@ -125,15 +160,155 @@ class AlarmService {
             orElse: () => alarms.first,
           );
 
-          // Trigger alarm through callback
-          if (onAlarmRing != null) {
-            onAlarmRing!(alarm);
-          }
+          // Show alarm screen
+          _showAlarmScreen(alarm);
         }
       } catch (e) {
         print('Error loading alarm: $e');
       }
     }
+  }
+
+  // Handle notification action (background)
+  static void _onNotificationAction(NotificationResponse response) {
+    print('Notification action: ${response.actionId} for ${response.payload}');
+
+    if (response.payload != null) {
+      if (response.actionId == 'dismiss') {
+        // Handle dismiss action
+        _dismissAlarmFromNotification(response.payload!);
+      } else if (response.actionId == 'snooze') {
+        // Handle snooze action
+        _snoozeAlarmFromNotification(response.payload!);
+      } else if (response.actionId == null || response.actionId!.isEmpty) {
+        // Notification was displayed (full screen intent), open ring screen directly
+        _openRingScreenFromNotification(response.payload!);
+      }
+    }
+  }
+
+  // Open ring screen from notification (when full screen intent triggers)
+  static void _openRingScreenFromNotification(String alarmId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final alarmsJson = prefs.getString('alarms');
+
+      if (alarmsJson != null) {
+        final List<dynamic> decoded = json.decode(alarmsJson);
+        final alarms = decoded
+            .map((item) => AlarmModel.fromJson(item))
+            .toList();
+
+        final alarm = alarms.firstWhere((a) => a.id == alarmId);
+
+        // Open ring screen directly
+        _showAlarmScreen(alarm);
+      }
+    } catch (e) {
+      print('Error opening ring screen from notification: $e');
+    }
+  }
+
+  // Dismiss alarm from notification action
+  static void _dismissAlarmFromNotification(String alarmId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final alarmsJson = prefs.getString('alarms');
+
+      if (alarmsJson != null) {
+        final List<dynamic> decoded = json.decode(alarmsJson);
+        final alarms = decoded
+            .map((item) => AlarmModel.fromJson(item))
+            .toList();
+
+        final alarm = alarms.firstWhere((a) => a.id == alarmId);
+
+        // Cancel the alarm
+        await AndroidAlarmManager.cancel(alarm.id.hashCode);
+
+        // For one-time alarms, disable them
+        if (alarm.repeatDays.isEmpty) {
+          // Update alarm to disabled in storage
+          try {
+            final prefs = await SharedPreferences.getInstance();
+            final alarmsJson = prefs.getString('alarms');
+
+            if (alarmsJson != null) {
+              final List<dynamic> decoded = json.decode(alarmsJson);
+              final alarms = decoded
+                  .map((item) => AlarmModel.fromJson(item))
+                  .toList();
+
+              // Find and update the alarm
+              final index = alarms.indexWhere((a) => a.id == alarmId);
+              if (index != -1) {
+                alarms[index] = alarms[index].copyWith(isEnabled: false);
+
+                // Save back to storage
+                final String encoded = json.encode(
+                  alarms.map((a) => a.toJson()).toList(),
+                );
+                await prefs.setString('alarms', encoded);
+              }
+            }
+          } catch (e) {
+            print('Error disabling one-time alarm: $e');
+          }
+        }
+
+        print('Alarm dismissed from notification: $alarmId');
+      }
+    } catch (e) {
+      print('Error dismissing alarm from notification: $e');
+    }
+  }
+
+  // Snooze alarm from notification action
+  static void _snoozeAlarmFromNotification(String alarmId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final alarmsJson = prefs.getString('alarms');
+
+      if (alarmsJson != null) {
+        final List<dynamic> decoded = json.decode(alarmsJson);
+        final alarms = decoded
+            .map((item) => AlarmModel.fromJson(item))
+            .toList();
+
+        final alarm = alarms.firstWhere((a) => a.id == alarmId);
+
+        // Cancel current alarm
+        await AndroidAlarmManager.cancel(alarm.id.hashCode);
+
+        // Schedule snooze (5 minutes later)
+        final snoozeTime = DateTime.now().add(const Duration(minutes: 5));
+        await AndroidAlarmManager.oneShotAt(
+          snoozeTime,
+          alarm.id.hashCode,
+          alarmCallback,
+          exact: true,
+          wakeup: true,
+          rescheduleOnReboot: true,
+          allowWhileIdle: true,
+          params: alarm.toJson(),
+        );
+
+        print('Alarm snoozed for 5 minutes: $alarmId');
+      }
+    } catch (e) {
+      print('Error snoozing alarm from notification: $e');
+    }
+  }
+
+  // Show alarm screen (can be called from notification tap or callback)
+  static void _showAlarmScreen(AlarmModel alarm) {
+    // Use the navigator key from main.dart
+    navigatorKey.currentState?.push(
+      CupertinoPageRoute(
+        builder: (context) => AlarmRingScreen(alarm: alarm),
+        fullscreenDialog: true,
+      ),
+    );
   }
 
   // Schedule an alarm
@@ -279,7 +454,7 @@ class AlarmService {
   // Show alarm notification
   static Future<void> showAlarmNotification(AlarmModel alarm) async {
     final androidDetails = AndroidNotificationDetails(
-      'alarm_channel',
+      'alarm_channel', // Use the channel we created
       'Alarm Notifications',
       channelDescription: 'Notifications for alarms',
       importance: Importance.max,
@@ -296,6 +471,8 @@ class AlarmService {
       autoCancel: false,
       audioAttributesUsage: AudioAttributesUsage.alarm,
       channelShowBadge: true,
+      showWhen: false,
+      timeoutAfter: null,
       actions: <AndroidNotificationAction>[
         AndroidNotificationAction(
           'dismiss',
@@ -348,6 +525,64 @@ class AlarmService {
       'This is a test alarm notification',
       notificationDetails,
     );
+  }
+
+  // Show system alarm icon on status bar
+  static Future<void> showSystemAlarmIcon(AlarmModel alarm) async {
+    try {
+      final scheduledTime = _getNextAlarmTime(alarm);
+      if (scheduledTime != null) {
+        await _alarmChannel.invokeMethod('showAlarmIcon', {
+          'alarmId': alarm.id.hashCode,
+          'timestamp': scheduledTime.millisecondsSinceEpoch,
+          'label': alarm.label.isEmpty ? 'Alarm' : alarm.label,
+        });
+      }
+    } catch (e) {
+      print('Error showing system alarm icon: $e');
+    }
+  }
+
+  // Hide system alarm icon from status bar
+  static Future<void> hideSystemAlarmIcon() async {
+    try {
+      await _alarmChannel.invokeMethod('hideAlarmIcon');
+    } catch (e) {
+      print('Error hiding system alarm icon: $e');
+    }
+  }
+
+  // Get next alarm time for system icon
+  static DateTime? _getNextAlarmTime(AlarmModel alarm) {
+    final now = DateTime.now();
+    var scheduledTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      alarm.time.hour,
+      alarm.time.minute,
+    );
+
+    // If the time has passed today, schedule for tomorrow
+    if (scheduledTime.isBefore(now)) {
+      scheduledTime = scheduledTime.add(const Duration(days: 1));
+    }
+
+    // For repeating alarms, find the next valid day
+    if (alarm.repeatDays.isNotEmpty) {
+      int daysToAdd = 0;
+      while (daysToAdd < 7) {
+        final checkTime = scheduledTime.add(Duration(days: daysToAdd));
+        final weekday = checkTime.weekday;
+        if (alarm.repeatDays.contains(weekday)) {
+          scheduledTime = checkTime;
+          break;
+        }
+        daysToAdd++;
+      }
+    }
+
+    return scheduledTime;
   }
 
   // Reschedule all alarms (useful after reboot)
