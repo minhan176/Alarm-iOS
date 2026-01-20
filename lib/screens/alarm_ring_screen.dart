@@ -10,8 +10,9 @@ import '../widgets/custom_buttons.dart';
 
 class AlarmRingScreen extends StatefulWidget {
   final AlarmModel alarm;
+  final VoidCallback? onDismiss;
 
-  const AlarmRingScreen({super.key, required this.alarm});
+  const AlarmRingScreen({super.key, required this.alarm, this.onDismiss});
 
   @override
   State<AlarmRingScreen> createState() => _AlarmRingScreenState();
@@ -120,7 +121,10 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     // Cancel the notification and handle one-time alarms
     await AlarmService.dismissAlarm(widget.alarm);
 
-    // Reload alarms to update UI
+    // Call onDismiss callback if provided (for AlarmRingActivity)
+    widget.onDismiss?.call();
+
+    // Reload alarms to update UI and navigate back
     if (mounted) {
       Provider.of<AlarmProvider>(context, listen: false).loadAlarms();
       Navigator.of(context).pop();

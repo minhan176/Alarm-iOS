@@ -32,15 +32,62 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
     print('One-time alarm triggered, will be disabled after dismiss');
   }
 
-  // Save pending alarm to SharedPreferences so it persists across app restarts
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.setString('pending_alarm', json.encode(alarm.toJson()));
+  // Initialize notifications plugin for isolate
+  final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
+  
+  // Show notification (this will trigger the ring screen via full screen intent)
+  final androidDetails = AndroidNotificationDetails(
+    'alarm_channel',
+    'Alarm Notifications',
+    channelDescription: 'Notifications for alarms',
+    importance: Importance.max,
+    priority: Priority.max,
+    playSound: true,
+    enableVibration: alarm.vibrate,
+    vibrationPattern: alarm.vibrate
+        ? Int64List.fromList([0, 1000, 500, 1000])
+        : null,
+    fullScreenIntent: true,
+    category: AndroidNotificationCategory.alarm,
+    visibility: NotificationVisibility.public,
+    ongoing: true,
+    autoCancel: false,
+    audioAttributesUsage: AudioAttributesUsage.alarm,
+    channelShowBadge: true,
+    showWhen: false,
+    timeoutAfter: null,
+    actions: <AndroidNotificationAction>[
+      AndroidNotificationAction(
+        'dismiss',
+        'Dismiss',
+        showsUserInterface: true,
+        cancelNotification: true,
+      ),
+      AndroidNotificationAction('snooze', 'Snooze', showsUserInterface: true),
+    ],
+  );
 
-  // Show notification with full screen intent
-  await AlarmService.showAlarmNotification(alarm);
+  const iosDetails = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+    interruptionLevel: InterruptionLevel.critical,
+  );
 
-  // Try to show alarm screen immediately if app is running
-  AlarmService._showAlarmScreen(alarm);
+  final notificationDetails = NotificationDetails(
+    android: androidDetails,
+    iOS: iosDetails,
+  );
+
+  await notificationsPlugin.show(
+    alarm.id.hashCode,
+    alarm.label.isEmpty ? 'Alarm' : alarm.label,
+    alarm.getFormattedTime(),
+    notificationDetails,
+    payload: alarm.id,
+  );
+  
+  print('Alarm notification shown for: ${alarm.label}');
 }
 
 class AlarmService {
@@ -48,6 +95,7 @@ class AlarmService {
       FlutterLocalNotificationsPlugin();
 
   static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
+  static const MethodChannel _navigationChannel = MethodChannel('com.example.alarm/navigation');
 
   static bool _isInitialized = false;
   static Function(AlarmModel)? onAlarmRing;
@@ -89,7 +137,25 @@ class AlarmService {
     // Request permissions for Android 13+
     await _requestPermissions();
 
+    // Set up navigation method channel handler
+    _navigationChannel.setMethodCallHandler(_handleNavigationMethodCall);
+
     _isInitialized = true;
+  }
+
+  // Handle navigation method calls from Android
+  static Future<void> _handleNavigationMethodCall(MethodCall call) async {
+    if (call.method == 'navigateToRingScreen') {
+      final alarmJson = call.arguments as String?;
+      if (alarmJson != null) {
+        try {
+          final alarm = AlarmModel.fromJson(json.decode(alarmJson));
+          _showAlarmScreen(alarm);
+        } catch (e) {
+          print('Error parsing alarm from navigation: $e');
+        }
+      }
+    }
   }
 
   // Create notification channel
@@ -353,20 +419,14 @@ class AlarmService {
     final alarmId = alarm.id.hashCode;
 
     if (alarm.repeatDays.isEmpty) {
-      // One-time alarm
-      await AndroidAlarmManager.oneShotAt(
-        scheduledTime,
-        alarmId,
-        alarmCallback,
-        exact: true,
-        wakeup: true,
-        rescheduleOnReboot: true,
-        allowWhileIdle: true,
-        params: alarm.toJson(),
-      );
+      // One-time alarm - use AlarmPlugin for direct activity start
+      await _alarmChannel.invokeMethod('scheduleAlarm', {
+        'alarm': json.encode(alarm.toJson()),
+        'alarmTime': scheduledTime.millisecondsSinceEpoch,
+      });
       print('One-time alarm scheduled for: $scheduledTime');
     } else {
-      // Repeating alarm - schedule daily and check repeat days in callback
+      // Repeating alarm - still use AndroidAlarmManager for complex repeat logic
       await AndroidAlarmManager.periodic(
         const Duration(days: 1),
         alarmId,
@@ -402,6 +462,14 @@ class AlarmService {
     final id = alarmId.hashCode;
     await AndroidAlarmManager.cancel(id);
     await _notificationsPlugin.cancel(id);
+    
+    // Also cancel through AlarmPlugin for one-time alarms
+    try {
+      await _alarmChannel.invokeMethod('cancelAlarm', {'alarmId': alarmId});
+    } catch (e) {
+      // Ignore if method not available
+    }
+    
     print('Alarm cancelled: $alarmId');
   }
 

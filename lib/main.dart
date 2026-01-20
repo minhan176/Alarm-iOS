@@ -27,20 +27,6 @@ AlarmModel? _pendingAlarm;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Check for pending alarm from SharedPreferences (when app was killed)
-  final prefs = await SharedPreferences.getInstance();
-  final pendingAlarmJson = prefs.getString('pending_alarm');
-  if (pendingAlarmJson != null) {
-    try {
-      final alarm = AlarmModel.fromJson(json.decode(pendingAlarmJson));
-      _pendingAlarm = alarm;
-      // Clear the pending alarm from storage
-      await prefs.remove('pending_alarm');
-    } catch (e) {
-      print('Error parsing pending alarm: $e');
-    }
-  }
-
   // Initialize alarm service
   await AlarmService.initialize();
 
@@ -82,6 +68,32 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     _checkPermissionsSetup();
+    
+    // Set up method channel to listen for navigation calls from Android
+    const platform = MethodChannel('com.example.alarm/navigation');
+    platform.setMethodCallHandler((call) async {
+      print('DEBUG: Flutter received method call: ${call.method}');
+      switch (call.method) {
+        case 'navigateToRingScreen':
+          final alarmJson = call.arguments as String?;
+          print('DEBUG: navigateToRingScreen called with: $alarmJson');
+          if (alarmJson != null) {
+            try {
+              final alarm = AlarmModel.fromJson(json.decode(alarmJson));
+              print('DEBUG: Parsed alarm: ${alarm.label}');
+              _showAlarmScreen(alarm);
+            } catch (e) {
+              print('Error parsing alarm from Android: $e');
+            }
+          }
+          break;
+        default:
+          throw PlatformException(
+            code: 'Unimplemented',
+            details: 'Method ${call.method} not implemented',
+          );
+      }
+    });
   }
 
   Future<void> _checkPermissionsSetup() async {
@@ -144,6 +156,7 @@ class _MainAppState extends State<MainApp> {
                   body: const MainTabScreen(),
                 ),
               ),
+          '/alarm_ring': (context) => const AlarmRingScreenWidget(),
         },
         debugShowCheckedModeBanner: false,
       ),
@@ -259,4 +272,88 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
         ],
       );
     }
+}
+
+// Widget for alarm ring screen that loads data from method channel
+class AlarmRingScreenWidget extends StatefulWidget {
+  const AlarmRingScreenWidget({super.key});
+
+  @override
+  State<AlarmRingScreenWidget> createState() => _AlarmRingScreenWidgetState();
+}
+
+class _AlarmRingScreenWidgetState extends State<AlarmRingScreenWidget> {
+  AlarmModel? _alarm;
+  bool _isLoading = true;
+
+  static const platform = MethodChannel('com.example.alarm/ring');
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAlarmData();
+  }
+
+  Future<void> _loadAlarmData() async {
+    try {
+      print('DEBUG: AlarmRingScreenWidget loading alarm data');
+      final String? alarmJson = await platform.invokeMethod('getAlarmData');
+      if (alarmJson != null) {
+        print('DEBUG: Received alarm JSON: $alarmJson');
+        final alarm = AlarmModel.fromJson(json.decode(alarmJson));
+        print('DEBUG: Parsed alarm: ${alarm.label}');
+        setState(() {
+          _alarm = alarm;
+          _isLoading = false;
+        });
+      } else {
+        print('DEBUG: No alarm data received');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('DEBUG: Error loading alarm data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _dismissAlarm() async {
+    try {
+      await platform.invokeMethod('dismissAlarm');
+    } catch (e) {
+      print('DEBUG: Error dismissing alarm: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const CupertinoPageScaffold(
+        backgroundColor: CupertinoColors.black,
+        child: Center(
+          child: CupertinoActivityIndicator(),
+        ),
+      );
+    }
+
+    if (_alarm == null) {
+      return const CupertinoPageScaffold(
+        backgroundColor: CupertinoColors.black,
+        child: Center(
+          child: Text(
+            'No Alarm Data',
+            style: TextStyle(color: CupertinoColors.white),
+          ),
+        ),
+      );
+    }
+
+    return AlarmRingScreen(
+      alarm: _alarm!,
+      onDismiss: _dismissAlarm,
+    );
+  }
 }
