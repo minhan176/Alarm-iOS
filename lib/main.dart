@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:android_intent_plus/android_intent.dart';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'models/alarm_model.dart';
@@ -15,7 +17,6 @@ import 'screens/world_clock_screen.dart';
 import 'screens/stopwatch_screen.dart';
 import 'screens/timer_screen.dart';
 import 'screens/alarm_ring_screen.dart';
-import 'screens/permission_setup_screen.dart';
 import 'services/alarm_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
 
@@ -60,14 +61,16 @@ class MainApp extends StatefulWidget {
   State<MainApp> createState() => _MainAppState();
 }
 
-class _MainAppState extends State<MainApp> {
-  bool _permissionsSetupCompleted = false;
-  bool _isLoading = true;
+class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
+  bool _overlayGranted = false;
+  bool _dialogShown = false;
+  bool _shouldDismissDialog = false;
 
   @override
   void initState() {
     super.initState();
-    _checkPermissionsSetup();
+    WidgetsBinding.instance.addObserver(this);
+    _checkOverlayPermission();
     
     // Set up method channel to listen for navigation calls from Android
     const platform = MethodChannel('com.example.alarm/navigation');
@@ -96,30 +99,86 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
-  Future<void> _checkPermissionsSetup() async {
-    final prefs = await SharedPreferences.getInstance();
-    final setupCompleted = prefs.getBool('permissions_setup_completed') ?? false;
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
-    setState(() {
-      _permissionsSetupCompleted = setupCompleted;
-      _isLoading = false;
-    });
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _dialogShown) {
+      _checkPermissionAgain();
+    }
+  }
+
+  Future<void> _checkOverlayPermission() async {
+    final status = await Permission.systemAlertWindow.status;
+    if (status.isGranted) {
+      setState(() {
+        _overlayGranted = true;
+      });
+    } else {
+      // Dialog will be shown in build
+    }
+  }
+
+  Future<void> _checkPermissionAgain() async {
+    final status = await Permission.systemAlertWindow.status;
+    if (status.isGranted) {
+      setState(() {
+        _overlayGranted = true;
+        _shouldDismissDialog = true;
+      });
+    }
+  }
+
+  void _showOverlayDialog(BuildContext context) {
+    _dialogShown = true;
+    showCupertinoDialog(
+      context: navigatorKey.currentContext ?? context,
+      barrierDismissible: false,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text('Cho phép "Hiển thị trên các ứng dụng khác"'),
+        content: Text('Chúng tôi khuyến khích bạn cấp quyền này để giảm nguy cơ báo thức không hoạt động.'),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () async {
+              const AndroidIntent intent = AndroidIntent(
+                action: 'android.settings.action.MANAGE_OVERLAY_PERMISSION',
+                data: 'package:com.example.alarm',
+              );
+              await intent.launch();
+            },
+            child: Text('Mở Cài Đặt'),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Thoát'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const CupertinoApp(
-        debugShowCheckedModeBanner: false,
-        home: CupertinoPageScaffold(
-          backgroundColor: CupertinoColors.black,
-          child: Center(
-            child: CupertinoActivityIndicator(),
-          ),
-        ),
-      );
+    if (!_overlayGranted && !_dialogShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showOverlayDialog(context);
+      });
     }
-
+    if (_shouldDismissDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(navigatorKey.currentContext ?? context).pop();
+        setState(() {
+          _dialogShown = false;
+          _shouldDismissDialog = false;
+        });
+      });
+    }
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AlarmProvider()),
@@ -137,16 +196,14 @@ class _MainAppState extends State<MainApp> {
             primaryColor: CupertinoColors.white,
           ),
         ),
-        home: _permissionsSetupCompleted
-            ? AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle.light,
-                child: CupertinoScaffold(
-                  topRadius: const Radius.circular(12),
-                  transitionBackgroundColor: CupertinoColors.black,
-                  body: const MainTabScreen(),
-                ),
-              )
-            : const PermissionSetupScreen(),
+        home: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: CupertinoScaffold(
+            topRadius: const Radius.circular(12),
+            transitionBackgroundColor: CupertinoColors.black,
+            body: const MainTabScreen(),
+          ),
+        ),
         routes: {
           '/home': (context) => AnnotatedRegion<SystemUiOverlayStyle>(
                 value: SystemUiOverlayStyle.light,
