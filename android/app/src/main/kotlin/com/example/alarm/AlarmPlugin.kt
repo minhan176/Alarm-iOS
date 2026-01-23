@@ -45,8 +45,9 @@ class AlarmPlugin : FlutterPlugin, MethodCallHandler {
             "scheduleAlarm" -> {
                 val alarmJson = call.argument<String>("alarm")
                 val alarmTime = call.argument<Long>("alarmTime") ?: 0L
-                if (alarmJson != null && alarmTime > 0) {
-                    scheduleAlarm(alarmJson, alarmTime)
+                val alarmId = call.argument<String>("alarmId") ?: ""
+                if (alarmJson != null && alarmTime > 0 && alarmId.isNotEmpty()) {
+                    scheduleAlarm(alarmJson, alarmTime, alarmId)
                 }
                 result.success(null)
             }
@@ -108,14 +109,14 @@ class AlarmPlugin : FlutterPlugin, MethodCallHandler {
         }
     }
 
-    private fun scheduleAlarm(alarmJson: String, alarmTime: Long) {
+    private fun scheduleAlarm(alarmJson: String, alarmTime: Long, alarmId: String) {
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("alarm_data", alarmJson)
         }
         
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            alarmJson.hashCode(), // Use alarm JSON hash as request code
+            alarmId.hashCode(), // Use alarm ID hash as request code
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )

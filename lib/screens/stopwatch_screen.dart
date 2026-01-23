@@ -126,8 +126,12 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: ListView.builder(
-                    itemCount: _laps.length,
+                    itemCount: _laps.length + 1,
                     itemBuilder: (context, index) {
+                      if (index == _laps.length) {
+                        // Add extra space at the bottom to avoid tab bar overlap
+                        return const SizedBox(height: 100);
+                      }
                       final lapTime = _laps[index];
                       final previousLapTime = index < _laps.length - 1
                           ? _laps[index + 1]

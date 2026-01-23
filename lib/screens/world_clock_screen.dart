@@ -131,13 +131,22 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                   }
 
                   return ListView.builder(
-                    itemCount: provider.clocks.length,
+                    itemCount: provider.clocks.length + 1,
                     itemBuilder: (context, index) {
+                      if (index == provider.clocks.length) {
+                        // Add extra space at the bottom to avoid tab bar overlap
+                        return const SizedBox(height: 100);
+                      }
                       final clock = provider.clocks[index];
                       return _WorldClockItem(
                         clock: clock,
                         isEditMode: _isEditMode,
-                        onDelete: () => provider.removeClock(clock.id),
+                        onTap: () {
+                          // No action in edit mode for world clocks
+                        },
+                        onDelete: () {
+                          provider.removeClock(clock.id);
+                        },
                       );
                     },
                   );
@@ -154,11 +163,13 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
 class _WorldClockItem extends StatelessWidget {
   final WorldClockModel clock;
   final bool isEditMode;
+  final VoidCallback onTap;
   final VoidCallback onDelete;
 
   const _WorldClockItem({
     required this.clock,
     required this.isEditMode,
+    required this.onTap,
     required this.onDelete,
   });
 
@@ -227,17 +238,21 @@ class _WorldClockItem extends StatelessWidget {
     
     final timeDiff = _getTimeDifference();
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: CupertinoColors.darkBackgroundGray,
-            width: 0.5,
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      pressedOpacity: 1.0,
+      onPressed: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: CupertinoColors.darkBackgroundGray,
+              width: 0.5,
+            ),
           ),
         ),
-      ),
       child: Row(
         children: [
           if (isEditMode)
@@ -305,6 +320,7 @@ class _WorldClockItem extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }

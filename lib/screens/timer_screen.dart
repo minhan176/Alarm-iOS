@@ -181,8 +181,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.black,
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             const Padding(
               padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
@@ -195,11 +196,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 ),
               ),
             ),
-            Expanded(
-              child: (_isRunning || _isPaused)
-                  ? _buildRunningTimer()
-                  : _buildTimerPicker(),
-            ),
+            (_isRunning || _isPaused)
+                ? _buildRunningTimer()
+                : _buildTimerPicker(),
           ],
         ),
       ),

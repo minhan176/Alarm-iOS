@@ -65,6 +65,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   bool _overlayGranted = false;
   bool _dialogShown = false;
   bool _shouldDismissDialog = false;
+  bool _permissionChecked = false;
 
   @override
   void initState() {
@@ -114,23 +115,26 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   Future<void> _checkOverlayPermission() async {
     final status = await Permission.systemAlertWindow.status;
-    if (status.isGranted) {
-      setState(() {
-        _overlayGranted = true;
-      });
-    } else {
-      // Dialog will be shown in build
-    }
+    setState(() {
+      _overlayGranted = status.isGranted;
+      _permissionChecked = true;
+    });
+  }
+
+  Future<void> _saveOverlayDialogState(bool shown) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('overlay_dialog_shown', shown);
   }
 
   Future<void> _checkPermissionAgain() async {
     final status = await Permission.systemAlertWindow.status;
-    if (status.isGranted) {
-      setState(() {
-        _overlayGranted = true;
+    setState(() {
+      _overlayGranted = status.isGranted;
+      _permissionChecked = true;
+      if (status.isGranted) {
         _shouldDismissDialog = true;
-      });
-    }
+      }
+    });
   }
 
   void _showOverlayDialog(BuildContext context) {
@@ -165,7 +169,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if (!_overlayGranted && !_dialogShown) {
+    if (_permissionChecked && !_overlayGranted && !_dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _showOverlayDialog(context);
       });

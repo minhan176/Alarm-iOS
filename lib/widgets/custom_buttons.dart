@@ -150,7 +150,7 @@ class NavTextIconButton extends StatelessWidget {
               decoration: backgroundColor != null
                   ? BoxDecoration(
                       color: backgroundColor,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(24),
                     )
                   : null,
               child: Row(

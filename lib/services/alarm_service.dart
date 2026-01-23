@@ -423,6 +423,7 @@ class AlarmService {
       await _alarmChannel.invokeMethod('scheduleAlarm', {
         'alarm': json.encode(alarm.toJson()),
         'alarmTime': scheduledTime.millisecondsSinceEpoch,
+        'alarmId': alarm.id,
       });
       print('One-time alarm scheduled for: $scheduledTime');
     } else {

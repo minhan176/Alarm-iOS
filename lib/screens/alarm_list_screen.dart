@@ -70,8 +70,12 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         ),
                       )
                     : ListView.builder(
-            itemCount: alarmProvider.alarms.length,
+            itemCount: alarmProvider.alarms.length + 1,
             itemBuilder: (context, index) {
+              if (index == alarmProvider.alarms.length) {
+                // Add extra space at the bottom to avoid tab bar overlap
+                return const SizedBox(height: 100);
+              }
               final alarm = alarmProvider.alarms[index];
               return AlarmListItem(
                 alarm: alarm,
@@ -82,7 +86,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                       context: context,
                       useNestedNavigation: true,
                       builder: (BuildContext context) => EditAlarmScreen(alarm: alarm),
-              );
+                    );
                   }
                 },
                 onToggle: () {
@@ -134,56 +138,32 @@ class AlarmListItem extends StatelessWidget {
       ),
       child: CupertinoButton(
         padding: EdgeInsets.zero,
+        pressedOpacity: 1.0,
         onPressed: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
             children: [
-              // Delete button in edit mode
-              if (isEditMode) ...[
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    showCupertinoDialog(
-                      context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: const Text('Delete Alarm'),
-                        content: const Text('Are you sure you want to delete this alarm?'),
-                        actions: [
-                          CupertinoDialogAction(
-                            child: const Text('Cancel'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          CupertinoDialogAction(
-                            isDestructiveAction: true,
-                            child: const Text('Delete'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              onDelete();
-                            },
-                          ),
-                        ],
+              if (isEditMode)
+                Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: GestureDetector(
+                    onTap: onDelete,
+                    child: Container(
+                      width: 24,
+                      height: 24,
+                      decoration: const BoxDecoration(
+                        color: CupertinoColors.systemRed,
+                        shape: BoxShape.circle,
                       ),
-                    );
-                  },
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    decoration: const BoxDecoration(
-                      color: CupertinoColors.systemRed,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      CupertinoIcons.minus,
-                      color: CupertinoColors.white,
-                      size: 18,
+                      child: const Icon(
+                        CupertinoIcons.minus,
+                        color: CupertinoColors.white,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
-              ],
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,18 +212,17 @@ class AlarmListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              // Hide toggle in edit mode
-              if (!isEditMode)
-                Transform.scale(
-                  scale: 0.8,
-                  child: CupertinoSwitch(
-                    value: alarm.isEnabled,
-                    activeColor: CupertinoColors.systemGreen,
-                    onChanged: (value) {
-                      onToggle();
-                    },
-                  ),
+              // Toggle switch - disabled in edit mode
+              Transform.scale(
+                scale: 0.8,
+                child: CupertinoSwitch(
+                  value: alarm.isEnabled,
+                  activeColor: CupertinoColors.systemGreen,
+                  onChanged: isEditMode ? null : (value) {
+                    onToggle();
+                  },
                 ),
+              ),
             ],
           ),
         ),
