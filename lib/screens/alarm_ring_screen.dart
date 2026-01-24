@@ -1,8 +1,10 @@
+import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
 import 'package:provider/provider.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
@@ -23,6 +25,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   final AudioPlayer _audioPlayer = AudioPlayer();
   late AnimationController _pulseController;
   late AnimationController _rotationController;
+  late AnimationController _shakeController;
 
   @override
   void initState() {
@@ -38,6 +41,11 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       vsync: this,
       duration: const Duration(milliseconds: 2000),
     )..repeat();
+
+    _shakeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..repeat(reverse: true);
 
     // Start playing alarm sound and vibration
     _startAlarm();
@@ -124,9 +132,11 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     // Call onDismiss callback if provided (for AlarmRingActivity)
     widget.onDismiss?.call();
 
-    // Reload alarms to update UI and navigate back
+    // Update alarm to disabled in provider immediately
     if (mounted) {
-      Provider.of<AlarmProvider>(context, listen: false).loadAlarms();
+      final alarmProvider = Provider.of<AlarmProvider>(context, listen: false);
+      final updatedAlarm = widget.alarm.copyWith(isEnabled: false);
+      await alarmProvider.updateAlarm(widget.alarm.id, updatedAlarm);
       Navigator.of(context).pop();
     }
   }
@@ -166,6 +176,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     _audioPlayer.dispose();
     _pulseController.dispose();
     _rotationController.dispose();
+    _shakeController.dispose();
     super.dispose();
   }
 
@@ -175,194 +186,95 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       onWillPop: () async => false, // Prevent back button
       child: CupertinoPageScaffold(
         backgroundColor: CupertinoColors.black,
-        child: SafeArea(
-          child: Stack(
-            children: [
-              // Background gradient
-              Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF1C1C1E),
-                      Color(0xFF000000),
-                    ],
+        child: Column(
+          children: [
+            const Spacer(),
+        
+            // Alarm icon and label above clock
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedBuilder(
+                  animation: _shakeController,
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: math.sin(_shakeController.value * 2 * math.pi) * 0.1,
+                      child: const Icon(
+                        CupertinoIcons.alarm_fill,
+                        color: CupertinoColors.systemGrey,
+                        size: 32,
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  widget.alarm.label.isNotEmpty ? widget.alarm.label : 'Alarm',
+                  style: const TextStyle(
+                    color: CupertinoColors.systemGrey,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
+              ],
+            ),
+        
+            const SizedBox(height: 40),
+        
+            // Large digital clock
+            Text(
+              _getCurrentTime(),
+              style: const TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 120,
+                fontWeight: FontWeight.w200,
+                height: 1,
               ),
-
-              Column(
+            ),
+        
+            const Spacer(),
+        
+            // Action buttons - vertical stack
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 40),
+              child: Column(
                 children: [
-                  // Header with time and date
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _getCurrentTime(),
-                              style: const TextStyle(
-                                color: CupertinoColors.white,
-                                fontSize: 48,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            Text(
-                              _getCurrentDate(),
-                              style: const TextStyle(
-                                color: CupertinoColors.systemGrey,
-                                fontSize: 17,
-                              ),
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            CupertinoIcons.bell_fill,
-                            color: CupertinoColors.systemOrange,
-                            size: 28,
+                  // Snooze button - orange (only if snooze is enabled)
+                  if (widget.alarm.snooze)
+                    Container(
+                      width: double.infinity,
+                      height: 75,
+                      margin: const EdgeInsets.only(bottom: 16),
+                      child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        color: CupertinoColors.systemOrange,
+                        borderRadius: BorderRadius.circular(32),
+                        onPressed: _snoozeAlarm,
+                        child: Text(
+                          'Snooze',
+                          style: TextStyle(
+                            color: CupertinoColors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-
-                  const Spacer(),
-
-                  // Alarm label
-                  if (widget.alarm.label.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        widget.alarm.label,
-                        style: const TextStyle(
-                          color: CupertinoColors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
-
-                  const SizedBox(height: 40),
-
-                  // Animated alarm icon
-                  Center(
-                    child: AnimatedBuilder(
-                      animation: _pulseController,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: 1.0 + (_pulseController.value * 0.2),
-                          child: AnimatedBuilder(
-                            animation: _rotationController,
-                            builder: (context, child) {
-                              return Transform.rotate(
-                                angle: _rotationController.value * 0.3,
-                                child: Container(
-                                  width: 160,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: RadialGradient(
-                                      colors: [
-                                        CupertinoColors.systemOrange.withOpacity(0.3),
-                                        CupertinoColors.systemOrange.withOpacity(0.1),
-                                        Colors.transparent,
-                                      ],
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    CupertinoIcons.alarm_fill,
-                                    color: CupertinoColors.systemOrange,
-                                    size: 80,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
+        
+                  // Slide to stop button
+                  Container(
+                    width: double.infinity,
+                    height: 75,
+                    decoration: BoxDecoration(
+                      color: CupertinoColors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(32),
                     ),
-                  ),
-
-                  const Spacer(),
-
-                  // Action buttons
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-                    child: Row(
-                      children: [
-                        // Snooze button
-                        Expanded(
-                          child: CupertinoButton(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            color: CupertinoColors.systemGrey.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(20),
-                            onPressed: _snoozeAlarm,
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  CupertinoIcons.alarm,
-                                  size: 32,
-                                  color: CupertinoColors.white,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'Snooze',
-                                  style: TextStyle(
-                                    color: CupertinoColors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(width: 20),
-
-                        // Dismiss button
-                        Expanded(
-                          child: CupertinoButton(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            color: CupertinoColors.systemOrange,
-                            borderRadius: BorderRadius.circular(20),
-                            onPressed: _dismissAlarm,
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  CupertinoIcons.check_mark_circled_solid,
-                                  size: 32,
-                                  color: CupertinoColors.white,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'Dismiss',
-                                  style: TextStyle(
-                                    color: CupertinoColors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: SlideToStopButton(onSlideComplete: _dismissAlarm),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -384,5 +296,164 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     final months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return '${days[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}';
+  }
+}
+
+class SlideToStopButton extends StatefulWidget {
+  final VoidCallback onSlideComplete;
+
+  const SlideToStopButton({super.key, required this.onSlideComplete});
+
+  @override
+  State<SlideToStopButton> createState() => _SlideToStopButtonState();
+}
+
+class _SlideToStopButtonState extends State<SlideToStopButton>
+    with TickerProviderStateMixin {
+  double _dragPosition = 5.0;
+  bool _isCompleted = false;
+  late AnimationController _shimmerController;
+
+  @override
+  void initState() {
+    super.initState();
+    _shimmerController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _shimmerController.dispose();
+    super.dispose();
+  }
+
+  LiquidGlassSettings _getGlassSettings(BuildContext context) {
+    final brightness = MediaQuery.platformBrightnessOf(context);
+    final isDark = brightness == Brightness.dark;
+    
+    return LiquidGlassSettings(
+      refractiveIndex: 1.21,
+      thickness: 30,
+      blur: 8,
+      saturation: 1.5,
+      lightIntensity: isDark ? .7 : 1,
+      ambientStrength: isDark ? .2 : .5,
+      lightAngle: math.pi / 4,
+      glassColor: CupertinoTheme.of(context).barBackgroundColor.withValues(alpha: 0.2),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final containerWidth = constraints.maxWidth;
+        final buttonSize = 60.0;
+        final slideThreshold = containerWidth - buttonSize - 20; // Leave some margin
+
+        return LiquidGlassLayer(
+          fake: true,
+          settings: _getGlassSettings(context),
+          child: LiquidGlassBlendGroup(
+            blend: 10,
+            child: Stack(
+              children: [
+                // Background text
+                Center(
+                  child: AnimatedBuilder(
+                    animation: _shimmerController,
+                    builder: (context, child) {
+                      return ShaderMask(
+                        shaderCallback: (bounds) {
+                          final double shimmerWidth = bounds.width * 0.5; // Width of the shimmer effect
+                          final double start = (bounds.width - shimmerWidth) * _shimmerController.value;
+                          final double end = start + shimmerWidth;
+                          
+                          return LinearGradient(
+                            colors: [
+                              CupertinoColors.white.withOpacity(0.3),
+                              CupertinoColors.white.withOpacity(0.9),
+                              CupertinoColors.white.withOpacity(0.3),
+                            ],
+                            stops: [
+                              (start / bounds.width).clamp(0.0, 1.0),
+                              ((start + shimmerWidth / 2) / bounds.width).clamp(0.0, 1.0),
+                              (end / bounds.width).clamp(0.0, 1.0),
+                            ],
+                          ).createShader(bounds);
+                        },
+                        child: Text(
+                          'slide to stop',
+                          style: TextStyle(
+                            color: CupertinoColors.white.withOpacity(0.7),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
+                // Sliding button
+                Positioned(
+                  left: _dragPosition,
+                  top: 0,
+                  bottom: 0,
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: (details) {
+                      if (_isCompleted) return;
+
+                      setState(() {
+                        _dragPosition += details.delta.dx;
+                        _dragPosition = _dragPosition.clamp(0.0, slideThreshold);
+                      });
+                    },
+                    onHorizontalDragEnd: (details) {
+                      if (_isCompleted) return;
+
+                      if (_dragPosition >= slideThreshold) {
+                        // Completed slide
+                        setState(() {
+                          _isCompleted = true;
+                        });
+                        widget.onSlideComplete();
+                      } else {
+                        // Reset position
+                        setState(() {
+                          _dragPosition = 0.0;
+                        });
+                      }
+                    },
+                    child: LiquidStretch(
+                      child: LiquidGlass.grouped(
+                        shape: const LiquidRoundedSuperellipse(borderRadius: 9000),
+                        child: GlassGlow(
+                          child: Container(
+                            width: buttonSize,
+                            height: buttonSize,
+                            decoration: BoxDecoration(
+                              //color: CupertinoColors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              CupertinoIcons.stop_fill,
+                              color: CupertinoColors.white,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

@@ -182,54 +182,58 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       _snooze,
                       (value) => setState(() => _snooze = value),
                     ),
-                    _buildSettingItem(
-                      'Snooze Duration',
-                      '${_snoozeDuration.inMinutes} minutes',
-                      () => setState(() => _showDurationOptions = !_showDurationOptions),
-                      valueColor: CupertinoColors.systemOrange,
-                      showArrow: false,
-                      pressedOpacity: 1.0,
-                    ),
-                    AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    height: _showDurationOptions ? 216 : 0,
-                    curve: Curves.easeInOut,
-                    child: _showDurationOptions
-                        ? Container(
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF2C2C2E),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(16),
-                                bottomRight: Radius.circular(16),
-                              ),
-                            ),
-                            child: CupertinoPicker(
-                              backgroundColor: Colors.transparent,
-                              itemExtent: 40,
-                              scrollController: FixedExtentScrollController(
-                                initialItem: _snoozeDuration.inMinutes - 1,
-                              ),
-                              onSelectedItemChanged: (index) {
-                                setState(() {
-                                  _snoozeDuration = Duration(minutes: index + 1);
-                                });
-                              },
-                              children: List.generate(15, (index) {
-                                final minutes = index + 1;
-                                return Center(
-                                  child: Text(
-                                    '$minutes minutes',
-                                    style: const TextStyle(
-                                      color: CupertinoColors.white,
-                                      fontSize: 17,
+                    Column(
+                      children: [
+                        _buildSettingItem(
+                          'Snooze Duration',
+                          '${_snoozeDuration.inMinutes} minutes',
+                          () => setState(() => _showDurationOptions = !_showDurationOptions),
+                          valueColor: CupertinoColors.systemOrange,
+                          showArrow: false,
+                          pressedOpacity: 1.0,
+                        ),
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          height: _showDurationOptions ? 216 : 0,
+                          curve: Curves.easeInOut,
+                          child: _showDurationOptions
+                              ? Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF2C2C2E),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(16),
+                                      bottomRight: Radius.circular(16),
                                     ),
                                   ),
-                                );
-                              }),
-                            ),
-                          )
-                        : null,
-                  ),
+                                  child: CupertinoPicker(
+                                    backgroundColor: Colors.transparent,
+                                    itemExtent: 40,
+                                    scrollController: FixedExtentScrollController(
+                                      initialItem: _snoozeDuration.inMinutes - 1,
+                                    ),
+                                    onSelectedItemChanged: (index) {
+                                      setState(() {
+                                        _snoozeDuration = Duration(minutes: index + 1);
+                                      });
+                                    },
+                                    children: List.generate(15, (index) {
+                                      final minutes = index + 1;
+                                      return Center(
+                                        child: Text(
+                                          '$minutes minutes',
+                                          style: const TextStyle(
+                                            color: CupertinoColors.white,
+                                            fontSize: 17,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                )
+                              : null,
+                        ),
+                      ],
+                    ),
                   ]),
                   
                   if (widget.alarm != null) ...[
@@ -362,7 +366,10 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               controller: _labelController,
               placeholder: 'Alarm',
               textAlign: TextAlign.right,
-              style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+              style: TextStyle(
+                color: (_label.isEmpty || _label == 'Alarm') ? CupertinoColors.systemGrey : CupertinoColors.white,
+                fontSize: 17,
+              ),
               placeholderStyle: const TextStyle(color: CupertinoColors.systemGrey, fontSize: 17),
               decoration: const BoxDecoration(),
               onChanged: (value) {

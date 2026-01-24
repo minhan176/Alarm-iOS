@@ -139,7 +139,7 @@ class NavTextIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LiquidStretch(
       child: LiquidGlass.grouped(
-        shape: const LiquidRoundedSuperellipse(borderRadius: 16),
+        shape: const LiquidRoundedSuperellipse(borderRadius: 24),
         child: GlassGlow(
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,

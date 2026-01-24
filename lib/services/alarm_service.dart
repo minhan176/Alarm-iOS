@@ -481,43 +481,41 @@ class AlarmService {
     // Cancel the notification
     await _notificationsPlugin.cancel(id);
 
-    // If it's a one-time alarm, cancel the alarm schedule and disable it
-    if (alarm.repeatDays.isEmpty) {
-      await AndroidAlarmManager.cancel(id);
+    // Always disable the alarm after dismissing
+    await AndroidAlarmManager.cancel(id);
 
-      // Update alarm to disabled in storage
-      try {
-        final prefs = await SharedPreferences.getInstance();
-        final alarmsJson = prefs.getString('alarms');
+    // Update alarm to disabled in storage
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final alarmsJson = prefs.getString('alarms');
 
-        if (alarmsJson != null) {
-          final List<dynamic> decoded = json.decode(alarmsJson);
-          final alarms = decoded
-              .map((item) => AlarmModel.fromJson(item))
-              .toList();
+      if (alarmsJson != null) {
+        final List<dynamic> decoded = json.decode(alarmsJson);
+        final alarms = decoded
+            .map((item) => AlarmModel.fromJson(item))
+            .toList();
 
-          // Find and update the alarm
-          final index = alarms.indexWhere((a) => a.id == alarm.id);
-          if (index != -1) {
-            alarms[index] = alarms[index].copyWith(isEnabled: false);
+        // Find and update the alarm
+        final index = alarms.indexWhere((a) => a.id == alarm.id);
+        if (index != -1) {
+          alarms[index] = alarms[index].copyWith(isEnabled: false);
 
-            // Save back to storage
-            final String encoded = json.encode(
-              alarms.map((a) => a.toJson()).toList(),
-            );
-            await prefs.setString('alarms', encoded);
-          }
+          // Save back to storage
+          final String encoded = json.encode(
+            alarms.map((a) => a.toJson()).toList(),
+          );
+          await prefs.setString('alarms', encoded);
+
+          // Notify listeners to update UI
+          // Note: This assumes there's a way to access the provider, but since this is a static method,
+          // we'll rely on the screen calling loadAlarms() instead
         }
-      } catch (e) {
-        print('Error disabling one-time alarm: $e');
       }
-
-      print('One-time alarm dismissed and disabled: ${alarm.id}');
-    } else {
-      // For repeating alarms, just cancel the notification
-      // The alarm will ring again on the next scheduled day
-      print('Repeating alarm dismissed: ${alarm.id}');
+    } catch (e) {
+      print('Error disabling alarm: $e');
     }
+
+    print('Alarm dismissed and disabled: ${alarm.id}');
   }
 
   // Show alarm notification
