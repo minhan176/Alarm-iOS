@@ -6,26 +6,17 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.PowerManager
 import androidx.annotation.RequiresApi
-import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 
-class AlarmPlugin : FlutterPlugin, MethodCallHandler {
-    private lateinit var channel: MethodChannel
-    private lateinit var context: Context
+class AlarmPlugin(private val context: Context) : MethodCallHandler {
     private var alarmManager: AlarmManager? = null
 
-    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "com.example.alarm/alarm")
-        channel.setMethodCallHandler(this)
-        context = flutterPluginBinding.applicationContext
+    init {
         alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    }
-
-    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
@@ -161,14 +152,32 @@ class AlarmReceiver : BroadcastReceiver() {
         val alarmJson = intent.getStringExtra("alarm_data")
         if (alarmJson != null) {
             println("DEBUG: AlarmReceiver triggered with alarm data: $alarmJson")
+
+            // Acquire wake lock to ensure screen turns on
+            val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+            val wakeLock = powerManager.newWakeLock(
+                PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE,
+                "AlarmApp:AlarmWakeLock"
+            )
+            wakeLock.acquire(10 * 60 * 1000L) // 10 minutes timeout
+
             // Start AlarmRingActivity with alarm data
             val activityIntent = Intent(context, AlarmRingActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                       Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                       Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                       Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                       Intent.FLAG_ACTIVITY_NO_HISTORY
                 putExtra("alarm_data", alarmJson)
+                // Add these to ensure it shows on lock screen
+                addFlags(Intent.FLAG_FROM_BACKGROUND)
             }
             println("DEBUG: AlarmReceiver starting AlarmRingActivity")
             context.startActivity(activityIntent)
             println("DEBUG: AlarmReceiver startActivity completed")
+
+            // Release wake lock after a short delay to let activity start
+            wakeLock.release()
         } else {
             println("DEBUG: AlarmReceiver triggered but no alarm data found")
         }

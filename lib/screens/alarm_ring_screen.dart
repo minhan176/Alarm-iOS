@@ -310,7 +310,7 @@ class SlideToStopButton extends StatefulWidget {
 
 class _SlideToStopButtonState extends State<SlideToStopButton>
     with TickerProviderStateMixin {
-  double _dragPosition = 5.0;
+  double _dragPosition = 9.0;
   bool _isCompleted = false;
   late AnimationController _shimmerController;
 
@@ -400,8 +400,8 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
                 // Sliding button
                 Positioned(
                   left: _dragPosition,
-                  top: 0,
-                  bottom: 0,
+                  top: 9,
+                  //bottom: 0,
                   child: GestureDetector(
                     onHorizontalDragUpdate: (details) {
                       if (_isCompleted) return;

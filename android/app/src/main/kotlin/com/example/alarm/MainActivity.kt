@@ -43,18 +43,43 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         println("DEBUG: configureFlutterEngine called")
 
-        // Register the alarm plugin
-        flutterEngine.plugins.add(AlarmPlugin())
-
         // Store binary messenger for later use
         binaryMessenger = flutterEngine.dartExecutor.binaryMessenger
+
+        // Register alarm method channel directly
+        val alarmChannel = MethodChannel(binaryMessenger!!, "com.example.alarm/alarm")
+        val alarmPlugin = AlarmPlugin(this)
+        alarmChannel.setMethodCallHandler(alarmPlugin)
+
+        // Register navigation method channel
+        val navChannel = MethodChannel(binaryMessenger!!, CHANNEL)
+        navChannel.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "navigateToAlarm" -> {
+                    // Navigate to alarm screen if needed
+                    result.success(null)
+                }
+                "navigateToRingScreen" -> {
+                    val alarmJson = call.arguments as? String
+                    if (alarmJson != null) {
+                        // Parse alarm and navigate to ring screen
+                        // This will be handled in Flutter side
+                        result.success(null)
+                    } else {
+                        result.error("INVALID_ARGUMENT", "Alarm data is required", null)
+                    }
+                }
+                else -> {
+                    result.notImplemented()
+                }
+            }
+        }
 
         // Check for pending alarm when Flutter engine is ready
         if (pendingAlarmJson != null) {
             println("DEBUG: Navigating to ring screen with pending alarm: $pendingAlarmJson")
             try {
-                val result = MethodChannel(binaryMessenger!!, CHANNEL)
-                    .invokeMethod("navigateToRingScreen", pendingAlarmJson)
+                val result = navChannel.invokeMethod("navigateToRingScreen", pendingAlarmJson)
                 println("DEBUG: Method channel invokeMethod called successfully")
                 pendingAlarmJson = null // Clear after use
             } catch (e: Exception) {
@@ -63,30 +88,6 @@ class MainActivity : FlutterActivity() {
         } else {
             println("DEBUG: No pending alarm to navigate to")
         }
-
-        // Set up method channel for navigation
-        MethodChannel(binaryMessenger!!, CHANNEL)
-            .setMethodCallHandler { call, result ->
-                when (call.method) {
-                    "navigateToAlarm" -> {
-                        // Navigate to alarm screen if needed
-                        result.success(null)
-                    }
-                    "navigateToRingScreen" -> {
-                        val alarmJson = call.arguments as? String
-                        if (alarmJson != null) {
-                            // Parse alarm and navigate to ring screen
-                            // This will be handled in Flutter side
-                            result.success(null)
-                        } else {
-                            result.error("INVALID_ARGUMENT", "Alarm data is required", null)
-                        }
-                    }
-                    else -> {
-                        result.notImplemented()
-                    }
-                }
-            }
     }
 
     override fun onNewIntent(intent: Intent) {

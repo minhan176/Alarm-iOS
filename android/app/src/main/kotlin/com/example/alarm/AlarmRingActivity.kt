@@ -38,6 +38,11 @@ class AlarmRingActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         println("DEBUG: AlarmRingActivity configureFlutterEngine called")
 
+        // Register alarm method channel (same as MainActivity)
+        val alarmChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.example.alarm/alarm")
+        val alarmPlugin = AlarmPlugin(this)
+        alarmChannel.setMethodCallHandler(alarmPlugin)
+
         // Set up method channel to pass alarm data to Flutter
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
             .setMethodCallHandler { call, result ->

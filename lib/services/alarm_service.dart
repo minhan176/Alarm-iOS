@@ -418,6 +418,8 @@ class AlarmService {
 
     final alarmId = alarm.id.hashCode;
 
+    // Use AndroidAlarmManager for both one-time and repeating alarms
+    // This ensures consistent behavior and works when app is killed
     if (alarm.repeatDays.isEmpty) {
       // One-time alarm - use AlarmPlugin for direct activity start
       await _alarmChannel.invokeMethod('scheduleAlarm', {
