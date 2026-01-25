@@ -322,10 +322,63 @@ class AlarmService {
           }
         }
 
+        // Update system alarm icon after dismissing
+        await updateSystemAlarmIcon();
+
         print('Alarm dismissed from notification: $alarmId');
       }
     } catch (e) {
       print('Error dismissing alarm from notification: $e');
+    }
+  }
+
+  // Centralized method to update system alarm icon based on current alarm state
+  static Future<void> updateSystemAlarmIcon() async {
+    try {
+      print('DEBUG: updateSystemAlarmIcon called');
+      final prefs = await SharedPreferences.getInstance();
+      final alarmsJson = prefs.getString('alarms');
+
+      if (alarmsJson != null) {
+        final List<dynamic> decoded = json.decode(alarmsJson);
+        final alarms = decoded
+            .map((item) => AlarmModel.fromJson(item))
+            .toList();
+
+        final enabledAlarms = alarms.where((alarm) => alarm.isEnabled).toList();
+        print('DEBUG: updateSystemAlarmIcon - enabled alarms count: ${enabledAlarms.length}');
+
+        if (enabledAlarms.isNotEmpty) {
+          // Find next alarm
+          AlarmModel? nextAlarm;
+          DateTime? nextTime;
+
+          for (var alarm in enabledAlarms) {
+            final alarmTime = alarm.getNextAlarmTime();
+            if (nextTime == null || alarmTime.isBefore(nextTime)) {
+              nextTime = alarmTime;
+              nextAlarm = alarm;
+            }
+          }
+
+          if (nextAlarm != null) {
+            print('DEBUG: updateSystemAlarmIcon - showing icon for: ${nextAlarm.label}');
+            await showSystemAlarmIcon(nextAlarm);
+          } else {
+            print('DEBUG: updateSystemAlarmIcon - no next alarm found, hiding icon');
+            await hideSystemAlarmIcon();
+          }
+        } else {
+          // No enabled alarms, hide icon
+          print('DEBUG: updateSystemAlarmIcon - no enabled alarms, hiding icon');
+          await hideSystemAlarmIcon();
+        }
+      } else {
+        print('DEBUG: updateSystemAlarmIcon - no alarms data, hiding icon');
+        await hideSystemAlarmIcon();
+      }
+    } catch (e) {
+      print('Error updating system alarm icon: $e');
     }
   }
 
@@ -346,8 +399,8 @@ class AlarmService {
         // Cancel current alarm
         await AndroidAlarmManager.cancel(alarm.id.hashCode);
 
-        // Schedule snooze (5 minutes later)
-        final snoozeTime = DateTime.now().add(const Duration(minutes: 5));
+        // Schedule snooze based on alarm's snooze duration
+        final snoozeTime = DateTime.now().add(alarm.snoozeDuration);
         await AndroidAlarmManager.oneShotAt(
           snoozeTime,
           alarm.id.hashCode,
@@ -359,7 +412,10 @@ class AlarmService {
           params: alarm.toJson(),
         );
 
-        print('Alarm snoozed for 5 minutes: $alarmId');
+        // Update system alarm icon after snoozing (alarm is still enabled)
+        await updateSystemAlarmIcon();
+
+        print('Alarm snoozed for ${alarm.snoozeDuration.inMinutes} minutes: $alarmId');
       }
     } catch (e) {
       print('Error snoozing alarm from notification: $e');
@@ -601,11 +657,15 @@ class AlarmService {
     try {
       final scheduledTime = _getNextAlarmTime(alarm);
       if (scheduledTime != null) {
+        print('DEBUG: showSystemAlarmIcon called for alarm: ${alarm.label}');
         await _alarmChannel.invokeMethod('showAlarmIcon', {
           'alarmId': alarm.id.hashCode,
           'timestamp': scheduledTime.millisecondsSinceEpoch,
           'label': alarm.label.isEmpty ? 'Alarm' : alarm.label,
         });
+        print('DEBUG: showSystemAlarmIcon completed');
+      } else {
+        print('DEBUG: showSystemAlarmIcon - no scheduled time for alarm: ${alarm.label}');
       }
     } catch (e) {
       print('Error showing system alarm icon: $e');
@@ -615,7 +675,9 @@ class AlarmService {
   // Hide system alarm icon from status bar
   static Future<void> hideSystemAlarmIcon() async {
     try {
+      print('DEBUG: hideSystemAlarmIcon called - attempting to hide alarm icon');
       await _alarmChannel.invokeMethod('hideAlarmIcon');
+      print('DEBUG: hideSystemAlarmIcon completed');
     } catch (e) {
       print('Error hiding system alarm icon: $e');
     }

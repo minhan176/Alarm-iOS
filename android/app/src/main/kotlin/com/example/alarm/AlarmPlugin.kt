@@ -12,6 +12,13 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 
+class DummyAlarmReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        // Do nothing - this is just a dummy receiver for hiding alarm icon
+        println("DEBUG: DummyAlarmReceiver triggered - this should not happen")
+    }
+}
+
 class AlarmPlugin(private val context: Context) : MethodCallHandler {
     private var alarmManager: AlarmManager? = null
 
@@ -85,18 +92,109 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun hideAlarmIcon() {
+        println("DEBUG: hideAlarmIcon called - trying multiple methods")
         if (alarmManager != null) {
-            // Cancel all alarm clock intents
-            for (i in 0..999) { // Assuming alarm IDs are within this range
-                val intent = Intent(context, MainActivity::class.java)
-                val pendingIntent = PendingIntent.getActivity(
+            // Method 1: Try to cancel all possible alarm clock pending intents
+            println("DEBUG: Method 1 - canceling all possible pending intents")
+            try {
+                for (i in 0..50) { // Try more IDs including the ones we used for showAlarmIcon
+                    val intent = Intent(context, MainActivity::class.java)
+                    val pendingIntent = PendingIntent.getActivity(
+                        context,
+                        i,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                    alarmManager?.cancel(pendingIntent)
+                }
+                println("DEBUG: Method 1 completed - cancelled all pending intents")
+            } catch (e: Exception) {
+                println("DEBUG: Method 1 failed: ${e.message}")
+            }
+
+            // Method 2: Set a dummy alarm clock and immediately cancel it
+            try {
+                println("DEBUG: Method 2 - dummy alarm clock with BroadcastReceiver")
+                val dummyTime = System.currentTimeMillis() + 1000 // 1 second from now
+                val dummyIntent = Intent(context, DummyAlarmReceiver::class.java).apply {
+                    action = "com.example.alarm.DUMMY_ALARM"
+                }
+                val dummyPendingIntent = PendingIntent.getBroadcast(
                     context,
-                    i,
-                    intent,
+                    999998, // Different ID
+                    dummyIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
-                alarmManager?.cancel(pendingIntent)
+
+                val dummyAlarmClockInfo = AlarmManager.AlarmClockInfo(dummyTime, dummyPendingIntent)
+                alarmManager?.setAlarmClock(dummyAlarmClockInfo, dummyPendingIntent)
+
+                // Small delay then cancel
+                Thread.sleep(100)
+                alarmManager?.cancel(dummyPendingIntent)
+                println("DEBUG: Method 2 completed - dummy alarm set and cancelled")
+            } catch (e: Exception) {
+                println("DEBUG: Method 2 failed: ${e.message}")
             }
+
+            // Method 3: Try to set alarm clock to current time and cancel
+            try {
+                println("DEBUG: Method 3 - current time alarm with BroadcastReceiver")
+                val currentTime = System.currentTimeMillis()
+                val currentIntent = Intent(context, DummyAlarmReceiver::class.java)
+                val currentPendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    999997, // Another different ID
+                    currentIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+
+                val currentAlarmClockInfo = AlarmManager.AlarmClockInfo(currentTime, currentPendingIntent)
+                alarmManager?.setAlarmClock(currentAlarmClockInfo, currentPendingIntent)
+                alarmManager?.cancel(currentPendingIntent)
+                println("DEBUG: Method 3 completed - current time alarm set and cancelled")
+            } catch (e: Exception) {
+                println("DEBUG: Method 3 failed: ${e.message}")
+            }
+
+            // Method 4: Try reflection to access private methods
+            try {
+                println("DEBUG: Method 4 - reflection approach")
+                val alarmManagerClass = AlarmManager::class.java
+
+                // Try to find and call private methods that might help
+                val methods = alarmManagerClass.declaredMethods
+                for (method in methods) {
+                    if (method.name.contains("cancel") || method.name.contains("clear") || method.name.contains("remove")) {
+                        try {
+                            method.isAccessible = true
+                            if (method.parameterCount == 0) {
+                                method.invoke(alarmManager)
+                                println("DEBUG: Called private method: ${method.name}")
+                            } else if (method.parameterCount == 1 && method.parameterTypes[0] == PendingIntent::class.java) {
+                                val dummyIntent = Intent(context, DummyAlarmReceiver::class.java)
+                                val dummyPendingIntent = PendingIntent.getBroadcast(
+                                    context,
+                                    999996,
+                                    dummyIntent,
+                                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                                )
+                                method.invoke(alarmManager, dummyPendingIntent)
+                                println("DEBUG: Called private method with pending intent: ${method.name}")
+                            }
+                        } catch (e: Exception) {
+                            // Ignore individual method failures
+                        }
+                    }
+                }
+                println("DEBUG: Method 4 completed - reflection methods attempted")
+            } catch (e: Exception) {
+                println("DEBUG: Method 4 failed: ${e.message}")
+            }
+
+            println("DEBUG: hideAlarmIcon - all methods attempted")
+        } else {
+            println("DEBUG: alarmManager is null")
         }
     }
 

@@ -53,6 +53,13 @@ class AlarmRingActivity : FlutterActivity() {
                     }
                     "dismissAlarm" -> {
                         // Close the activity when alarm is dismissed
+                        println("DEBUG: AlarmRingActivity dismissAlarm called, finishing activity")
+                        finish()
+                        result.success(null)
+                    }
+                    "snoozeAlarm" -> {
+                        // Close the activity when alarm is snoozed
+                        println("DEBUG: AlarmRingActivity snoozeAlarm called, finishing activity")
                         finish()
                         result.success(null)
                     }
@@ -61,6 +68,13 @@ class AlarmRingActivity : FlutterActivity() {
                     }
                 }
             }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        // If activity is reopened, finish it immediately
+        println("DEBUG: AlarmRingActivity onNewIntent called, finishing activity")
+        finish()
     }
 
     override fun onDestroy() {

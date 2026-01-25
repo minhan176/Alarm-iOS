@@ -389,6 +389,14 @@ class _AlarmRingScreenWidgetState extends State<AlarmRingScreenWidget> {
     }
   }
 
+  void _snoozeAlarm() async {
+    try {
+      await platform.invokeMethod('snoozeAlarm');
+    } catch (e) {
+      print('DEBUG: Error snoozing alarm: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -415,6 +423,7 @@ class _AlarmRingScreenWidgetState extends State<AlarmRingScreenWidget> {
     return AlarmRingScreen(
       alarm: _alarm!,
       onDismiss: _dismissAlarm,
+      onSnooze: _snoozeAlarm,
     );
   }
 }

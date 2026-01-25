@@ -5,6 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
@@ -13,8 +14,14 @@ import '../widgets/custom_buttons.dart';
 class AlarmRingScreen extends StatefulWidget {
   final AlarmModel alarm;
   final VoidCallback? onDismiss;
+  final VoidCallback? onSnooze;
 
-  const AlarmRingScreen({super.key, required this.alarm, this.onDismiss});
+  const AlarmRingScreen({
+    super.key,
+    required this.alarm,
+    this.onDismiss,
+    this.onSnooze,
+  });
 
   @override
   State<AlarmRingScreen> createState() => _AlarmRingScreenState();
@@ -144,28 +151,27 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   void _snoozeAlarm() async {
     await _stopAlarm();
 
-    // Schedule snooze (5 minutes)
-    final snoozeTime = DateTime.now().add(const Duration(minutes: 5));
+    // Schedule snooze based on alarm's snooze duration
+    final snoozeTime = DateTime.now().add(widget.alarm.snoozeDuration);
     final snoozeAlarm = widget.alarm.copyWith(time: snoozeTime);
 
     await AlarmService.scheduleAlarm(snoozeAlarm);
 
+    // Call onSnooze callback if provided (for AlarmRingActivity)
+    widget.onSnooze?.call();
+
     if (mounted) {
       Navigator.of(context).pop();
 
-      // Show snooze confirmation
-      showCupertinoDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-          title: const Text('Snoozed'),
-          content: const Text('Alarm will ring again in 5 minutes'),
-          actions: [
-            CupertinoDialogAction(
-              child: const Text('OK'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
+      // Show snooze message
+      Fluttertoast.showToast(
+        msg: 'Báo lại sau ${widget.alarm.snoozeDuration.inMinutes} phút',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        fontSize: 16.0,
       );
     }
   }

@@ -31,12 +31,7 @@ class AlarmProvider with ChangeNotifier {
         );
 
         // Update system alarm icon
-        final nextAlarm = getNextAlarm();
-        if (nextAlarm != null) {
-          await AlarmService.showSystemAlarmIcon(nextAlarm);
-        } else {
-          await AlarmService.hideSystemAlarmIcon();
-        }
+        await AlarmService.updateSystemAlarmIcon();
 
         notifyListeners();
       }
@@ -79,12 +74,7 @@ class AlarmProvider with ChangeNotifier {
     }
 
     // Update system alarm icon
-    final nextAlarm = getNextAlarm();
-    if (nextAlarm != null) {
-      await AlarmService.showSystemAlarmIcon(nextAlarm);
-    } else {
-      await AlarmService.hideSystemAlarmIcon();
-    }
+    await AlarmService.updateSystemAlarmIcon();
 
     notifyListeners();
   }
@@ -106,12 +96,7 @@ class AlarmProvider with ChangeNotifier {
       }
 
       // Update system alarm icon
-      final nextAlarm = getNextAlarm();
-      if (nextAlarm != null) {
-        await AlarmService.showSystemAlarmIcon(nextAlarm);
-      } else {
-        await AlarmService.hideSystemAlarmIcon();
-      }
+      await AlarmService.updateSystemAlarmIcon();
 
       notifyListeners();
     }
@@ -126,12 +111,7 @@ class AlarmProvider with ChangeNotifier {
     await _saveAlarms();
 
     // Update system alarm icon
-    final nextAlarm = getNextAlarm();
-    if (nextAlarm != null) {
-      await AlarmService.showSystemAlarmIcon(nextAlarm);
-    } else {
-      await AlarmService.hideSystemAlarmIcon();
-    }
+    await AlarmService.updateSystemAlarmIcon();
 
     notifyListeners();
   }
@@ -152,12 +132,8 @@ class AlarmProvider with ChangeNotifier {
       }
 
       // Update system alarm icon
-      final nextAlarm = getNextAlarm();
-      if (nextAlarm != null) {
-        await AlarmService.showSystemAlarmIcon(nextAlarm);
-      } else {
-        await AlarmService.hideSystemAlarmIcon();
-      }
+      print('DEBUG: toggleAlarm calling updateSystemAlarmIcon');
+      await AlarmService.updateSystemAlarmIcon();
 
       notifyListeners();
     }
