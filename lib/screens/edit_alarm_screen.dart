@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
+import '../utils/alarm_toast.dart';
 
 class EditAlarmScreen extends StatefulWidget {
   final AlarmModel? alarm;
@@ -76,6 +77,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     } else {
       provider.addAlarm(alarm);
     }
+
+    // Show toast for enabled alarm
+    AlarmToast.showAlarmToast(alarm, context);
 
     Navigator.of(context, rootNavigator: true).pop();
   }

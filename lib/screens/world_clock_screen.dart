@@ -248,7 +248,7 @@ class _WorldClockItem extends StatelessWidget {
         decoration: const BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: CupertinoColors.darkBackgroundGray,
+              color: Color(0xFF3C3C3E),
               width: 0.5,
             ),
           ),

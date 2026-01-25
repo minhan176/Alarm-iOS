@@ -5,6 +5,7 @@ import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
 import 'edit_alarm_screen.dart';
+import '../utils/alarm_toast.dart';
 
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({super.key});
@@ -15,6 +16,50 @@ class AlarmListScreen extends StatefulWidget {
 
 class _AlarmListScreenState extends State<AlarmListScreen> {
   bool _isEditMode = false;
+
+  String? _getNextAlarmTimeText(List<AlarmModel> alarms) {
+    final enabledAlarms = alarms.where((alarm) => alarm.isEnabled).toList();
+    if (enabledAlarms.isEmpty) return null;
+
+    // Find the earliest alarm
+    AlarmModel? nextAlarm;
+    DateTime? nextAlarmTime;
+
+    for (final alarm in enabledAlarms) {
+      final alarmTime = alarm.getNextAlarmTime();
+      if (nextAlarmTime == null || alarmTime.isBefore(nextAlarmTime)) {
+        nextAlarmTime = alarmTime;
+        nextAlarm = alarm;
+      }
+    }
+
+    if (nextAlarmTime == null) return null;
+
+    final now = DateTime.now();
+    final difference = nextAlarmTime.difference(now);
+
+    final days = difference.inDays;
+    final hours = difference.inHours % 24;
+    final minutes = difference.inMinutes % 60;
+
+    final parts = <String>[];
+    
+    if (days > 0) {
+      // Show days, hours, minutes
+      parts.add('$days days');
+      if (hours > 0) parts.add('$hours hours');
+      if (minutes > 0) parts.add('$minutes minutes');
+    } else if (hours > 0) {
+      // Show hours, minutes only
+      parts.add('$hours hours');
+      if (minutes > 0) parts.add('$minutes minutes');
+    } else {
+      // Show minutes only
+      parts.add('$minutes minutes');
+    }
+
+    return 'Còn lại ${parts.join(', ')}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +92,33 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   },
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
-                child: Text(
-                  'Alarms',
-                  style: TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    const Text(
+                      'Alarms',
+                      style: TextStyle(
+                        color: CupertinoColors.white,
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (_getNextAlarmTimeText(alarmProvider.alarms) != null)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Text(
+                          _getNextAlarmTimeText(alarmProvider.alarms)!,
+                          style: const TextStyle(
+                            color: CupertinoColors.systemGrey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               Expanded(
@@ -89,8 +152,13 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                     );
                   }
                 },
-                onToggle: () {
-                  alarmProvider.toggleAlarm(alarm.id);
+                onToggle: () async {
+                  final wasEnabled = alarm.isEnabled;
+                  await alarmProvider.toggleAlarm(alarm.id);
+                  // Show toast if alarm was just enabled
+                  if (!wasEnabled) {
+                    AlarmToast.showAlarmToast(alarm, context);
+                  }
                 },
                 onDelete: () {
                   alarmProvider.deleteAlarm(alarm.id);
@@ -128,6 +196,11 @@ class AlarmListItem extends StatelessWidget {
     final repeatDescription = alarm.getRepeatDescription();
     final hasLabel = alarm.label.isNotEmpty && alarm.label != 'Alarm';
     final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
+
+    // Create combined label for repeat alarms
+    final displayLabel = repeatDescription.isNotEmpty
+        ? '${alarm.label}, $repeatDescription'
+        : alarm.label;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -185,30 +258,20 @@ class AlarmListItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
-                    if (hasLabel) ...[
+                    //const SizedBox(height: 0),
+                    if (displayLabel.isNotEmpty) ...[
                       Text(
-                        alarm.label,
+                        displayLabel,
                         style: TextStyle(
                           color: alarm.isEnabled
                               ? CupertinoColors.white
                               : CupertinoColors.systemGrey2,
-                          fontSize: 17,
+                          fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      //const SizedBox(height: 4),
                     ],
-                    if (repeatDescription.isNotEmpty)
-                      Text(
-                        repeatDescription,
-                        style: TextStyle(
-                          color: alarm.isEnabled
-                              ? CupertinoColors.systemGrey
-                              : CupertinoColors.systemGrey2,
-                          fontSize: 15,
-                        ),
-                      ),
                   ],
                 ),
               ),

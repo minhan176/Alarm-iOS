@@ -154,13 +154,13 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               );
               await intent.launch();
             },
-            child: Text('Mở Cài Đặt'),
+            child: Text('Settings'),
           ),
           CupertinoDialogAction(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Thoát'),
+            child: Text('Close'),
           ),
         ],
       ),
@@ -292,7 +292,7 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
           alignment: Alignment.bottomCenter,
           child: LiquidGlassBottomBar(
             fake: true,
-            barHeight: 64,
+            barHeight: 57,
             bottomPadding: MediaQuery.of(context).padding.bottom + 16,
             tabs: const [
                 LiquidGlassBottomBarTab(
@@ -326,7 +326,7 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
                 lightIntensity: isDark ? .7 : 1,
                 ambientStrength: isDark ? .2 : .5,
                 lightAngle: math.pi / 4,
-                glassColor: const Color(0xFF3C3C3E).withValues(alpha: 0.5),
+                glassColor: const Color(0xFF3C3C3E).withValues(alpha: 1),
               ),
             ),
           ),

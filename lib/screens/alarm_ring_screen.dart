@@ -5,7 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
@@ -163,16 +163,16 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     if (mounted) {
       Navigator.of(context).pop();
 
-      // Show snooze message
-      Fluttertoast.showToast(
-        msg: 'Báo lại sau ${widget.alarm.snoozeDuration.inMinutes} phút',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.white,
-        textColor: Colors.black,
-        fontSize: 16.0,
-      );
+      // // Show snooze message
+      // Fluttertoast.showToast(
+      //   msg: 'Báo lại sau ${widget.alarm.snoozeDuration.inMinutes} phút',
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.BOTTOM,
+      //   timeInSecForIosWeb: 1,
+      //   backgroundColor: Colors.white,
+      //   textColor: Colors.black,
+      //   fontSize: 16.0,
+      // );
     }
   }
 

@@ -122,7 +122,7 @@ class AlarmModel {
     }
 
     const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return repeatDays.map((day) => dayNames[day - 1]).join(', ');
+    return repeatDays.map((day) => dayNames[day - 1]).join(' ');
   }
 
   // Calculate next alarm time
