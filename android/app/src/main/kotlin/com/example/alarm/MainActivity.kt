@@ -51,6 +51,10 @@ class MainActivity : FlutterActivity() {
         val alarmPlugin = AlarmPlugin(this)
         alarmChannel.setMethodCallHandler(alarmPlugin)
 
+        // Register timer ring method channel
+        val timerRingChannel = MethodChannel(binaryMessenger!!, "com.example.alarm/timer_ring")
+        timerRingChannel.setMethodCallHandler(alarmPlugin)
+
         // Register navigation method channel
         val navChannel = MethodChannel(binaryMessenger!!, CHANNEL)
         navChannel.setMethodCallHandler { call, result ->

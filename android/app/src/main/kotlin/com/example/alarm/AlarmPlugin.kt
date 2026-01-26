@@ -64,6 +64,14 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
                 }
                 result.success(null)
             }
+            "startTimerRingActivity" -> {
+                val remainingSeconds = call.argument<Int>("remaining_seconds") ?: 0
+                val selectedSound = call.argument<String>("selected_sound") ?: "Radar"
+                val selectedVibrate = call.argument<Boolean>("selected_vibrate") ?: false
+                println("DEBUG: AlarmPlugin startTimerRingActivity called with remainingSeconds=$remainingSeconds, selectedSound=$selectedSound, selectedVibrate=$selectedVibrate")
+                startTimerRingActivity(remainingSeconds, selectedSound, selectedVibrate)
+                result.success(null)
+            }
             else -> {
                 result.notImplemented()
             }
@@ -241,6 +249,23 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
         }
         context.startActivity(intent)
         println("DEBUG: openRingScreen startActivity called")
+    }
+
+    private fun startTimerRingActivity(remainingSeconds: Int, selectedSound: String, selectedVibrate: Boolean) {
+        val intent = Intent(context, TimerRingActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                   Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                   Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                   Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                   Intent.FLAG_ACTIVITY_NO_HISTORY
+            putExtra("remaining_seconds", remainingSeconds)
+            putExtra("selected_sound", selectedSound)
+            putExtra("selected_vibrate", selectedVibrate)
+            addFlags(Intent.FLAG_FROM_BACKGROUND)
+        }
+        println("DEBUG: AlarmPlugin starting TimerRingActivity")
+        context.startActivity(intent)
+        println("DEBUG: AlarmPlugin startActivity completed")
     }
 }
 

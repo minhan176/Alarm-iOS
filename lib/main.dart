@@ -17,6 +17,7 @@ import 'screens/world_clock_screen.dart';
 import 'screens/stopwatch_screen.dart';
 import 'screens/timer_screen.dart';
 import 'screens/alarm_ring_screen.dart';
+import 'screens/timer_ring_screen.dart';
 import 'services/alarm_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
 
@@ -218,6 +219,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
                 ),
               ),
           '/alarm_ring': (context) => const AlarmRingScreenWidget(),
+          '/timer_ring': (context) => const TimerRingScreenWidget(),
         },
         debugShowCheckedModeBanner: false,
       ),
@@ -424,6 +426,85 @@ class _AlarmRingScreenWidgetState extends State<AlarmRingScreenWidget> {
       alarm: _alarm!,
       onDismiss: _dismissAlarm,
       onSnooze: _snoozeAlarm,
+    );
+  }
+}
+
+class TimerRingScreenWidget extends StatefulWidget {
+  const TimerRingScreenWidget({super.key});
+
+  @override
+  State<TimerRingScreenWidget> createState() => _TimerRingScreenWidgetState();
+}
+
+class _TimerRingScreenWidgetState extends State<TimerRingScreenWidget> {
+  int _remainingSeconds = 0;
+  String _selectedSound = 'Radar';
+  bool _selectedVibrate = false;
+  bool _isLoading = true;
+
+  static const platform = MethodChannel('com.example.alarm/timer_ring');
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTimerData();
+  }
+
+  Future<void> _loadTimerData() async {
+    try {
+      print('DEBUG: TimerRingScreenWidget loading timer data');
+      final Map<dynamic, dynamic>? timerData = await platform.invokeMethod('getTimerData');
+      if (timerData != null) {
+        print('DEBUG: Received timer data: $timerData');
+        final remainingSeconds = timerData['remainingSeconds'] as int? ?? 0;
+        final selectedSound = timerData['selectedSound'] as String? ?? 'Radar';
+        final selectedVibrate = timerData['selectedVibrate'] as bool? ?? false;
+        print('DEBUG: Parsed timer: remainingSeconds=$remainingSeconds, sound=$selectedSound, vibrate=$selectedVibrate');
+        setState(() {
+          _remainingSeconds = remainingSeconds;
+          _selectedSound = selectedSound;
+          _selectedVibrate = selectedVibrate;
+          _isLoading = false;
+        });
+      } else {
+        print('DEBUG: No timer data received');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('DEBUG: Error loading timer data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _stopTimer() async {
+    try {
+      await platform.invokeMethod('stopTimer');
+    } catch (e) {
+      print('DEBUG: Error stopping timer: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const CupertinoPageScaffold(
+        backgroundColor: CupertinoColors.black,
+        child: Center(
+          child: CupertinoActivityIndicator(),
+        ),
+      );
+    }
+
+    return TimerRingScreen(
+      remainingSeconds: _remainingSeconds,
+      selectedSound: _selectedSound,
+      selectedVibrate: _selectedVibrate,
+      onStop: _stopTimer,
     );
   }
 }

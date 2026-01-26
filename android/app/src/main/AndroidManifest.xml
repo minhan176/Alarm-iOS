@@ -55,6 +55,22 @@
             android:turnScreenOn="true">
         </activity>
         
+        <!-- Timer Ring Activity -->
+        <activity
+            android:name=".TimerRingActivity"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true">
+        </activity>
+        
         <!-- Alarm Manager Service -->
         <service
             android:name="dev.fluttercommunity.plus.androidalarmmanager.AlarmService"

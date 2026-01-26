@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/custom_buttons.dart';
+import 'timer_ring_screen.dart';
+import 'sound_selector.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({super.key});
@@ -14,8 +17,12 @@ class TimerScreen extends StatefulWidget {
   State<TimerScreen> createState() => _TimerScreenState();
 }
 
-class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin {
+class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin, WidgetsBindingObserver {
   static const String _timerSoundKey = 'timer_sound';
+  static const String _timerHoursKey = 'timer_hours';
+  static const String _timerMinutesKey = 'timer_minutes';
+  static const String _timerSecondsKey = 'timer_seconds';
+  static const String _timerVibrateKey = 'timer_vibrate';
   int _hours = 0;
   int _minutes = 45;
   int _seconds = 0;
@@ -25,12 +32,28 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   bool _isRunning = false;
   bool _isPaused = false;
   String _selectedSound = 'Radar';
+  bool _selectedVibrate = false;
   late AnimationController _progressController;
+  late FixedExtentScrollController _hourController;
+  late FixedExtentScrollController _minuteController;
+  late FixedExtentScrollController _secondController;
 
   @override
   void initState() {
     super.initState();
+    _hourController = FixedExtentScrollController();
+    _minuteController = FixedExtentScrollController();
+    _secondController = FixedExtentScrollController();
     _loadTimerSound();
+    _loadTimerDuration().then((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _hourController.jumpToItem(_hours);
+        _minuteController.jumpToItem(_minutes);
+        _secondController.jumpToItem(_seconds);
+      });
+    });
+    _loadTimerVibrate();
+    WidgetsBinding.instance.addObserver(this);
     _progressController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -38,10 +61,31 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   }
 
   @override
-  void dispose() {
-    _timer?.cancel();
-    _progressController.dispose();
-    super.dispose();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _loadTimerDuration().then((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _hourController.jumpToItem(_hours);
+          _minuteController.jumpToItem(_minutes);
+          _secondController.jumpToItem(_seconds);
+        });
+      });
+    }
+  }
+
+  Future<void> _loadTimerDuration() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _hours = prefs.getInt(_timerHoursKey) ?? 0;
+        _minutes = prefs.getInt(_timerMinutesKey) ?? 45;
+        _seconds = prefs.getInt(_timerSecondsKey) ?? 0;
+      });
+      print('Loaded timer duration: $_hours h, $_minutes m, $_seconds s');
+    } catch (e) {
+      print('Error loading timer duration: $e');
+      // If loading fails, keep default value
+    }
   }
 
   Future<void> _loadTimerSound() async {
@@ -58,6 +102,19 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     }
   }
 
+  Future<void> _saveTimerDuration() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_timerHoursKey, _hours);
+      await prefs.setInt(_timerMinutesKey, _minutes);
+      await prefs.setInt(_timerSecondsKey, _seconds);
+      print('Saved timer duration: $_hours h, $_minutes m, $_seconds s');
+    } catch (e) {
+      print('Error saving timer duration: $e');
+      // If saving fails, ignore
+    }
+  }
+
   Future<void> _saveTimerSound(String sound) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -67,9 +124,35 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     }
   }
 
-  void _startTimer() {
+  Future<void> _loadTimerVibrate() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _selectedVibrate = prefs.getBool(_timerVibrateKey) ?? false;
+      });
+      print('Loaded timer vibrate: $_selectedVibrate');
+    } catch (e) {
+      print('Error loading timer vibrate: $e');
+      // If loading fails, keep default value
+    }
+  }
+
+  Future<void> _saveTimerVibrate(bool vibrate) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_timerVibrateKey, vibrate);
+      print('Saved timer vibrate: $vibrate');
+    } catch (e) {
+      print('Error saving timer vibrate: $e');
+      // If saving fails, ignore
+    }
+  }
+
+  Future<void> _startTimer() async {
     final totalSeconds = (_hours * 3600) + (_minutes * 60) + _seconds;
     if (totalSeconds == 0) return;
+
+    await _saveTimerDuration();
 
     setState(() {
       _remainingSeconds = totalSeconds;
@@ -127,34 +210,28 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   }
 
   void _showTimerEndDialog() {
-    // Play sound here - in a real app you would use audioplayers package
-    // For now just show dialog
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: const Text('Timer Ended'),
-        content: Text('Sound: ${_getSoundDisplayName()}'),
-        actions: [
-          CupertinoDialogAction(
-            child: const Text('OK'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-    );
+    // Start timer ring activity like alarm
+    const platform = MethodChannel('com.example.alarm/alarm');
+    platform.invokeMethod('startTimerRingActivity', {
+      'remaining_seconds': 0,
+      'selected_sound': _selectedSound,
+      'selected_vibrate': _selectedVibrate,
+    });
   }
 
   void _showSoundDialog() async {
     final result = await Navigator.of(context).push<Map<String, dynamic>>(
       CupertinoPageRoute(
-        builder: (context) => SoundSelector(currentSound: _selectedSound, currentVibrate: false),
+        builder: (context) => SoundSelector(currentSound: _selectedSound, currentVibrate: _selectedVibrate),
       ),
     );
     if (result != null) {
       setState(() {
         _selectedSound = result['sound'];
+        _selectedVibrate = result['vibrate'];
       });
       _saveTimerSound(_selectedSound);
+      _saveTimerVibrate(_selectedVibrate);
     }
   }
 
@@ -414,14 +491,13 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                   selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
                     background: CupertinoColors.transparent,
                   ),
-                  scrollController: FixedExtentScrollController(
-                    initialItem: _hours,
-                  ),
+                  scrollController: _hourController,
                   itemExtent: 35,
                   diameterRatio: 1.2,
                   squeeze: 1.1,
                   onSelectedItemChanged: (index) {
                     setState(() => _hours = index);
+                    _saveTimerDuration();
                   },
                   children: List.generate(
                     24,
@@ -455,14 +531,13 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                   selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
                     background: CupertinoColors.transparent,
                   ),
-                  scrollController: FixedExtentScrollController(
-                    initialItem: _minutes,
-                  ),
+                  scrollController: _minuteController,
                   itemExtent: 35,
                   diameterRatio: 1.2,
                   squeeze: 1.1,
                   onSelectedItemChanged: (index) {
                     setState(() => _minutes = index);
+                    _saveTimerDuration();
                   },
                   children: List.generate(
                     60,
@@ -496,14 +571,13 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                   selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
                     background: CupertinoColors.transparent,
                   ),
-                  scrollController: FixedExtentScrollController(
-                    initialItem: _seconds,
-                  ),
+                  scrollController: _secondController,
                   itemExtent: 35,
                   diameterRatio: 1.2,
                   squeeze: 1.1,
                   onSelectedItemChanged: (index) {
                     setState(() => _seconds = index);
+                    _saveTimerDuration();
                   },
                   children: List.generate(
                     60,
