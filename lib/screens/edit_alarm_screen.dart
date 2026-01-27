@@ -48,7 +48,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _snooze = true;
       _vibrate = true;
     }
-    _labelController = TextEditingController(text: _label);
+    _labelController = TextEditingController(text: _label == 'Alarm' ? '' : _label);
     _snoozeDuration = widget.alarm?.snoozeDuration ?? const Duration(minutes: 5);
     _showDurationOptions = false;
   }
@@ -79,8 +79,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       provider.addAlarm(alarm);
     }
 
-    // Show toast for enabled alarm
-    AlarmToast.showAlarmToast(alarm, context);
+    // Set last saved alarm for toast on list screen
+    provider.setLastSavedAlarm(alarm);
 
     Navigator.of(context, rootNavigator: true).pop();
   }
@@ -379,7 +379,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               decoration: const BoxDecoration(),
               onChanged: (value) {
                 setState(() {
-                  _label = value;
+                  _label = value.isEmpty ? 'Alarm' : value;
                 });
               },
             ),

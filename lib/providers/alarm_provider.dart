@@ -7,9 +7,11 @@ import '../services/alarm_service.dart';
 
 class AlarmProvider with ChangeNotifier {
   List<AlarmModel> _alarms = [];
+  AlarmModel? _lastSavedAlarm;
   static const String _storageKey = 'alarms';
 
   List<AlarmModel> get alarms => _alarms;
+  AlarmModel? get lastSavedAlarm => _lastSavedAlarm;
 
   AlarmProvider() {
     loadAlarms();
@@ -52,6 +54,18 @@ class AlarmProvider with ChangeNotifier {
     } catch (e) {
       debugPrint('Error saving alarms: $e');
     }
+  }
+
+  // Set last saved alarm for toast
+  void setLastSavedAlarm(AlarmModel alarm) {
+    _lastSavedAlarm = alarm;
+    notifyListeners();
+  }
+
+  // Clear last saved alarm
+  void clearLastSavedAlarm() {
+    _lastSavedAlarm = null;
+    notifyListeners();
   }
 
   // Sort alarms by time

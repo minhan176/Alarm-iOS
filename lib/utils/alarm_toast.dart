@@ -16,8 +16,10 @@ class AlarmToast {
       timeText = '$days ngày, $hours giờ, $minutes phút';
     } else if (hours > 0) {
       timeText = '$hours giờ, $minutes phút';
-    } else {
+    } else if (minutes > 0) {
       timeText = '$minutes phút';
+    } else {
+      timeText = '1 phút';
     }
 
     final overlay = Overlay.of(context);

@@ -6,6 +6,7 @@ import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
 import 'edit_alarm_screen.dart';
 import '../utils/alarm_toast.dart';
+import '../utils/alarm_toast.dart';
 
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({super.key});
@@ -16,6 +17,19 @@ class AlarmListScreen extends StatefulWidget {
 
 class _AlarmListScreenState extends State<AlarmListScreen> {
   bool _isEditMode = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final provider = Provider.of<AlarmProvider>(context);
+    if (provider.lastSavedAlarm != null) {
+      final alarm = provider.lastSavedAlarm!;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        AlarmToast.showAlarmToast(alarm, context);
+        provider.clearLastSavedAlarm();
+      });
+    }
+  }
 
   String? _getNextAlarmTimeText(List<AlarmModel> alarms) {
     final enabledAlarms = alarms.where((alarm) => alarm.isEnabled).toList();
@@ -46,16 +60,20 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     
     if (days > 0) {
       // Show days, hours, minutes
-      parts.add('$days days');
-      if (hours > 0) parts.add('$hours hours');
-      if (minutes > 0) parts.add('$minutes minutes');
+      parts.add('$days ngày');
+      if (hours > 0) parts.add('$hours giờ');
+      if (minutes > 0) parts.add('$minutes phút');
     } else if (hours > 0) {
       // Show hours, minutes only
-      parts.add('$hours hours');
-      if (minutes > 0) parts.add('$minutes minutes');
+      parts.add('$hours giờ');
+      if (minutes > 0) parts.add('$minutes phút');
     } else {
       // Show minutes only
-      parts.add('$minutes minutes');
+      if (minutes > 0) {
+        parts.add('$minutes phút');
+      } else {
+        parts.add('1 phút');
+      }
     }
 
     return 'Còn lại ${parts.join(', ')}';
@@ -153,12 +171,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   }
                 },
                 onToggle: () async {
-                  final wasEnabled = alarm.isEnabled;
                   await alarmProvider.toggleAlarm(alarm.id);
-                  // Show toast if alarm was just enabled
-                  if (!wasEnabled) {
-                    AlarmToast.showAlarmToast(alarm, context);
-                  }
+                  // Show toast when alarm is toggled
+                  AlarmToast.showAlarmToast(alarm, context);
                 },
                 onDelete: () {
                   alarmProvider.deleteAlarm(alarm.id);
