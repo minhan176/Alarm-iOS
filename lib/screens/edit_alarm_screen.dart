@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
+import 'package:jbh_ringtone/jbh_ringtone.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
@@ -704,44 +706,79 @@ class SoundSelector extends StatefulWidget {
 class _SoundSelectorState extends State<SoundSelector> {
   late String _selectedSound;
   late bool _vibrate;
-
-  final List<String> _sounds = [
-    'None',
-    'Radar',
-    'Apex',
-    'Beacon',
-    'Bulletin',
-    'By The Seaside',
-    'Chimes',
-    'Circuit',
-    'Constellation',
-    'Cosmic',
-    'Crystals',
-    'Hillside',
-    'Illuminate',
-    'Night Owl',
-    'Opening',
-    'Playtime',
-    'Presto',
-    'Radar (Classic)',
-    'Reflection',
-    'Ripples',
-    'Sencha',
-    'Signal',
-    'Silk',
-    'Slow Rise',
-    'Stargaze',
-    'Summit',
-    'Twinkle',
-    'Uplift',
-    'Waves',
-  ];
+  List<JbhRingtoneModel> _systemRingtones = [];
+  bool _isLoadingRingtones = true;
 
   @override
   void initState() {
     super.initState();
     _selectedSound = widget.currentSound;
     _vibrate = widget.currentVibrate;
+    _loadSystemRingtones();
+  }
+
+  Future<void> _loadSystemRingtones() async {
+    try {
+      // Try to load system ringtones without requesting permissions first
+      // jbh_ringtone package may handle permissions internally
+      final jbhRingtone = JbhRingtone();
+
+      // Get both ringtone and alarm sounds
+      final ringtoneSounds = await jbhRingtone.getRingtoneOnly();
+      final alarmSounds = await jbhRingtone.getAlarmRingtones();
+
+      // Combine and remove duplicates based on URI
+      final allSounds = [...ringtoneSounds, ...alarmSounds];
+      final uniqueSounds = <String, JbhRingtoneModel>{};
+
+      for (final sound in allSounds) {
+        if (!uniqueSounds.containsKey(sound.uri)) {
+          uniqueSounds[sound.uri] = sound;
+        }
+      }
+
+      setState(() {
+        _systemRingtones = uniqueSounds.values.toList();
+        _isLoadingRingtones = false;
+      });
+    } catch (e) {
+      // If loading fails, try requesting permission and retry once
+      try {
+        PermissionStatus status = await Permission.audio.request();
+        if (status.isGranted) {
+          final jbhRingtone = JbhRingtone();
+
+          // Get both ringtone and alarm sounds
+          final ringtoneSounds = await jbhRingtone.getRingtoneOnly();
+          final alarmSounds = await jbhRingtone.getAlarmRingtones();
+
+          // Combine and remove duplicates based on URI
+          final allSounds = [...ringtoneSounds, ...alarmSounds];
+          final uniqueSounds = <String, JbhRingtoneModel>{};
+
+          for (final sound in allSounds) {
+            if (!uniqueSounds.containsKey(sound.uri)) {
+              uniqueSounds[sound.uri] = sound;
+            }
+          }
+
+          setState(() {
+            _systemRingtones = uniqueSounds.values.toList();
+            _isLoadingRingtones = false;
+          });
+        } else {
+          // Permission denied, just use built-in sounds
+          setState(() {
+            _isLoadingRingtones = false;
+          });
+        }
+      } catch (e2) {
+        // If still fails, just use built-in sounds
+        setState(() {
+          _isLoadingRingtones = false;
+        });
+      }
+    }
   }
 
   void _pickFromDevice() async {
@@ -794,214 +831,224 @@ class _SoundSelectorState extends State<SoundSelector> {
                   ),
                 ),
               ),
-              // Vibrate toggle
-              Container(
-                margin: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2C2C2E),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Vibrate',
-                        style: TextStyle(color: CupertinoColors.white, fontSize: 17),
-                      ),
-                      Transform.scale(
-                        scale: 0.8,
-                        child: CupertinoSwitch(
-                          value: _vibrate,
-                          activeColor: CupertinoColors.systemGreen,
-                          onChanged: (value) => setState(() => _vibrate = value),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Section 1: Add from device
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
-                    child: Text(
-                      'SONGS',
-                      style: TextStyle(
-                        color: CupertinoColors.systemGrey,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2C2C2E),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: 2, // Always show 2 items: custom song (if selected) and pick button
-                      separatorBuilder: (context, index) => Divider(
-                        color: const Color(0xFF3C3C3E),
-                        height: 0.5,
-                        indent: 48,
-                        endIndent: 16,
-                      ),
-                      itemBuilder: (context, index) {
-                        // Index 0: Show selected custom song if exists, otherwise show pick button
-                        if (index == 0 && !_sounds.contains(_selectedSound)) {
-                          // Selected custom song
-                          return CupertinoButton(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            pressedOpacity: 1.0,
-                            onPressed: () {},
-                            child: SizedBox(
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                    child: Icon(
-                                      CupertinoIcons.check_mark,
-                                      color: CupertinoColors.systemOrange,
-                                      size: 24,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Container(
-                                      constraints: const BoxConstraints(maxWidth: 200),
-                                      child: Text(
-                                        _truncateSoundName(path.basename(_selectedSound)),
-                                        style: const TextStyle(
-                                          color: CupertinoColors.white,
-                                          fontSize: 17,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else if (index == 0 || (index == 1 && !_sounds.contains(_selectedSound))) {
-                          // Pick a song button
-                          return CupertinoButton(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            pressedOpacity: 1.0,
-                            onPressed: _pickFromDevice,
-                            child: SizedBox(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(width: 32),
-                                  const Text(
-                                    'Pick a song',
-                                    style: TextStyle(
-                                      color: CupertinoColors.white,
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Icon(
-                                    CupertinoIcons.chevron_right,
-                                    color: CupertinoColors.systemGrey3,
-                                    size: 17,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                        return const SizedBox.shrink(); // Should not reach here
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              // Section 2: List of sounds
+              // Make the rest of the content scrollable
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
-                      child: Text(
-                        'RINGTONES',
-                        style: TextStyle(
-                          color: CupertinoColors.systemGrey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Vibrate toggle
+                      Container(
+                        margin: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2C2C2E),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Vibrate',
+                                style: TextStyle(color: CupertinoColors.white, fontSize: 17),
+                              ),
+                              Transform.scale(
+                                scale: 0.8,
+                                child: CupertinoSwitch(
+                                  value: _vibrate,
+                                  activeColor: CupertinoColors.systemGreen,
+                                  onChanged: (value) => setState(() => _vibrate = value),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF2C2C2E),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: ListView.separated(
-                            itemCount: _sounds.length,
-                            separatorBuilder: (context, index) => Divider(
-                              color: const Color(0xFF3C3C3E),
-                              height: 0.5,
-                              indent: index == 0 ? 0 : 48, // No indent for divider under 'None'
-                              endIndent: index == 0 ? 0 : 16, // No endIndent for divider under 'None'
+                      // Section 1: Add from device
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                            child: Text(
+                              'SONGS',
+                              style: TextStyle(
+                                color: CupertinoColors.systemGrey,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                            itemBuilder: (context, index) {
-                              final sound = _sounds[index];
-                              final isSelected = _selectedSound == sound;
-                              return CupertinoButton(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                pressedOpacity: 1.0,
-                                onPressed: () {
-                                  setState(() {
-                                    _selectedSound = sound;
-                                  });
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 24,
-                                      child: isSelected
-                                          ? const Icon(
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF2C2C2E),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              //physics: const ClampingScrollPhysics(),
+                              itemCount: 2, // Always show 2 items: custom song (if selected) and pick button
+                              separatorBuilder: (context, index) => Divider(
+                                color: const Color(0xFF3C3C3E),
+                                height: 0.5,
+                                indent: 48,
+                                endIndent: 16,
+                              ),
+                              itemBuilder: (context, index) {
+                                // Index 0: Show selected custom song if exists, otherwise show pick button
+                                if (index == 0 && !_systemRingtones.any((r) => r.uri == _selectedSound)) {
+                                  // Selected custom song
+                                  return CupertinoButton(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    pressedOpacity: 1.0,
+                                    onPressed: () {},
+                                    child: SizedBox(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 24,
+                                            child: Icon(
                                               CupertinoIcons.check_mark,
                                               color: CupertinoColors.systemOrange,
-                                              size: 18,
-                                            )
-                                          : null,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Expanded(
-                                      child: Container(
-                                        constraints: const BoxConstraints(maxWidth: 200),
-                                        child: Text(
-                                          _truncateSoundName(sound),
-                                          style: const TextStyle(
-                                            color: CupertinoColors.white,
-                                            fontSize: 17,
+                                              size: 24,
+                                            ),
                                           ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Container(
+                                              constraints: const BoxConstraints(maxWidth: 200),
+                                              child: Text(
+                                                _truncateSoundName(path.basename(_selectedSound)),
+                                                style: const TextStyle(
+                                                  color: CupertinoColors.white,
+                                                  fontSize: 17,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              );
-                            },
+                                  );
+                                } else if (index == 0 || (index == 1 && !_systemRingtones.any((r) => r.uri == _selectedSound))) {
+                                  // Pick a song button
+                                  return CupertinoButton(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    pressedOpacity: 1.0,
+                                    onPressed: _pickFromDevice,
+                                    child: SizedBox(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(width: 32),
+                                          const Text(
+                                            'Pick a song',
+                                            style: TextStyle(
+                                              color: CupertinoColors.white,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Icon(
+                                            CupertinoIcons.chevron_right,
+                                            color: CupertinoColors.systemGrey3,
+                                            size: 17,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return const SizedBox.shrink(); // Should not reach here
+                              },
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
+                      // Section 2: System Ringtones
+                      if (_systemRingtones.isNotEmpty) ...[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                              child: Text(
+                                'SYSTEM RINGTONES',
+                                style: TextStyle(
+                                  color: CupertinoColors.systemGrey,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF2C2C2E),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                //physics: const ClampingScrollPhysics(),
+                                itemCount: _systemRingtones.length,
+                                separatorBuilder: (context, index) => Divider(
+                                  color: const Color(0xFF3C3C3E),
+                                  height: 0.5,
+                                  indent: 48,
+                                  endIndent: 16,
+                                ),
+                                itemBuilder: (context, index) {
+                                  final ringtone = _systemRingtones[index];
+                                  final isSelected = _selectedSound == ringtone.uri;
+                                  return CupertinoButton(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    pressedOpacity: 1.0,
+                                    onPressed: () {
+                                      setState(() {
+                                        _selectedSound = ringtone.uri;
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 24,
+                                          child: isSelected
+                                              ? const Icon(
+                                                  CupertinoIcons.check_mark,
+                                                  color: CupertinoColors.systemOrange,
+                                                  size: 18,
+                                                )
+                                              : null,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Container(
+                                            constraints: const BoxConstraints(maxWidth: 200),
+                                            child: Text(
+                                              _truncateSoundName(ringtone.displayTitle),
+                                              style: const TextStyle(
+                                                color: CupertinoColors.white,
+                                                fontSize: 17,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
               ),
             ],
