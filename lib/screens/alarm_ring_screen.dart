@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,8 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   late AnimationController _pulseController;
   late AnimationController _rotationController;
   late AnimationController _shakeController;
+
+  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
 
   @override
   void initState() {
@@ -93,25 +96,32 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       // Play alarm sound based on user selection
       if (widget.alarm.sound != 'None') {
         try {
-          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
-          await _audioPlayer.setVolume(1.0);
-
-          Source audioSource;
-          if (widget.alarm.sound.startsWith('/') || widget.alarm.sound.contains('\\')) {
-            // It's a file path from device
-            audioSource = DeviceFileSource(widget.alarm.sound);
+          if (widget.alarm.sound.startsWith('content://')) {
+            // It's a system ringtone URI - use native RingtoneManager
+            await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': widget.alarm.sound});
+            print('Playing system ringtone: ${widget.alarm.sound}');
           } else {
-            // It's a built-in sound
-            final soundFileName = widget.alarm.sound.toLowerCase();
-            final soundPath = 'sounds/$soundFileName.mp3';
-            audioSource = AssetSource(soundPath);
-          }
+            // Use audioplayers for other sounds
+            await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+            await _audioPlayer.setVolume(1.0);
 
-          await _audioPlayer.play(audioSource);
-          print('Playing alarm sound: ${widget.alarm.sound}');
+            Source audioSource;
+            if (widget.alarm.sound.startsWith('/') || widget.alarm.sound.contains('\\')) {
+              // It's a file path from device
+              audioSource = DeviceFileSource(widget.alarm.sound);
+            } else {
+              // It's a built-in sound
+              final soundFileName = widget.alarm.sound.toLowerCase();
+              final soundPath = 'sounds/$soundFileName.mp3';
+              audioSource = AssetSource(soundPath);
+            }
+
+            await _audioPlayer.play(audioSource);
+            print('Playing alarm sound: ${widget.alarm.sound}');
+          }
         } catch (e) {
           print('Could not play alarm sound "${widget.alarm.sound}": $e');
-          if (!widget.alarm.sound.startsWith('/') && !widget.alarm.sound.contains('\\')) {
+          if (!widget.alarm.sound.startsWith('content://') && !widget.alarm.sound.startsWith('/') && !widget.alarm.sound.contains('\\')) {
             print(
               'Make sure the file assets/sounds/${widget.alarm.sound.toLowerCase()}.mp3 exists',
             );
@@ -128,6 +138,12 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   Future<void> _stopAlarm() async {
     await _audioPlayer.stop();
     await Vibration.cancel();
+    // Stop system ringtone if playing
+    try {
+      await _alarmChannel.invokeMethod('stopSystemRingtone');
+    } catch (e) {
+      print('Error stopping system ringtone: $e');
+    }
   }
 
   void _dismissAlarm() async {

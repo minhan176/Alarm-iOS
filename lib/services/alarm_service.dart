@@ -43,6 +43,9 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
     importance: Importance.max,
     priority: Priority.max,
     playSound: true,
+    sound: alarm.sound.startsWith('content://') || alarm.sound.startsWith('/') || alarm.sound.contains('\\')
+        ? UriAndroidNotificationSound(alarm.sound)
+        : null,
     enableVibration: alarm.vibrate,
     vibrationPattern: alarm.vibrate
         ? Int64List.fromList([0, 1000, 500, 1000])

@@ -5,6 +5,10 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
+import android.media.Ringtone
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import androidx.annotation.RequiresApi
@@ -21,6 +25,7 @@ class DummyAlarmReceiver : BroadcastReceiver() {
 
 class AlarmPlugin(private val context: Context) : MethodCallHandler {
     private var alarmManager: AlarmManager? = null
+    private var currentRingtone: Ringtone? = null
 
     init {
         alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -70,6 +75,17 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
                 val selectedVibrate = call.argument<Boolean>("selected_vibrate") ?: false
                 println("DEBUG: AlarmPlugin startTimerRingActivity called with remainingSeconds=$remainingSeconds, selectedSound=$selectedSound, selectedVibrate=$selectedVibrate")
                 startTimerRingActivity(remainingSeconds, selectedSound, selectedVibrate)
+                result.success(null)
+            }
+            "playSystemRingtone" -> {
+                val uriString = call.argument<String>("uri")
+                if (uriString != null) {
+                    playSystemRingtone(uriString)
+                }
+                result.success(null)
+            }
+            "stopSystemRingtone" -> {
+                stopSystemRingtone()
                 result.success(null)
             }
             else -> {
@@ -266,6 +282,36 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
         println("DEBUG: AlarmPlugin starting TimerRingActivity")
         context.startActivity(intent)
         println("DEBUG: AlarmPlugin startActivity completed")
+    }
+
+    private fun stopSystemRingtone() {
+        try {
+            currentRingtone?.stop()
+            currentRingtone = null
+            println("DEBUG: Stopped system ringtone")
+        } catch (e: Exception) {
+            println("DEBUG: Error stopping system ringtone: ${e.message}")
+        }
+    }
+
+    private fun playSystemRingtone(uriString: String) {
+        try {
+            // Stop any currently playing ringtone
+            stopSystemRingtone()
+
+            val uri = Uri.parse(uriString)
+            currentRingtone = RingtoneManager.getRingtone(context, uri)
+            if (currentRingtone != null) {
+                currentRingtone?.setStreamType(AudioManager.STREAM_ALARM)
+                currentRingtone?.setLooping(true)
+                currentRingtone?.play()
+                println("DEBUG: Playing system ringtone: $uriString")
+            } else {
+                println("DEBUG: Could not get ringtone for URI: $uriString")
+            }
+        } catch (e: Exception) {
+            println("DEBUG: Error playing system ringtone: ${e.message}")
+        }
     }
 }
 
