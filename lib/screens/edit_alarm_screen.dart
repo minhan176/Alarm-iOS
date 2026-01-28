@@ -1,6 +1,7 @@
 import 'package:alarm/utils/alarm_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
@@ -9,7 +10,8 @@ import 'package:permission_handler/permission_handler.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
-import '../utils/alarm_toast.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
 
 class EditAlarmScreen extends StatefulWidget {
   final AlarmModel? alarm;
@@ -25,11 +27,16 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late String _label;
   late List<int> _repeatDays;
   late String _sound;
+  late String _soundDisplayName;
   late bool _snooze;
   late bool _vibrate;
   late TextEditingController _labelController;
   late Duration _snoozeDuration;
   late bool _showDurationOptions;
+  late AudioPlayer _previewPlayer;
+  late String? _currentlyPreviewingUri;
+
+  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
 
   @override
   void initState() {
@@ -39,6 +46,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _label = widget.alarm!.label;
       _repeatDays = List.from(widget.alarm!.repeatDays);
       _sound = widget.alarm!.sound;
+      _soundDisplayName = _getSoundDisplayName(_sound);
       _snooze = widget.alarm!.snooze;
       _vibrate = widget.alarm!.vibrate;
     } else {
@@ -47,17 +55,36 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _label = '';
       _repeatDays = [];
       _sound = 'Radar';
+      _soundDisplayName = 'Radar';
       _snooze = true;
       _vibrate = true;
     }
     _labelController = TextEditingController(text: _label == 'Alarm' ? '' : _label);
     _snoozeDuration = widget.alarm?.snoozeDuration ?? const Duration(minutes: 5);
     _showDurationOptions = false;
+    _previewPlayer = AudioPlayer();
+    _currentlyPreviewingUri = null;
+  }
+
+  String _getSoundDisplayName(String sound) {
+    if (sound == 'assets/sounds/alarm.wav') {
+      return 'Alarm OS 26';
+    }
+    // For system ringtones, we can't easily get the display name without loading the list
+    // So we'll show a generic name or the URI basename
+    if (sound.startsWith('content://')) {
+      return 'System Ringtone';
+    }
+    // For built-in sounds, return the sound name
+    return path.basename(sound);
   }
 
   @override
   void dispose() {
     _labelController.dispose();
+    _previewPlayer.dispose();
+    // Stop any playing system ringtone preview
+    _stopSystemRingtonePreview();
     super.dispose();
   }
 
@@ -115,6 +142,16 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
           ],
         ),
       );
+    }
+  }
+
+  Future<void> _stopSystemRingtonePreview() async {
+    try {
+      print('📱 Stopping system ringtone preview in EditAlarmScreen');
+      await _alarmChannel.invokeMethod('stopSystemRingtonePreview');
+      print('📱 System ringtone preview stopped successfully');
+    } catch (e) {
+      print('❌ Error stopping system ringtone preview: $e');
     }
   }
 
@@ -180,7 +217,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                     _buildLabelItem(),
                     _buildSettingItem(
                       'Sound',
-                      _truncateSoundName(path.basename(_sound)),
+                      _soundDisplayName,
                       () => _showSoundPage(),
                       valueColor: CupertinoColors.white,
                     ),
@@ -476,6 +513,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     if (result != null) {
       setState(() {
         _sound = result['sound'];
+        _soundDisplayName = result['soundDisplayName'] ?? _getSoundDisplayName(result['sound']);
         _vibrate = result['vibrate'];
       });
     }
@@ -689,6 +727,13 @@ String _truncateSoundName(String soundName, {int maxLength = 25}) {
   return '${soundName.substring(0, maxLength - 3)}...';
 }
 
+class CustomRingtone {
+  final String displayTitle;
+  final String uri;
+  
+  CustomRingtone({required this.displayTitle, required this.uri});
+}
+
 class SoundSelector extends StatefulWidget {
   final String currentSound;
   final bool currentVibrate;
@@ -706,14 +751,20 @@ class SoundSelector extends StatefulWidget {
 class _SoundSelectorState extends State<SoundSelector> {
   late String _selectedSound;
   late bool _vibrate;
-  List<JbhRingtoneModel> _systemRingtones = [];
+  List<dynamic> _systemRingtones = [];
   bool _isLoadingRingtones = true;
+  late AudioPlayer _previewPlayer;
+  late String? _currentlyPreviewingUri;
+
+  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
 
   @override
   void initState() {
     super.initState();
     _selectedSound = widget.currentSound;
     _vibrate = widget.currentVibrate;
+    _previewPlayer = AudioPlayer();
+    _currentlyPreviewingUri = null;
     _loadSystemRingtones();
   }
 
@@ -736,9 +787,17 @@ class _SoundSelectorState extends State<SoundSelector> {
           uniqueSounds[sound.uri] = sound;
         }
       }
+      
 
       setState(() {
-        _systemRingtones = uniqueSounds.values.toList();
+        // Create the custom ringtone
+        final alarmOS26 = CustomRingtone(
+          displayTitle: 'Alarm OS 26',
+          uri: 'assets/sounds/alarm.wav',
+        );
+        
+        // Combine system ringtones with custom ringtone
+        _systemRingtones = [alarmOS26, ...uniqueSounds.values];
         _isLoadingRingtones = false;
       });
     } catch (e) {
@@ -763,7 +822,14 @@ class _SoundSelectorState extends State<SoundSelector> {
           }
 
           setState(() {
-            _systemRingtones = uniqueSounds.values.toList();
+            // Create the custom ringtone
+            final alarmOS26 = CustomRingtone(
+              displayTitle: 'Alarm OS 26',
+              uri: 'assets/sounds/alarm.wav',
+            );
+            
+            // Combine system ringtones with custom ringtone
+            _systemRingtones = [alarmOS26, ...uniqueSounds.values];
             _isLoadingRingtones = false;
           });
         } else {
@@ -778,6 +844,164 @@ class _SoundSelectorState extends State<SoundSelector> {
           _isLoadingRingtones = false;
         });
       }
+    }
+  }
+
+  void _playRingtonePreview(dynamic ringtone) async {
+    try {
+      print('🎵 Starting ringtone preview for: $ringtone');
+      // Stop any currently playing preview
+      await _stopRingtonePreview();
+
+      String? soundUri;
+      if (ringtone is CustomRingtone) {
+        soundUri = ringtone.uri;
+        print('🎵 CustomRingtone URI: $soundUri');
+      } else if (ringtone is Map<String, dynamic>) {
+        soundUri = ringtone['uri'] as String?;
+        print('🎵 Map URI: $soundUri');
+      } else if (ringtone is String) {
+        // Handle direct string URI
+        soundUri = ringtone;
+        print('🎵 String URI: $soundUri');
+      } else {
+        // Handle JbhRingtoneModel and other objects with uri property
+        try {
+          soundUri = (ringtone as dynamic).uri as String?;
+          print('🎵 Dynamic URI: $soundUri, type: ${soundUri?.startsWith('assets/')}, ringtone type: ${ringtone.runtimeType}');
+        } catch (e) {
+          print('❌ Could not extract URI from ringtone: $e');
+        }
+      }
+
+      if (soundUri != null && soundUri != 'None') {
+        try {
+          // Set audio context like alarm ring screen
+          final AudioContext audioContext = AudioContext(
+            android: AudioContextAndroid(
+              usageType: AndroidUsageType.alarm,
+              audioFocus: AndroidAudioFocus.gainTransientExclusive,
+              audioMode: AndroidAudioMode.normal,
+              contentType: AndroidContentType.music,
+            ),
+            iOS: AudioContextIOS(
+              category: AVAudioSessionCategory.playback,
+              options: {},
+            ),
+          );
+          await _previewPlayer.setAudioContext(audioContext);
+
+          if (soundUri.startsWith('content://')) {
+            // It's a system ringtone URI - use native RingtoneManager like alarm ring screen
+            await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': soundUri});
+            print('Playing system ringtone preview: $soundUri');
+            _currentlyPreviewingUri = soundUri;
+
+            // Auto-stop after 3 seconds (since playSystemRingtone loops)
+            Future.delayed(const Duration(seconds: 3), () {
+              if (_currentlyPreviewingUri == soundUri) {
+                print('🎵 Auto-stopping system ringtone preview after 3 seconds');
+                _stopRingtonePreview();
+              }
+            });
+          } else if (soundUri.startsWith('assets/')) {
+            // It's an asset file (like our custom Alarm OS 26)
+            await _previewPlayer.setReleaseMode(ReleaseMode.loop);
+            await _previewPlayer.setVolume(1.0);
+            final assetPath = soundUri.replaceFirst('assets/', '');
+            final audioSource = AssetSource(assetPath);
+            await _previewPlayer.play(audioSource);
+            print('Playing asset sound preview: $soundUri');
+            _currentlyPreviewingUri = soundUri;
+
+            // Auto-stop after 3 seconds
+            Future.delayed(const Duration(seconds: 3), () {
+              if (_currentlyPreviewingUri == soundUri) {
+                print('🎵 Auto-stopping asset preview after 3 seconds');
+                _stopRingtonePreview();
+              }
+            });
+          } else {
+            // Use audioplayers for other sounds
+            await _previewPlayer.setReleaseMode(ReleaseMode.loop);
+            await _previewPlayer.setVolume(1.0);
+
+            Source audioSource;
+            if (soundUri.startsWith('/') || soundUri.contains('\\')) {
+              // It's a file path from device
+              audioSource = DeviceFileSource(soundUri);
+            } else {
+              // It's a built-in sound
+              final soundFileName = soundUri.toLowerCase();
+              final soundPath = 'sounds/$soundFileName.mp3';
+              audioSource = AssetSource(soundPath);
+            }
+
+            await _previewPlayer.play(audioSource);
+            print('Playing other sound preview: $soundUri');
+            _currentlyPreviewingUri = soundUri;
+
+            // Auto-stop after 3 seconds
+            Future.delayed(const Duration(seconds: 3), () {
+              if (_currentlyPreviewingUri == soundUri) {
+                print('🎵 Auto-stopping other preview after 3 seconds');
+                _stopRingtonePreview();
+              }
+            });
+          }
+        } catch (e) {
+          print('Could not play preview sound "$soundUri": $e');
+          if (!soundUri.startsWith('content://') && !soundUri.startsWith('/') && !soundUri.startsWith('assets/') && !soundUri.contains('\\')) {
+            print(
+              'Make sure the file assets/sounds/${soundUri.toLowerCase()}.mp3 exists',
+            );
+          }
+        }
+      } else {
+        print('No sound selected for preview');
+      }
+    } catch (e) {
+      print('Error starting preview: $e');
+    }
+  }
+
+  Future<void> _stopRingtonePreview() async {
+    try {
+      print('🛑 Stopping ringtone preview');
+      await _previewPlayer.stop();
+
+      // Also stop system ringtone if playing
+      if (_currentlyPreviewingUri != null && _currentlyPreviewingUri!.startsWith('content://')) {
+        await _alarmChannel.invokeMethod('stopSystemRingtone');
+        print('🛑 Stopped system ringtone');
+      }
+
+      _currentlyPreviewingUri = null;
+      print('🛑 Preview stopped successfully');
+    } catch (e) {
+      print('❌ Error stopping ringtone preview: $e');
+    }
+  }
+
+  Future<void> _playSystemRingtonePreview(String uri) async {
+    try {
+      print('📱 Playing system ringtone preview: $uri');
+      await _alarmChannel.invokeMethod('playSystemRingtonePreview', {'uri': uri});
+      _currentlyPreviewingUri = uri;
+      print('📱 System ringtone preview started successfully');
+    } catch (e) {
+      print('❌ Error playing system ringtone preview: $e');
+    }
+  }
+
+  Future<void> _stopSystemRingtonePreview() async {
+    try {
+      print('📱 Stopping system ringtone preview');
+      await _alarmChannel.invokeMethod('stopSystemRingtonePreview');
+      _currentlyPreviewingUri = null;
+      print('📱 System ringtone preview stopped successfully');
+    } catch (e) {
+      print('❌ Error stopping system ringtone preview: $e');
     }
   }
 
@@ -800,11 +1024,41 @@ class _SoundSelectorState extends State<SoundSelector> {
     return '${soundName.substring(0, maxLength - 3)}...';
   }
 
+  String _getSelectedSoundDisplayName() {
+    // Find the ringtone with the selected URI
+    final ringtone = _systemRingtones.cast<dynamic>().firstWhere(
+      (r) => r.uri == _selectedSound,
+      orElse: () => null,
+    );
+    
+    if (ringtone != null) {
+      return ringtone.displayTitle;
+    }
+    
+    // For custom sounds from device
+    if (_selectedSound.startsWith('/') || _selectedSound.contains('\\')) {
+      return _truncateSoundName(path.basename(_selectedSound));
+    }
+    
+    // For built-in sounds
+    return _selectedSound;
+  }
+
+  @override
+  void dispose() {
+    _previewPlayer.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pop({'sound': _selectedSound, 'vibrate': _vibrate});
+        Navigator.of(context).pop({
+          'sound': _selectedSound, 
+          'soundDisplayName': _getSelectedSoundDisplayName(),
+          'vibrate': _vibrate
+        });
         return false;
       },
       child: CupertinoPageScaffold(
@@ -821,7 +1075,11 @@ class _SoundSelectorState extends State<SoundSelector> {
                   text: 'Back',
                   iconColor: CupertinoColors.white,
                   textColor: CupertinoColors.white,
-                  onPressed: () => Navigator.of(context).pop({'sound': _selectedSound, 'vibrate': _vibrate}),
+                  onPressed: () => Navigator.of(context).pop({
+                    'sound': _selectedSound, 
+                    'soundDisplayName': _getSelectedSoundDisplayName(),
+                    'vibrate': _vibrate
+                  }),
                 ),
                 middle: const Text(
                   'Sound',
@@ -895,7 +1153,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                       return CupertinoButton(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         pressedOpacity: 1.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          
+                        },
                         child: SizedBox(
                           child: Row(
                             children: [
@@ -997,6 +1257,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                           onPressed: () {
                             setState(() {
                               _selectedSound = ringtone.uri;
+                              _playRingtonePreview(_selectedSound);
                             });
                           },
                           child: Row(

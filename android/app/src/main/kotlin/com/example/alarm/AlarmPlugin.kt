@@ -88,6 +88,17 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
                 stopSystemRingtone()
                 result.success(null)
             }
+            "playSystemRingtonePreview" -> {
+                val uriString = call.argument<String>("uri")
+                if (uriString != null) {
+                    playSystemRingtonePreview(uriString)
+                }
+                result.success(null)
+            }
+            "stopSystemRingtonePreview" -> {
+                stopSystemRingtonePreview()
+                result.success(null)
+            }
             else -> {
                 result.notImplemented()
             }
@@ -311,6 +322,36 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
             }
         } catch (e: Exception) {
             println("DEBUG: Error playing system ringtone: ${e.message}")
+        }
+    }
+
+    private fun playSystemRingtonePreview(uriString: String) {
+        try {
+            // Stop any currently playing preview ringtone
+            stopSystemRingtonePreview()
+
+            val uri = Uri.parse(uriString)
+            currentRingtone = RingtoneManager.getRingtone(context, uri)
+            if (currentRingtone != null) {
+                currentRingtone?.setStreamType(AudioManager.STREAM_ALARM) // Use alarm stream for preview like the main alarm
+                currentRingtone?.setLooping(false) // Don't loop for preview
+                currentRingtone?.play()
+                println("DEBUG: Playing system ringtone preview: $uriString")
+            } else {
+                println("DEBUG: Could not get ringtone for preview URI: $uriString")
+            }
+        } catch (e: Exception) {
+            println("DEBUG: Error playing system ringtone preview: ${e.message}")
+        }
+    }
+
+    private fun stopSystemRingtonePreview() {
+        try {
+            currentRingtone?.stop()
+            currentRingtone = null
+            println("DEBUG: Stopped system ringtone preview")
+        } catch (e: Exception) {
+            println("DEBUG: Error stopping system ringtone preview: ${e.message}")
         }
     }
 }
