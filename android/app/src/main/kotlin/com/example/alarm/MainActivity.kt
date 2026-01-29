@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.provider.Settings
 import android.net.Uri
+import android.os.PowerManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
@@ -71,6 +72,46 @@ class MainActivity : FlutterActivity() {
                         result.success(null)
                     } else {
                         result.error("INVALID_ARGUMENT", "Alarm data is required", null)
+                    }
+                }
+                else -> {
+                    result.notImplemented()
+                }
+            }
+        }
+
+        // Register battery optimization method channel
+        val batteryChannel = MethodChannel(binaryMessenger!!, "com.example.alarm/battery")
+        batteryChannel.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "isIgnoringBatteryOptimizations" -> {
+                    try {
+                        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+                        val isIgnoring = powerManager.isIgnoringBatteryOptimizations(packageName)
+                        result.success(isIgnoring)
+                    } catch (e: Exception) {
+                        result.error("BATTERY_CHECK_ERROR", e.message, null)
+                    }
+                }
+                "canRunInBackground" -> {
+                    try {
+                        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+                        val isIgnoring = powerManager.isIgnoringBatteryOptimizations(packageName)
+                        result.success(isIgnoring)
+                    } catch (e: Exception) {
+                        result.error("BACKGROUND_CHECK_ERROR", e.message, null)
+                    }
+                }
+                "openBatterySettings" -> {
+                    try {
+                        // Open app-specific battery settings
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.parse("package:$packageName")
+                        }
+                        startActivity(intent)
+                        result.success("Opened app battery settings")
+                    } catch (e: Exception) {
+                        result.error("SETTINGS_OPEN_ERROR", e.message, null)
                     }
                 }
                 else -> {

@@ -5,6 +5,7 @@ class AlarmModel {
   final bool isEnabled;
   final List<int> repeatDays; // 1=Monday, 2=Tuesday, ..., 7=Sunday
   final String sound;
+  final String? soundDisplayName;
   final bool snooze;
   final bool vibrate;
   final Duration snoozeDuration;
@@ -15,7 +16,8 @@ class AlarmModel {
     this.label = 'Alarm',
     this.isEnabled = true,
     this.repeatDays = const [],
-    this.sound = 'Radar',
+    this.sound = 'assets/sounds/alarm.wav',
+    this.soundDisplayName,
     this.snooze = true,
     this.vibrate = true,
     this.snoozeDuration = const Duration(minutes: 5),
@@ -29,6 +31,7 @@ class AlarmModel {
     bool? isEnabled,
     List<int>? repeatDays,
     String? sound,
+    String? soundDisplayName,
     bool? snooze,
     bool? vibrate,
     Duration? snoozeDuration,
@@ -40,6 +43,7 @@ class AlarmModel {
       isEnabled: isEnabled ?? this.isEnabled,
       repeatDays: repeatDays ?? this.repeatDays,
       sound: sound ?? this.sound,
+      soundDisplayName: soundDisplayName ?? this.soundDisplayName,
       snooze: snooze ?? this.snooze,
       vibrate: vibrate ?? this.vibrate,
       snoozeDuration: snoozeDuration ?? this.snoozeDuration,
@@ -55,6 +59,7 @@ class AlarmModel {
       'isEnabled': isEnabled,
       'repeatDays': repeatDays,
       'sound': sound,
+      'soundDisplayName': soundDisplayName,
       'snooze': snooze,
       'vibrate': vibrate,
       'snoozeDuration': snoozeDuration.inMinutes,
@@ -69,7 +74,8 @@ class AlarmModel {
       label: json['label'] ?? 'Alarm',
       isEnabled: json['isEnabled'] ?? true,
       repeatDays: List<int>.from(json['repeatDays'] ?? []),
-      sound: json['sound'] ?? 'Radar',
+      sound: json['sound'] ?? 'assets/sounds/alarm.wav',
+      soundDisplayName: json['soundDisplayName'],
       snooze: json['snooze'] ?? true,
       vibrate: json['vibrate'] ?? true,
       snoozeDuration: Duration(minutes: json['snoozeDuration'] ?? 5),

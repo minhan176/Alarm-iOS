@@ -19,6 +19,7 @@ import 'screens/timer_screen.dart';
 import 'screens/alarm_ring_screen.dart';
 import 'screens/timer_ring_screen.dart';
 import 'services/alarm_service.dart';
+import 'services/battery_optimization_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -68,11 +69,18 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   bool _shouldDismissDialog = false;
   bool _permissionChecked = false;
 
+  // Battery optimization variables
+  bool _batteryOptimizationIgnored = false;
+  bool _batteryDialogShown = false;
+  bool _shouldDismissBatteryDialog = false;
+  bool _batteryPermissionChecked = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _checkOverlayPermission();
+    _checkBatteryOptimizationPermission();
     
     // Set up method channel to listen for navigation calls from Android
     const platform = MethodChannel('com.example.alarm/navigation');
@@ -112,6 +120,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed && _dialogShown) {
       _checkPermissionAgain();
     }
+    if (state == AppLifecycleState.resumed && _batteryDialogShown) {
+      _checkBatteryPermissionAgain();
+    }
   }
 
   Future<void> _checkOverlayPermission() async {
@@ -136,6 +147,51 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         _shouldDismissDialog = true;
       }
     });
+  }
+
+  Future<void> _checkBatteryOptimizationPermission() async {
+    final isIgnoring = await BatteryOptimizationService.isIgnoringBatteryOptimizations();
+    setState(() {
+      _batteryOptimizationIgnored = isIgnoring;
+      _batteryPermissionChecked = true;
+    });
+  }
+
+  Future<void> _checkBatteryPermissionAgain() async {
+    final isIgnoring = await BatteryOptimizationService.isIgnoringBatteryOptimizations();
+    setState(() {
+      _batteryOptimizationIgnored = isIgnoring;
+      _batteryPermissionChecked = true;
+      if (isIgnoring) {
+        _shouldDismissBatteryDialog = true;
+      }
+    });
+  }
+
+  void _showBatteryOptimizationDialog(BuildContext context) {
+    _batteryDialogShown = true;
+    showCupertinoDialog(
+      context: navigatorKey.currentContext ?? context,
+      barrierDismissible: false,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text('Cho phép chạy dưới nền'),
+        content: Text('Để báo thức hoạt động chính xác, vui lòng vào cài đặt ứng dụng > Pin và cho phép ứng dụng chạy dưới nền.'),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () async {
+              await BatteryOptimizationService.openBatterySettings();
+            },
+            child: Text('Mở cài đặt ứng dụng'),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Đóng'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showOverlayDialog(BuildContext context) {
@@ -184,6 +240,23 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         });
       });
     }
+
+    // Battery optimization dialog logic
+    if (_batteryPermissionChecked && !_batteryOptimizationIgnored && !_batteryDialogShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showBatteryOptimizationDialog(context);
+      });
+    }
+    if (_shouldDismissBatteryDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(navigatorKey.currentContext ?? context).pop();
+        setState(() {
+          _batteryDialogShown = false;
+          _shouldDismissBatteryDialog = false;
+        });
+      });
+    }
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AlarmProvider()),
