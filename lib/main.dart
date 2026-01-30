@@ -70,17 +70,16 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   bool _permissionChecked = false;
 
   // Battery optimization variables
-  bool _batteryOptimizationIgnored = false;
   bool _batteryDialogShown = false;
   bool _shouldDismissBatteryDialog = false;
-  bool _batteryPermissionChecked = false;
+  bool _batteryDialogDisplayedOnce = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _checkOverlayPermission();
-    _checkBatteryOptimizationPermission();
+    _loadBatteryDialogState();
     
     // Set up method channel to listen for navigation calls from Android
     const platform = MethodChannel('com.example.alarm/navigation');
@@ -120,9 +119,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed && _dialogShown) {
       _checkPermissionAgain();
     }
-    if (state == AppLifecycleState.resumed && _batteryDialogShown) {
-      _checkBatteryPermissionAgain();
-    }
   }
 
   Future<void> _checkOverlayPermission() async {
@@ -138,6 +134,18 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     await prefs.setBool('overlay_dialog_shown', shown);
   }
 
+  Future<void> _loadBatteryDialogState() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _batteryDialogDisplayedOnce = prefs.getBool('battery_dialog_shown') ?? false;
+    });
+  }
+
+  Future<void> _saveBatteryDialogState(bool shown) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('battery_dialog_shown', shown);
+  }
+
   Future<void> _checkPermissionAgain() async {
     final status = await Permission.systemAlertWindow.status;
     setState(() {
@@ -149,27 +157,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     });
   }
 
-  Future<void> _checkBatteryOptimizationPermission() async {
-    final isIgnoring = await BatteryOptimizationService.isIgnoringBatteryOptimizations();
-    setState(() {
-      _batteryOptimizationIgnored = isIgnoring;
-      _batteryPermissionChecked = true;
-    });
-  }
-
-  Future<void> _checkBatteryPermissionAgain() async {
-    final isIgnoring = await BatteryOptimizationService.isIgnoringBatteryOptimizations();
-    setState(() {
-      _batteryOptimizationIgnored = isIgnoring;
-      _batteryPermissionChecked = true;
-      if (isIgnoring) {
-        _shouldDismissBatteryDialog = true;
-      }
-    });
-  }
-
   void _showBatteryOptimizationDialog(BuildContext context) {
     _batteryDialogShown = true;
+    _batteryDialogDisplayedOnce = true;
+    _saveBatteryDialogState(true);
     showCupertinoDialog(
       context: navigatorKey.currentContext ?? context,
       barrierDismissible: false,
@@ -241,8 +232,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       });
     }
 
-    // Battery optimization dialog logic
-    if (_batteryPermissionChecked && !_batteryOptimizationIgnored && !_batteryDialogShown) {
+    // Battery optimization dialog logic - only show after overlay is granted and only once
+    if (_permissionChecked && _overlayGranted && !_batteryDialogDisplayedOnce && !_batteryDialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _showBatteryOptimizationDialog(context);
       });
@@ -272,6 +263,21 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           barBackgroundColor: Color(0xFF1C1C1E),
           textTheme: CupertinoTextThemeData(
             primaryColor: CupertinoColors.white,
+            textStyle: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 17,
+              fontWeight: FontWeight.w400,
+            ),
+            navTitleTextStyle: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            ),
+            navLargeTitleTextStyle: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 34,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         home: AnnotatedRegion<SystemUiOverlayStyle>(

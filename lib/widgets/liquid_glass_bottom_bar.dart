@@ -201,7 +201,7 @@ class _BottomBarTab extends StatelessWidget {
     final theme = CupertinoTheme.of(context);
     final iconColor = selected
         ? theme.primaryColor
-        : theme.textTheme.textStyle.color;
+        : CupertinoColors.systemGrey;
 
     return GestureDetector(
       onTap: onTap,
