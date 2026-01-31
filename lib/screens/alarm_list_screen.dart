@@ -7,6 +7,8 @@ import '../widgets/custom_buttons.dart';
 import 'edit_alarm_screen.dart';
 import '../utils/alarm_toast.dart';
 import '../utils/alarm_toast.dart';
+import 'settings_screen.dart';
+import '../providers/settings_provider.dart';
 
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({super.key});
@@ -125,7 +127,26 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    if (_getNextAlarmTimeText(alarmProvider.alarms) != null)
+                    if (_isEditMode)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (context) => const SettingsScreen(),
+                              ),
+                            );
+                          },
+                          child: const Icon(
+                            CupertinoIcons.settings,
+                          color: CupertinoColors.systemOrange,
+                          size: 24,
+                          ),
+                        ),
+                      )
+                    else if (_getNextAlarmTimeText(alarmProvider.alarms) != null)
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: Text(
@@ -161,6 +182,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
               return AlarmListItem(
                 alarm: alarm,
                 isEditMode: _isEditMode,
+                use24HourFormat: Provider.of<SettingsProvider>(context).is24HourFormat,
                 onTap: () {
                   if (!_isEditMode) {
                     showCupertinoSheet<void>(
@@ -193,6 +215,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
 class AlarmListItem extends StatelessWidget {
   final AlarmModel alarm;
   final bool isEditMode;
+  final bool use24HourFormat;
   final VoidCallback onTap;
   final VoidCallback onToggle;
   final VoidCallback onDelete;
@@ -201,6 +224,7 @@ class AlarmListItem extends StatelessWidget {
     super.key,
     required this.alarm,
     required this.isEditMode,
+    required this.use24HourFormat,
     required this.onTap,
     required this.onToggle,
     required this.onDelete,
@@ -210,7 +234,7 @@ class AlarmListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final repeatDescription = alarm.getRepeatDescription();
     final hasLabel = alarm.label.isNotEmpty && alarm.label != 'Alarm';
-    final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
+    // final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
 
     // Create combined label for repeat alarms
     final displayLabel = repeatDescription.isNotEmpty

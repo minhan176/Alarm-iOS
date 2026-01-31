@@ -12,6 +12,7 @@ import 'dart:math' as math;
 import 'models/alarm_model.dart';
 import 'providers/alarm_provider.dart';
 import 'providers/world_clock_provider.dart';
+import 'providers/settings_provider.dart';
 import 'screens/alarm_list_screen.dart';
 import 'screens/world_clock_screen.dart';
 import 'screens/stopwatch_screen.dart';
@@ -252,6 +253,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       providers: [
         ChangeNotifierProvider(create: (context) => AlarmProvider()),
         ChangeNotifierProvider(create: (context) => WorldClockProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsProvider()),
       ],
       child: CupertinoApp(
         navigatorKey: navigatorKey,

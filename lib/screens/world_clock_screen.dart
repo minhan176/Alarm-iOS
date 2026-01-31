@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../providers/world_clock_provider.dart';
 import '../models/world_clock_model.dart';
 import '../widgets/custom_buttons.dart';
+import 'settings_screen.dart';
+import '../providers/settings_provider.dart';
 
 class WorldClockScreen extends StatefulWidget {
   const WorldClockScreen({super.key});
@@ -104,15 +106,41 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                 onPressed: _addCity,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
-              child: Text(
-                'World Clock',
-                style: TextStyle(
-                  color: CupertinoColors.white,
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  const Text(
+                    'World Clock',
+                    style: TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (_isEditMode)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(
+                              builder: (context) => const SettingsScreen(),
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          CupertinoIcons.settings,
+                          color: CupertinoColors.systemOrange,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             Expanded(
@@ -221,13 +249,13 @@ class _WorldClockItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
+    // final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
     final currentTime = _getCurrentTimeInTimezone();
     
     final String hourText;
     final String? periodText;
     
-    if (use24HourFormat) {
+    if (Provider.of<SettingsProvider>(context).is24HourFormat) {
       hourText = '${currentTime.hour.toString().padLeft(2, '0')}:${currentTime.minute.toString().padLeft(2, '0')}';
       periodText = null;
     } else {

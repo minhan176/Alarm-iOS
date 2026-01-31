@@ -78,7 +78,7 @@ class AlarmProvider with ChangeNotifier {
   }
 
   // Add new alarm
-  Future<void> addAlarm(AlarmModel alarm) async {
+  Future<void> addAlarm(AlarmModel alarm, {VoidCallback? onRatingDialogRequested}) async {
     _alarms.add(alarm);
     _sortAlarms();
     await _saveAlarms();
@@ -90,6 +90,9 @@ class AlarmProvider with ChangeNotifier {
 
     // Update system alarm icon
     await AlarmService.updateSystemAlarmIcon();
+
+    // Check if rating dialog should be shown (after 3rd alarm)
+    await _checkAndShowRatingDialog(onRatingDialogRequested);
 
     notifyListeners();
   }
@@ -180,5 +183,38 @@ class AlarmProvider with ChangeNotifier {
     }
 
     return nextAlarm;
+  }
+
+  // Check and show rating dialog after 3rd alarm creation
+  Future<void> _checkAndShowRatingDialog(VoidCallback? onRatingDialogRequested) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      // Check if user has already rated or dismissed the dialog
+      final hasRated = prefs.getBool('has_rated_app') ?? false;
+      final dialogDismissed = prefs.getBool('rating_dialog_dismissed') ?? false;
+
+      if (hasRated || dialogDismissed || onRatingDialogRequested == null) {
+        return; // Don't show dialog
+      }
+
+      // Get current alarm creation count
+      final alarmCount = prefs.getInt('alarm_creation_count') ?? 0;
+      final newCount = alarmCount + 1;
+
+      // Save updated count
+      await prefs.setInt('alarm_creation_count', newCount);
+
+      // Show dialog after 3rd alarm
+      if (newCount >= 3) {
+        // Use Future.delayed to show dialog after current operations complete
+        Future.delayed(const Duration(milliseconds: 500), () {
+          onRatingDialogRequested();
+        });
+      }
+    } catch (e) {
+      // Silently handle errors to avoid disrupting alarm creation
+      debugPrint('Error checking rating dialog: $e');
+    }
   }
 }

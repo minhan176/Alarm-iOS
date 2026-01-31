@@ -9,7 +9,9 @@ import 'package:jbh_ringtone/jbh_ringtone.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
+import '../providers/settings_provider.dart';
 import '../widgets/custom_buttons.dart';
+import '../widgets/rating_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 
@@ -108,7 +110,15 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     if (widget.alarm != null) {
       provider.updateAlarm(widget.alarm!.id, alarm);
     } else {
-      provider.addAlarm(alarm);
+      provider.addAlarm(alarm, onRatingDialogRequested: () {
+        if (mounted) {
+          showCupertinoDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const RatingDialog(),
+          );
+        }
+      });
     }
 
     // Set last saved alarm for toast on list screen
@@ -160,8 +170,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
-
     return CupertinoPageScaffold(
       backgroundColor: const Color(0xFF1C1C1E),
       child: SafeArea(
@@ -197,7 +205,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 initialDateTime: _selectedTime,
-                use24hFormat: use24HourFormat,
+                use24hFormat: Provider.of<SettingsProvider>(context).is24HourFormat,
                 onDateTimeChanged: (DateTime newTime) {
                   setState(() {
                     _selectedTime = newTime;
