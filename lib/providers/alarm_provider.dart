@@ -78,7 +78,7 @@ class AlarmProvider with ChangeNotifier {
   }
 
   // Add new alarm
-  Future<void> addAlarm(AlarmModel alarm, {VoidCallback? onRatingDialogRequested}) async {
+  Future<void> addAlarm(AlarmModel alarm) async {
     _alarms.add(alarm);
     _sortAlarms();
     await _saveAlarms();
@@ -92,7 +92,7 @@ class AlarmProvider with ChangeNotifier {
     await AlarmService.updateSystemAlarmIcon();
 
     // Check if rating dialog should be shown (after 3rd alarm)
-    await _checkAndShowRatingDialog(onRatingDialogRequested);
+    await _checkAndShowRatingDialog();
 
     notifyListeners();
   }
@@ -186,7 +186,7 @@ class AlarmProvider with ChangeNotifier {
   }
 
   // Check and show rating dialog after 3rd alarm creation
-  Future<void> _checkAndShowRatingDialog(VoidCallback? onRatingDialogRequested) async {
+  Future<void> _checkAndShowRatingDialog() async {
     try {
       final prefs = await SharedPreferences.getInstance();
 
@@ -194,7 +194,7 @@ class AlarmProvider with ChangeNotifier {
       final hasRated = prefs.getBool('has_rated_app') ?? false;
       final dialogDismissed = prefs.getBool('rating_dialog_dismissed') ?? false;
 
-      if (hasRated || dialogDismissed || onRatingDialogRequested == null) {
+      if (hasRated || dialogDismissed) {
         return; // Don't show dialog
       }
 
@@ -207,10 +207,8 @@ class AlarmProvider with ChangeNotifier {
 
       // Show dialog after 3rd alarm
       if (newCount >= 3) {
-        // Use Future.delayed to show dialog after current operations complete
-        Future.delayed(const Duration(milliseconds: 500), () {
-          onRatingDialogRequested();
-        });
+        // Set flag to show review dialog when back to list
+        await prefs.setBool('show_review_dialog', true);
       }
     } catch (e) {
       // Silently handle errors to avoid disrupting alarm creation

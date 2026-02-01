@@ -1,4 +1,4 @@
-package com.example.alarm
+package com.oaptech.clock
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -152,7 +152,7 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
                 println("DEBUG: Method 2 - dummy alarm clock with BroadcastReceiver")
                 val dummyTime = System.currentTimeMillis() + 1000 // 1 second from now
                 val dummyIntent = Intent(context, DummyAlarmReceiver::class.java).apply {
-                    action = "com.example.alarm.DUMMY_ALARM"
+                    action = "com.oaptech.clock.DUMMY_ALARM"
                 }
                 val dummyPendingIntent = PendingIntent.getBroadcast(
                     context,

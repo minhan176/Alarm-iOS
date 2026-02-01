@@ -97,8 +97,8 @@ class AlarmService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
-  static const MethodChannel _navigationChannel = MethodChannel('com.example.alarm/navigation');
+  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
+  static const MethodChannel _navigationChannel = MethodChannel('com.oaptech.clock/navigation');
 
   static bool _isInitialized = false;
   static Function(AlarmModel)? onAlarmRing;

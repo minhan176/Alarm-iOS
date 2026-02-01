@@ -1,4 +1,4 @@
-package com.example.alarm
+package com.oaptech.clock
 
 import android.content.Intent
 import android.content.Context
@@ -15,7 +15,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.example.alarm/navigation"
+    private val CHANNEL = "com.oaptech.clock/navigation"
     private var binaryMessenger: io.flutter.plugin.common.BinaryMessenger? = null
     private var pendingAlarmJson: String? = null
 
@@ -48,12 +48,12 @@ class MainActivity : FlutterActivity() {
         binaryMessenger = flutterEngine.dartExecutor.binaryMessenger
 
         // Register alarm method channel directly
-        val alarmChannel = MethodChannel(binaryMessenger!!, "com.example.alarm/alarm")
+        val alarmChannel = MethodChannel(binaryMessenger!!, "com.oaptech.clock/alarm")
         val alarmPlugin = AlarmPlugin(this)
         alarmChannel.setMethodCallHandler(alarmPlugin)
 
         // Register timer ring method channel
-        val timerRingChannel = MethodChannel(binaryMessenger!!, "com.example.alarm/timer_ring")
+        val timerRingChannel = MethodChannel(binaryMessenger!!, "com.oaptech.clock/timer_ring")
         timerRingChannel.setMethodCallHandler(alarmPlugin)
 
         // Register navigation method channel
@@ -81,7 +81,7 @@ class MainActivity : FlutterActivity() {
         }
 
         // Register battery optimization method channel
-        val batteryChannel = MethodChannel(binaryMessenger!!, "com.example.alarm/battery")
+        val batteryChannel = MethodChannel(binaryMessenger!!, "com.oaptech.clock/battery")
         batteryChannel.setMethodCallHandler { call, result ->
             when (call.method) {
                 "isIgnoringBatteryOptimizations" -> {

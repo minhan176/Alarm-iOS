@@ -35,7 +35,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   late AnimationController _rotationController;
   late AnimationController _shakeController;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
 
   @override
   void initState() {

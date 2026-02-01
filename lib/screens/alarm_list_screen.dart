@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../widgets/custom_buttons.dart';
 import 'edit_alarm_screen.dart';
 import '../utils/alarm_toast.dart';
-import '../utils/alarm_toast.dart';
 import 'settings_screen.dart';
+import '../widgets/rating_dialog.dart';
 import '../providers/settings_provider.dart';
 
 class AlarmListScreen extends StatefulWidget {
@@ -19,6 +20,32 @@ class AlarmListScreen extends StatefulWidget {
 
 class _AlarmListScreenState extends State<AlarmListScreen> {
   bool _isEditMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAndShowReviewDialog();
+  }
+
+  Future<void> _checkAndShowReviewDialog() async {
+    final prefs = await SharedPreferences.getInstance();
+    final shouldShow = prefs.getBool('show_review_dialog') ?? false;
+    if (shouldShow) {
+      prefs.setBool('show_review_dialog', false); // Reset flag
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showReviewDialog();
+      });
+    }
+  }
+
+  void _showReviewDialog() {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const RatingDialog();
+      },
+    );
+  }
 
   @override
   void didChangeDependencies() {

@@ -29,7 +29,11 @@ class _RatingDialogState extends State<RatingDialog> {
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    _selectedRating = index + 1;
+                    if (_selectedRating == index + 1) {
+                      _selectedRating = 0; // Deselect if tapping the same star
+                    } else {
+                      _selectedRating = index + 1;
+                    }
                   });
                 },
                 child: Icon(
@@ -40,26 +44,22 @@ class _RatingDialogState extends State<RatingDialog> {
               );
             }),
           ),
-          const SizedBox(height: 24),
-          CupertinoButton(
-            onPressed: _selectedRating > 0 ? _rateOnPlayStore : null,
-            child: Text(
-              _selectedRating > 0 ? 'Rate us on Google Play' : 'Rate',
-              style: TextStyle(
-                color: _selectedRating > 0 ? CupertinoColors.activeBlue : CupertinoColors.systemGrey,
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          CupertinoButton(
-            onPressed: _dismissForever,
-            child: const Text(
-              'Later',
-              style: TextStyle(color: CupertinoColors.systemGrey),
-            ),
-          ),
         ],
       ),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: _dismissForever,
+          child: const Text('Later'),
+        ),
+        CupertinoDialogAction(
+          onPressed: _selectedRating > 0 ? _rateOnPlayStore : null,
+          child: Container(
+            width: 200,
+            alignment: Alignment.center,
+            child: Text(_selectedRating > 0 ? 'Rate us on Google Play' : 'Rate', style: TextStyle(fontSize: 16)),
+          ),
+        ),
+      ],
     );
   }
 
@@ -69,7 +69,7 @@ class _RatingDialogState extends State<RatingDialog> {
     await prefs.setBool('has_rated_app', true);
 
     // Redirect to Google Play
-    StoreRedirect.redirect(androidAppId: 'com.example.alarm');
+    StoreRedirect.redirect(androidAppId: 'com.oaptech.clock');
 
     if (mounted) {
       Navigator.of(context).pop();

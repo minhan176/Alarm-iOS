@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 class BatteryOptimizationService {
-  static const MethodChannel _channel = MethodChannel('com.example.alarm/battery');
+  static const MethodChannel _channel = MethodChannel('com.oaptech.clock/battery');
 
   /// Kiểm tra xem app có đang bỏ qua tối ưu hóa pin không
   static Future<bool> isIgnoringBatteryOptimizations() async {

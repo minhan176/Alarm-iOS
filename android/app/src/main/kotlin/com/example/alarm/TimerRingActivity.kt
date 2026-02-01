@@ -1,4 +1,4 @@
-package com.example.alarm
+package com.oaptech.clock
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class TimerRingActivity : FlutterActivity() {
-    private val CHANNEL = "com.example.alarm/timer_ring"
+    private val CHANNEL = "com.oaptech.clock/timer_ring"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class TimerRingActivity : FlutterActivity() {
         println("DEBUG: TimerRingActivity configureFlutterEngine called")
 
         // Register alarm method channel (same as MainActivity)
-        val alarmChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.example.alarm/alarm")
+        val alarmChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.oaptech.clock/alarm")
         val alarmPlugin = AlarmPlugin(this)
         alarmChannel.setMethodCallHandler(alarmPlugin)
 

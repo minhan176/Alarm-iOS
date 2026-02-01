@@ -31,6 +31,10 @@ AlarmModel? _pendingAlarm;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Get system time format
+  final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+  final system24HourFormat = mediaQuery.alwaysUse24HourFormat;
+
   // Initialize alarm service
   await AlarmService.initialize();
 
@@ -44,7 +48,7 @@ void main() async {
     // The notification will also be shown and can be tapped
   };
 
-  runApp(const MainApp());
+  runApp(MainApp(system24HourFormat: system24HourFormat));
 }
 
 void _showAlarmScreen(AlarmModel alarm) {
@@ -58,7 +62,9 @@ void _showAlarmScreen(AlarmModel alarm) {
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key});
+  final bool system24HourFormat;
+
+  const MainApp({super.key, required this.system24HourFormat});
 
   @override
   State<MainApp> createState() => _MainAppState();
@@ -83,7 +89,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     _loadBatteryDialogState();
     
     // Set up method channel to listen for navigation calls from Android
-    const platform = MethodChannel('com.example.alarm/navigation');
+    const platform = MethodChannel('com.oaptech.clock/navigation');
     platform.setMethodCallHandler((call) async {
       print('DEBUG: Flutter received method call: ${call.method}');
       switch (call.method) {
@@ -199,7 +205,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             onPressed: () async {
               const AndroidIntent intent = AndroidIntent(
                 action: 'android.settings.action.MANAGE_OVERLAY_PERMISSION',
-                data: 'package:com.example.alarm',
+                data: 'package:com.oaptech.clock',
               );
               await intent.launch();
             },
@@ -218,21 +224,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if (_permissionChecked && !_overlayGranted && !_dialogShown) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showOverlayDialog(context);
-      });
-    }
-    if (_shouldDismissDialog) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(navigatorKey.currentContext ?? context).pop();
-        setState(() {
-          _dialogShown = false;
-          _shouldDismissDialog = false;
-        });
-      });
-    }
-
     // Battery optimization dialog logic - only show after overlay is granted and only once
     if (_permissionChecked && _overlayGranted && !_batteryDialogDisplayedOnce && !_batteryDialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -248,12 +239,29 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         });
       });
     }
+    
+    if (_permissionChecked && !_overlayGranted && !_dialogShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showOverlayDialog(context);
+      });
+    }
+    if (_shouldDismissDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(navigatorKey.currentContext ?? context).pop();
+        setState(() {
+          _dialogShown = false;
+          _shouldDismissDialog = false;
+        });
+      });
+    }
+
+    
 
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AlarmProvider()),
         ChangeNotifierProvider(create: (context) => WorldClockProvider()),
-        ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsProvider(initial24HourFormat: widget.system24HourFormat)),
       ],
       child: CupertinoApp(
         navigatorKey: navigatorKey,
@@ -430,7 +438,7 @@ class _AlarmRingScreenWidgetState extends State<AlarmRingScreenWidget> {
   AlarmModel? _alarm;
   bool _isLoading = true;
 
-  static const platform = MethodChannel('com.example.alarm/ring');
+  static const platform = MethodChannel('com.oaptech.clock/ring');
 
   @override
   void initState() {
@@ -524,7 +532,7 @@ class _TimerRingScreenWidgetState extends State<TimerRingScreenWidget> {
   bool _selectedVibrate = false;
   bool _isLoading = true;
 
-  static const platform = MethodChannel('com.example.alarm/timer_ring');
+  static const platform = MethodChannel('com.oaptech.clock/timer_ring');
 
   @override
   void initState() {

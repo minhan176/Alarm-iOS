@@ -31,7 +31,7 @@ class _SoundSelectorState extends State<SoundSelector> {
   late String? _currentlyPreviewingUri;
   late String? _selectedCustomSound;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
 
   @override
   void initState() {
@@ -163,6 +163,9 @@ class _SoundSelectorState extends State<SoundSelector> {
 
       if (soundUri != null && soundUri != 'None') {
         try {
+          // Stop any current preview
+          await _previewPlayer.stop();
+
           // Set audio context like alarm ring screen
           final AudioContext audioContext = AudioContext(
             android: AudioContextAndroid(
@@ -193,24 +196,16 @@ class _SoundSelectorState extends State<SoundSelector> {
             });
           } else if (soundUri.startsWith('assets/')) {
             // It's an asset file (like our custom Alarm OS 26)
-            await _previewPlayer.setReleaseMode(ReleaseMode.loop);
+            await _previewPlayer.setReleaseMode(ReleaseMode.stop);
             await _previewPlayer.setVolume(1.0);
             final assetPath = soundUri.replaceFirst('assets/', '');
             final audioSource = AssetSource(assetPath);
             await _previewPlayer.play(audioSource);
             print('Playing asset sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
-
-            // Auto-stop after 5 seconds
-            Future.delayed(const Duration(seconds: 5), () {
-              if (_currentlyPreviewingUri == soundUri) {
-                print('🎵 Auto-stopping asset preview after 5 seconds');
-                _stopRingtonePreview();
-              }
-            });
           } else {
             // Use audioplayers for other sounds
-            await _previewPlayer.setReleaseMode(ReleaseMode.loop);
+            await _previewPlayer.setReleaseMode(ReleaseMode.stop);
             await _previewPlayer.setVolume(1.0);
 
             Source audioSource;
@@ -227,14 +222,6 @@ class _SoundSelectorState extends State<SoundSelector> {
             await _previewPlayer.play(audioSource);
             print('Playing other sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
-
-            // Auto-stop after 5 seconds
-            Future.delayed(const Duration(seconds: 5), () {
-              if (_currentlyPreviewingUri == soundUri) {
-                print('🎵 Auto-stopping other preview after 5 seconds');
-                _stopRingtonePreview();
-              }
-            });
           }
         } catch (e) {
           print('Could not play preview sound "$soundUri": $e');
@@ -334,6 +321,7 @@ class _SoundSelectorState extends State<SoundSelector> {
 
   @override
   void dispose() {
+    _stopRingtonePreview();
     _previewPlayer.dispose();
     super.dispose();
   }

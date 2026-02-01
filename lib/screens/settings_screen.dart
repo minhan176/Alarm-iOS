@@ -75,17 +75,18 @@ Please describe your feedback below:
   }
 
   void _shareApp() {
-    Share.share('Check out this amazing Alarm app! Download it now.');
+    Share.share('Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock');
   }
 
   void _rateApp() {
-    StoreRedirect.redirect(androidAppId: 'com.example.alarm', iOSAppId: '123456789');
+    StoreRedirect.redirect(androidAppId: 'com.oaptech.clock', iOSAppId: '123456789');
   }
 
   void _openPrivacyPolicy(BuildContext context) async {
-    const url = 'https://example.com/privacy-policy';
+    const url = 'https://sites.google.com/view/clockos26';
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
+      print('DEBUG: Opening Privacy Policy URL');
       await launchUrl(uri);
     } else {
       showCupertinoDialog(
@@ -106,9 +107,7 @@ Please describe your feedback below:
 
   @override
   Widget build(BuildContext context) {
-    // Initialize system setting on first build if not already initialized
     final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
-    settingsProvider.initializeWithSystemSetting(MediaQuery.of(context).alwaysUse24HourFormat);
 
     return CupertinoPageScaffold(
       backgroundColor: const Color(0xFF1C1C1E),

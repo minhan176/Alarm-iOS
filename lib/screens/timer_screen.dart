@@ -19,6 +19,7 @@ class TimerScreen extends StatefulWidget {
 
 class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin, WidgetsBindingObserver {
   static const String _timerSoundKey = 'timer_sound';
+  static const String _timerSoundDisplayNameKey = 'timer_sound_display_name';
   static const String _timerHoursKey = 'timer_hours';
   static const String _timerMinutesKey = 'timer_minutes';
   static const String _timerSecondsKey = 'timer_seconds';
@@ -32,6 +33,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   bool _isRunning = false;
   bool _isPaused = false;
   String _selectedSound = 'Radar';
+  String _selectedSoundDisplayName = 'Radar';
   bool _selectedVibrate = false;
   late AnimationController _progressController;
   late FixedExtentScrollController _hourController;
@@ -92,9 +94,11 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     try {
       final prefs = await SharedPreferences.getInstance();
       final savedSound = prefs.getString(_timerSoundKey);
+      final savedSoundDisplayName = prefs.getString(_timerSoundDisplayNameKey);
       if (savedSound != null) {
         setState(() {
           _selectedSound = savedSound;
+          _selectedSoundDisplayName = savedSoundDisplayName ?? _truncateSoundName(path.basename(savedSound));
         });
       }
     } catch (e) {
@@ -119,6 +123,15 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_timerSoundKey, sound);
+    } catch (e) {
+      // If saving fails, ignore
+    }
+  }
+
+  Future<void> _saveTimerSoundDisplayName(String displayName) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_timerSoundDisplayNameKey, displayName);
     } catch (e) {
       // If saving fails, ignore
     }
@@ -211,7 +224,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
 
   void _showTimerEndDialog() {
     // Start timer ring activity like alarm
-    const platform = MethodChannel('com.example.alarm/alarm');
+    const platform = MethodChannel('com.oaptech.clock/alarm');
     platform.invokeMethod('startTimerRingActivity', {
       'remaining_seconds': 0,
       'selected_sound': _selectedSound,
@@ -228,15 +241,17 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     if (result != null) {
       setState(() {
         _selectedSound = result['sound'];
+        _selectedSoundDisplayName = result['soundDisplayName'];
         _selectedVibrate = result['vibrate'];
       });
       _saveTimerSound(_selectedSound);
+      _saveTimerSoundDisplayName(_selectedSoundDisplayName);
       _saveTimerVibrate(_selectedVibrate);
     }
   }
 
   String _getSoundDisplayName() {
-    return _truncateSoundName(path.basename(_selectedSound));
+    return _selectedSoundDisplayName;
   }
 
   String _truncateSoundName(String soundName, {int maxLength = 25}) {

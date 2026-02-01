@@ -11,7 +11,6 @@ import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
 import '../widgets/custom_buttons.dart';
-import '../widgets/rating_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 
@@ -38,7 +37,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late AudioPlayer _previewPlayer;
   late String? _currentlyPreviewingUri;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
 
   @override
   void initState() {
@@ -110,15 +109,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     if (widget.alarm != null) {
       provider.updateAlarm(widget.alarm!.id, alarm);
     } else {
-      provider.addAlarm(alarm, onRatingDialogRequested: () {
-        if (mounted) {
-          showCupertinoDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => const RatingDialog(),
-          );
-        }
-      });
+      provider.addAlarm(alarm);
     }
 
     // Set last saved alarm for toast on list screen
@@ -768,7 +759,7 @@ class _SoundSelectorState extends State<SoundSelector> {
   late String? _currentlyPreviewingUri;
   late String? _selectedCustomSound;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.example.alarm/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
 
   @override
   void initState() {
@@ -930,24 +921,16 @@ class _SoundSelectorState extends State<SoundSelector> {
             });
           } else if (soundUri.startsWith('assets/')) {
             // It's an asset file (like our custom Alarm OS 26)
-            await _previewPlayer.setReleaseMode(ReleaseMode.loop);
+            await _previewPlayer.setReleaseMode(ReleaseMode.stop);
             await _previewPlayer.setVolume(1.0);
             final assetPath = soundUri.replaceFirst('assets/', '');
             final audioSource = AssetSource(assetPath);
             await _previewPlayer.play(audioSource);
             print('Playing asset sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
-
-            // Auto-stop after 3 seconds
-            Future.delayed(const Duration(seconds: 3), () {
-              if (_currentlyPreviewingUri == soundUri) {
-                print('🎵 Auto-stopping asset preview after 3 seconds');
-                _stopRingtonePreview();
-              }
-            });
           } else {
             // Use audioplayers for other sounds
-            await _previewPlayer.setReleaseMode(ReleaseMode.loop);
+            await _previewPlayer.setReleaseMode(ReleaseMode.stop);
             await _previewPlayer.setVolume(1.0);
 
             Source audioSource;
@@ -964,14 +947,6 @@ class _SoundSelectorState extends State<SoundSelector> {
             await _previewPlayer.play(audioSource);
             print('Playing other sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
-
-            // Auto-stop after 30 seconds
-            Future.delayed(const Duration(seconds: 30), () {
-              if (_currentlyPreviewingUri == soundUri) {
-                print('🎵 Auto-stopping other preview after 30 seconds');
-                _stopRingtonePreview();
-              }
-            });
           }
         } catch (e) {
           print('Could not play preview sound "$soundUri": $e');
@@ -1071,6 +1046,7 @@ class _SoundSelectorState extends State<SoundSelector> {
 
   @override
   void dispose() {
+    _stopRingtonePreview();
     _previewPlayer.dispose();
     super.dispose();
   }
