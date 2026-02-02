@@ -131,18 +131,18 @@ class AlarmRingActivity : FlutterActivity() {
             // Snooze and cancel the alarm when activity is destroyed without user action
             println("DEBUG: Snoozing and cancelling alarm because activity destroyed without user action")
             snoozeAlarm()
-            
-        }
-        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-        if (vibrator != null) {
-            // Try multiple cancel methods
-            vibrator.cancel()
-            // For Android O+, try to vibrate with 0 amplitude to stop
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(1, 0))
+            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            if (vibrator != null) {
+                // Try multiple cancel methods
+                vibrator.cancel()
+                // For Android O+, try to vibrate with 0 amplitude to stop
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(1, 0))
+                }
+                println("DEBUG: Force cancelled vibration with native vibrator")
             }
-            println("DEBUG: Force cancelled vibration with native vibrator")
         }
+        
         
         super.onDestroy()
         println("DEBUG: AlarmRingActivity onDestroy called")
