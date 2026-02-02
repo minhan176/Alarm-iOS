@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/rating_dialog.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import 'package:jbh_ringtone/jbh_ringtone.dart';
@@ -79,8 +81,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     if (sound.startsWith('content://')) {
       return 'System Ringtone';
     }
-    // For built-in sounds, return the sound name
-    return path.basename(sound);
+    // For built-in sounds, return the sound name (truncated if too long)
+    return _truncateSoundName(path.basename(sound));
   }
 
   @override
@@ -92,7 +94,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     super.dispose();
   }
 
-  void _saveAlarm() {
+  void _saveAlarm() async {
     final provider = Provider.of<AlarmProvider>(context, listen: false);
     final alarm = AlarmModel(
       id: widget.alarm?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
@@ -106,6 +108,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       snoozeDuration: _snoozeDuration,
     );
 
+    final isNewAlarm = widget.alarm == null;
+
     if (widget.alarm != null) {
       provider.updateAlarm(widget.alarm!.id, alarm);
     } else {
@@ -116,6 +120,36 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     provider.setLastSavedAlarm(alarm);
 
     Navigator.of(context, rootNavigator: true).pop();
+
+    // Check and show review dialog after adding new alarm
+    if (isNewAlarm) {
+      await _checkAndShowReviewDialog();
+    }
+  }
+
+  Future<void> _checkAndShowReviewDialog() async {
+    final prefs = await SharedPreferences.getInstance();
+    
+    // Check if user already rated or dismissed
+    final hasRated = prefs.getBool('has_rated_app') ?? false;
+    final dismissed = prefs.getBool('rating_dialog_dismissed') ?? false;
+    
+    if (hasRated || dismissed) return;
+    
+    // Increment add alarm count
+    int addCount = prefs.getInt('add_alarm_count') ?? 0;
+    addCount++;
+    await prefs.setInt('add_alarm_count', addCount);
+    
+    // Show dialog after 3rd alarm
+    if (addCount >= 3 && mounted) {
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const RatingDialog();
+        },
+      );
+    }
   }
 
   void _deleteAlarm() {

@@ -24,27 +24,6 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
   @override
   void initState() {
     super.initState();
-    _checkAndShowReviewDialog();
-  }
-
-  Future<void> _checkAndShowReviewDialog() async {
-    final prefs = await SharedPreferences.getInstance();
-    final shouldShow = prefs.getBool('show_review_dialog') ?? false;
-    if (shouldShow) {
-      prefs.setBool('show_review_dialog', false); // Reset flag
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showReviewDialog();
-      });
-    }
-  }
-
-  void _showReviewDialog() {
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const RatingDialog();
-      },
-    );
   }
 
   @override

@@ -28,12 +28,19 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 // Global variable to store pending alarm
 AlarmModel? _pendingAlarm;
 
+// Flag to skip permission check when opened from ring screen
+bool _skipPermissionCheck = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Get system time format
   final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
   final system24HourFormat = mediaQuery.alwaysUse24HourFormat;
+
+  // Check if app is opened from ring screen intent
+  final initialRoute = WidgetsBinding.instance.platformDispatcher.defaultRouteName;
+  _skipPermissionCheck = initialRoute == '/alarm_ring' || initialRoute == '/timer_ring';
 
   // Initialize alarm service
   await AlarmService.initialize();
@@ -85,8 +92,12 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _checkOverlayPermission();
-    _loadBatteryDialogState();
+    
+    // Skip permission checks if app is opened from ring screen
+    if (!_skipPermissionCheck) {
+      _checkOverlayPermission();
+      _loadBatteryDialogState();
+    }
     
     // Set up method channel to listen for navigation calls from Android
     const platform = MethodChannel('com.oaptech.clock/navigation');
@@ -224,35 +235,38 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // Battery optimization dialog logic - only show after overlay is granted and only once
-    if (_permissionChecked && _overlayGranted && !_batteryDialogDisplayedOnce && !_batteryDialogShown) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showBatteryOptimizationDialog(context);
-      });
-    }
-    if (_shouldDismissBatteryDialog) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(navigatorKey.currentContext ?? context).pop();
-        setState(() {
-          _batteryDialogShown = false;
-          _shouldDismissBatteryDialog = false;
+    // Skip permission dialogs if app is opened from ring screen
+    if (!_skipPermissionCheck) {
+      // Battery optimization dialog logic - only show after overlay is granted and only once
+      if (_permissionChecked && _overlayGranted && !_batteryDialogDisplayedOnce && !_batteryDialogShown) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showBatteryOptimizationDialog(context);
         });
-      });
-    }
-    
-    if (_permissionChecked && !_overlayGranted && !_dialogShown) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showOverlayDialog(context);
-      });
-    }
-    if (_shouldDismissDialog) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(navigatorKey.currentContext ?? context).pop();
-        setState(() {
-          _dialogShown = false;
-          _shouldDismissDialog = false;
+      }
+      if (_shouldDismissBatteryDialog) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(navigatorKey.currentContext ?? context).pop();
+          setState(() {
+            _batteryDialogShown = false;
+            _shouldDismissBatteryDialog = false;
+          });
         });
-      });
+      }
+      
+      if (_permissionChecked && !_overlayGranted && !_dialogShown) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showOverlayDialog(context);
+        });
+      }
+      if (_shouldDismissDialog) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(navigatorKey.currentContext ?? context).pop();
+          setState(() {
+            _dialogShown = false;
+            _shouldDismissDialog = false;
+          });
+        });
+      }
     }
 
     
