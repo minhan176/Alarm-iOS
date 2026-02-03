@@ -16,49 +16,48 @@ class _RatingDialogState extends State<RatingDialog> {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: const Text('Enjoying our app?'),
+      title: const Text('Enjoying Clock OS 26?'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 16),
-          const Text('Rate us on Google Play'),
-          const SizedBox(height: 16),
+          const Text('Tap a star to rate us on\nGoogle Play.'),
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) {
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (_selectedRating == index + 1) {
-                      _selectedRating = 0; // Deselect if tapping the same star
-                    } else {
-                      _selectedRating = index + 1;
-                    }
-                  });
-                },
-                child: Icon(
-                  index < _selectedRating ? CupertinoIcons.star_fill : CupertinoIcons.star,
-                  color: index < _selectedRating ? CupertinoColors.systemYellow : CupertinoColors.systemGrey,
-                  size: 32,
+            children: [
+              for (int index = 0; index < 5; index++) ...[
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (_selectedRating == index + 1) {
+                        _selectedRating = 0; // Deselect if tapping the same star
+                      } else {
+                        _selectedRating = index + 1;
+                      }
+                    });
+                  },
+                  child: Icon(
+                    index < _selectedRating ? CupertinoIcons.star_fill : CupertinoIcons.star,
+                    color: CupertinoColors.systemYellow,
+                    size: 36,
+                  ),
                 ),
-              );
-            }),
+                if (index < 4) const SizedBox(width: 8),
+              ]
+            ],
           ),
         ],
       ),
-      actions: <CupertinoDialogAction>[
+      actions: [           
         CupertinoDialogAction(
           onPressed: _dismissForever,
-          child: const Text('Later'),
+          child: const Text('Cancel'),
         ),
         CupertinoDialogAction(
           onPressed: _selectedRating > 0 ? _rateOnPlayStore : null,
-          child: Container(
-            width: 200,
-            alignment: Alignment.center,
-            child: Text(_selectedRating > 0 ? 'Rate us on Google Play' : 'Rate', style: TextStyle(fontSize: 16)),
-          ),
+          child: const Text('Submit'),
         ),
+        
       ],
     );
   }

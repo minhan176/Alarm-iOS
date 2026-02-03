@@ -8,6 +8,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 import '../widgets/custom_buttons.dart';
 import '../providers/settings_provider.dart';
+import 'guide_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -202,6 +203,43 @@ Please describe your feedback below:
                             CupertinoButton(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               pressedOpacity: 1.0,
+                              onPressed: () => Navigator.of(context).push(
+                                CupertinoPageRoute(builder: (context) => const GuideScreen()),
+                              ),
+                              child: const Row(
+                                children: [
+                                  Icon(
+                                    CupertinoIcons.book,
+                                    color: CupertinoColors.white,
+                                    size: 20,
+                                  ),
+                                  SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      'Hướng dẫn',
+                                      style: TextStyle(
+                                        color: CupertinoColors.white,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                  Icon(
+                                    CupertinoIcons.chevron_right,
+                                    color: CupertinoColors.systemGrey,
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              color: const Color(0xFF3C3C3E),
+                              height: 0.5,
+                              indent: 48,
+                              endIndent: 16,
+                            ),
+                            CupertinoButton(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              pressedOpacity: 1.0,
                               onPressed: () => _sendFeedback(context),
                               child: const Row(
                                 children: [
@@ -228,6 +266,8 @@ Please describe your feedback below:
                                 ],
                               ),
                             ),
+                            
+                            
                           ],
                         ),
                       ),

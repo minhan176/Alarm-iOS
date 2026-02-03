@@ -1,25 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../models/alarm_model.dart';
 
 class AlarmToast {
-  static void showAlarmToast(AlarmModel alarm, BuildContext context) {
-    final nextAlarmTime = alarm.getNextAlarmTime();
-    final now = DateTime.now();
-    final difference = nextAlarmTime.difference(now);
-
-    final days = difference.inDays;
-    final hours = difference.inHours % 24;
-    final minutes = difference.inMinutes % 60;
-
-    String timeText;
-    if (days > 0) {
-      timeText = '$days ngày, $hours giờ, $minutes phút';
-    } else if (hours > 0) {
-      timeText = '$hours giờ, $minutes phút';
-    } else if (minutes > 0) {
-      timeText = '$minutes phút';
+  static void showAlarmToast(AlarmModel alarm, BuildContext context, {String? customMessage}) {
+    String displayMessage;
+    if (customMessage != null) {
+      displayMessage = customMessage;
     } else {
-      timeText = '1 phút';
+      final nextAlarmTime = alarm.getNextAlarmTime();
+      final now = DateTime.now();
+      final difference = nextAlarmTime.difference(now);
+
+      final days = difference.inDays;
+      final hours = difference.inHours % 24;
+      final minutes = difference.inMinutes % 60;
+
+      String timeText;
+      if (days > 0) {
+        timeText = '$days ngày, $hours giờ, $minutes phút';
+      } else if (hours > 0) {
+        timeText = '$hours giờ, $minutes phút';
+      } else if (minutes > 0) {
+        timeText = '$minutes phút';
+      } else {
+        timeText = '1 phút';
+      }
+
+      displayMessage = 'Đổ chuông sau $timeText.';
+    }
+
+    Widget messageWidget;
+    if (displayMessage.startsWith('Tip:')) {
+      messageWidget = RichText(
+        textAlign: TextAlign.justify,
+        text: TextSpan(
+          children: [
+            WidgetSpan(
+              child: Icon(
+                CupertinoIcons.lightbulb_fill,
+                color: CupertinoColors.systemYellow,
+                size: 16,
+              ),
+              alignment: PlaceholderAlignment.middle,
+            ),
+            const TextSpan(text: ' '),
+            TextSpan(
+              text: displayMessage,
+              style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      messageWidget = Text(
+        displayMessage,
+        style: const TextStyle(
+          color: Colors.black87,
+          fontSize: 13,
+          fontWeight: FontWeight.w400,
+        ),
+        textAlign: TextAlign.center,
+      );
     }
 
     final overlay = Overlay.of(context);
@@ -34,7 +80,7 @@ class AlarmToast {
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 40),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              constraints: const BoxConstraints(minWidth: 200, maxWidth: 300),
+              constraints: const BoxConstraints(minWidth: 200, maxWidth: 350),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(25), // More rounded
@@ -46,15 +92,7 @@ class AlarmToast {
                   ),
                 ],
               ),
-              child: Text(
-                'Đổ chuông sau $timeText.',
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              child: messageWidget,
             ),
           ),
         ),

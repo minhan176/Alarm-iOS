@@ -184,7 +184,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
         title: Text('Cho phép chạy dưới nền'),
-        content: Text('Để báo thức hoạt động chính xác, vui lòng vào cài đặt ứng dụng > Pin và cho phép ứng dụng chạy dưới nền.'),
+        content: Text('Open App Settings → Pin → Allow Background Activity'),
         actions: [
           CupertinoDialogAction(
             onPressed: () async {
@@ -210,8 +210,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
         title: Text('Cho phép "Hiển thị trên các ứng dụng khác"'),
-        content: Text('Chúng tôi khuyến khích bạn cấp quyền này để giảm nguy cơ báo thức không hoạt động.'),
+        content: Text('Open Settings → Alarm Clock → Switch On'),
         actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Close'),
+          ),
           CupertinoDialogAction(
             onPressed: () async {
               const AndroidIntent intent = AndroidIntent(
@@ -219,14 +225,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
                 data: 'package:com.oaptech.clock',
               );
               await intent.launch();
-            },
-            child: Text('Settings'),
-          ),
-          CupertinoDialogAction(
-            onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Close'),
+            child: Text('Open Settings'),
           ),
         ],
       ),

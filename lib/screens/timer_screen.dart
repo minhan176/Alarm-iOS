@@ -32,8 +32,8 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   Timer? _timer;
   bool _isRunning = false;
   bool _isPaused = false;
-  String _selectedSound = 'Radar';
-  String _selectedSoundDisplayName = 'Radar';
+  String _selectedSound = 'assets/sounds/alarm.wav';
+  String _selectedSoundDisplayName = 'Alarm OS 26';
   bool _selectedVibrate = false;
   late AnimationController _progressController;
   late FixedExtentScrollController _hourController;
@@ -100,9 +100,19 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
           _selectedSound = savedSound;
           _selectedSoundDisplayName = savedSoundDisplayName ?? _truncateSoundName(path.basename(savedSound));
         });
+      } else {
+        // Set default sound if none saved
+        setState(() {
+          _selectedSound = 'assets/sounds/alarm.wav';
+          _selectedSoundDisplayName = 'Alarm OS 26';
+        });
       }
     } catch (e) {
       // If loading fails, keep default value
+      setState(() {
+        _selectedSound = 'assets/sounds/alarm.wav';
+        _selectedSoundDisplayName = 'Alarm OS 26';
+      });
     }
   }
 

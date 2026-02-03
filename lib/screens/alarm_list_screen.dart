@@ -32,8 +32,16 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     final provider = Provider.of<AlarmProvider>(context);
     if (provider.lastSavedAlarm != null) {
       final alarm = provider.lastSavedAlarm!;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        AlarmToast.showAlarmToast(alarm, context);
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        // Check if first alarm advice should be shown
+        final prefs = await SharedPreferences.getInstance();
+        final hasShownFirstAlarmToast = prefs.getBool('first_alarm_toast_shown') ?? false;
+        if (!hasShownFirstAlarmToast) {
+          AlarmToast.showAlarmToast(alarm, context, customMessage: 'Tip: Khuyến khích không nên tắt app trong đa nhiệm để đảm bảo báo thức hoạt động tốt hơn.');
+          await prefs.setBool('first_alarm_toast_shown', true);
+        } else {
+          AlarmToast.showAlarmToast(alarm, context);
+        }
         provider.clearLastSavedAlarm();
       });
     }
