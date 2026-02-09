@@ -459,6 +459,7 @@ class _AddCityContentState extends State<_AddCityContent> {
   final ScrollController _scrollController = ScrollController();
   final Map<String, GlobalKey> _sectionKeys = {};
   String? _hoveredLetter;
+  String? _activeLetter;
   List<_CityData> _filteredCities = [];
 
   final List<_CityData> _allCities = [
@@ -531,13 +532,47 @@ class _AddCityContentState extends State<_AddCityContent> {
     super.initState();
     _filteredCities = List.from(_allCities)..sort((a, b) => a.city.compareTo(b.city));
     _searchController.addListener(_filterCities);
+    _scrollController.addListener(_updateActiveLetter);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateActiveLetter());
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.removeListener(_updateActiveLetter);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _updateActiveLetter() {
+    // Group cities by first letter
+    final Map<String, List<_CityData>> groupedCities = {};
+    for (final city in _filteredCities) {
+      final firstLetter = city.city[0].toUpperCase();
+      if (!groupedCities.containsKey(firstLetter)) {
+        groupedCities[firstLetter] = [];
+      }
+      groupedCities[firstLetter]!.add(city);
+    }
+    // Sort the groups by letter
+    final sortedKeys = groupedCities.keys.toList()..sort();
+
+    final offset = _scrollController.offset;
+    double currentPos = 0.0;
+    for (final letter in sortedKeys) {
+      final cities = groupedCities[letter]!;
+      final sectionHeight = 38.0 + (cities.length * 64.0);
+      if (offset >= currentPos && offset < currentPos + sectionHeight) {
+        if (_activeLetter != letter) {
+          setState(() => _activeLetter = letter);
+        }
+        return;
+      }
+      currentPos += sectionHeight;
+    }
+    if (_activeLetter != null) {
+      setState(() => _activeLetter = null);
+    }
   }
 
   void _filterCities() {
@@ -687,12 +722,13 @@ class _AddCityContentState extends State<_AddCityContent> {
               ),
               // Index bar
               Container(
-                width: 25,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: sortedKeys.map((letter) => MouseRegion(
+                width: 30,
+                padding: const EdgeInsets.only(top: 16, bottom: 16, right: 4),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: sortedKeys.map((letter) => MouseRegion(
                     onEnter: (_) => setState(() => _hoveredLetter = letter),
                     onExit: (_) => setState(() => _hoveredLetter = null),
                     child: GestureDetector(
@@ -707,11 +743,18 @@ class _AddCityContentState extends State<_AddCityContent> {
                             alignment: 0.0,
                           );
                         } else {
-                          // Fallback: scroll to approximate position if key not available
+                          // Fallback: calculate precise position based on previous sections
                           final sectionIndex = sortedKeys.indexOf(letter);
-                          final scrollPosition = sectionIndex * 200.0; // Rough estimate
-                          _scrollController.jumpTo(
+                          double scrollPosition = 0.0;
+                          for (int i = 0; i < sectionIndex; i++) {
+                            final prevLetter = sortedKeys[i];
+                            final prevCities = groupedCities[prevLetter]!;
+                            scrollPosition += 38.0 + (prevCities.length * 64.0); // header + cities
+                          }
+                          _scrollController.animateTo(
                             scrollPosition.clamp(0.0, _scrollController.position.maxScrollExtent),
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
                           );
                         }
                       },
@@ -725,16 +768,19 @@ class _AddCityContentState extends State<_AddCityContent> {
                         child: Text(
                           letter,
                           style: TextStyle(
-                            color: CupertinoColors.systemOrange,
-                            fontSize: 14,
-                            fontWeight: _hoveredLetter == letter 
-                              ? FontWeight.w700 
-                              : FontWeight.w500,
+                            color: _activeLetter == letter 
+                              ? CupertinoColors.systemYellow
+                              : CupertinoColors.systemOrange,
+                            fontSize: _activeLetter == letter ? 16 : 14,
+                            fontWeight: _activeLetter == letter 
+                              ? FontWeight.w900 
+                              : (_hoveredLetter == letter ? FontWeight.w700 : FontWeight.w500),
                           ),
                         ),
                       ),
                     ),
                   )).toList(),
+                  ),
                 ),
               ),
             ],

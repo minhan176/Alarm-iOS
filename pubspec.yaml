@@ -33,12 +33,12 @@ dependencies:
   store_redirect: ^2.0.2
   device_info_plus: ^10.1.0
   in_app_review: ^2.0.11
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
@@ -54,3 +54,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/ic_launcher.jpg"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/ic_launcher.jpg"
+  android_adaptive_background: "#000000"
+  android_adaptive_foreground: "assets/ic_launcher.jpg"

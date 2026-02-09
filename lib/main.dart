@@ -34,6 +34,9 @@ bool _skipPermissionCheck = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Lock orientation to portrait only
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   // Get system time format
   final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
   final system24HourFormat = mediaQuery.alwaysUse24HourFormat;
