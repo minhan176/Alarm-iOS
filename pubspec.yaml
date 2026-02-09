@@ -1,5 +1,5 @@
-name: alarm
-description: "A new Flutter project."
+name: clock_os_26
+description: "Clock OS 26 - Liquid Glass UI"
 publish_to: 'none'
 version: 0.1.0
 
@@ -38,6 +38,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
@@ -48,3 +49,8 @@ flutter:
       fonts:
         - asset: assets/fonts/Inter-Regular.woff2
           weight: 400
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/ic_launcher.jpg"
