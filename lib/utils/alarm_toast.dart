@@ -50,7 +50,7 @@ class AlarmToast {
               style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 13,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
@@ -101,8 +101,8 @@ class AlarmToast {
 
     overlay.insert(overlayEntry);
 
-    // Remove after 3 seconds
-    Future.delayed(const Duration(seconds: 3), () {
+    // Remove after 5 seconds
+    Future.delayed(const Duration(seconds: 5), () {
       overlayEntry.remove();
     });
   }

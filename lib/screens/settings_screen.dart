@@ -18,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
     String deviceInfo = await _getDeviceInfo(context);
 
     // Construct mailto URL manually to preserve spaces
-    final String subject = 'Feedback clock';
+    final String subject = 'Feedback Clock OS 26';
     final String mailtoUrl = 'mailto:oaptech.sp@gmail.com?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(deviceInfo)}';
 
     final Uri emailUri = Uri.parse(mailtoUrl);
@@ -54,7 +54,7 @@ class SettingsScreen extends StatelessWidget {
       timezone = DateTime.now().timeZoneName;
       
       // Screen info
-      screenInfo = '${mediaQuery.size.width.toInt()}x${mediaQuery.size.height.toInt()} (${mediaQuery.devicePixelRatio.toStringAsFixed(1)}x)';
+      screenInfo = '${mediaQuery.size.width.toInt()} px x ${mediaQuery.size.height.toInt()} px';
       
     } catch (e) {
       // If device info collection fails, use fallback

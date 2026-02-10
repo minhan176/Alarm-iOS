@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../widgets/custom_buttons.dart';
 
 class GuideScreen extends StatelessWidget {
@@ -30,12 +31,13 @@ class GuideScreen extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 8),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
                   const Text(
-                    'Để báo thức hoạt động tốt, vui lòng làm theo các bước sau:',
+                    'Để báo thức hoạt động tốt, chúng tôi khuyến khích bạn làm theo các bước sau:',
                     style: TextStyle(
                       color: CupertinoColors.white,
                       fontSize: 16,
@@ -49,7 +51,7 @@ class GuideScreen extends StatelessWidget {
                     steps: [
                       'Vào Cài đặt > Ứng dụng > Clock OS 26',
                       'Chọn "Hiển thị trên các ứng dụng khác"',
-                      'Bật quyền này để app có thể hiển thị báo thức khi màn hình khóa.',
+                      'Allow display over other apps',
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -58,19 +60,24 @@ class GuideScreen extends StatelessWidget {
                     title: 'Cấp quyền chạy dưới nền',
                     steps: [
                       'Vào Cài đặt > Ứng dụng > Clock OS 26',
-                      'Chọn "Quyền" > "Chạy dưới nền"',
-                      'Cho phép để app tiếp tục chạy khi không sử dụng.',
+                      'Chọn "App battery usage"',
+                      'Allow battery usage in background',
                     ],
                   ),
                   const SizedBox(height: 20),
-                  _buildGuideItem(
-                    number: '3',
-                    title: 'Không tắt đa nhiệm ứng dụng',
-                    steps: [
-                      'Sau khi đặt báo thức, không tắt app trong đa nhiệm.',
-                      'Để đảm bảo báo thức đổ chuông đúng giờ.',
-                      'App cần chạy nền để kích hoạt báo thức.',
-                    ],
+                  Center(                    
+                    child: CupertinoButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      color: CupertinoColors.systemOrange,
+                      child: const Text(
+                        'Đã hiểu',
+                        style: TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -101,7 +108,7 @@ class GuideScreen extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: const BoxDecoration(
-                  color: CupertinoColors.systemBlue,
+                  color: CupertinoColors.systemOrange,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
@@ -120,7 +127,7 @@ class GuideScreen extends StatelessWidget {
                 child: Text(
                   title,
                   style: const TextStyle(
-                    color: CupertinoColors.white,
+                    color: CupertinoColors.systemOrange,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -129,32 +136,67 @@ class GuideScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          ...steps.map((step) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      '• ',
-                      style: TextStyle(
-                        color: CupertinoColors.systemGrey,
-                        fontSize: 14,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        step,
-                        style: const TextStyle(
-                          color: CupertinoColors.white,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )),
+          ..._buildStepWidgets(steps, number),
         ],
       ),
     );
+  }
+
+  List<Widget> _buildStepWidgets(List<String> steps, String number) {
+    List<Widget> widgets = [];
+    for (int i = 0; i < steps.length; i++) {
+      widgets.add(Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '• ',
+              style: TextStyle(
+                color: CupertinoColors.systemGrey,
+                fontSize: 14,
+              ),
+            ),
+            Expanded(
+              child: Text(
+                steps[i],
+                style: const TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ));
+      if ((number == '1' || number == '2') && i == 0) {
+        widgets.add(const SizedBox(height: 8));
+        widgets.add(Image.asset('assets/images/app info.jpg'));
+        widgets.add(const SizedBox(height: 8));
+      }
+      if (number == '1' && i == 1) {
+        widgets.add(const SizedBox(height: 8));
+        widgets.add(Image.asset('assets/images/app info - overlay.jpg'));
+        widgets.add(const SizedBox(height: 8));
+      }
+      if (number == '1' && i == 2) {
+        widgets.add(const SizedBox(height: 8));
+        widgets.add(Image.asset('assets/images/overlay - on.jpg'));
+        widgets.add(const SizedBox(height: 8));
+      }
+      if (number == '2' && i == 1) {
+        widgets.add(const SizedBox(height: 8));
+        widgets.add(Image.asset('assets/images/app info - battery.jpg'));
+        widgets.add(const SizedBox(height: 8));
+      }
+      if (number == '2' && i == 2) {
+        widgets.add(const SizedBox(height: 8));
+        widgets.add(Image.asset('assets/images/manage battery.jpg'));
+        widgets.add(const SizedBox(height: 8));
+        widgets.add(Image.asset('assets/images/allow battery.jpg'));
+        widgets.add(const SizedBox(height: 8));
+      }
+    }
+    return widgets;
   }
 }
