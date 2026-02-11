@@ -18,16 +18,16 @@ class AlarmToast {
 
       String timeText;
       if (days > 0) {
-        timeText = '$days ngày, $hours giờ, $minutes phút';
+        timeText = '$days days, $hours hours, $minutes minutes';
       } else if (hours > 0) {
-        timeText = '$hours giờ, $minutes phút';
+        timeText = '$hours hours, $minutes minutes';
       } else if (minutes > 0) {
-        timeText = '$minutes phút';
+        timeText = '$minutes minutes';
       } else {
-        timeText = '1 phút';
+        timeText = '1 minute';
       }
 
-      displayMessage = 'Đổ chuông sau $timeText.';
+      displayMessage = 'Ringing in $timeText.';
     }
 
     Widget messageWidget;
@@ -50,7 +50,7 @@ class AlarmToast {
               style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 13,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
@@ -102,8 +102,14 @@ class AlarmToast {
     overlay.insert(overlayEntry);
 
     // Remove after 5 seconds
-    Future.delayed(const Duration(seconds: 5), () {
-      overlayEntry.remove();
-    });
+    if (displayMessage.startsWith('Tip:')) {
+      Future.delayed(const Duration(seconds: 5), () {
+        overlayEntry.remove();
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 3), () {
+        overlayEntry.remove();
+      });
+    }
   }
 }

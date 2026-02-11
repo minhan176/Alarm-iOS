@@ -37,7 +37,7 @@ class GuideScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 children: [
                   const Text(
-                    'Để báo thức hoạt động tốt, chúng tôi khuyến khích bạn làm theo các bước sau:',
+                    'For the alarm to work properly, we recommend following these steps:',
                     style: TextStyle(
                       color: CupertinoColors.white,
                       fontSize: 16,
@@ -61,7 +61,7 @@ class GuideScreen extends StatelessWidget {
                     steps: [
                       'Vào Cài đặt > Ứng dụng > Clock OS 26',
                       'Chọn "App battery usage"',
-                      'Allow battery usage in background',
+                      'Manage battery usage → Allow battery usage in background',
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -79,6 +79,7 @@ class GuideScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),

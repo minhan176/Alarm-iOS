@@ -90,6 +90,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   bool _batteryDialogShown = false;
   bool _shouldDismissBatteryDialog = false;
   bool _batteryDialogDisplayedOnce = false;
+  bool _skipBatteryAfterOverlayGrant = false;
 
   @override
   void initState() {
@@ -169,16 +170,21 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   Future<void> _checkPermissionAgain() async {
     final status = await Permission.systemAlertWindow.status;
+    final wasGranted = _overlayGranted;
     setState(() {
       _overlayGranted = status.isGranted;
       _permissionChecked = true;
       if (status.isGranted) {
         _shouldDismissDialog = true;
+        if (!wasGranted) {
+          _skipBatteryAfterOverlayGrant = true;
+        }
       }
     });
   }
 
   void _showBatteryOptimizationDialog(BuildContext context) {
+    print('DEBUG: Showing battery optimization dialog');
     _batteryDialogShown = true;
     _batteryDialogDisplayedOnce = true;
     _saveBatteryDialogState(true);
@@ -186,20 +192,21 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       context: navigatorKey.currentContext ?? context,
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
-        title: Text('Cho phép chạy dưới nền'),
-        content: Text('Open App Settings → Pin → Allow Background Activity'),
+        title: Text('Allow Background Running'),
+        content: Text('Select "App Settings" → Battery → Allow background activity'),
         actions: [
           CupertinoDialogAction(
             onPressed: () async {
               await BatteryOptimizationService.openBatterySettings();
+              Navigator.of(context).pop();
             },
-            child: Text('Mở cài đặt ứng dụng'),
+            child: Text('Open App Settings'),
           ),
           CupertinoDialogAction(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Đóng'),
+            child: Text('Close'),
           ),
         ],
       ),
@@ -212,8 +219,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       context: navigatorKey.currentContext ?? context,
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
-        title: Text('Cho phép "Hiển thị trên các ứng dụng khác"'),
-        content: Text('Open Settings → Alarm Clock → Switch On'),
+        title: Text('Allow "Display Over Other Apps"'),
+        content: Text('Select "Settings" → Apps → Clock OS 26 → Display over other apps → Enable'),
         actions: [
           CupertinoDialogAction(
             onPressed: () {
@@ -228,7 +235,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
                 data: 'package:com.oaptech.clock',
               );
               await intent.launch();
-              Navigator.of(context).pop();
             },
             child: Text('Open Settings'),
           ),
@@ -242,7 +248,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     // Skip permission dialogs if app is opened from ring screen
     if (!_skipPermissionCheck) {
       // Battery optimization dialog logic - only show after overlay is granted and only once
-      if (_permissionChecked && _overlayGranted && !_batteryDialogDisplayedOnce && !_batteryDialogShown) {
+      if (_permissionChecked && _overlayGranted && !_batteryDialogDisplayedOnce && !_batteryDialogShown && !_skipBatteryAfterOverlayGrant) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _showBatteryOptimizationDialog(context);
         });

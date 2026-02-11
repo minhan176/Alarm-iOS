@@ -37,7 +37,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
         final prefs = await SharedPreferences.getInstance();
         final hasShownFirstAlarmToast = prefs.getBool('first_alarm_toast_shown') ?? false;
         if (!hasShownFirstAlarmToast) {
-          AlarmToast.showAlarmToast(alarm, context, customMessage: 'Tip: Khuyến khích không nên tắt app trong đa nhiệm để đảm bảo báo thức hoạt động tốt hơn.');
+          AlarmToast.showAlarmToast(alarm, context, customMessage: 'Tip: It is recommended not to close the app in multitasking to ensure better alarm functionality.');
           await prefs.setBool('first_alarm_toast_shown', true);
         } else {
           AlarmToast.showAlarmToast(alarm, context);
@@ -76,23 +76,23 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     
     if (days > 0) {
       // Show days, hours, minutes
-      parts.add('$days ngày');
-      if (hours > 0) parts.add('$hours giờ');
-      if (minutes > 0) parts.add('$minutes phút');
+      parts.add('$days days');
+      if (hours > 0) parts.add('$hours hours');
+      if (minutes > 0) parts.add('$minutes minutes');
     } else if (hours > 0) {
       // Show hours, minutes only
-      parts.add('$hours giờ');
-      if (minutes > 0) parts.add('$minutes phút');
+      parts.add('$hours hours');
+      if (minutes > 0) parts.add('$minutes minutes');
     } else {
       // Show minutes only
       if (minutes > 0) {
-        parts.add('$minutes phút');
+        parts.add('$minutes minutes');
       } else {
-        parts.add('1 phút');
+        parts.add('1 minute');
       }
     }
 
-    return 'Còn lại ${parts.join(', ')}';
+    return 'Remaining ${parts.join(', ')}';
   }
 
   @override
@@ -153,10 +153,25 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                               ),
                             );
                           },
-                          child: const Icon(
-                            CupertinoIcons.settings,
-                          color: CupertinoColors.systemOrange,
-                          size: 24,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: const [
+                            Icon(
+                              CupertinoIcons.settings,
+                              color: CupertinoColors.systemOrange,
+                              size: 24,
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              'Settings',
+                              style: TextStyle(
+                                color: CupertinoColors.systemOrange,
+                                fontSize: 16,
+                              ),
+                              
+                            ),
+                          ],
                           ),
                         ),
                       )
@@ -208,8 +223,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                 },
                 onToggle: () async {
                   await alarmProvider.toggleAlarm(alarm.id);
-                  // Show toast when alarm is toggled
-                  AlarmToast.showAlarmToast(alarm, context);
+                  if (alarm.isEnabled) {
+                    AlarmToast.showAlarmToast(alarm, context);
+                  }
                 },
                 onDelete: () {
                   alarmProvider.deleteAlarm(alarm.id);

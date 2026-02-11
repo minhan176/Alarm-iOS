@@ -67,15 +67,15 @@ flutter pub get
 flutter run
 ```
 
-## Lưu ý
+## Notes
 
-- **Quyền SCHEDULE_EXACT_ALARM**: Trên Android 12+, người dùng có thể cần cấp quyền thủ công trong Settings
-- **Battery Optimization**: Để báo thức hoạt động đúng, có thể cần tắt tối ưu hóa pin cho app
-- **Do Not Disturb**: Báo thức vẫn kêu trong chế độ không làm phiền nhờ `InterruptionLevel.critical`
+- **SCHEDULE_EXACT_ALARM Permission**: On Android 12+, users may need to manually grant permission in Settings
+- **Battery Optimization**: To ensure alarms work correctly, battery optimization for the app may need to be disabled
+- **Do Not Disturb**: Alarms will still ring in Do Not Disturb mode thanks to `InterruptionLevel.critical`
 
 ## Testing
 
-Để test notification:
+To test notification:
 ```dart
 await AlarmService.showTestNotification();
 ```
