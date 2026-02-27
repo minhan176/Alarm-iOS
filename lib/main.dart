@@ -193,7 +193,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
         title: Text('Allow Background Running'),
-        content: Text('Select "App Settings" → Battery → Allow background activity'),
+        content: Text('Select "Open App Settings" → Battery → Manage battery usage → Allow battery usage in background'),
         actions: [
           CupertinoDialogAction(
             onPressed: () async {
@@ -220,7 +220,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
         title: Text('Allow "Display Over Other Apps"'),
-        content: Text('Select "Settings" → Apps → Clock OS 26 → Display over other apps → Enable'),
+        content: Text('Select "Open Settings" → Clock OS 26 → Allow display over other apps'),
         actions: [
           CupertinoDialogAction(
             onPressed: () {

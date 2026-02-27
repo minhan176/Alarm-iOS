@@ -216,7 +216,7 @@ Please describe your feedback below:
                                   SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
-                                      'Hướng dẫn',
+                                      'Guide',
                                       style: TextStyle(
                                         color: CupertinoColors.white,
                                         fontSize: 17,

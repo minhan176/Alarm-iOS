@@ -23,7 +23,7 @@ class GuideScreen extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               middle: const Text(
-                'Hướng dẫn',
+                'Guide',
                 style: TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 17,
@@ -47,20 +47,20 @@ class GuideScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   _buildGuideItem(
                     number: '1',
-                    title: 'Cấp quyền hiển thị trên các ứng dụng khác (Overlay)',
+                    title: 'Grant "Display Over Other Apps" permission',
                     steps: [
-                      'Vào Cài đặt > Ứng dụng > Clock OS 26',
-                      'Chọn "Hiển thị trên các ứng dụng khác"',
+                      'Go to Settings → Apps → Clock OS 26',
+                      'Select "Display over other apps"',
                       'Allow display over other apps',
                     ],
                   ),
                   const SizedBox(height: 20),
                   _buildGuideItem(
                     number: '2',
-                    title: 'Cấp quyền chạy dưới nền',
+                    title: 'Allow background battery usage',
                     steps: [
-                      'Vào Cài đặt > Ứng dụng > Clock OS 26',
-                      'Chọn "App battery usage"',
+                      'Go to Settings → Apps → Clock OS 26',
+                      'Select "App Battery Usage"',
                       'Manage battery usage → Allow battery usage in background',
                     ],
                   ),
@@ -70,7 +70,7 @@ class GuideScreen extends StatelessWidget {
                       onPressed: () => Navigator.of(context).pop(),
                       color: CupertinoColors.systemOrange,
                       child: const Text(
-                        'Đã hiểu',
+                        'Got it',
                         style: TextStyle(
                           color: CupertinoColors.white,
                           fontSize: 16,
