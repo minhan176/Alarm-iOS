@@ -10,6 +10,7 @@ import '../utils/alarm_toast.dart';
 import 'settings_screen.dart';
 import '../widgets/rating_dialog.dart';
 import '../providers/settings_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({super.key});
@@ -37,7 +38,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
         final prefs = await SharedPreferences.getInstance();
         final hasShownFirstAlarmToast = prefs.getBool('first_alarm_toast_shown') ?? false;
         if (!hasShownFirstAlarmToast) {
-          AlarmToast.showAlarmToast(alarm, context, customMessage: 'Tip: It is recommended not to close the app in multitasking to ensure better alarm functionality.');
+          AlarmToast.showAlarmToast(alarm, context, customMessage: AppLocalizations.of(context).tipKeepAppRunning);
           await prefs.setBool('first_alarm_toast_shown', true);
         } else {
           AlarmToast.showAlarmToast(alarm, context);
@@ -47,7 +48,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     }
   }
 
-  String? _getNextAlarmTimeText(List<AlarmModel> alarms) {
+  String? _getNextAlarmTimeText(List<AlarmModel> alarms, BuildContext context) {
     final enabledAlarms = alarms.where((alarm) => alarm.isEnabled).toList();
     if (enabledAlarms.isEmpty) return null;
 
@@ -76,23 +77,23 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     
     if (days > 0) {
       // Show days, hours, minutes
-      parts.add('$days days');
-      if (hours > 0) parts.add('$hours hours');
-      if (minutes > 0) parts.add('$minutes minutes');
+      parts.add(AppLocalizations.of(context).daysText(days));
+      if (hours > 0) parts.add(AppLocalizations.of(context).hoursText(hours));
+      if (minutes > 0) parts.add(AppLocalizations.of(context).minutesText(minutes));
     } else if (hours > 0) {
       // Show hours, minutes only
-      parts.add('$hours hours');
-      if (minutes > 0) parts.add('$minutes minutes');
+      parts.add(AppLocalizations.of(context).hoursText(hours));
+      if (minutes > 0) parts.add(AppLocalizations.of(context).minutesText(minutes));
     } else {
       // Show minutes only
       if (minutes > 0) {
-        parts.add('$minutes minutes');
+        parts.add(AppLocalizations.of(context).minutesText(minutes));
       } else {
-        parts.add('1 minute');
+        parts.add(AppLocalizations.of(context).oneMinute);
       }
     }
 
-    return 'Remaining ${parts.join(', ')}';
+    return AppLocalizations.of(context).remaining(parts.join(', '));
   }
 
   @override
@@ -108,7 +109,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
               CustomNavBar(
                 backgroundColor: CupertinoColors.black,
                 leading: NavTextButton(
-                  text: _isEditMode ? 'Done' : 'Edit',
+                  text: _isEditMode ? AppLocalizations.of(context).done : AppLocalizations.of(context).edit,
                   onPressed: () {
                     setState(() {
                       _isEditMode = !_isEditMode;
@@ -133,9 +134,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
-                    const Text(
-                      'Alarms',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context).alarms,
+                      style: const TextStyle(
                         color: CupertinoColors.white,
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
@@ -156,16 +157,16 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               CupertinoIcons.settings,
                               color: CupertinoColors.systemOrange,
                               size: 24,
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
-                              'Settings',
-                              style: TextStyle(
+                              AppLocalizations.of(context).settings,
+                              style: const TextStyle(
                                 color: CupertinoColors.systemOrange,
                                 fontSize: 16,
                               ),
@@ -175,11 +176,11 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                           ),
                         ),
                       )
-                    else if (_getNextAlarmTimeText(alarmProvider.alarms) != null)
+                    else if (_getNextAlarmTimeText(alarmProvider.alarms, context) != null)
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: Text(
-                          _getNextAlarmTimeText(alarmProvider.alarms)!,
+                          _getNextAlarmTimeText(alarmProvider.alarms, context)!,
                           style: const TextStyle(
                             color: CupertinoColors.systemGrey,
                             fontSize: 12,
@@ -191,10 +192,10 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
               ),
               Expanded(
                 child: alarmProvider.alarms.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
-                          'No Alarm',
-                          style: TextStyle(
+                          AppLocalizations.of(context).noAlarm,
+                          style: const TextStyle(
                             color: CupertinoColors.systemGrey,
                             fontSize: 24,
                           ),

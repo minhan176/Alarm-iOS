@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'dart:math' as dart_math;
+import '../l10n/app_localizations.dart';
 
 class StopwatchScreen extends StatefulWidget {
   const StopwatchScreen({super.key});
@@ -96,7 +97,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                     onPressed: _milliseconds > 0 ? _lapReset : null,
                     backgroundColor: const Color(0xFF2C2C2E),
                     foregroundColor: CupertinoColors.white,
-                    label: _isRunning ? 'Lap' : 'Reset',
+                    label: _isRunning ? AppLocalizations.of(context).lap : AppLocalizations.of(context).reset,
                   ),
                   // Start/Stop Button
                   _CircularButton(
@@ -107,7 +108,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                     foregroundColor: _isRunning
                         ? const Color(0xFFFF453A)
                         : const Color(0xFF32D74B),
-                    label: _isRunning ? 'Stop' : 'Start',
+                    label: _isRunning ? AppLocalizations.of(context).stop : AppLocalizations.of(context).start,
                   ),
                 ],
               ),
@@ -155,7 +156,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Lap $lapNumber',
+                              AppLocalizations.of(context).lapNumber(lapNumber),
                               style: const TextStyle(
                                 color: CupertinoColors.white,
                                 fontSize: 17,

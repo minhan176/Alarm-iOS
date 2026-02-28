@@ -9,6 +9,7 @@ import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import 'package:jbh_ringtone/jbh_ringtone.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../l10n/app_localizations.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
@@ -69,9 +70,15 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     _currentlyPreviewingUri = null;
   }
 
-  String _getSoundDisplayName(String sound) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _soundDisplayName = _getSoundDisplayName(_sound, AppLocalizations.of(context));
+  }
+
+  String _getSoundDisplayName(String sound, [AppLocalizations? loc]) {
     if (sound == 'None') {
-      return 'None';
+      return loc?.none ?? 'None';
     }
     if (sound == 'assets/sounds/alarm.wav') {
       return 'Alarm OS 26';
@@ -79,7 +86,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     // For system ringtones, we can't easily get the display name without loading the list
     // So we'll show a generic name or the URI basename
     if (sound.startsWith('content://')) {
-      return 'System Ringtone';
+      return loc?.systemRingtone ?? 'System Ringtone';
     }
     // For built-in sounds, return the sound name (truncated if too long)
     return _truncateSoundName(path.basename(sound));
@@ -157,17 +164,17 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       showCupertinoDialog(
         context: context,
         builder: (context) => CupertinoAlertDialog(
-          title: const Text('Delete Alarm'),
-          content: const Text('Are you sure you want to delete this alarm?'),
+          title: Text(AppLocalizations.of(context).deleteAlarm),
+          content: Text(AppLocalizations.of(context).deleteAlarmConfirm),
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context).cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,
-              child: const Text('Delete'),
+              child: Text(AppLocalizations.of(context).delete),
               onPressed: () {
                 Provider.of<AlarmProvider>(
                   context,
@@ -210,7 +217,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
               ),
               middle: Text(
-                widget.alarm != null ? 'Edit Alarm' : 'Add Alarm',
+                widget.alarm != null ? AppLocalizations.of(context).editAlarm : AppLocalizations.of(context).addAlarm,
                 style: const TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 17,
@@ -245,28 +252,28 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 children: [
                   _buildSettingGroup([
                     _buildSettingItem(
-                      'Repeat',
-                      _getRepeatText(),
+                      AppLocalizations.of(context).repeat,
+                      _getRepeatText(AppLocalizations.of(context)),
                       () => _showRepeatDialog(),
                       valueColor: CupertinoColors.white,
                     ),
                     _buildLabelItem(),
                     _buildSettingItem(
-                      'Sound',
+                      AppLocalizations.of(context).sound,
                       _soundDisplayName,
                       () => _showSoundPage(),
                       valueColor: CupertinoColors.white,
                     ),
                     _buildSwitchItem(
-                      'Snooze',
+                      AppLocalizations.of(context).snooze,
                       _snooze,
                       (value) => setState(() => _snooze = value),
                     ),
                     Column(
                       children: [
                         _buildSettingItem(
-                          'Snooze Duration',
-                          '${_snoozeDuration.inMinutes} minutes',
+                          AppLocalizations.of(context).snoozeDuration,
+                          AppLocalizations.of(context).minutesValue(_snoozeDuration.inMinutes),
                           () => setState(() => _showDurationOptions = !_showDurationOptions),
                           valueColor: CupertinoColors.systemOrange,
                           showArrow: false,
@@ -300,7 +307,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                                       final minutes = index + 1;
                                       return Center(
                                         child: Text(
-                                          '$minutes minutes',
+                                          AppLocalizations.of(context).minutesValue(minutes),
                                           style: const TextStyle(
                                             color: CupertinoColors.white,
                                             fontSize: 17,
@@ -326,9 +333,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       ),
                       child: CupertinoButton(
                         padding: EdgeInsets.zero,
-                        child: const Text(
-                          'Delete Alarm',
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context).deleteAlarm,
+                          style: const TextStyle(
                             color: CupertinoColors.systemRed,
                             fontSize: 17,
                           ),
@@ -437,14 +444,14 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Label',
-            style: TextStyle(color: CupertinoColors.white, fontSize: 17),
+          Text(
+            AppLocalizations.of(context).label,
+            style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
           ),
           Expanded(
             child: CupertinoTextField(
               controller: _labelController,
-              placeholder: 'Alarm',
+              placeholder: AppLocalizations.of(context).alarm,
               textAlign: TextAlign.right,
               style: TextStyle(
                 color: (_label.isEmpty || _label == 'Alarm') ? CupertinoColors.systemGrey : CupertinoColors.white,
@@ -487,7 +494,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '$minutes minutes',
+                  AppLocalizations.of(context).minutesValue(minutes),
                   style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
                 ),
                 if (isSelected)
@@ -504,23 +511,23 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     );
   }
 
-  String _getRepeatText() {
-    if (_repeatDays.isEmpty) return 'Never';
-    if (_repeatDays.length == 7) return 'Every day';
+  String _getRepeatText(AppLocalizations loc) {
+    if (_repeatDays.isEmpty) return loc.never;
+    if (_repeatDays.length == 7) return loc.everyDay;
     if (_repeatDays.length == 5 &&
         _repeatDays.contains(1) &&
         _repeatDays.contains(2) &&
         _repeatDays.contains(3) &&
         _repeatDays.contains(4) &&
         _repeatDays.contains(5)) {
-      return 'Weekdays';
+      return loc.weekdays;
     }
     if (_repeatDays.length == 2 &&
         _repeatDays.contains(6) &&
         _repeatDays.contains(7)) {
-      return 'Weekends';
+      return loc.weekends;
     }
-    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final dayNames = [loc.mon, loc.tue, loc.wed, loc.thu, loc.fri, loc.sat, loc.sun];
     return _repeatDays.map((day) => dayNames[day - 1]).join(', ');
   }
 
@@ -549,7 +556,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     if (result != null) {
       setState(() {
         _sound = result['sound'];
-        _soundDisplayName = result['soundDisplayName'] ?? _getSoundDisplayName(result['sound']);
+        _soundDisplayName = result['soundDisplayName'] ?? _getSoundDisplayName(result['sound'], AppLocalizations.of(context));
         _vibrate = result['vibrate'];
       });
     }
@@ -577,19 +584,19 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CupertinoButton(
-                    child: const Text('Cancel'),
+                    child: Text(AppLocalizations.of(context).cancel),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
-                  const Text(
-                    'Snooze Duration',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context).snoozeDuration,
+                    style: const TextStyle(
                       color: CupertinoColors.white,
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   CupertinoButton(
-                    child: const Text('Done'),
+                    child: Text(AppLocalizations.of(context).done),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -611,7 +618,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                     .map(
                       (duration) => Center(
                         child: Text(
-                          '$duration minutes',
+                          AppLocalizations.of(context).minutesValue(duration),
                           style: const TextStyle(
                             color: CupertinoColors.white,
                             fontSize: 17,
@@ -652,14 +659,14 @@ class _RepeatSelectorState extends State<RepeatSelector> {
 
   @override
   Widget build(BuildContext context) {
-    const days = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
+    final days = [
+      AppLocalizations.of(context).monday,
+      AppLocalizations.of(context).tuesday,
+      AppLocalizations.of(context).wednesday,
+      AppLocalizations.of(context).thursday,
+      AppLocalizations.of(context).friday,
+      AppLocalizations.of(context).saturday,
+      AppLocalizations.of(context).sunday,
     ];
 
     return WillPopScope(
@@ -677,14 +684,14 @@ class _RepeatSelectorState extends State<RepeatSelector> {
               backgroundColor: const Color(0xFF1C1C1E),
               leading: NavTextIconButton(
                 icon: CupertinoIcons.chevron_left,
-                text: 'Back',
+                text: AppLocalizations.of(context).back,
                 iconColor: CupertinoColors.white,
                 textColor: CupertinoColors.white,
                 onPressed: () => Navigator.of(context).pop(_selectedDays),
               ),
-              middle: const Text(
-                'Repeat',
-                style: TextStyle(
+              middle: Text(
+                AppLocalizations.of(context).repeat,
+                style: const TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
@@ -833,7 +840,7 @@ class _SoundSelectorState extends State<SoundSelector> {
       setState(() {
         // Create the custom ringtones
         final noneRingtone = CustomRingtone(
-          displayTitle: 'None',
+          displayTitle: AppLocalizations.of(context).none,
           uri: 'None',
         );
         final alarmOS26 = CustomRingtone(
@@ -869,7 +876,7 @@ class _SoundSelectorState extends State<SoundSelector> {
           setState(() {
             // Create the custom ringtones
             final noneRingtone = CustomRingtone(
-              displayTitle: 'None',
+              displayTitle: AppLocalizations.of(context).none,
               uri: 'None',
             );
             final alarmOS26 = CustomRingtone(
@@ -1107,7 +1114,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                 backgroundColor: const Color(0xFF1C1C1E),
                 leading: NavTextIconButton(
                   icon: CupertinoIcons.chevron_left,
-                  text: 'Back',
+                  text: AppLocalizations.of(context).back,
                   iconColor: CupertinoColors.white,
                   textColor: CupertinoColors.white,
                   onPressed: () => Navigator.of(context).pop({
@@ -1116,9 +1123,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                     'vibrate': _vibrate
                   }),
                 ),
-                middle: const Text(
-                  'Sound',
-                  style: TextStyle(
+                middle: Text(
+                  AppLocalizations.of(context).sound,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
@@ -1137,9 +1144,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Vibrate',
-                        style: TextStyle(color: CupertinoColors.white, fontSize: 17),
+                      Text(
+                        AppLocalizations.of(context).vibrate,
+                        style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
                       ),
                       Transform.scale(
                         scale: 0.8,
@@ -1154,11 +1161,11 @@ class _SoundSelectorState extends State<SoundSelector> {
                 ),
               ),
               // Section 1: Add from device
-              const Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
                 child: Text(
-                  'SONGS',
-                  style: TextStyle(
+                  AppLocalizations.of(context).songs,
+                  style: const TextStyle(
                     color: CupertinoColors.systemGrey,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -1238,9 +1245,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const SizedBox(width: 32),
-                              const Text(
-                                'Pick a song',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context).pickASong,
+                                style: const TextStyle(
                                   color: CupertinoColors.white,
                                   fontSize: 17,
                                 ),
@@ -1262,11 +1269,11 @@ class _SoundSelectorState extends State<SoundSelector> {
               ),
               // Section 2: System Ringtones
               if (_systemRingtones.isNotEmpty) ...[
-                const Padding(
-                  padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
                   child: Text(
-                    'SYSTEM RINGTONES',
-                    style: TextStyle(
+                    AppLocalizations.of(context).systemRingtones,
+                    style: const TextStyle(
                       color: CupertinoColors.systemGrey,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,

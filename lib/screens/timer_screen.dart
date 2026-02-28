@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/custom_buttons.dart';
 import 'timer_ring_screen.dart';
 import 'sound_selector.dart';
+import '../l10n/app_localizations.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({super.key});
@@ -287,11 +288,11 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
               child: Text(
-                'Timer',
-                style: TextStyle(
+                AppLocalizations.of(context).timer,
+                style: const TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
@@ -418,13 +419,13 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 onPressed: _cancelTimer,
                 backgroundColor: const Color(0xFF2C2C2E),
                 foregroundColor: CupertinoColors.white,
-                label: 'Cancel',
+                label: AppLocalizations.of(context).cancel,
               ),
               _StopwatchStyleButton(
                 onPressed: _isPaused ? _resumeTimer : _pauseTimer,
                 backgroundColor: const Color(0xFF0A3A1F),
                 foregroundColor: CupertinoColors.systemGreen,
-                label: _isPaused ? 'Resume' : 'Pause',
+                label: _isPaused ? AppLocalizations.of(context).resume : AppLocalizations.of(context).pause,
               ),
             ],
           ),
@@ -444,9 +445,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'When Timer Ends',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context).whenTimerEnds,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
                   ),
@@ -538,11 +539,11 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Text(
-                  'hours',
-                  style: TextStyle(
+                  AppLocalizations.of(context).hoursLabel,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 15,
                   ),
@@ -578,11 +579,11 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Text(
-                  'min',
-                  style: TextStyle(
+                  AppLocalizations.of(context).minLabel,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 15,
                   ),
@@ -618,11 +619,11 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
                 child: Text(
-                  'sec',
-                  style: TextStyle(
+                  AppLocalizations.of(context).secLabel,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 15,
                   ),
@@ -645,14 +646,14 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 onPressed: null,
                 backgroundColor: const Color(0xFF2C2C2E),
                 foregroundColor: CupertinoColors.white,
-                label: 'Cancel',
+                label: AppLocalizations.of(context).cancel,
               ),
               // Start Button
               _StopwatchStyleButton(
                 onPressed: _startTimer,
                 backgroundColor: const Color(0xFF0A3A1F),
                 foregroundColor: CupertinoColors.systemGreen,
-                label: 'Start',
+                label: AppLocalizations.of(context).start,
               ),
             ],
           ),
@@ -672,9 +673,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'When Timer Ends',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context).whenTimerEnds,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
                   ),

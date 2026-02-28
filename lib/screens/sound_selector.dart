@@ -7,6 +7,7 @@ import 'package:jbh_ringtone/jbh_ringtone.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../widgets/custom_buttons.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '../l10n/app_localizations.dart';
 
 class SoundSelector extends StatefulWidget {
   final String currentSound;
@@ -348,7 +349,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                 backgroundColor: const Color(0xFF1C1C1E),
                 leading: NavTextIconButton(
                   icon: CupertinoIcons.chevron_left,
-                  text: 'Back',
+                  text: AppLocalizations.of(context).back,
                   iconColor: CupertinoColors.white,
                   textColor: CupertinoColors.white,
                   onPressed: () => Navigator.of(context).pop({
@@ -357,9 +358,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                     'vibrate': _vibrate
                   }),
                 ),
-                middle: const Text(
-                  'When Timer Ends',
-                  style: TextStyle(
+                middle: Text(
+                  AppLocalizations.of(context).whenTimerEnds,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
@@ -378,9 +379,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Vibrate',
-                        style: TextStyle(color: CupertinoColors.white, fontSize: 17),
+                      Text(
+                        AppLocalizations.of(context).vibrate,
+                        style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
                       ),
                       Transform.scale(
                         scale: 0.8,
@@ -395,11 +396,11 @@ class _SoundSelectorState extends State<SoundSelector> {
                 ),
               ),
               // Section 1: Add from device
-              const Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
                 child: Text(
-                  'SONGS',
-                  style: TextStyle(
+                  AppLocalizations.of(context).songs,
+                  style: const TextStyle(
                     color: CupertinoColors.systemGrey,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -479,9 +480,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const SizedBox(width: 32),
-                              const Text(
-                                'Pick a song',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context).pickASong,
+                                style: const TextStyle(
                                   color: CupertinoColors.white,
                                   fontSize: 17,
                                 ),
@@ -503,11 +504,11 @@ class _SoundSelectorState extends State<SoundSelector> {
               ),
               // Section 2: System Ringtones
               if (_systemRingtones.isNotEmpty) ...[
-                const Padding(
-                  padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
                   child: Text(
-                    'SYSTEM RINGTONES',
-                    style: TextStyle(
+                    AppLocalizations.of(context).systemRingtones,
+                    style: const TextStyle(
                       color: CupertinoColors.systemGrey,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,

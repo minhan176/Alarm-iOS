@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/alarm_model.dart';
+import '../l10n/app_localizations.dart';
 
 class AlarmToast {
   static void showAlarmToast(AlarmModel alarm, BuildContext context, {String? customMessage}) {
@@ -16,18 +17,19 @@ class AlarmToast {
       final hours = difference.inHours % 24;
       final minutes = difference.inMinutes % 60;
 
+      final l10n = AppLocalizations.of(context);
       String timeText;
       if (days > 0) {
-        timeText = '$days days, $hours hours, $minutes minutes';
+        timeText = '${l10n.daysText(days)}, ${l10n.hoursText(hours)}, ${l10n.minutesText(minutes)}';
       } else if (hours > 0) {
-        timeText = '$hours hours, $minutes minutes';
+        timeText = '${l10n.hoursText(hours)}, ${l10n.minutesText(minutes)}';
       } else if (minutes > 0) {
-        timeText = '$minutes minutes';
+        timeText = l10n.minutesText(minutes);
       } else {
-        timeText = '1 minute';
+        timeText = l10n.oneMinute;
       }
 
-      displayMessage = 'Ringing in $timeText.';
+      displayMessage = l10n.ringingIn(timeText);
     }
 
     Widget messageWidget;

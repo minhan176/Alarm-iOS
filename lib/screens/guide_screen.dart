@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/custom_buttons.dart';
 
 class GuideScreen extends StatelessWidget {
@@ -17,13 +18,13 @@ class GuideScreen extends StatelessWidget {
               backgroundColor: const Color(0xFF1C1C1E),
               leading: NavTextIconButton(
                 icon: CupertinoIcons.chevron_left,
-                text: 'Back',
+                text: AppLocalizations.of(context).back,
                 iconColor: CupertinoColors.white,
                 textColor: CupertinoColors.white,
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              middle: const Text(
-                'Guide',
+              middle: Text(
+                AppLocalizations.of(context).guide,
                 style: TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 17,
@@ -36,8 +37,8 @@ class GuideScreen extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  const Text(
-                    'For the alarm to work properly, we recommend following these steps:',
+                  Text(
+                    AppLocalizations.of(context).guideIntro,
                     style: TextStyle(
                       color: CupertinoColors.white,
                       fontSize: 16,
@@ -47,21 +48,21 @@ class GuideScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   _buildGuideItem(
                     number: '1',
-                    title: 'Grant "Display Over Other Apps" permission',
+                    title: AppLocalizations.of(context).guideStep1Title,
                     steps: [
-                      'Go to Settings → Apps → Clock OS 26',
-                      'Select "Display over other apps"',
-                      'Allow display over other apps',
+                      AppLocalizations.of(context).guideStep1Sub1,
+                      AppLocalizations.of(context).guideStep1Sub2,
+                      AppLocalizations.of(context).guideStep1Sub3,
                     ],
                   ),
                   const SizedBox(height: 20),
                   _buildGuideItem(
                     number: '2',
-                    title: 'Allow background battery usage',
+                    title: AppLocalizations.of(context).guideStep2Title,
                     steps: [
-                      'Go to Settings → Apps → Clock OS 26',
-                      'Select "App Battery Usage"',
-                      'Manage battery usage → Allow battery usage in background',
+                      AppLocalizations.of(context).guideStep2Sub1,
+                      AppLocalizations.of(context).guideStep2Sub2,
+                      AppLocalizations.of(context).guideStep2Sub3,
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -69,8 +70,8 @@ class GuideScreen extends StatelessWidget {
                     child: CupertinoButton(
                       onPressed: () => Navigator.of(context).pop(),
                       color: CupertinoColors.systemOrange,
-                      child: const Text(
-                        'Got it',
+                      child: Text(
+                        AppLocalizations.of(context).gotIt,
                         style: TextStyle(
                           color: CupertinoColors.white,
                           fontSize: 16,

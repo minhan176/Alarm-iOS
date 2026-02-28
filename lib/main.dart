@@ -22,6 +22,7 @@ import 'screens/timer_ring_screen.dart';
 import 'services/alarm_service.dart';
 import 'services/battery_optimization_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
+import 'l10n/app_localizations.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -192,21 +193,21 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       context: navigatorKey.currentContext ?? context,
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
-        title: Text('Allow Background Running'),
-        content: Text('Select "Open App Settings" → Battery → Manage battery usage → Allow battery usage in background'),
+        title: Text(AppLocalizations.of(context).allowBackgroundRunning),
+        content: Text(AppLocalizations.of(context).batteryDialogContent),
         actions: [
           CupertinoDialogAction(
             onPressed: () async {
               await BatteryOptimizationService.openBatterySettings();
               Navigator.of(context).pop();
             },
-            child: Text('Open App Settings'),
+            child: Text(AppLocalizations.of(context).openAppSettings),
           ),
           CupertinoDialogAction(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Close'),
+            child: Text(AppLocalizations.of(context).close),
           ),
         ],
       ),
@@ -219,14 +220,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       context: navigatorKey.currentContext ?? context,
       barrierDismissible: false,
       builder: (context) => CupertinoAlertDialog(
-        title: Text('Allow "Display Over Other Apps"'),
-        content: Text('Select "Open Settings" → Clock OS 26 → Allow display over other apps'),
+        title: Text(AppLocalizations.of(context).allowDisplayOverOtherApps),
+        content: Text(AppLocalizations.of(context).overlayDialogContent),
         actions: [
           CupertinoDialogAction(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Close'),
+            child: Text(AppLocalizations.of(context).close),
           ),
           CupertinoDialogAction(
             onPressed: () async {
@@ -236,7 +237,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               );
               await intent.launch();
             },
-            child: Text('Open Settings'),
+            child: Text(AppLocalizations.of(context).openSettings),
           ),
         ],
       ),
@@ -290,6 +291,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       child: CupertinoApp(
         navigatorKey: navigatorKey,
         title: 'Alarm',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: const CupertinoThemeData(
           brightness: Brightness.dark,
           primaryColor: CupertinoColors.systemOrange,
@@ -409,21 +412,21 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
             fake: true,
             barHeight: 57,
             bottomPadding: MediaQuery.of(context).padding.bottom + 16,
-            tabs: const [
+            tabs: [
                 LiquidGlassBottomBarTab(
-                  label: 'World Clock',
+                  label: AppLocalizations.of(context).tabWorldClock,
                   icon: CupertinoIcons.globe,
                 ),
                 LiquidGlassBottomBarTab(
-                  label: 'Alarm',
+                  label: AppLocalizations.of(context).tabAlarm,
                   icon: CupertinoIcons.alarm,
                 ),
                 LiquidGlassBottomBarTab(
-                  label: 'Stopwatch',
+                  label: AppLocalizations.of(context).tabStopwatch,
                   icon: CupertinoIcons.stopwatch,
                 ),
                 LiquidGlassBottomBarTab(
-                  label: 'Timer',
+                  label: AppLocalizations.of(context).tabTimer,
                   icon: CupertinoIcons.timer,
                 ),
               ],
@@ -524,12 +527,12 @@ class _AlarmRingScreenWidgetState extends State<AlarmRingScreenWidget> {
     }
 
     if (_alarm == null) {
-      return const CupertinoPageScaffold(
+      return CupertinoPageScaffold(
         backgroundColor: CupertinoColors.black,
         child: Center(
           child: Text(
-            'No Alarm Data',
-            style: TextStyle(color: CupertinoColors.white),
+            AppLocalizations.of(context).noAlarmData,
+            style: const TextStyle(color: CupertinoColors.white),
           ),
         ),
       );

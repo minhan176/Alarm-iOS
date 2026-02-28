@@ -9,6 +9,7 @@ import 'dart:io';
 import '../widgets/custom_buttons.dart';
 import '../providers/settings_provider.dart';
 import 'guide_screen.dart';
+import '../l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -75,8 +76,8 @@ Please describe your feedback below:
 ''';
   }
 
-  void _shareApp() {
-    Share.share('Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock');
+  void _shareApp(BuildContext context) {
+    Share.share(AppLocalizations.of(context).shareMessage);
   }
 
   void _rateApp() {
@@ -93,11 +94,11 @@ Please describe your feedback below:
       showCupertinoDialog(
         context: context,
         builder: (context) => CupertinoAlertDialog(
-          title: const Text('Privacy Policy'),
-          content: const Text('Unable to open privacy policy. Please visit our website.'),
+          title: Text(AppLocalizations.of(context).privacyPolicy),
+          content: Text(AppLocalizations.of(context).privacyPolicyError),
           actions: [
             CupertinoDialogAction(
-              child: const Text('OK'),
+              child: Text(AppLocalizations.of(context).ok),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
@@ -121,14 +122,14 @@ Please describe your feedback below:
               backgroundColor: const Color(0xFF1C1C1E),
               leading: NavTextIconButton(
                 icon: CupertinoIcons.chevron_left,
-                text: 'Back',
+                text: AppLocalizations.of(context).back,
                 iconColor: CupertinoColors.white,
                 textColor: CupertinoColors.white,
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              middle: const Text(
-                'Settings',
-                style: TextStyle(
+              middle: Text(
+                AppLocalizations.of(context).settings,
+                style: const TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
@@ -141,11 +142,11 @@ Please describe your feedback below:
                   return ListView(
                     children: [
                       // Section 1: Time Format
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
                         child: Text(
-                          'TIME FORMAT',
-                          style: TextStyle(
+                          AppLocalizations.of(context).timeFormat,
+                          style: const TextStyle(
                             color: CupertinoColors.systemGrey,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -163,9 +164,9 @@ Please describe your feedback below:
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                '24-Hour Format',
-                                style: TextStyle(color: CupertinoColors.white, fontSize: 17),
+                              Text(
+                                AppLocalizations.of(context).twentyFourHourFormat,
+                                style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
                               ),
                               Transform.scale(
                                 scale: 0.8,
@@ -181,11 +182,11 @@ Please describe your feedback below:
                       ),
 
                       // Section 2: Support & Feedback
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
                         child: Text(
-                          'SUPPORT & FEEDBACK',
-                          style: TextStyle(
+                          AppLocalizations.of(context).supportAndFeedback,
+                          style: const TextStyle(
                             color: CupertinoColors.systemGrey,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -206,24 +207,24 @@ Please describe your feedback below:
                               onPressed: () => Navigator.of(context).push(
                                 CupertinoPageRoute(builder: (context) => const GuideScreen()),
                               ),
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.book,
                                     color: CupertinoColors.white,
                                     size: 20,
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
-                                      'Guide',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context).guide,
+                                      style: const TextStyle(
                                         color: CupertinoColors.white,
                                         fontSize: 17,
                                       ),
                                     ),
                                   ),
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.chevron_right,
                                     color: CupertinoColors.systemGrey,
                                     size: 16,
@@ -241,24 +242,24 @@ Please describe your feedback below:
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               pressedOpacity: 1.0,
                               onPressed: () => _sendFeedback(context),
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.mail,
                                     color: CupertinoColors.white,
                                     size: 20,
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
-                                      'Send Feedback',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context).sendFeedback,
+                                      style: const TextStyle(
                                         color: CupertinoColors.white,
                                         fontSize: 17,
                                       ),
                                     ),
                                   ),
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.chevron_right,
                                     color: CupertinoColors.systemGrey,
                                     size: 16,
@@ -273,11 +274,11 @@ Please describe your feedback below:
                       ),
 
                       // Section 3: About
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
                         child: Text(
-                          'ABOUT',
-                          style: TextStyle(
+                          AppLocalizations.of(context).about,
+                          style: const TextStyle(
                             color: CupertinoColors.systemGrey,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -295,25 +296,25 @@ Please describe your feedback below:
                             CupertinoButton(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               pressedOpacity: 1.0,
-                              onPressed: _shareApp,
-                              child: const Row(
+                              onPressed: () => _shareApp(context),
+                              child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.share,
                                     color: CupertinoColors.white,
                                     size: 20,
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
-                                      'Share App',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context).shareApp,
+                                      style: const TextStyle(
                                         color: CupertinoColors.white,
                                         fontSize: 17,
                                       ),
                                     ),
                                   ),
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.chevron_right,
                                     color: CupertinoColors.systemGrey,
                                     size: 16,
@@ -331,24 +332,24 @@ Please describe your feedback below:
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               pressedOpacity: 1.0,
                               onPressed: _rateApp,
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.star,
                                     color: CupertinoColors.white,
                                     size: 20,
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
-                                      'Rate App',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context).rateApp,
+                                      style: const TextStyle(
                                         color: CupertinoColors.white,
                                         fontSize: 17,
                                       ),
                                     ),
                                   ),
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.chevron_right,
                                     color: CupertinoColors.systemGrey,
                                     size: 16,
@@ -366,24 +367,24 @@ Please describe your feedback below:
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               pressedOpacity: 1.0,
                               onPressed: () => _openPrivacyPolicy(context),
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.doc_text,
                                     color: CupertinoColors.white,
                                     size: 20,
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
-                                      'Privacy Policy',
-                                      style: TextStyle(
+                                      AppLocalizations.of(context).privacyPolicy,
+                                      style: const TextStyle(
                                         color: CupertinoColors.white,
                                         fontSize: 17,
                                       ),
                                     ),
                                   ),
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.chevron_right,
                                     color: CupertinoColors.systemGrey,
                                     size: 16,

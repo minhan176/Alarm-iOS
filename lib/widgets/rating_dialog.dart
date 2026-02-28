@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_redirect/store_redirect.dart';
+import '../l10n/app_localizations.dart';
 
 class RatingDialog extends StatefulWidget {
   const RatingDialog({super.key});
@@ -16,11 +17,11 @@ class _RatingDialogState extends State<RatingDialog> {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: const Text('Enjoying Clock OS 26?'),
+      title: Text(AppLocalizations.of(context).ratingTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('Tap a star to rate us on\nGoogle Play.'),
+          Text(AppLocalizations.of(context).ratingContent),
           SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -51,11 +52,11 @@ class _RatingDialogState extends State<RatingDialog> {
       actions: [           
         CupertinoDialogAction(
           onPressed: _dismissForever,
-          child: const Text('Cancel'),
+          child: Text(AppLocalizations.of(context).cancel),
         ),
         CupertinoDialogAction(
           onPressed: _selectedRating > 0 ? _rateOnPlayStore : null,
-          child: const Text('Submit'),
+          child: Text(AppLocalizations.of(context).submit),
         ),
         
       ],

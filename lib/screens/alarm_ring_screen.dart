@@ -7,6 +7,7 @@ import 'package:vibration/vibration.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
+import '../l10n/app_localizations.dart';
 import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
@@ -239,7 +240,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  widget.alarm.label.isNotEmpty ? widget.alarm.label : 'Alarm',
+                  widget.alarm.label.isNotEmpty ? widget.alarm.label : AppLocalizations.of(context).alarm,
                   style: const TextStyle(
                     color: CupertinoColors.systemGrey,
                     fontSize: 24,
@@ -281,7 +282,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                         borderRadius: BorderRadius.circular(32),
                         onPressed: _snoozeAlarm,
                         child: Text(
-                          'Snooze',
+                          AppLocalizations.of(context).snooze,
                           style: TextStyle(
                             color: CupertinoColors.white,
                             fontSize: 18,
@@ -321,10 +322,10 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     return '$hour:$minute';
   }
 
-  String _getCurrentDate() {
+  String _getCurrentDate(AppLocalizations l10n) {
     final now = DateTime.now();
-    final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    final months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    final days = [l10n.monday, l10n.tuesday, l10n.wednesday, l10n.thursday, l10n.friday, l10n.saturday, l10n.sunday];
+    final months = [l10n.january, l10n.february, l10n.march, l10n.april, l10n.may, l10n.june, l10n.july, l10n.august, l10n.september, l10n.october, l10n.november, l10n.december];
     return '${days[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}';
   }
 }
@@ -415,7 +416,7 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
                           ).createShader(bounds);
                         },
                         child: Text(
-                          'slide to stop',
+                          AppLocalizations.of(context).slideToStop,
                           style: TextStyle(
                             color: CupertinoColors.white.withOpacity(0.7),
                             fontSize: 18,

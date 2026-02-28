@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import '../models/world_clock_model.dart';
 import '../widgets/custom_buttons.dart';
+import '../l10n/app_localizations.dart';
 
 class AddCityScreen extends StatefulWidget {
   const AddCityScreen({super.key});
@@ -88,11 +89,11 @@ class _AddCityScreenState extends State<AddCityScreen> {
             CustomNavBar(
               backgroundColor: CupertinoColors.black,
               leading: NavTextButton(
-                text: 'Cancel',
+                text: AppLocalizations.of(context).cancel,
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              middle: const Text(
-                'Choose a City',
+              middle: Text(
+                AppLocalizations.of(context).chooseACity,
                 style: TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 17,
@@ -105,7 +106,7 @@ class _AddCityScreenState extends State<AddCityScreen> {
               padding: const EdgeInsets.all(16),
               child: CupertinoSearchTextField(
                 controller: _searchController,
-                placeholder: 'Search',
+                placeholder: AppLocalizations.of(context).search,
                 backgroundColor: const Color(0xFF2C2C2E),
                 style: const TextStyle(color: CupertinoColors.white),
                 placeholderStyle: const TextStyle(

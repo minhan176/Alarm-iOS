@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
+import '../l10n/app_localizations.dart';
 
 class TimerRingScreen extends StatefulWidget {
   final int remainingSeconds;
@@ -178,9 +179,9 @@ class _TimerRingScreenState extends State<TimerRingScreen>
                   },
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'Timer',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context).timer,
+                  style: const TextStyle(
                     color: CupertinoColors.systemGrey,
                     fontSize: 24,
                     fontWeight: FontWeight.w400,
@@ -222,9 +223,9 @@ class _TimerRingScreenState extends State<TimerRingScreen>
                   color: CupertinoColors.systemOrange,
                   borderRadius: BorderRadius.circular(32),
                   onPressed: _stopTimer,
-                  child: const Text(
-                    'Stop',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context).stop,
+                    style: const TextStyle(
                       color: CupertinoColors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

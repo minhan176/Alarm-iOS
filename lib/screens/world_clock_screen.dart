@@ -7,6 +7,7 @@ import '../models/world_clock_model.dart';
 import '../widgets/custom_buttons.dart';
 import 'settings_screen.dart';
 import '../providers/settings_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class WorldClockScreen extends StatefulWidget {
   const WorldClockScreen({super.key});
@@ -56,9 +57,9 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                   icon: CupertinoIcons.xmark,
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                middle: const Text(
-                  'Choose a City',
-                  style: TextStyle(
+                middle: Text(
+                  AppLocalizations.of(context).chooseACity,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
@@ -98,7 +99,7 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
             CustomNavBar(
               backgroundColor: CupertinoColors.black,
               leading: NavTextButton(
-                text: _isEditMode ? 'Done' : 'Edit',
+                text: _isEditMode ? AppLocalizations.of(context).done : AppLocalizations.of(context).edit,
                 onPressed: _toggleEditMode,
               ),
               trailing: NavIconButton(
@@ -113,9 +114,9 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
-                  const Text(
-                    'World Clock',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context).worldClock,
+                    style: const TextStyle(
                       color: CupertinoColors.white,
                       fontSize: 34,
                       fontWeight: FontWeight.bold,
@@ -147,10 +148,10 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
               child: Consumer<WorldClockProvider>(
                 builder: (context, provider, child) {
                   if (provider.clocks.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: Text(
-                        'No World Clocks',
-                        style: TextStyle(
+                        AppLocalizations.of(context).noWorldClocks,
+                        style: const TextStyle(
                           color: CupertinoColors.systemGrey,
                           fontSize: 24,
                         ),
@@ -201,7 +202,7 @@ class _WorldClockItem extends StatelessWidget {
     required this.onDelete,
   });
 
-  String _getTimeDifference() {
+  String _getTimeDifference(BuildContext context) {
     final now = DateTime.now();
     final localTime = now;
     final clockTime = DateTime.now().toUtc().add(
@@ -217,7 +218,7 @@ class _WorldClockItem extends StatelessWidget {
     final difference = clockTime.hour - localTime.hour;
     
     if (difference == 0) {
-      return 'Today';
+      return AppLocalizations.of(context).today;
     } else if (difference > 0) {
       return '+${difference}HRS';
     } else {
@@ -264,7 +265,7 @@ class _WorldClockItem extends StatelessWidget {
       periodText = currentTime.hour >= 12 ? 'PM' : 'AM';
     }
     
-    final timeDiff = _getTimeDifference();
+    final timeDiff = _getTimeDifference(context);
 
     return CupertinoButton(
       padding: EdgeInsets.zero,
@@ -628,7 +629,7 @@ class _AddCityContentState extends State<_AddCityContent> {
           padding: const EdgeInsets.all(16),
           child: CupertinoSearchTextField(
             controller: _searchController,
-            placeholder: 'Search',
+            placeholder: AppLocalizations.of(context).search,
             backgroundColor: const Color(0xFF2C2C2E),
             style: const TextStyle(color: CupertinoColors.white),
             placeholderStyle: const TextStyle(
