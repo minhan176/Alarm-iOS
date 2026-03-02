@@ -142,6 +142,13 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed && _dialogShown) {
       _checkPermissionAgain();
     }
+    if (state == AppLifecycleState.resumed) {
+      // Update time format from system if user hasn't changed it
+      final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+      final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
+      Provider.of<SettingsProvider>(navigatorKey.currentContext!, listen: false)
+          .updateFromSystem(currentSystem24HourFormat);
+    }
   }
 
   Future<void> _checkOverlayPermission() async {
@@ -385,6 +392,11 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       _checkPendingAlarm();
+      // Update time format from system if user hasn't changed it
+      final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+      final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
+      Provider.of<SettingsProvider>(context, listen: false)
+          .updateFromSystem(currentSystem24HourFormat);
     }
   }
 

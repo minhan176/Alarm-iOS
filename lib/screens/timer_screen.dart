@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 import '../widgets/custom_buttons.dart';
+import '../providers/settings_provider.dart';
 import 'timer_ring_screen.dart';
 import 'sound_selector.dart';
 import '../l10n/app_localizations.dart';
@@ -231,6 +233,11 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
       _remainingSeconds = 0;
       _totalSeconds = 0;
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _hourController.jumpToItem(_hours);
+      _minuteController.jumpToItem(_minutes);
+      _secondController.jumpToItem(_seconds);
+    });
   }
 
   void _showTimerEndDialog() {
@@ -311,10 +318,17 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   String _getEndTime() {
     final now = DateTime.now();
     final endTime = now.add(Duration(seconds: _remainingSeconds));
+    final is24h = Provider.of<SettingsProvider>(context, listen: false).is24HourFormat;
     final hour = endTime.hour;
     final minute = endTime.minute;
     
-    return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+    if (is24h) {
+      return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+    } else {
+      final displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
+      final period = hour >= 12 ? 'PM' : 'AM';
+      return '$displayHour:${minute.toString().padLeft(2, '0')} $period';
+    }
   }
 
   String _getCountdownDisplay() {
@@ -748,19 +762,20 @@ class _StopwatchStyleButton extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(2.0),
-              child: Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,child: Text(
-                label,
-                style: TextStyle(
-                  color: onPressed == null
-                      ? foregroundColor.withOpacity(0.3)
-                      : foregroundColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: onPressed == null
+                        ? foregroundColor.withOpacity(0.3)
+                        : foregroundColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),)),
-            )
+              ),
+            ),
           ),
         ),
       ),

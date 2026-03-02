@@ -11,6 +11,7 @@ import '../l10n/app_localizations.dart';
 import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
+import '../providers/settings_provider.dart';
 import '../widgets/custom_buttons.dart';
 
 class AlarmRingScreen extends StatefulWidget {
@@ -313,13 +314,15 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
   String _getCurrentTime() {
     final now = DateTime.now();
-    final hour = now.hour == 0
-        ? 12
-        : now.hour > 12
-        ? now.hour - 12
-        : now.hour;
+    final is24h = Provider.of<SettingsProvider>(context, listen: false).is24HourFormat;
     final minute = now.minute.toString().padLeft(2, '0');
-    return '$hour:$minute';
+    
+    if (is24h) {
+      return '${now.hour.toString().padLeft(2, '0')}:$minute';
+    } else {
+      final hour = now.hour == 0 ? 12 : (now.hour > 12 ? now.hour - 12 : now.hour);
+      return '$hour:$minute';
+    }
   }
 
   String _getCurrentDate(AppLocalizations l10n) {
