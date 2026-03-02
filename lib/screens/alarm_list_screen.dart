@@ -37,10 +37,10 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
         // Check if first alarm advice should be shown
         final prefs = await SharedPreferences.getInstance();
         final hasShownFirstAlarmToast = prefs.getBool('first_alarm_toast_shown') ?? false;
-        if (!hasShownFirstAlarmToast) {
+        if (!hasShownFirstAlarmToast && alarm.isEnabled) {
           AlarmToast.showAlarmToast(alarm, context, customMessage: AppLocalizations.of(context).tipKeepAppRunning);
           await prefs.setBool('first_alarm_toast_shown', true);
-        } else {
+        } else if (alarm.isEnabled) {
           AlarmToast.showAlarmToast(alarm, context);
         }
         provider.clearLastSavedAlarm();
@@ -224,8 +224,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                 },
                 onToggle: () async {
                   await alarmProvider.toggleAlarm(alarm.id);
-                  if (alarm.isEnabled) {
-                    AlarmToast.showAlarmToast(alarm, context);
+                  final updatedAlarm = alarmProvider.alarms.firstWhere((a) => a.id == alarm.id);
+                  if (updatedAlarm.isEnabled) {
+                    AlarmToast.showAlarmToast(updatedAlarm, context);
                   }
                 },
                 onDelete: () {

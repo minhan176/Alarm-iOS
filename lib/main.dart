@@ -293,6 +293,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         title: 'Alarm',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          child: child!,
+        ),
         theme: const CupertinoThemeData(
           brightness: Brightness.dark,
           primaryColor: CupertinoColors.systemOrange,

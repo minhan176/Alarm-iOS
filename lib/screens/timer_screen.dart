@@ -730,8 +730,8 @@ class _StopwatchStyleButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 85,
-        height: 85,
+        width: 70,
+        height: 70,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
@@ -746,16 +746,21 @@ class _StopwatchStyleButton extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                color: onPressed == null
-                    ? foregroundColor.withOpacity(0.3)
-                    : foregroundColor,
-                fontSize: 17,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,child: Text(
+                label,
+                style: TextStyle(
+                  color: onPressed == null
+                      ? foregroundColor.withOpacity(0.3)
+                      : foregroundColor,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),)),
+            )
           ),
         ),
       ),

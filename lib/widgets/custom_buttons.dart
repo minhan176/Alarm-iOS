@@ -161,12 +161,17 @@ class NavTextIconButton extends StatelessWidget {
                     color: enabled ? iconColor : iconColor.withOpacity(0.4),
                     size: iconSize,
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    text,
-                    style: TextStyle(
-                      color: enabled ? textColor : textColor.withOpacity(0.4),
-                      fontSize: textSize,
+                  //const SizedBox(width: 4),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        text,
+                        style: TextStyle(
+                          color: enabled ? textColor : textColor.withOpacity(0.4),
+                          fontSize: textSize,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -273,7 +278,7 @@ class CustomNavBar extends StatelessWidget {
             children: [
               // Leading section
               SizedBox(
-                width: 100,
+                width: 120,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -290,7 +295,7 @@ class CustomNavBar extends StatelessWidget {
               ),
               // Trailing section
               SizedBox(
-                width: 100,
+                width: 120,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Padding(

@@ -359,7 +359,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                   }),
                 ),
                 middle: Text(
-                  AppLocalizations.of(context).whenTimerEnds,
+                  AppLocalizations.of(context).sound,
                   style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
