@@ -210,7 +210,7 @@ class _BottomBarTab extends StatelessWidget {
         button: true,
         label: tab.label,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

@@ -216,14 +216,15 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 iconColor: CupertinoColors.white,
                 onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
               ),
-              middle: Text(
+              middle: FittedBox(
+                fit: BoxFit.scaleDown, child: Text(
                 widget.alarm != null ? AppLocalizations.of(context).editAlarm : AppLocalizations.of(context).addAlarm,
                 style: const TextStyle(
                   color: CupertinoColors.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
                 ),
-              ),
+              )),
               trailing: NavIconButton(
                 icon: CupertinoIcons.checkmark,
                 iconColor: CupertinoColors.white,

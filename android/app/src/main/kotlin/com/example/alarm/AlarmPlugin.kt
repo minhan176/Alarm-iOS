@@ -10,11 +10,17 @@ import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import androidx.core.app.NotificationCompat
 import android.os.PowerManager
 import androidx.annotation.RequiresApi
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import java.util.Calendar
+import org.json.JSONObject
+import java.text.SimpleDateFormat
 
 class DummyAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -245,14 +251,16 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        if (alarmManager != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
-            } else {
-                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
-            }
-            println("DEBUG: Alarm scheduled for ${java.util.Date(alarmTime)}")
+        val alarmManager = this.alarmManager ?: return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Use setAlarmClock for better reliability on some devices
+            val alarmInfo = AlarmManager.AlarmClockInfo(alarmTime, pendingIntent)
+            alarmManager.setAlarmClock(alarmInfo, pendingIntent)
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
         }
+        println("DEBUG: Alarm scheduled for ${java.util.Date(alarmTime)}")
     }
 
     private fun cancelAlarm(alarmId: String) {
@@ -371,7 +379,7 @@ class AlarmReceiver : BroadcastReceiver() {
             )
             wakeLock.acquire(10 * 60 * 1000L) // 10 minutes timeout
 
-            // Start AlarmRingActivity with alarm data
+            // Start AlarmRingActivity directly
             val activityIntent = Intent(context, AlarmRingActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                        Intent.FLAG_ACTIVITY_CLEAR_TOP or
@@ -379,17 +387,144 @@ class AlarmReceiver : BroadcastReceiver() {
                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
                        Intent.FLAG_ACTIVITY_NO_HISTORY
                 putExtra("alarm_data", alarmJson)
-                // Add these to ensure it shows on lock screen
                 addFlags(Intent.FLAG_FROM_BACKGROUND)
+                // Add overlay flags if needed
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
             }
-            println("DEBUG: AlarmReceiver starting AlarmRingActivity")
+            println("DEBUG: AlarmReceiver starting AlarmRingActivity directly")
             context.startActivity(activityIntent)
             println("DEBUG: AlarmReceiver startActivity completed")
+
+            // Reschedule if repeating alarm
+            try {
+                val alarmObj = JSONObject(alarmJson)
+                val repeatDays = alarmObj.optJSONArray("repeatDays")
+                if (repeatDays != null && repeatDays.length() > 0) {
+                    val timeStr = alarmObj.getString("time")
+                val dateTime = java.util.Date(java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(timeStr).time)
+                val calendarTime = Calendar.getInstance()
+                calendarTime.time = dateTime
+                val hour = calendarTime.get(Calendar.HOUR_OF_DAY)
+                val minute = calendarTime.get(Calendar.MINUTE)
+                    var calendar = Calendar.getInstance()
+                    calendar.set(Calendar.HOUR_OF_DAY, hour)
+                    calendar.set(Calendar.MINUTE, minute)
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+                    
+                    // If time has passed today, add one day
+                    if (calendar.timeInMillis <= System.currentTimeMillis()) {
+                        calendar.add(Calendar.DAY_OF_MONTH, 1)
+                    }
+                    
+                    // Find next valid day
+                    var daysAdded = 0
+                    val maxDays = 7
+                    while (daysAdded < maxDays) {
+                        val checkCalendar = calendar.clone() as Calendar
+                        checkCalendar.add(Calendar.DAY_OF_MONTH, daysAdded)
+                        val weekday = checkCalendar.get(Calendar.DAY_OF_WEEK)
+                        // Convert to Monday=1, Sunday=7
+                        val adjustedWeekday = if (weekday == Calendar.SUNDAY) 7 else weekday - 1
+                        
+                        var isValidDay = false
+                        for (i in 0 until repeatDays.length()) {
+                            if (repeatDays.getInt(i) == adjustedWeekday) {
+                                isValidDay = true
+                                break
+                            }
+                        }
+                        
+                        if (isValidDay) {
+                            calendar = checkCalendar
+                            break
+                        }
+                        daysAdded++
+                    }
+                    
+                    // Schedule next alarm
+                    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                    val nextIntent = Intent(context, AlarmReceiver::class.java).apply {
+                        putExtra("alarm_data", alarmJson)
+                    }
+                    val pendingIntent = PendingIntent.getBroadcast(
+                        context,
+                        alarmJson.hashCode(),
+                        nextIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                    
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        val alarmInfo = AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent)
+                        alarmManager.setAlarmClock(alarmInfo, pendingIntent)
+                    } else {
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+                    }
+                    println("DEBUG: Rescheduled repeating alarm for ${java.util.Date(calendar.timeInMillis)}")
+                }
+            } catch (e: Exception) {
+                println("DEBUG: Error rescheduling alarm: ${e.message}")
+            }
 
             // Release wake lock after a short delay to let activity start
             wakeLock.release()
         } else {
             println("DEBUG: AlarmReceiver triggered but no alarm data found")
         }
+    }
+
+    private fun showFullScreenNotification(context: Context, alarmJson: String) {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Create notification channel if needed
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "alarm_channel",
+                "Alarm Notifications",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Notifications for alarms"
+                setShowBadge(true)
+                enableVibration(true)
+                vibrationPattern = longArrayOf(0, 1000, 500, 1000)
+                lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
+            }
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Intent to open AlarmRingActivity
+        val activityIntent = Intent(context, AlarmRingActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                   Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                   Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                   Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                   Intent.FLAG_ACTIVITY_NO_HISTORY
+            putExtra("alarm_data", alarmJson)
+            addFlags(Intent.FLAG_FROM_BACKGROUND)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            alarmJson.hashCode(),
+            activityIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(context, "alarm_channel")
+            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setContentTitle("Alarm")
+            .setContentText("Tap to dismiss")
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setFullScreenIntent(pendingIntent, true)
+            .setOngoing(true)
+            .setAutoCancel(false)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .build()
+
+        notificationManager.notify(alarmJson.hashCode(), notification)
+        println("DEBUG: Full screen notification shown for alarm")
     }
 }

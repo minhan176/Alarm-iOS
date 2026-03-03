@@ -239,17 +239,16 @@ class _CircularButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(2.0),
               child: FittedBox(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown, child: Text(
-                label,
-                style: TextStyle(
-                  color: onPressed == null
-                      ? foregroundColor.withOpacity(0.3)
-                      : foregroundColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),)),
+                fit: BoxFit.scaleDown, child: Text(
+                              label,
+                              style: TextStyle(
+                                color: onPressed == null
+              ? foregroundColor.withOpacity(0.3)
+              : foregroundColor,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),),
             )
           ),
         ),

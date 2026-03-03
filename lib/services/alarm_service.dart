@@ -477,30 +477,18 @@ class AlarmService {
 
     final alarmId = alarm.id.hashCode;
 
-    // Use AndroidAlarmManager for both one-time and repeating alarms
-    // This ensures consistent behavior and works when app is killed
+    // Use AlarmPlugin for both one-time and repeating alarms
+    // For repeating alarms, AlarmReceiver will reschedule after each trigger
+    await _alarmChannel.invokeMethod('scheduleAlarm', {
+      'alarm': json.encode(alarm.toJson()),
+      'alarmTime': scheduledTime.millisecondsSinceEpoch,
+      'alarmId': alarm.id,
+    });
+
     if (alarm.repeatDays.isEmpty) {
-      // One-time alarm - use AlarmPlugin for direct activity start
-      await _alarmChannel.invokeMethod('scheduleAlarm', {
-        'alarm': json.encode(alarm.toJson()),
-        'alarmTime': scheduledTime.millisecondsSinceEpoch,
-        'alarmId': alarm.id,
-      });
       print('One-time alarm scheduled for: $scheduledTime');
     } else {
-      // Repeating alarm - still use AndroidAlarmManager for complex repeat logic
-      await AndroidAlarmManager.periodic(
-        const Duration(days: 1),
-        alarmId,
-        alarmCallback,
-        startAt: scheduledTime,
-        exact: true,
-        wakeup: true,
-        rescheduleOnReboot: true,
-        allowWhileIdle: true,
-        params: alarm.toJson(),
-      );
-      print('Repeating alarm scheduled, checking daily from: $scheduledTime');
+      print('Repeating alarm scheduled, starting from: $scheduledTime');
     }
 
     print('Alarm scheduled: ${alarm.label} at ${alarm.getFormattedTime()}');

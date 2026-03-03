@@ -459,13 +459,14 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                FittedBox(
+                fit: BoxFit.scaleDown, child: Text(
                   AppLocalizations.of(context).whenTimerEnds,
                   style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
                   ),
-                ),
+                )),
                 Row(
                   children: [
                     Container(
@@ -687,13 +688,14 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                FittedBox(
+                fit: BoxFit.scaleDown, child: Text(
                   AppLocalizations.of(context).whenTimerEnds,
                   style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 17,
                   ),
-                ),
+                )),
                 Row(
                   children: [
                     Container(
