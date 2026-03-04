@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
+import 'package:flutter/services.dart' show SystemNavigator;
 import '../l10n/app_localizations.dart';
 
 class TimerRingScreen extends StatefulWidget {
@@ -32,6 +34,8 @@ class _TimerRingScreenState extends State<TimerRingScreen>
   late int _currentRemainingSeconds;
   Timer? _countdownTimer;
   Timer? _vibrateTimer;
+
+  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
 
   @override
   void initState() {
@@ -95,19 +99,31 @@ class _TimerRingScreenState extends State<TimerRingScreen>
       if (widget.selectedSound != 'None') {
         try {
           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
-          await _audioPlayer.setVolume(1.0);
+          await _audioPlayer.setVolume(2.0);
 
           Source audioSource;
-          if (widget.selectedSound.startsWith('/') || widget.selectedSound.contains('\\')) {
+          if (widget.selectedSound.startsWith('content://')) {
+            // It's a system ringtone URI - use native RingtoneManager
+            await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': widget.selectedSound});
+            print('Playing system ringtone: ${widget.selectedSound}');
+          } else if (widget.selectedSound.startsWith('assets/')) {
+            // It's an asset file (like our custom Alarm OS 26)
+            final assetPath = widget.selectedSound.replaceFirst('assets/', '');
+            audioSource = AssetSource(assetPath);
+            await _audioPlayer.play(audioSource);
+            print('Playing asset sound: ${widget.selectedSound}');
+          } else if (widget.selectedSound.startsWith('/') || widget.selectedSound.contains('\\')) {
             audioSource = DeviceFileSource(widget.selectedSound);
+            await _audioPlayer.play(audioSource);
+            print('Playing file sound: ${widget.selectedSound}');
           } else {
+            // It's a built-in sound
             final soundFileName = widget.selectedSound.toLowerCase();
             final soundPath = 'sounds/$soundFileName.mp3';
             audioSource = AssetSource(soundPath);
+            await _audioPlayer.play(audioSource);
+            print('Playing built-in sound: ${widget.selectedSound}');
           }
-
-          await _audioPlayer.play(audioSource);
-          print('Playing timer sound: ${widget.selectedSound}');
         } catch (e) {
           print('Could not play timer sound "${widget.selectedSound}": $e');
         }
@@ -127,6 +143,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
   }
 
   Future<void> _stopTimerRing() async {
+    print('Stopping timer ring sound');
     await _audioPlayer.stop();
     await Vibration.cancel();
     _vibrateTimer?.cancel();
@@ -134,9 +151,15 @@ class _TimerRingScreenState extends State<TimerRingScreen>
 
   void _stopTimer() async {
     await _stopTimerRing();
+    // Stop native sound if playing
+    try {
+      await _alarmChannel.invokeMethod('stopSystemRingtone');
+    } catch (e) {
+      print('Error stopping native sound: $e');
+    }
     widget.onStop();
     if (mounted) {
-      Navigator.of(context).pop();
+      SystemNavigator.pop(); // Finish the activity
     }
   }
 
