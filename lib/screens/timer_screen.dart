@@ -3,13 +3,10 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-import '../widgets/custom_buttons.dart';
 import '../providers/settings_provider.dart';
-import 'timer_ring_screen.dart';
 import 'sound_selector.dart';
 import '../l10n/app_localizations.dart';
 
@@ -38,7 +35,6 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   String _selectedSound = 'assets/sounds/alarm.wav';
   String _selectedSoundDisplayName = 'Alarm OS 26';
   bool _selectedVibrate = false;
-  late AnimationController _progressController;
   late FixedExtentScrollController _hourController;
   late FixedExtentScrollController _minuteController;
   late FixedExtentScrollController _secondController;
@@ -59,10 +55,6 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     });
     _loadTimerVibrate();
     WidgetsBinding.instance.addObserver(this);
-    _progressController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
   }
 
   @override
@@ -279,13 +271,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     return '${soundName.substring(0, maxLength - 3)}...';
   }
 
-  String _formatTime(int totalSeconds) {
-    final hours = totalSeconds ~/ 3600;
-    final minutes = (totalSeconds % 3600) ~/ 60;
-    final seconds = totalSeconds % 60;
-    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -459,16 +445,19 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FittedBox(
-                fit: BoxFit.scaleDown, child: Text(
-                  AppLocalizations.of(context).whenTimerEnds,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 17,
-                  ),
-                )),
+                Flexible(
+                  child: FittedBox(
+                  fit: BoxFit.scaleDown, child: Text(
+                    AppLocalizations.of(context).whenTimerEnds,
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 17,
+                    ),
+                  )),
+                ),
                 Row(
                   children: [
+                    SizedBox(width: 5,),
                     Container(
                       constraints: const BoxConstraints(maxWidth: 120),
                       child: Text(
@@ -688,16 +677,19 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FittedBox(
-                fit: BoxFit.scaleDown, child: Text(
-                  AppLocalizations.of(context).whenTimerEnds,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 17,
-                  ),
-                )),
+                Flexible(
+                  child: FittedBox(
+                  fit: BoxFit.scaleDown, child: Text(
+                    AppLocalizations.of(context).whenTimerEnds,
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 17,
+                    ),
+                  )),
+                ),
                 Row(
                   children: [
+                    SizedBox(width: 5,),
                     Container(
                       constraints: const BoxConstraints(maxWidth: 120),
                       child: Text(

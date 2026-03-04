@@ -40,11 +40,11 @@ class SettingsScreen extends StatelessWidget {
     try {
       if (Platform.isAndroid) {
         final androidInfo = await deviceInfoPlugin.androidInfo;
-        deviceName = androidInfo.model ?? 'Unknown Android Device';
+        deviceName = androidInfo.model;
         osVersion = 'Android ${androidInfo.version.release} (API ${androidInfo.version.sdkInt})';
       } else if (Platform.isIOS) {
         final iosInfo = await deviceInfoPlugin.iosInfo;
-        deviceName = iosInfo.utsname.machine ?? 'Unknown iOS Device';
+        deviceName = iosInfo.utsname.machine;
         osVersion = 'iOS ${iosInfo.systemVersion}';
       }
       
@@ -109,7 +109,7 @@ Please describe your feedback below:
 
   @override
   Widget build(BuildContext context) {
-    final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+    Provider.of<SettingsProvider>(context, listen: false);
 
     return CupertinoPageScaffold(
       backgroundColor: const Color(0xFF1C1C1E),

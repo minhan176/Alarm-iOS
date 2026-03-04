@@ -12,7 +12,6 @@ import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
-import '../widgets/custom_buttons.dart';
 
 class AlarmRingScreen extends StatefulWidget {
   final AlarmModel alarm;
@@ -259,7 +258,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
               style: const TextStyle(
                 color: CupertinoColors.white,
                 fontSize: 120,
-                fontWeight: FontWeight.w200,
+                fontWeight: FontWeight.w600,
                 height: 1,
               ),
             ),
@@ -325,12 +324,6 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     }
   }
 
-  String _getCurrentDate(AppLocalizations l10n) {
-    final now = DateTime.now();
-    final days = [l10n.monday, l10n.tuesday, l10n.wednesday, l10n.thursday, l10n.friday, l10n.saturday, l10n.sunday];
-    final months = [l10n.january, l10n.february, l10n.march, l10n.april, l10n.may, l10n.june, l10n.july, l10n.august, l10n.september, l10n.october, l10n.november, l10n.december];
-    return '${days[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}';
-  }
 }
 
 class SlideToStopButton extends StatefulWidget {

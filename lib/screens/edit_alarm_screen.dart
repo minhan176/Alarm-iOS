@@ -1,5 +1,4 @@
-﻿import 'package:clock_os_26/utils/alarm_toast.dart';
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
@@ -15,7 +14,6 @@ import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
 import '../widgets/custom_buttons.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/services.dart';
 
 class EditAlarmScreen extends StatefulWidget {
   final AlarmModel? alarm;
@@ -38,7 +36,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late Duration _snoozeDuration;
   late bool _showDurationOptions;
   late AudioPlayer _previewPlayer;
-  late String? _currentlyPreviewingUri;
 
   static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
 
@@ -63,11 +60,10 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _snooze = true;
       _vibrate = true;
     }
-    _labelController = TextEditingController(text: _label == 'Alarm' ? '' : _label);
+    _labelController = TextEditingController(text: _label);
     _snoozeDuration = widget.alarm?.snoozeDuration ?? const Duration(minutes: 5);
     _showDurationOptions = false;
     _previewPlayer = AudioPlayer();
-    _currentlyPreviewingUri = null;
   }
 
   @override
@@ -106,7 +102,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     final alarm = AlarmModel(
       id: widget.alarm?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       time: _selectedTime,
-      label: _label.isEmpty ? 'Alarm' : _label,
+      label: _label,
       isEnabled: true, // Always enable the alarm when saving
       repeatDays: _repeatDays,
       sound: _sound,
@@ -192,11 +188,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   Future<void> _stopSystemRingtonePreview() async {
     try {
-      print('📱 Stopping system ringtone preview in EditAlarmScreen');
       await _alarmChannel.invokeMethod('stopSystemRingtonePreview');
-      print('📱 System ringtone preview stopped successfully');
     } catch (e) {
-      print('❌ Error stopping system ringtone preview: $e');
     }
   }
 
@@ -334,6 +327,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       ),
                       child: CupertinoButton(
                         padding: EdgeInsets.zero,
+                        onPressed: _deleteAlarm,
                         child: Text(
                           AppLocalizations.of(context).deleteAlarm,
                           style: const TextStyle(
@@ -341,7 +335,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                             fontSize: 17,
                           ),
                         ),
-                        onPressed: _deleteAlarm,
                       ),
                     ),
                   ],
@@ -455,14 +448,14 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               placeholder: AppLocalizations.of(context).alarm,
               textAlign: TextAlign.right,
               style: TextStyle(
-                color: (_label.isEmpty || _label == 'Alarm') ? CupertinoColors.systemGrey : CupertinoColors.white,
+                color: _label.isEmpty ? CupertinoColors.systemGrey : CupertinoColors.white,
                 fontSize: 17,
               ),
               placeholderStyle: const TextStyle(color: CupertinoColors.systemGrey, fontSize: 17),
               decoration: const BoxDecoration(),
               onChanged: (value) {
                 setState(() {
-                  _label = value.isEmpty ? 'Alarm' : value;
+                  _label = value;
                 });
               },
             ),
@@ -472,45 +465,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     );
   }
 
-  Widget _buildDurationOptions() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C2C2E),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: List.generate(15, (index) {
-          final minutes = index + 1;
-          final isSelected = _snoozeDuration.inMinutes == minutes;
-          return CupertinoButton(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            onPressed: () {
-              setState(() {
-                _snoozeDuration = Duration(minutes: minutes);
-                _showDurationOptions = false;
-              });
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(context).minutesValue(minutes),
-                  style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
-                ),
-                if (isSelected)
-                  const Icon(
-                    CupertinoIcons.check_mark,
-                    color: CupertinoColors.systemOrange,
-                    size: 24,
-                  ),
-              ],
-            ),
-          );
-        }),
-      ),
-    );
-  }
 
   String _getRepeatText(AppLocalizations loc) {
     if (_repeatDays.isEmpty) return loc.never;
@@ -563,78 +517,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     }
   }
 
-  void _showSnoozeDurationDialog() {
-    final durations = [1, 5, 10, 15, 20, 30];
-
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) => Container(
-        height: 300,
-        color: const Color(0xFF1C1C1E),
-        child: Column(
-          children: [
-            Container(
-              height: 44,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CupertinoButton(
-                    child: Text(AppLocalizations.of(context).cancel),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                  Text(
-                    AppLocalizations.of(context).snoozeDuration,
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  CupertinoButton(
-                    child: Text(AppLocalizations.of(context).done),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: CupertinoPicker(
-                backgroundColor: const Color(0xFF1C1C1E),
-                itemExtent: 40,
-                scrollController: FixedExtentScrollController(
-                  initialItem: durations.indexOf(_snoozeDuration.inMinutes),
-                ),
-                onSelectedItemChanged: (index) {
-                  setState(() {
-                    _snoozeDuration = Duration(minutes: durations[index]);
-                  });
-                },
-                children: durations
-                    .map(
-                      (duration) => Center(
-                        child: Text(
-                          AppLocalizations.of(context).minutesValue(duration),
-                          style: const TextStyle(
-                            color: CupertinoColors.white,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class RepeatSelector extends StatefulWidget {
@@ -796,7 +678,6 @@ class _SoundSelectorState extends State<SoundSelector> {
   late String _selectedSound;
   late bool _vibrate;
   List<dynamic> _systemRingtones = [];
-  bool _isLoadingRingtones = true;
   late AudioPlayer _previewPlayer;
   late String? _currentlyPreviewingUri;
   late String? _selectedCustomSound;
@@ -851,7 +732,6 @@ class _SoundSelectorState extends State<SoundSelector> {
         
         // Combine system ringtones with custom ringtones
         _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
-        _isLoadingRingtones = false;
       });
     } catch (e) {
       // If loading fails, try requesting permission and retry once
@@ -887,18 +767,15 @@ class _SoundSelectorState extends State<SoundSelector> {
             
             // Combine system ringtones with custom ringtones
             _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
-            _isLoadingRingtones = false;
           });
         } else {
           // Permission denied, just use built-in sounds
           setState(() {
-            _isLoadingRingtones = false;
           });
         }
       } catch (e2) {
         // If still fails, just use built-in sounds
         setState(() {
-          _isLoadingRingtones = false;
         });
       }
     }
@@ -906,28 +783,22 @@ class _SoundSelectorState extends State<SoundSelector> {
 
   void _playRingtonePreview(dynamic ringtone) async {
     try {
-      print('🎵 Starting ringtone preview for: $ringtone');
       // Stop any currently playing preview
       await _stopRingtonePreview();
 
       String? soundUri;
       if (ringtone is CustomRingtone) {
         soundUri = ringtone.uri;
-        print('🎵 CustomRingtone URI: $soundUri');
       } else if (ringtone is Map<String, dynamic>) {
         soundUri = ringtone['uri'] as String?;
-        print('🎵 Map URI: $soundUri');
       } else if (ringtone is String) {
         // Handle direct string URI
         soundUri = ringtone;
-        print('🎵 String URI: $soundUri');
       } else {
         // Handle JbhRingtoneModel and other objects with uri property
         try {
           soundUri = (ringtone as dynamic).uri as String?;
-          print('🎵 Dynamic URI: $soundUri, type: ${soundUri?.startsWith('assets/')}, ringtone type: ${ringtone.runtimeType}');
         } catch (e) {
-          print('❌ Could not extract URI from ringtone: $e');
         }
       }
 
@@ -951,13 +822,11 @@ class _SoundSelectorState extends State<SoundSelector> {
           if (soundUri.startsWith('content://')) {
             // It's a system ringtone URI - use native RingtoneManager like alarm ring screen
             await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': soundUri});
-            print('Playing system ringtone preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
 
             // Auto-stop after 30 seconds (since playSystemRingtone loops)
             Future.delayed(const Duration(seconds: 30), () {
               if (_currentlyPreviewingUri == soundUri) {
-                print('🎵 Auto-stopping system ringtone preview after 30 seconds');
                 _stopRingtonePreview();
               }
             });
@@ -968,7 +837,6 @@ class _SoundSelectorState extends State<SoundSelector> {
             final assetPath = soundUri.replaceFirst('assets/', '');
             final audioSource = AssetSource(assetPath);
             await _previewPlayer.play(audioSource);
-            print('Playing asset sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
           } else {
             // Use audioplayers for other sounds
@@ -987,64 +855,33 @@ class _SoundSelectorState extends State<SoundSelector> {
             }
 
             await _previewPlayer.play(audioSource);
-            print('Playing other sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
           }
         } catch (e) {
-          print('Could not play preview sound "$soundUri": $e');
           if (!soundUri.startsWith('content://') && !soundUri.startsWith('/') && !soundUri.startsWith('assets/') && !soundUri.contains('\\')) {
-            print(
-              'Make sure the file assets/sounds/${soundUri.toLowerCase()}.mp3 exists',
-            );
           }
         }
       } else {
-        print('No sound selected for preview');
       }
     } catch (e) {
-      print('Error starting preview: $e');
     }
   }
 
   Future<void> _stopRingtonePreview() async {
     try {
-      print('🛑 Stopping ringtone preview');
       await _previewPlayer.stop();
 
       // Also stop system ringtone if playing
       if (_currentlyPreviewingUri != null && _currentlyPreviewingUri!.startsWith('content://')) {
         await _alarmChannel.invokeMethod('stopSystemRingtone');
-        print('🛑 Stopped system ringtone');
       }
 
       _currentlyPreviewingUri = null;
-      print('🛑 Preview stopped successfully');
     } catch (e) {
-      print('❌ Error stopping ringtone preview: $e');
     }
   }
 
-  Future<void> _playSystemRingtonePreview(String uri) async {
-    try {
-      print('📱 Playing system ringtone preview: $uri');
-      await _alarmChannel.invokeMethod('playSystemRingtonePreview', {'uri': uri});
-      _currentlyPreviewingUri = uri;
-      print('📱 System ringtone preview started successfully');
-    } catch (e) {
-      print('❌ Error playing system ringtone preview: $e');
-    }
-  }
 
-  Future<void> _stopSystemRingtonePreview() async {
-    try {
-      print('📱 Stopping system ringtone preview');
-      await _alarmChannel.invokeMethod('stopSystemRingtonePreview');
-      _currentlyPreviewingUri = null;
-      print('📱 System ringtone preview stopped successfully');
-    } catch (e) {
-      print('❌ Error stopping system ringtone preview: $e');
-    }
-  }
 
   void _pickFromDevice() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(

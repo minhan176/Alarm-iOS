@@ -202,7 +202,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
                   style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 100,
-                    fontWeight: FontWeight.w200,
+                    fontWeight: FontWeight.w600,
                     height: 1,
                   ),
                   textAlign: TextAlign.center,

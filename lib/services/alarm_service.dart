@@ -475,8 +475,7 @@ class AlarmService {
       );
     }
 
-    final alarmId = alarm.id.hashCode;
-
+    
     // Use AlarmPlugin for both one-time and repeating alarms
     // For repeating alarms, AlarmReceiver will reschedule after each trigger
     await _alarmChannel.invokeMethod('scheduleAlarm', {

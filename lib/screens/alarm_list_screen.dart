@@ -8,7 +8,6 @@ import '../widgets/custom_buttons.dart';
 import 'edit_alarm_screen.dart';
 import '../utils/alarm_toast.dart';
 import 'settings_screen.dart';
-import '../widgets/rating_dialog.dart';
 import '../providers/settings_provider.dart';
 import '../l10n/app_localizations.dart';
 
@@ -53,14 +52,12 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     if (enabledAlarms.isEmpty) return null;
 
     // Find the earliest alarm
-    AlarmModel? nextAlarm;
     DateTime? nextAlarmTime;
 
     for (final alarm in enabledAlarms) {
       final alarmTime = alarm.getNextAlarmTime();
       if (nextAlarmTime == null || alarmTime.isBefore(nextAlarmTime)) {
         nextAlarmTime = alarmTime;
-        nextAlarm = alarm;
       }
     }
 
@@ -264,14 +261,13 @@ class AlarmListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repeatDescription = alarm.getRepeatDescription();
-    final hasLabel = alarm.label.isNotEmpty && alarm.label != 'Alarm';
+    final repeatDescription = alarm.getRepeatDescription(context);
     // final use24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
 
     // Create combined label for repeat alarms
     final displayLabel = repeatDescription.isNotEmpty
-        ? '${alarm.label}, $repeatDescription'
-        : alarm.label;
+        ? '${alarm.label.isNotEmpty ? alarm.label : AppLocalizations.of(context).alarm}, $repeatDescription'
+        : (alarm.label.isNotEmpty ? alarm.label : AppLocalizations.of(context).alarm);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),

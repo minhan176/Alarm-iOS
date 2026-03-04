@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
+import '../l10n/app_localizations.dart';
+
 class AlarmModel {
   final String id;
   final DateTime time;
@@ -13,7 +17,7 @@ class AlarmModel {
   AlarmModel({
     required this.id,
     required this.time,
-    this.label = 'Alarm',
+    this.label = '',
     this.isEnabled = true,
     this.repeatDays = const [],
     this.sound = 'assets/sounds/alarm.wav',
@@ -71,7 +75,7 @@ class AlarmModel {
     return AlarmModel(
       id: json['id'],
       time: DateTime.parse(json['time']),
-      label: json['label'] ?? 'Alarm',
+      label: json['label'] ?? '',
       isEnabled: json['isEnabled'] ?? true,
       repeatDays: List<int>.from(json['repeatDays'] ?? []),
       sound: json['sound'] ?? 'assets/sounds/alarm.wav',
@@ -103,13 +107,14 @@ class AlarmModel {
   }
 
   // Get repeat description
-  String getRepeatDescription() {
+  String getRepeatDescription(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     if (repeatDays.isEmpty) {
       return '';
     }
 
     if (repeatDays.length == 7) {
-      return 'Every day';
+      return l10n.everyDay;
     }
 
     if (repeatDays.length == 5 &&
@@ -118,17 +123,17 @@ class AlarmModel {
         repeatDays.contains(3) &&
         repeatDays.contains(4) &&
         repeatDays.contains(5)) {
-      return 'Weekdays';
+      return l10n.weekdays;
     }
 
     if (repeatDays.length == 2 &&
         repeatDays.contains(6) &&
         repeatDays.contains(7)) {
-      return 'Weekends';
+      return l10n.weekends;
     }
 
-    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return repeatDays.map((day) => dayNames[day - 1]).join(' ');
+    final dayGetters = [l10n.mon, l10n.tue, l10n.wed, l10n.thu, l10n.fri, l10n.sat, l10n.sun];
+    return repeatDays.map((day) => dayGetters[day - 1]).join(' ');
   }
 
   // Calculate next alarm time

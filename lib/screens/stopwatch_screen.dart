@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
-import 'dart:math' as dart_math;
 import '../l10n/app_localizations.dart';
 
 class StopwatchScreen extends StatefulWidget {

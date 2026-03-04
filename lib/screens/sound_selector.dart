@@ -27,7 +27,6 @@ class _SoundSelectorState extends State<SoundSelector> {
   late String _selectedSound;
   late bool _vibrate;
   List<dynamic> _systemRingtones = [];
-  bool _isLoadingRingtones = true;
   late AudioPlayer _previewPlayer;
   late String? _currentlyPreviewingUri;
   late String? _selectedCustomSound;
@@ -82,7 +81,6 @@ class _SoundSelectorState extends State<SoundSelector> {
         
         // Combine system ringtones with custom ringtones
         _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
-        _isLoadingRingtones = false;
       });
     } catch (e) {
       // If loading fails, try requesting permission and retry once
@@ -118,18 +116,15 @@ class _SoundSelectorState extends State<SoundSelector> {
             
             // Combine system ringtones with custom ringtones
             _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
-            _isLoadingRingtones = false;
           });
         } else {
           // Permission denied, just use built-in sounds
           setState(() {
-            _isLoadingRingtones = false;
           });
         }
       } catch (e2) {
         // If still fails, just use built-in sounds
         setState(() {
-          _isLoadingRingtones = false;
         });
       }
     }
@@ -258,27 +253,7 @@ class _SoundSelectorState extends State<SoundSelector> {
     }
   }
 
-  Future<void> _playSystemRingtonePreview(String uri) async {
-    try {
-      print('📱 Playing system ringtone preview: $uri');
-      await _alarmChannel.invokeMethod('playSystemRingtonePreview', {'uri': uri});
-      _currentlyPreviewingUri = uri;
-      print('📱 System ringtone preview started successfully');
-    } catch (e) {
-      print('❌ Error playing system ringtone preview: $e');
-    }
-  }
 
-  Future<void> _stopSystemRingtonePreview() async {
-    try {
-      print('📱 Stopping system ringtone preview');
-      await _alarmChannel.invokeMethod('stopSystemRingtonePreview');
-      _currentlyPreviewingUri = null;
-      print('📱 System ringtone preview stopped successfully');
-    } catch (e) {
-      print('❌ Error stopping system ringtone preview: $e');
-    }
-  }
 
   void _pickFromDevice() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -586,12 +561,6 @@ class _SoundSelectorState extends State<SoundSelector> {
   }
 }
 
-String _truncateSoundName(String soundName, {int maxLength = 25}) {
-  if (soundName.length <= maxLength) {
-    return soundName;
-  }
-  return '${soundName.substring(0, maxLength - 3)}...';
-}
 
 class CustomRingtone {
   final String displayTitle;
