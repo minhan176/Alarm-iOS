@@ -55,7 +55,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _selectedTime = now.add(const Duration(minutes: 1));
       _label = '';
       _repeatDays = [];
-      _sound = 'assets/sounds/alarm.wav';
+      _sound = 'assets/sounds/alarm.mp3';
       _soundDisplayName = 'Alarm OS 26';
       _snooze = true;
       _vibrate = true;
@@ -76,7 +76,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     if (sound == 'None') {
       return loc?.none ?? 'None';
     }
-    if (sound == 'assets/sounds/alarm.wav') {
+    if (sound == 'assets/sounds/alarm.mp3') {
       return 'Alarm OS 26';
     }
     // For system ringtones, we can't easily get the display name without loading the list
@@ -727,7 +727,7 @@ class _SoundSelectorState extends State<SoundSelector> {
         );
         final alarmOS26 = CustomRingtone(
           displayTitle: 'Alarm OS 26',
-          uri: 'assets/sounds/alarm.wav',
+          uri: 'assets/sounds/alarm.mp3',
         );
         
         // Combine system ringtones with custom ringtones
@@ -762,7 +762,7 @@ class _SoundSelectorState extends State<SoundSelector> {
             );
             final alarmOS26 = CustomRingtone(
               displayTitle: 'Alarm OS 26',
-              uri: 'assets/sounds/alarm.wav',
+              uri: 'assets/sounds/alarm.mp3',
             );
             
             // Combine system ringtones with custom ringtones
@@ -838,6 +838,13 @@ class _SoundSelectorState extends State<SoundSelector> {
             final audioSource = AssetSource(assetPath);
             await _previewPlayer.play(audioSource);
             _currentlyPreviewingUri = soundUri;
+
+            // Auto-stop after 3 seconds for asset previews
+            Future.delayed(const Duration(seconds: 3), () {
+              if (_currentlyPreviewingUri == soundUri) {
+                _stopRingtonePreview();
+              }
+            });
           } else {
             // Use audioplayers for other sounds
             await _previewPlayer.setReleaseMode(ReleaseMode.stop);

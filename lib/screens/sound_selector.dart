@@ -76,7 +76,7 @@ class _SoundSelectorState extends State<SoundSelector> {
         );
         final alarmOS26 = CustomRingtone(
           displayTitle: 'Alarm OS 26',
-          uri: 'assets/sounds/alarm.wav',
+          uri: 'assets/sounds/alarm.mp3',
         );
         
         // Combine system ringtones with custom ringtones
@@ -111,7 +111,7 @@ class _SoundSelectorState extends State<SoundSelector> {
             );
             final alarmOS26 = CustomRingtone(
               displayTitle: 'Alarm OS 26',
-              uri: 'assets/sounds/alarm.wav',
+              uri: 'assets/sounds/alarm.mp3',
             );
             
             // Combine system ringtones with custom ringtones
@@ -199,6 +199,13 @@ class _SoundSelectorState extends State<SoundSelector> {
             await _previewPlayer.play(audioSource);
             print('Playing asset sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
+            
+            Future.delayed(const Duration(seconds: 3), () {
+              if (_currentlyPreviewingUri == soundUri) {
+                _stopRingtonePreview();
+              }
+            });
+
           } else {
             // Use audioplayers for other sounds
             await _previewPlayer.setReleaseMode(ReleaseMode.stop);
