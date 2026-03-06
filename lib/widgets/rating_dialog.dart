@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:store_redirect/store_redirect.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 
 class RatingDialog extends StatefulWidget {
@@ -68,8 +68,11 @@ class _RatingDialogState extends State<RatingDialog> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('has_rated_app', true);
 
-    // Redirect to Google Play
-    StoreRedirect.redirect(androidAppId: 'com.oaptech.clock');
+    // Open Google Play link directly
+    final Uri playStoreUri = Uri.parse('https://play.google.com/store/apps/details?id=com.oaptech.clock');
+    if (await canLaunchUrl(playStoreUri)) {
+      await launchUrl(playStoreUri);
+    }
 
     if (mounted) {
       Navigator.of(context).pop();

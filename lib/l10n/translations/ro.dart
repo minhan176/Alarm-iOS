@@ -94,7 +94,7 @@ const Map<String, String> roTranslations = {
   'rateApp': 'Evaluează Aplicația',
   'privacyPolicy': 'Politica de Confidențialitate',
   'privacyPolicyError': 'Nu se poate deschide politica de confidențialitate. Vă rugăm să vizitați site-ul nostru.',
-  'shareMessage': 'Descarcă Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Descarcă Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notificări Alarmă',
   'alarmNotificationsDesc': 'Notificări pentru alarme',
   'dismiss': 'Respingere',

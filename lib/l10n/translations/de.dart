@@ -94,7 +94,7 @@ const Map<String, String> deTranslations = {
   'rateApp': 'App bewerten',
   'privacyPolicy': 'Datenschutzrichtlinie',
   'privacyPolicyError': 'Die Datenschutzrichtlinie konnte nicht geöffnet werden. Bitte besuchen Sie unsere Website.',
-  'shareMessage': 'Laden Sie Clock OS 26 - Liquid Glass UI herunter:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Laden Sie Clock OS 26 - Liquid Glass UI herunter:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Weckerbenachrichtigungen',
   'alarmNotificationsDesc': 'Benachrichtigungen für Wecker',
   'dismiss': 'Verwerfen',

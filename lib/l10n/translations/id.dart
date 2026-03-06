@@ -94,7 +94,7 @@ const Map<String, String> idTranslations = {
   'rateApp': 'Beri Nilai Aplikasi',
   'privacyPolicy': 'Kebijakan Privasi',
   'privacyPolicyError': 'Tidak dapat membuka kebijakan privasi. Silakan kunjungi situs web kami.',
-  'shareMessage': 'Unduh Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Unduh Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notifikasi Alarm',
   'alarmNotificationsDesc': 'Notifikasi untuk alarm',
   'dismiss': 'Tutup',

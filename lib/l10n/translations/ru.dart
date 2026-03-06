@@ -94,7 +94,7 @@ const Map<String, String> ruTranslations = {
   'rateApp': 'Оценить приложение',
   'privacyPolicy': 'Политика конфиденциальности',
   'privacyPolicyError': 'Не удалось открыть политику конфиденциальности. Пожалуйста, посетите наш сайт.',
-  'shareMessage': 'Скачайте Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Скачайте Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Уведомления будильника',
   'alarmNotificationsDesc': 'Уведомления для будильников',
   'dismiss': 'Отклонить',

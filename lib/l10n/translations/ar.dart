@@ -94,7 +94,7 @@ const Map<String, String> arTranslations = {
   'rateApp': 'تقييم التطبيق',
   'privacyPolicy': 'سياسة الخصوصية',
   'privacyPolicyError': 'تعذر فتح سياسة الخصوصية. يرجى زيارة موقعنا الإلكتروني.',
-  'shareMessage': 'حمّل Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'حمّل Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'إشعارات المنبه',
   'alarmNotificationsDesc': 'إشعارات للمنبهات',
   'dismiss': 'رفض',

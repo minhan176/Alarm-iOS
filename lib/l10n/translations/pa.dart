@@ -94,7 +94,7 @@ const Map<String, String> paTranslations = {
   'rateApp': 'ਐਪ ਦੀ ਰੇਟਿੰਗ ਕਰੋ',
   'privacyPolicy': 'ਗੋਪਨੀਯਤਾ ਨੀਤੀ',
   'privacyPolicyError': 'ਗੋਪਨੀਯਤਾ ਨੀਤੀ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਮਰੱਥ। ਕਿਰਪਾ ਕਰਕੇ ਸਾਡੀ ਵੈੱਬਸਾਈਟ \'ਤੇ ਜਾਓ।',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI ਡਾਊਨਲੋਡ ਕਰੋ:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI ਡਾਊਨਲੋਡ ਕਰੋ:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'ਅਲਾਰਮ ਸੂਚਨਾਵਾਂ',
   'alarmNotificationsDesc': 'ਅਲਾਰਮ ਲਈ ਸੂਚਨਾਵਾਂ',
   'dismiss': 'ਖਾਰਜ ਕਰੋ',

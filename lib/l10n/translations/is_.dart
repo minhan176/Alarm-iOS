@@ -94,7 +94,7 @@ const Map<String, String> isTranslations = {
   'rateApp': 'Gefa einkunn',
   'privacyPolicy': 'Persónuverndarstefna',
   'privacyPolicyError': 'Ekki tókst að opna persónuverndarstefnu. Vinsamlegast heimsæktu vefsíðu okkar.',
-  'shareMessage': 'Sæktu Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Sæktu Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Vekjaratilkynningar',
   'alarmNotificationsDesc': 'Tilkynningar fyrir vekjara',
   'dismiss': 'Hunsa',

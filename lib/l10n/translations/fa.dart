@@ -94,7 +94,7 @@ const Map<String, String> faTranslations = {
   'rateApp': 'امتیازدهی به برنامه',
   'privacyPolicy': 'سیاست حفظ حریم خصوصی',
   'privacyPolicyError': 'امکان باز کردن سیاست حفظ حریم خصوصی وجود ندارد. لطفاً از وب‌سایت ما بازدید کنید.',
-  'shareMessage': 'دانلود Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'دانلود Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'اعلان‌های زنگ هشدار',
   'alarmNotificationsDesc': 'اعلان‌ها برای زنگ‌های هشدار',
   'dismiss': 'رد کردن',

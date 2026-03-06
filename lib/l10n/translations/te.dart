@@ -94,7 +94,7 @@ const Map<String, String> teTranslations = {
   'rateApp': 'యాప్ రేట్ చేయండి',
   'privacyPolicy': 'గోప్యతా విధానం',
   'privacyPolicyError': 'గోప్యతా విధానాన్ని తెరవడం సాధ్యం కాలేదు. దయచేసి మా వెబ్‌సైట్‌ను సందర్శించండి.',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI డౌన్‌లోడ్ చేయండి:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI డౌన్‌లోడ్ చేయండి:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'అలారం నోటిఫికేషన్‌లు',
   'alarmNotificationsDesc': 'అలారాల కోసం నోటిఫికేషన్‌లు',
   'dismiss': 'తీసివేయి',

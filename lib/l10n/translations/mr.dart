@@ -94,7 +94,7 @@ const Map<String, String> mrTranslations = {
   'rateApp': 'अॅपला रेट करा',
   'privacyPolicy': 'गोपनीयता धोरण',
   'privacyPolicyError': 'गोपनीयता धोरण उघडता आले नाही. कृपया आमच्या वेबसाइटला भेट द्या.',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI डाउनलोड करा:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI डाउनलोड करा:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'अलार्म सूचना',
   'alarmNotificationsDesc': 'अलार्मसाठी सूचना',
   'dismiss': 'बंद करा',

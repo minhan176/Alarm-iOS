@@ -94,7 +94,7 @@ const Map<String, String> jaTranslations = {
   'rateApp': 'アプリを評価',
   'privacyPolicy': 'プライバシーポリシー',
   'privacyPolicyError': 'プライバシーポリシーを開けません。ウェブサイトをご覧ください。',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UIをダウンロード：\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UIをダウンロード：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'アラーム通知',
   'alarmNotificationsDesc': 'アラームの通知',
   'dismiss': '閉じる',

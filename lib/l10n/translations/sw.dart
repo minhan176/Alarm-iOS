@@ -94,7 +94,7 @@ const Map<String, String> swTranslations = {
   'rateApp': 'Kadiria Programu',
   'privacyPolicy': 'Sera ya Faragha',
   'privacyPolicyError': 'Haiwezekani kufungua sera ya faragha. Tafadhali tembelea tovuti yetu.',
-  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Arifa za Kengele',
   'alarmNotificationsDesc': 'Arifa za kengele',
   'dismiss': 'Ondoa',

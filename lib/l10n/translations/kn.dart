@@ -94,7 +94,7 @@ const Map<String, String> knTranslations = {
   'rateApp': 'ಅಪ್ಲಿಕೇಶನ್ ರೇಟ್ ಮಾಡಿ',
   'privacyPolicy': 'ಗೌಪ್ಯತಾ ನೀತಿ',
   'privacyPolicyError': 'ಗೌಪ್ಯತಾ ನೀತಿಯನ್ನು ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ನಮ್ಮ ವೆಬ್‌ಸೈಟ್‌ಗೆ ಭೇಟಿ ನೀಡಿ.',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'ಅಲಾರಾಂ ಅಧಿಸೂಚನೆಗಳು',
   'alarmNotificationsDesc': 'ಅಲಾರಾಂಗಳಿಗೆ ಅಧಿಸೂಚನೆಗಳು',
   'dismiss': 'ವಜಾಗೊಳಿಸಿ',

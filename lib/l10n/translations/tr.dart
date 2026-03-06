@@ -97,7 +97,7 @@ const Map<String, String> trTranslations = {
   'privacyPolicyError':
       'Gizlilik politikası açılamıyor. Lütfen web sitemizi ziyaret edin.',
   'shareMessage':
-      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Alarm Bildirimleri',
   'alarmNotificationsDesc': 'Alarmlar için bildirimler',
   'dismiss': 'Kapat',

@@ -10,6 +10,7 @@ import '../widgets/custom_buttons.dart';
 import '../providers/settings_provider.dart';
 import 'guide_screen.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/rating_dialog.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -80,8 +81,13 @@ Please describe your feedback below:
     Share.share(AppLocalizations.of(context).shareMessage);
   }
 
-  void _rateApp() {
-    StoreRedirect.redirect(androidAppId: 'com.oaptech.clock', iOSAppId: '123456789');
+  void _rateApp(BuildContext context) {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const RatingDialog();
+      },
+    );
   }
 
   void _openPrivacyPolicy(BuildContext context) async {
@@ -331,7 +337,7 @@ Please describe your feedback below:
                             CupertinoButton(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               pressedOpacity: 1.0,
-                              onPressed: _rateApp,
+                              onPressed: () => _rateApp(context),
                               child: Row(
                                 children: [
                                   const Icon(

@@ -94,7 +94,7 @@ const Map<String, String> viTranslations = {
   'rateApp': 'Đánh giá ứng dụng',
   'privacyPolicy': 'Chính sách bảo mật',
   'privacyPolicyError': 'Không thể mở chính sách bảo mật. Vui lòng truy cập trang web của chúng tôi.',
-  'shareMessage': 'Tải Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Tải Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Thông báo báo thức',
   'alarmNotificationsDesc': 'Thông báo cho báo thức',
   'dismiss': 'Bỏ qua',

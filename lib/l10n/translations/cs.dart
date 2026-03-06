@@ -94,7 +94,7 @@ const Map<String, String> csTranslations = {
   'rateApp': 'Ohodnotit aplikaci',
   'privacyPolicy': 'Zásady ochrany osobních údajů',
   'privacyPolicyError': 'Nelze otevřít zásady ochrany osobních údajů. Navštivte prosím naše webové stránky.',
-  'shareMessage': 'Stáhněte si Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Stáhněte si Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Oznámení budíku',
   'alarmNotificationsDesc': 'Oznámení pro budíky',
   'dismiss': 'Zavřít',

@@ -94,7 +94,7 @@ const Map<String, String> guTranslations = {
   'rateApp': 'એપને રેટ કરો',
   'privacyPolicy': 'ગોપનીયતા નીતિ',
   'privacyPolicyError': 'ગોપનીયતા નીતિ ખોલવામાં અસમર્થ. કૃપા કરીને અમારી વેબસાઇટની મુલાકાત લો.',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI ડાઉનલોડ કરો:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI ડાઉનલોડ કરો:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'એલાર્મ સૂચનાઓ',
   'alarmNotificationsDesc': 'એલાર્મ માટે સૂચનાઓ',
   'dismiss': 'રદ કરો',

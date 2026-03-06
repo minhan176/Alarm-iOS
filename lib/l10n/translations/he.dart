@@ -94,7 +94,7 @@ const Map<String, String> heTranslations = {
   'rateApp': 'דרג אפליקציה',
   'privacyPolicy': 'מדיניות פרטיות',
   'privacyPolicyError': 'לא ניתן לפתוח את מדיניות הפרטיות. אנא בקר באתר שלנו.',
-  'shareMessage': 'הורד את Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'הורד את Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'התראות שעון מעורר',
   'alarmNotificationsDesc': 'התראות עבור שעונים מעוררים',
   'dismiss': 'סגור',

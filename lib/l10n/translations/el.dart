@@ -94,7 +94,7 @@ const Map<String, String> elTranslations = {
   'rateApp': 'Αξιολόγηση εφαρμογής',
   'privacyPolicy': 'Πολιτική Απορρήτου',
   'privacyPolicyError': 'Δεν είναι δυνατό το άνοιγμα της πολιτικής απορρήτου. Παρακαλούμε επισκεφθείτε τον ιστότοπό μας.',
-  'shareMessage': 'Κατεβάστε το Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Κατεβάστε το Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Ειδοποιήσεις ξυπνητηριού',
   'alarmNotificationsDesc': 'Ειδοποιήσεις για ξυπνητήρια',
   'dismiss': 'Απόρριψη',

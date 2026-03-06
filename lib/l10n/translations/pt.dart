@@ -94,7 +94,7 @@ const Map<String, String> ptTranslations = {
   'rateApp': 'Avaliar App',
   'privacyPolicy': 'Política de Privacidade',
   'privacyPolicyError': 'Não foi possível abrir a política de privacidade. Visite o nosso website.',
-  'shareMessage': 'Baixe o Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Baixe o Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notificações de Alarme',
   'alarmNotificationsDesc': 'Notificações para alarmes',
   'dismiss': 'Dispensar',

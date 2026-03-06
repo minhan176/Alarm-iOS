@@ -95,7 +95,7 @@ const Map<String, String> mlTranslations = {
   'privacyPolicy': 'സ്വകാര്യതാ നയം',
   'privacyPolicyError': 'സ്വകാര്യതാ നയം തുറക്കാൻ കഴിയുന്നില്ല. ദയവായി ഞങ്ങളുടെ വെബ്‌സൈറ്റ് സന്ദർശിക്കുക.',
   'shareMessage':
-      'Clock OS 26 - Liquid Glass UI ഡൗൺലോഡ് ചെയ്യുക:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+      'Clock OS 26 - Liquid Glass UI ഡൗൺലോഡ് ചെയ്യുക:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'അലാറം അറിയിപ്പുകൾ',
   'alarmNotificationsDesc': 'അലാറങ്ങൾക്കുള്ള അറിയിപ്പുകൾ',
   'dismiss': 'നിരസിക്കുക',

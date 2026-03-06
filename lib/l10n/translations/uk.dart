@@ -97,7 +97,7 @@ const Map<String, String> ukTranslations = {
   'privacyPolicyError':
       'Неможливо відкрити політику конфіденційності. Будь ласка, відвідайте наш веб-сайт.',
   'shareMessage':
-      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Сповіщення будильника',
   'alarmNotificationsDesc': 'Сповіщення для будильників',
   'dismiss': 'Відхилити',

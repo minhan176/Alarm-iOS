@@ -94,7 +94,7 @@ const Map<String, String> zhCnTranslations = {
   'rateApp': '评价应用',
   'privacyPolicy': '隐私政策',
   'privacyPolicyError': '无法打开隐私政策。请访问我们的网站。',
-  'shareMessage': '下载 Clock OS 26 - Liquid Glass UI：\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': '下载 Clock OS 26 - Liquid Glass UI：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': '闹钟通知',
   'alarmNotificationsDesc': '闹钟通知',
   'dismiss': '关闭',

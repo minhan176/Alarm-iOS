@@ -97,7 +97,7 @@ const Map<String, String> urTranslations = {
   'privacyPolicyError':
       'رازداری کی پالیسی کھولنے سے قاصر۔ براہ کرم ہماری ویب سائٹ ملاحظہ کریں۔',
   'shareMessage':
-      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'الارم اطلاعات',
   'alarmNotificationsDesc': 'الارمز کے لیے اطلاعات',
   'dismiss': 'برخاست',

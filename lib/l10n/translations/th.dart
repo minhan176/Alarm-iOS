@@ -94,7 +94,7 @@ const Map<String, String> thTranslations = {
   'rateApp': 'ให้คะแนนแอป',
   'privacyPolicy': 'นโยบายความเป็นส่วนตัว',
   'privacyPolicyError': 'ไม่สามารถเปิดนโยบายความเป็นส่วนตัวได้ กรุณาเยี่ยมชมเว็บไซต์ของเรา',
-  'shareMessage': 'ดาวน์โหลด Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'ดาวน์โหลด Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'การแจ้งเตือนนาฬิกาปลุก',
   'alarmNotificationsDesc': 'การแจ้งเตือนสำหรับนาฬิกาปลุก',
   'dismiss': 'ปิด',

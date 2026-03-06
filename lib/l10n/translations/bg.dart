@@ -94,7 +94,7 @@ const Map<String, String> bgTranslations = {
   'rateApp': 'Оценяване на приложението',
   'privacyPolicy': 'Политика за поверителност',
   'privacyPolicyError': 'Не може да се отвори политиката за поверителност. Моля, посетете нашия уебсайт.',
-  'shareMessage': 'Изтеглете Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Изтеглете Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Известия за аларми',
   'alarmNotificationsDesc': 'Известия за аларми',
   'dismiss': 'Отхвърляне',

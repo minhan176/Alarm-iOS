@@ -95,7 +95,7 @@ const Map<String, String> lvTranslations = {
   'privacyPolicy': 'Privātuma politika',
   'privacyPolicyError': 'Nevar atvērt privātuma politiku. Lūdzu, apmeklējiet mūsu tīmekļa vietni.',
   'shareMessage':
-      'Lejupielādējiet Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+      'Lejupielādējiet Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Modinātāja paziņojumi',
   'alarmNotificationsDesc': 'Paziņojumi par modinātājiem',
   'dismiss': 'Noraidīt',

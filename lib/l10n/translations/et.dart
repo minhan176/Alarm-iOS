@@ -94,7 +94,7 @@ const Map<String, String> etTranslations = {
   'rateApp': 'Hinda rakendust',
   'privacyPolicy': 'Privaatsuspoliitika',
   'privacyPolicyError': 'Privaatsuspoliitikat ei saa avada. Palun külastage meie veebisaiti.',
-  'shareMessage': 'Laadige alla Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Laadige alla Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Äratuse teavitused',
   'alarmNotificationsDesc': 'Teavitused äratuste kohta',
   'dismiss': 'Lõpeta',

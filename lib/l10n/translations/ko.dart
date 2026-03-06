@@ -94,7 +94,7 @@ const Map<String, String> koTranslations = {
   'rateApp': '앱 평가',
   'privacyPolicy': '개인정보 처리방침',
   'privacyPolicyError': '개인정보 처리방침을 열 수 없습니다. 웹사이트를 방문해 주세요.',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI 다운로드:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI 다운로드:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': '알람 알림',
   'alarmNotificationsDesc': '알람 알림',
   'dismiss': '닫기',

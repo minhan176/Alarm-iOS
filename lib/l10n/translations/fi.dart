@@ -94,7 +94,7 @@ const Map<String, String> fiTranslations = {
   'rateApp': 'Arvostele sovellus',
   'privacyPolicy': 'Tietosuojakäytäntö',
   'privacyPolicyError': 'Tietosuojakäytäntöä ei voi avata. Käy verkkosivuillamme.',
-  'shareMessage': 'Lataa Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Lataa Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Herätysilmoitukset',
   'alarmNotificationsDesc': 'Ilmoitukset herätyksistä',
   'dismiss': 'Hylkää',

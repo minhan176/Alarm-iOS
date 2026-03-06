@@ -94,7 +94,7 @@ const Map<String, String> daTranslations = {
   'rateApp': 'Bedøm app',
   'privacyPolicy': 'Privatlivspolitik',
   'privacyPolicyError': 'Kan ikke åbne privatlivspolitikken. Besøg venligst vores hjemmeside.',
-  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Alarmnotifikationer',
   'alarmNotificationsDesc': 'Notifikationer for alarmer',
   'dismiss': 'Afvis',

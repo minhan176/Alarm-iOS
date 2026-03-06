@@ -94,7 +94,7 @@ const Map<String, String> slTranslations = {
   'rateApp': 'Oceni aplikacijo',
   'privacyPolicy': 'Pravilnik o zasebnosti',
   'privacyPolicyError': 'Pravilnika o zasebnosti ni mogoče odpreti. Obiščite našo spletno stran.',
-  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Obvestila budilke',
   'alarmNotificationsDesc': 'Obvestila za budilke',
   'dismiss': 'Opusti',

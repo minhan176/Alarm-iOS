@@ -94,7 +94,7 @@ const Map<String, String> noTranslations = {
   'rateApp': 'Vurder appen',
   'privacyPolicy': 'Personvernregler',
   'privacyPolicyError': 'Kan ikke åpne personvernregler. Vennligst besøk nettstedet vårt.',
-  'shareMessage': 'Last ned Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Last ned Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Alarmvarsler',
   'alarmNotificationsDesc': 'Varsler for alarmer',
   'dismiss': 'Avvis',

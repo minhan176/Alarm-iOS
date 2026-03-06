@@ -97,7 +97,7 @@ const Map<String, String> zuTranslations = {
   'privacyPolicyError':
       'Ayikwazi ukuvula inqubomgomo yobumfihlo. Sicela uvakashele iwebhusayithi yethu.',
   'shareMessage':
-      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+      'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Izaziso Ze-Alamu',
   'alarmNotificationsDesc': 'Izaziso zama-alamu',
   'dismiss': 'Cashisa',

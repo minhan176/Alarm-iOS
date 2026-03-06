@@ -94,7 +94,7 @@ const Map<String, String> huTranslations = {
   'rateApp': 'Alkalmazás értékelése',
   'privacyPolicy': 'Adatvédelmi irányelvek',
   'privacyPolicyError': 'Nem sikerült megnyitni az adatvédelmi irányelveket. Kérjük, látogasson el weboldalunkra.',
-  'shareMessage': 'Töltse le a Clock OS 26 - Liquid Glass UI alkalmazást:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Töltse le a Clock OS 26 - Liquid Glass UI alkalmazást:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Ébresztő értesítések',
   'alarmNotificationsDesc': 'Értesítések az ébresztőkhöz',
   'dismiss': 'Elvetés',

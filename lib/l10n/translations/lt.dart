@@ -95,7 +95,7 @@ const Map<String, String> ltTranslations = {
   'privacyPolicy': 'Privatumo politika',
   'privacyPolicyError': 'Nepavyko atidaryti privatumo politikos. Apsilankykite mūsų svetainėje.',
   'shareMessage':
-      'Atsisiųskite Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+      'Atsisiųskite Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Žadintuvo pranešimai',
   'alarmNotificationsDesc': 'Pranešimai apie žadintuvus',
   'dismiss': 'Atmesti',

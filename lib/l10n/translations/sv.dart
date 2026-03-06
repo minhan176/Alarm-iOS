@@ -94,7 +94,7 @@ const Map<String, String> svTranslations = {
   'rateApp': 'Betygsätt app',
   'privacyPolicy': 'Integritetspolicy',
   'privacyPolicyError': 'Det gick inte att öppna integritetspolicyn. Besök vår webbplats.',
-  'shareMessage': 'Ladda ner Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Ladda ner Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Alarmnotiser',
   'alarmNotificationsDesc': 'Notiser för alarm',
   'dismiss': 'Avfärda',

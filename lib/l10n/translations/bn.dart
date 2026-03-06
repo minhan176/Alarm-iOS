@@ -94,7 +94,7 @@ const Map<String, String> bnTranslations = {
   'rateApp': 'অ্যাপ রেটিং দিন',
   'privacyPolicy': 'গোপনীয়তা নীতি',
   'privacyPolicyError': 'গোপনীয়তা নীতি খোলা যাচ্ছে না। অনুগ্রহ করে আমাদের ওয়েবসাইট দেখুন।',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI ডাউনলোড করুন:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI ডাউনলোড করুন:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'অ্যালার্ম বিজ্ঞপ্তি',
   'alarmNotificationsDesc': 'অ্যালার্মের জন্য বিজ্ঞপ্তি',
   'dismiss': 'খারিজ',

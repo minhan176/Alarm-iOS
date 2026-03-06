@@ -94,7 +94,7 @@ const Map<String, String> hrTranslations = {
   'rateApp': 'Ocijeni aplikaciju',
   'privacyPolicy': 'Pravila privatnosti',
   'privacyPolicyError': 'Nije moguće otvoriti pravila privatnosti. Posjetite našu web stranicu.',
-  'shareMessage': 'Preuzmite Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Preuzmite Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Obavijesti alarma',
   'alarmNotificationsDesc': 'Obavijesti za alarme',
   'dismiss': 'Odbaci',

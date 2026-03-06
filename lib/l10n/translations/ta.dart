@@ -94,7 +94,7 @@ const Map<String, String> taTranslations = {
   'rateApp': 'பயன்பாட்டை மதிப்பிடு',
   'privacyPolicy': 'தனியுரிமைக் கொள்கை',
   'privacyPolicyError': 'தனியுரிமைக் கொள்கையைத் திறக்க இயலவில்லை. எங்கள் வலைத்தளத்தைப் பார்வையிடவும்.',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI பதிவிறக்கம் செய்யவும்:\nhttps://play.google.com/store/apps/details?id=com.jbh.alarm',
+  'shareMessage': 'Clock OS 26 - Liquid Glass UI பதிவிறக்கம் செய்யவும்:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'அலாரம் அறிவிப்புகள்',
   'alarmNotificationsDesc': 'அலாரங்களுக்கான அறிவிப்புகள்',
   'dismiss': 'நிராகரி',
