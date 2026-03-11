@@ -7,6 +7,7 @@ import '../widgets/custom_buttons.dart';
 import 'settings_screen.dart';
 import '../providers/settings_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 
 class WorldClockScreen extends StatefulWidget {
   const WorldClockScreen({super.key});
@@ -143,6 +144,8 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                 ],
               ),
             ),
+            // AdMob Banner Ad
+            const AdaptiveBannerAdWidget(),
             Expanded(
               child: Consumer<WorldClockProvider>(
                 builder: (context, provider, child) {

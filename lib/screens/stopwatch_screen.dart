@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 
 class StopwatchScreen extends StatefulWidget {
   const StopwatchScreen({super.key});
@@ -71,7 +72,9 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
       child: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 80),
+            // AdMob Banner Ad
+            const AdaptiveBannerAdWidget(),
+            const SizedBox(height: 40),
             // Digital Timer Display
             Text(
               _formatTime(_milliseconds),

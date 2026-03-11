@@ -10,6 +10,7 @@ import '../utils/alarm_toast.dart';
 import 'settings_screen.dart';
 import '../providers/settings_provider.dart';
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 
 class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({super.key});
@@ -187,6 +188,8 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   ],
                 ),
               ),
+              // AdMob Banner Ad
+              const AdaptiveBannerAdWidget(),
               Expanded(
                 child: alarmProvider.alarms.isEmpty
                     ? Center(

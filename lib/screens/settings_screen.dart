@@ -11,6 +11,7 @@ import '../providers/settings_provider.dart';
 import 'guide_screen.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/rating_dialog.dart';
+import '../services/ad_service.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -401,6 +402,10 @@ Please describe your feedback below:
                           ],
                         ),
                       ),
+                      // AdMob Banner Ad
+                      const SizedBox(height: 16),
+                      const Center(child: AdaptiveBannerAdWidget()),
+                      const SizedBox(height: 20),
                     ],
                   );
                 },

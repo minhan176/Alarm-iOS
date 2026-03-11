@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import 'sound_selector.dart';
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({super.key});
@@ -281,6 +282,8 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: [
+            // AdMob Banner Ad
+            const AdaptiveBannerAdWidget(),
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
               child: Text(

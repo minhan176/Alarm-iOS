@@ -13,6 +13,7 @@ import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
 import '../widgets/custom_buttons.dart';
+import '../services/ad_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class EditAlarmScreen extends StatefulWidget {
@@ -123,6 +124,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     provider.setLastSavedAlarm(alarm);
 
     Navigator.of(context, rootNavigator: true).pop();
+
+    // Show interstitial ad after saving alarm
+    AdService().showInterstitialAd();
 
     // Check and show review dialog after adding new alarm
     if (isNewAlarm) {

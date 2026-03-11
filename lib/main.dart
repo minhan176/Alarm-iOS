@@ -21,6 +21,7 @@ import 'screens/alarm_ring_screen.dart';
 import 'screens/timer_ring_screen.dart';
 import 'services/alarm_service.dart';
 import 'services/battery_optimization_service.dart';
+import 'services/ad_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
 import 'l10n/app_localizations.dart';
 
@@ -48,6 +49,12 @@ void main() async {
 
   // Initialize alarm service
   await AlarmService.initialize();
+
+  // Initialize AdMob
+  final adService = AdService();
+  await adService.initialize();
+  adService.loadInterstitialAd();
+  adService.loadAppOpenAd();
 
   // Set up alarm callback
   AlarmService.onAlarmRing = (alarm) {
@@ -143,6 +150,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       _checkPermissionAgain();
     }
     if (state == AppLifecycleState.resumed) {
+      // Show App Open Ad when user returns to app
+      AdService().showAppOpenAd();
       // Update time format from system if user hasn't changed it
       final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
       final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
