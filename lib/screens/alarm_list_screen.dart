@@ -188,8 +188,6 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   ],
                 ),
               ),
-              // AdMob Banner Ad
-              const AdaptiveBannerAdWidget(),
               Expanded(
                 child: alarmProvider.alarms.isEmpty
                     ? Center(

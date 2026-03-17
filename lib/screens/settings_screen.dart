@@ -402,9 +402,6 @@ Please describe your feedback below:
                           ],
                         ),
                       ),
-                      // AdMob Banner Ad
-                      const SizedBox(height: 16),
-                      const Center(child: AdaptiveBannerAdWidget()),
                       const SizedBox(height: 20),
                     ],
                   );

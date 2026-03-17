@@ -19,9 +19,9 @@ import 'screens/stopwatch_screen.dart';
 import 'screens/timer_screen.dart';
 import 'screens/alarm_ring_screen.dart';
 import 'screens/timer_ring_screen.dart';
+import 'services/ad_service.dart';
 import 'services/alarm_service.dart';
 import 'services/battery_optimization_service.dart';
-import 'services/ad_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
 import 'l10n/app_localizations.dart';
 
@@ -50,7 +50,7 @@ void main() async {
   // Initialize alarm service
   await AlarmService.initialize();
 
-  // Initialize AdMob
+  // Initialize AdMob for App Open Ads and Interstitial Ads
   final adService = AdService();
   await adService.initialize();
   adService.loadInterstitialAd();
@@ -457,6 +457,10 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
               ],
               selectedIndex: _currentIndex,
               onTabSelected: (index) {
+                if (index != _currentIndex) {
+                  // Show interstitial ad when switching to a different tab
+                  AdService().showInterstitialAd();
+                }
                 setState(() {
                   _currentIndex = index;
                 });

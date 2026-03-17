@@ -144,8 +144,6 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                 ],
               ),
             ),
-            // AdMob Banner Ad
-            const AdaptiveBannerAdWidget(),
             Expanded(
               child: Consumer<WorldClockProvider>(
                 builder: (context, provider, child) {

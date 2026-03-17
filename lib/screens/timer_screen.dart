@@ -282,8 +282,6 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            // AdMob Banner Ad
-            const AdaptiveBannerAdWidget(),
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
               child: Text(

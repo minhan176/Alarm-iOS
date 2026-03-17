@@ -72,8 +72,6 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
       child: SafeArea(
         child: Column(
           children: [
-            // AdMob Banner Ad
-            const AdaptiveBannerAdWidget(),
             const SizedBox(height: 40),
             // Digital Timer Display
             Text(
