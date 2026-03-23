@@ -124,9 +124,16 @@ class AlarmRingActivity : FlutterActivity() {
     }
 
     override fun onDestroy() {
-        // Unregister receiver
-        unregisterReceiver(screenOffReceiver)
-        
+        // Unregister receiver safely
+        try {
+            unregisterReceiver(screenOffReceiver)
+            println("DEBUG: Successfully unregistered screenOffReceiver")
+        } catch (e: IllegalArgumentException) {
+            println("DEBUG: Receiver was already unregistered or not registered: ${e.message}")
+        } catch (e: Exception) {
+            println("DEBUG: Error unregistering receiver: ${e.message}")
+        }
+
         if (!isDismissed) {
             // Snooze and cancel the alarm when activity is destroyed without user action
             println("DEBUG: Snoozing and cancelling alarm because activity destroyed without user action")
@@ -142,8 +149,8 @@ class AlarmRingActivity : FlutterActivity() {
                 println("DEBUG: Force cancelled vibration with native vibrator")
             }
         }
-        
-        
+
+
         super.onDestroy()
         println("DEBUG: AlarmRingActivity onDestroy called")
         

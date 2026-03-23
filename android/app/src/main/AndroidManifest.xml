@@ -16,6 +16,30 @@
         android:label="Clock OS 26"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Disable Impeller to prevent SIGSEGV crashes with custom graphics renderers -->
+        <meta-data
+            android:name="flutter_impeller"
+            android:value="false" />
+        <!-- Additional Impeller disable flags for different architectures -->
+        <meta-data
+            android:name="io.flutter.impeller.enabled"
+            android:value="false" />
+        <!-- Force Skia renderer -->
+        <meta-data
+            android:name="io.flutter.renderer"
+            android:value="skia" />
+        <!-- Additional system properties to disable Impeller -->
+        <meta-data
+            android:name="flutter.skia"
+            android:value="true" />
+        <!-- Additional stability settings for graphics rendering -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableSurfaceView"
+            android:value="true" />
+        <!-- Improve graphics stability -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableOpenGLImageReader"
+            android:value="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -81,31 +81,78 @@ class LiquidGlassBottomBar extends StatefulWidget {
 }
 
 class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
+  static bool _hasGraphicsError = false;
+  bool _initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Delay initialization to avoid graphics issues during app startup
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (mounted) {
+        setState(() {
+          _initialized = true;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Don't render LiquidGlass until initialized
+    if (!_initialized) {
+      return _buildFallbackBar(context);
+    }
+
+    try {
+      return _buildLiquidGlassBar(context);
+    } catch (e) {
+      _hasGraphicsError = true;
+      // Fallback to a simple Cupertino-style bottom bar if LiquidGlass fails
+      return _buildFallbackBar(context);
+    }
+  }
+
+  bool _shouldSimplifyGraphics() {
+    // Simplify graphics if we've had errors or on lower-end devices
+    return _hasGraphicsError;
+  }
+
+  Widget _buildLiquidGlassBar(BuildContext context) {
     final brightness = MediaQuery.platformBrightnessOf(context);
     final isDark = brightness == Brightness.dark;
 
-    final glassSettings =
-        widget.glassSettings ??
-        LiquidGlassSettings(
-          refractiveIndex: 1.21,
-          thickness: 30,
-          blur: 8,
-          saturation: 1.5,
-          lightIntensity: isDark ? .7 : 1,
-          ambientStrength: isDark ? .2 : .5,
-          lightAngle: math.pi / 4,
-          glassColor: CupertinoTheme.of(
-            context,
-          ).barBackgroundColor.withValues(alpha: 0.6),
-        );
+    // Check if we should use simplified graphics for stability
+    final shouldSimplify = _shouldSimplifyGraphics();
+
+    final glassSettings = shouldSimplify
+        ? LiquidGlassSettings(
+            refractiveIndex: 1.1,
+            thickness: 15,
+            blur: 4,
+            saturation: 1.2,
+            lightIntensity: isDark ? .5 : .7,
+            ambientStrength: isDark ? .3 : .4,
+            lightAngle: math.pi / 6,
+            glassColor: CupertinoTheme.of(context).barBackgroundColor.withValues(alpha: 0.4),
+          )
+        : (widget.glassSettings ??
+            LiquidGlassSettings(
+              refractiveIndex: 1.21,
+              thickness: 30,
+              blur: 8,
+              saturation: 1.5,
+              lightIntensity: isDark ? .7 : 1,
+              ambientStrength: isDark ? .2 : .5,
+              lightAngle: math.pi / 4,
+              glassColor: CupertinoTheme.of(context).barBackgroundColor.withValues(alpha: 0.6),
+            ));
 
     return LiquidGlassLayer(
       settings: glassSettings,
-      fake: widget.fake,
+      fake: widget.fake || shouldSimplify,
       child: LiquidGlassBlendGroup(
-        blend: 10,
+        blend: shouldSimplify ? 5 : 10,
         child: Padding(
           padding: EdgeInsets.only(
             right: widget.horizontalPadding,
@@ -151,6 +198,41 @@ class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
                 _ExtraButton(config: widget.extraButton!, fake: widget.fake),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFallbackBar(BuildContext context) {
+    return Container(
+      height: widget.barHeight + widget.bottomPadding * 2,
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context).barBackgroundColor.withOpacity(0.8),
+        border: Border(
+          top: BorderSide(
+            color: CupertinoColors.systemGrey.withOpacity(0.2),
+            width: 0.5,
+          ),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          right: widget.horizontalPadding,
+          left: widget.horizontalPadding,
+          bottom: widget.bottomPadding,
+          top: widget.bottomPadding,
+        ),
+        child: Row(
+          children: [
+            for (var i = 0; i < widget.tabs.length; i++)
+              Expanded(
+                child: _BottomBarTab(
+                  tab: widget.tabs[i],
+                  selected: widget.selectedIndex == i,
+                  onTap: () => widget.onTabSelected(i),
+                ),
+              ),
+          ],
         ),
       ),
     );

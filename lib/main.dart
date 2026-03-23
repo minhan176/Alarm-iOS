@@ -7,6 +7,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:android_intent_plus/android_intent.dart';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'models/alarm_model.dart';
@@ -33,8 +34,32 @@ AlarmModel? _pendingAlarm;
 // Flag to skip permission check when opened from ring screen
 bool _skipPermissionCheck = false;
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Log graphics renderer information for debugging
+  try {
+    final renderer = WidgetsBinding.instance.platformDispatcher;
+    print('Flutter renderer info: ${renderer.toString()}');
+  } catch (e) {
+    print('Could not get renderer info: $e');
+  }
+
+  // Set up global error handling for graphics issues
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (details.exception.toString().contains('EGL') ||
+        details.exception.toString().contains('OpenGL') ||
+        details.exception.toString().contains('graphics') ||
+        details.exception.toString().contains('render') ||
+        details.exception.toString().contains('impeller') ||
+        details.exception.toString().contains('Context::ClearCurrent')) {
+      // Log graphics errors but don't crash the app
+      print('Graphics/Impeller error caught: ${details.exception}');
+      print('Stack trace: ${details.stack}');
+      return;
+    }
+    FlutterError.presentError(details);
+  };
 
   // Lock orientation to portrait only
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -47,15 +72,6 @@ void main() async {
   final initialRoute = WidgetsBinding.instance.platformDispatcher.defaultRouteName;
   _skipPermissionCheck = initialRoute == '/alarm_ring' || initialRoute == '/timer_ring';
 
-  // Initialize alarm service
-  await AlarmService.initialize();
-
-  // Initialize AdMob for App Open Ads and Interstitial Ads
-  final adService = AdService();
-  await adService.initialize();
-  adService.loadInterstitialAd();
-  adService.loadAppOpenAd();
-
   // Set up alarm callback
   AlarmService.onAlarmRing = (alarm) {
     _pendingAlarm = alarm;
@@ -67,6 +83,18 @@ void main() async {
   };
 
   runApp(MainApp(system24HourFormat: system24HourFormat));
+
+  // Initialize services after the first Flutter frame can start rendering.
+  unawaited(_initializeServices());
+}
+
+Future<void> _initializeServices() async {
+  await AlarmService.initialize();
+
+  final adService = AdService();
+  await adService.initialize();
+  adService.loadInterstitialAd();
+  adService.loadAppOpenAd();
 }
 
 void _showAlarmScreen(AlarmModel alarm) {
