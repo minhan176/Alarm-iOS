@@ -20,7 +20,6 @@ import 'screens/stopwatch_screen.dart';
 import 'screens/timer_screen.dart';
 import 'screens/alarm_ring_screen.dart';
 import 'screens/timer_ring_screen.dart';
-import 'services/ad_service.dart';
 import 'services/alarm_service.dart';
 import 'services/battery_optimization_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
@@ -90,11 +89,6 @@ void main() {
 
 Future<void> _initializeServices() async {
   await AlarmService.initialize();
-
-  final adService = AdService();
-  await adService.initialize();
-  adService.loadInterstitialAd();
-  adService.loadAppOpenAd();
 }
 
 void _showAlarmScreen(AlarmModel alarm) {
@@ -178,8 +172,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       _checkPermissionAgain();
     }
     if (state == AppLifecycleState.resumed) {
-      // Show App Open Ad when user returns to app
-      AdService().showAppOpenAd();
       // Update time format from system if user hasn't changed it
       final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
       final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
@@ -485,10 +477,6 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
               ],
               selectedIndex: _currentIndex,
               onTabSelected: (index) {
-                if (index != _currentIndex) {
-                  // Show interstitial ad when switching to a different tab
-                  AdService().showInterstitialAd();
-                }
                 setState(() {
                   _currentIndex = index;
                 });

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import '../l10n/app_localizations.dart';
-import '../services/ad_service.dart';
 
 class StopwatchScreen extends StatefulWidget {
   const StopwatchScreen({super.key});

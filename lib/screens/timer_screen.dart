@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import 'sound_selector.dart';
 import '../l10n/app_localizations.dart';
-import '../services/ad_service.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({super.key});
