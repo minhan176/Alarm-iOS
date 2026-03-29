@@ -94,7 +94,7 @@ const Map<String, String> arTranslations = {
   'rateApp': 'تقييم التطبيق',
   'privacyPolicy': 'سياسة الخصوصية',
   'privacyPolicyError': 'تعذر فتح سياسة الخصوصية. يرجى زيارة موقعنا الإلكتروني.',
-  'shareMessage': 'حمّل Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'حمّل Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'إشعارات المنبه',
   'alarmNotificationsDesc': 'إشعارات للمنبهات',
   'dismiss': 'رفض',
@@ -102,7 +102,7 @@ const Map<String, String> arTranslations = {
   'pm': 'م',
 
   // Rating dialog
-  'ratingTitle': 'هل تستمتع بـ Clock OS 26؟',
+  'ratingTitle': 'هل تستمتع بـ Alarm Phone 17 OS 26؟',
   'ratingContent': 'اضغط على نجمة لتقييمنا على\nGoogle Play.',
   'submit': 'إرسال',
 
@@ -114,17 +114,17 @@ const Map<String, String> arTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'السماح بـ "العرض فوق التطبيقات الأخرى"',
-  'overlayDialogContent': 'اختر "فتح الإعدادات" → Clock OS 26 → السماح بالعرض فوق التطبيقات الأخرى',
+  'overlayDialogContent': 'اختر "فتح الإعدادات" → Alarm Phone 17 OS 26 → السماح بالعرض فوق التطبيقات الأخرى',
   'openSettings': 'فتح الإعدادات',
 
   // Guide screen
   'guideIntro': 'لكي يعمل المنبه بشكل صحيح، نوصي باتباع هذه الخطوات:',
   'guideStep1Title': 'منح إذن "العرض فوق التطبيقات الأخرى"',
-  'guideStep1Sub1': 'انتقل إلى الإعدادات → التطبيقات → Clock OS 26',
+  'guideStep1Sub1': 'انتقل إلى الإعدادات → التطبيقات → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'اختر "العرض فوق التطبيقات الأخرى"',
   'guideStep1Sub3': 'السماح بالعرض فوق التطبيقات الأخرى',
   'guideStep2Title': 'السماح باستخدام البطارية في الخلفية',
-  'guideStep2Sub1': 'انتقل إلى الإعدادات → التطبيقات → Clock OS 26',
+  'guideStep2Sub1': 'انتقل إلى الإعدادات → التطبيقات → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'اختر "استخدام بطارية التطبيق"',
   'guideStep2Sub3': 'إدارة استخدام البطارية → السماح باستخدام البطارية في الخلفية',
   'gotIt': 'فهمت',

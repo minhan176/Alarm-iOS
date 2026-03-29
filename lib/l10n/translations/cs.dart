@@ -94,7 +94,7 @@ const Map<String, String> csTranslations = {
   'rateApp': 'Ohodnotit aplikaci',
   'privacyPolicy': 'Zásady ochrany osobních údajů',
   'privacyPolicyError': 'Nelze otevřít zásady ochrany osobních údajů. Navštivte prosím naše webové stránky.',
-  'shareMessage': 'Stáhněte si Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Stáhněte si Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Oznámení budíku',
   'alarmNotificationsDesc': 'Oznámení pro budíky',
   'dismiss': 'Zavřít',
@@ -102,7 +102,7 @@ const Map<String, String> csTranslations = {
   'pm': 'odp.',
 
   // Rating dialog
-  'ratingTitle': 'Líbí se vám Clock OS 26?',
+  'ratingTitle': 'Líbí se vám Alarm Phone 17 OS 26?',
   'ratingContent': 'Klepněte na hvězdičku a ohodnoťte nás na\nGoogle Play.',
   'submit': 'Odeslat',
 
@@ -114,17 +114,17 @@ const Map<String, String> csTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Povolit "Zobrazení přes jiné aplikace"',
-  'overlayDialogContent': 'Vyberte "Otevřít nastavení" → Clock OS 26 → Povolit zobrazení přes jiné aplikace',
+  'overlayDialogContent': 'Vyberte "Otevřít nastavení" → Alarm Phone 17 OS 26 → Povolit zobrazení přes jiné aplikace',
   'openSettings': 'Otevřít nastavení',
 
   // Guide screen
   'guideIntro': 'Pro správné fungování budíku doporučujeme postupovat podle těchto kroků:',
   'guideStep1Title': 'Udělte oprávnění "Zobrazení přes jiné aplikace"',
-  'guideStep1Sub1': 'Přejděte do Nastavení → Aplikace → Clock OS 26',
+  'guideStep1Sub1': 'Přejděte do Nastavení → Aplikace → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Vyberte "Zobrazení přes jiné aplikace"',
   'guideStep1Sub3': 'Povolte zobrazení přes jiné aplikace',
   'guideStep2Title': 'Povolit využití baterie na pozadí',
-  'guideStep2Sub1': 'Přejděte do Nastavení → Aplikace → Clock OS 26',
+  'guideStep2Sub1': 'Přejděte do Nastavení → Aplikace → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Vyberte "Využití baterie aplikace"',
   'guideStep2Sub3': 'Správa využití baterie → Povolit využití baterie na pozadí',
   'gotIt': 'Rozumím',

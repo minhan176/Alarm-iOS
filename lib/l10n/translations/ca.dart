@@ -94,7 +94,7 @@ const Map<String, String> caTranslations = {
   'rateApp': 'Valorar l\'aplicació',
   'privacyPolicy': 'Política de privacitat',
   'privacyPolicyError': 'No es pot obrir la política de privacitat. Si us plau, visiteu el nostre lloc web.',
-  'shareMessage': 'Descarrega Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Descarrega Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notificacions d\'alarma',
   'alarmNotificationsDesc': 'Notificacions per a alarmes',
   'dismiss': 'Descartar',
@@ -102,7 +102,7 @@ const Map<String, String> caTranslations = {
   'pm': 'PM',
 
   // Rating dialog
-  'ratingTitle': 'Estàs gaudint de Clock OS 26?',
+  'ratingTitle': 'Estàs gaudint de Alarm Phone 17 OS 26?',
   'ratingContent': 'Toca una estrella per valorar-nos a\nGoogle Play.',
   'submit': 'Enviar',
 
@@ -114,17 +114,17 @@ const Map<String, String> caTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Permetre "Mostrar sobre altres aplicacions"',
-  'overlayDialogContent': 'Selecciona "Obrir configuració" → Clock OS 26 → Permetre mostrar sobre altres aplicacions',
+  'overlayDialogContent': 'Selecciona "Obrir configuració" → Alarm Phone 17 OS 26 → Permetre mostrar sobre altres aplicacions',
   'openSettings': 'Obrir configuració',
 
   // Guide screen
   'guideIntro': 'Perquè l\'alarma funcioni correctament, recomanem seguir aquests passos:',
   'guideStep1Title': 'Concedir el permís de "Mostrar sobre altres aplicacions"',
-  'guideStep1Sub1': 'Ves a Configuració → Aplicacions → Clock OS 26',
+  'guideStep1Sub1': 'Ves a Configuració → Aplicacions → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Selecciona "Mostrar sobre altres aplicacions"',
   'guideStep1Sub3': 'Permet mostrar sobre altres aplicacions',
   'guideStep2Title': 'Permetre l\'ús de la bateria en segon pla',
-  'guideStep2Sub1': 'Ves a Configuració → Aplicacions → Clock OS 26',
+  'guideStep2Sub1': 'Ves a Configuració → Aplicacions → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Selecciona "Ús de bateria de l\'aplicació"',
   'guideStep2Sub3': 'Gestionar l\'ús de la bateria → Permetre l\'ús de la bateria en segon pla',
   'gotIt': 'Entès',

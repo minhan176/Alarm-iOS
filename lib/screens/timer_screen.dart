@@ -33,7 +33,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   bool _isRunning = false;
   bool _isPaused = false;
   String _selectedSound = 'assets/sounds/alarm.mp3';
-  String _selectedSoundDisplayName = 'Alarm OS 26';
+  String _selectedSoundDisplayName = 'Alarm Phone 17 OS 26';
   bool _selectedVibrate = false;
   late FixedExtentScrollController _hourController;
   late FixedExtentScrollController _minuteController;
@@ -99,14 +99,14 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
         // Set default sound if none saved
         setState(() {
           _selectedSound = 'assets/sounds/alarm.mp3';
-          _selectedSoundDisplayName = 'Alarm OS 26';
+          _selectedSoundDisplayName = 'Alarm Phone 17 OS 26';
         });
       }
     } catch (e) {
       // If loading fails, keep default value
       setState(() {
         _selectedSound = 'assets/sounds/alarm.mp3';
-        _selectedSoundDisplayName = 'Alarm OS 26';
+        _selectedSoundDisplayName = 'Alarm Phone 17 OS 26';
       });
     }
   }

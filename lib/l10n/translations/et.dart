@@ -94,7 +94,7 @@ const Map<String, String> etTranslations = {
   'rateApp': 'Hinda rakendust',
   'privacyPolicy': 'Privaatsuspoliitika',
   'privacyPolicyError': 'Privaatsuspoliitikat ei saa avada. Palun külastage meie veebisaiti.',
-  'shareMessage': 'Laadige alla Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Laadige alla Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Äratuse teavitused',
   'alarmNotificationsDesc': 'Teavitused äratuste kohta',
   'dismiss': 'Lõpeta',
@@ -102,7 +102,7 @@ const Map<String, String> etTranslations = {
   'pm': 'PM',
 
   // Rating dialog
-  'ratingTitle': 'Kas teile meeldib Clock OS 26?',
+  'ratingTitle': 'Kas teile meeldib Alarm Phone 17 OS 26?',
   'ratingContent': 'Puudutage tähte, et hinnata meid\nGoogle Play poes.',
   'submit': 'Esita',
 
@@ -114,17 +114,17 @@ const Map<String, String> etTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Luba "Kuva teiste rakenduste peal"',
-  'overlayDialogContent': 'Valige "Ava seaded" → Clock OS 26 → Luba kuva teiste rakenduste peal',
+  'overlayDialogContent': 'Valige "Ava seaded" → Alarm Phone 17 OS 26 → Luba kuva teiste rakenduste peal',
   'openSettings': 'Ava seaded',
 
   // Guide screen
   'guideIntro': 'Äratuse korrektseks toimimiseks soovitame järgida neid samme:',
   'guideStep1Title': 'Andke luba "Kuva teiste rakenduste peal"',
-  'guideStep1Sub1': 'Avage Seaded → Rakendused → Clock OS 26',
+  'guideStep1Sub1': 'Avage Seaded → Rakendused → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Valige "Kuva teiste rakenduste peal"',
   'guideStep1Sub3': 'Lubage kuva teiste rakenduste peal',
   'guideStep2Title': 'Luba akukasutus taustal',
-  'guideStep2Sub1': 'Avage Seaded → Rakendused → Clock OS 26',
+  'guideStep2Sub1': 'Avage Seaded → Rakendused → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Valige "Rakenduse akukasutus"',
   'guideStep2Sub3': 'Halda akukasutust → Luba akukasutus taustal',
   'gotIt': 'Selge',

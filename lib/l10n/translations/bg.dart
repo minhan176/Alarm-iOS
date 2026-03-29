@@ -94,7 +94,7 @@ const Map<String, String> bgTranslations = {
   'rateApp': 'Оценяване на приложението',
   'privacyPolicy': 'Политика за поверителност',
   'privacyPolicyError': 'Не може да се отвори политиката за поверителност. Моля, посетете нашия уебсайт.',
-  'shareMessage': 'Изтеглете Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Изтеглете Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Известия за аларми',
   'alarmNotificationsDesc': 'Известия за аларми',
   'dismiss': 'Отхвърляне',
@@ -102,7 +102,7 @@ const Map<String, String> bgTranslations = {
   'pm': 'сл.об.',
 
   // Rating dialog
-  'ratingTitle': 'Харесва ли ви Clock OS 26?',
+  'ratingTitle': 'Харесва ли ви Alarm Phone 17 OS 26?',
   'ratingContent': 'Докоснете звезда, за да ни оцените в\nGoogle Play.',
   'submit': 'Изпрати',
 
@@ -114,17 +114,17 @@ const Map<String, String> bgTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Разрешаване на "Показване над други приложения"',
-  'overlayDialogContent': 'Изберете "Отвори настройки" → Clock OS 26 → Разрешаване на показване над други приложения',
+  'overlayDialogContent': 'Изберете "Отвори настройки" → Alarm Phone 17 OS 26 → Разрешаване на показване над други приложения',
   'openSettings': 'Отвори настройки',
 
   // Guide screen
   'guideIntro': 'За да работи алармата правилно, препоръчваме да следвате тези стъпки:',
   'guideStep1Title': 'Предоставяне на разрешение за "Показване над други приложения"',
-  'guideStep1Sub1': 'Отидете в Настройки → Приложения → Clock OS 26',
+  'guideStep1Sub1': 'Отидете в Настройки → Приложения → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Изберете "Показване над други приложения"',
   'guideStep1Sub3': 'Разрешете показване над други приложения',
   'guideStep2Title': 'Разрешаване на използване на батерията във фонов режим',
-  'guideStep2Sub1': 'Отидете в Настройки → Приложения → Clock OS 26',
+  'guideStep2Sub1': 'Отидете в Настройки → Приложения → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Изберете "Използване на батерията на приложението"',
   'guideStep2Sub3': 'Управление на използването на батерията → Разрешаване на използване на батерията във фонов режим',
   'gotIt': 'Разбрах',

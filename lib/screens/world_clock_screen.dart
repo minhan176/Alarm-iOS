@@ -56,12 +56,15 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                   icon: CupertinoIcons.xmark,
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                middle: Text(
-                  AppLocalizations.of(context).chooseACity,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
+                middle: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    AppLocalizations.of(context).chooseACity,
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

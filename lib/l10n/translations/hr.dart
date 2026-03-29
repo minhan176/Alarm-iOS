@@ -94,7 +94,7 @@ const Map<String, String> hrTranslations = {
   'rateApp': 'Ocijeni aplikaciju',
   'privacyPolicy': 'Pravila privatnosti',
   'privacyPolicyError': 'Nije moguće otvoriti pravila privatnosti. Posjetite našu web stranicu.',
-  'shareMessage': 'Preuzmite Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Preuzmite Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Obavijesti alarma',
   'alarmNotificationsDesc': 'Obavijesti za alarme',
   'dismiss': 'Odbaci',
@@ -102,7 +102,7 @@ const Map<String, String> hrTranslations = {
   'pm': 'poslijepodne',
 
   // Rating dialog
-  'ratingTitle': 'Uživate li u Clock OS 26?',
+  'ratingTitle': 'Uživate li u Alarm Phone 17 OS 26?',
   'ratingContent': 'Dodirnite zvjezdicu da nas ocijenite na\nGoogle Play.',
   'submit': 'Pošalji',
 
@@ -114,17 +114,17 @@ const Map<String, String> hrTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Dopusti "Prikaz preko drugih aplikacija"',
-  'overlayDialogContent': 'Odaberite "Otvori postavke" → Clock OS 26 → Dopusti prikaz preko drugih aplikacija',
+  'overlayDialogContent': 'Odaberite "Otvori postavke" → Alarm Phone 17 OS 26 → Dopusti prikaz preko drugih aplikacija',
   'openSettings': 'Otvori postavke',
 
   // Guide screen
   'guideIntro': 'Kako bi alarm ispravno radio, preporučujemo da slijedite ove korake:',
   'guideStep1Title': 'Dodijelite dozvolu "Prikaz preko drugih aplikacija"',
-  'guideStep1Sub1': 'Idite na Postavke → Aplikacije → Clock OS 26',
+  'guideStep1Sub1': 'Idite na Postavke → Aplikacije → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Odaberite "Prikaz preko drugih aplikacija"',
   'guideStep1Sub3': 'Dopustite prikaz preko drugih aplikacija',
   'guideStep2Title': 'Dopusti korištenje baterije u pozadini',
-  'guideStep2Sub1': 'Idite na Postavke → Aplikacije → Clock OS 26',
+  'guideStep2Sub1': 'Idite na Postavke → Aplikacije → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Odaberite "Korištenje baterije aplikacije"',
   'guideStep2Sub3': 'Upravljanje korištenjem baterije → Dopusti korištenje baterije u pozadini',
   'gotIt': 'Razumijem',

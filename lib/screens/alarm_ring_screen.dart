@@ -102,7 +102,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
             await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': widget.alarm.sound});
             print('Playing system ringtone: ${widget.alarm.sound}');
           } else if (widget.alarm.sound.startsWith('assets/')) {
-            // It's an asset file (like our custom Alarm OS 26)
+            // It's an asset file (like our custom Alarm Phone 17 OS 26)
             await _audioPlayer.setReleaseMode(ReleaseMode.loop);
             await _audioPlayer.setVolume(1.0);
             final assetPath = widget.alarm.sound.replaceFirst('assets/', '');

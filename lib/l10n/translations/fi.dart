@@ -94,7 +94,7 @@ const Map<String, String> fiTranslations = {
   'rateApp': 'Arvostele sovellus',
   'privacyPolicy': 'Tietosuojakäytäntö',
   'privacyPolicyError': 'Tietosuojakäytäntöä ei voi avata. Käy verkkosivuillamme.',
-  'shareMessage': 'Lataa Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Lataa Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Herätysilmoitukset',
   'alarmNotificationsDesc': 'Ilmoitukset herätyksistä',
   'dismiss': 'Hylkää',
@@ -102,7 +102,7 @@ const Map<String, String> fiTranslations = {
   'pm': 'ip.',
 
   // Rating dialog
-  'ratingTitle': 'Pidätkö Clock OS 26:sta?',
+  'ratingTitle': 'Pidätkö Alarm Phone 17 OS 26:sta?',
   'ratingContent': 'Napauta tähteä arvostellaksesi meidät\nGoogle Playssa.',
   'submit': 'Lähetä',
 
@@ -114,17 +114,17 @@ const Map<String, String> fiTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Salli "Näytä muiden sovellusten päällä"',
-  'overlayDialogContent': 'Valitse "Avaa asetukset" → Clock OS 26 → Salli näyttäminen muiden sovellusten päällä',
+  'overlayDialogContent': 'Valitse "Avaa asetukset" → Alarm Phone 17 OS 26 → Salli näyttäminen muiden sovellusten päällä',
   'openSettings': 'Avaa asetukset',
 
   // Guide screen
   'guideIntro': 'Jotta hälytys toimisi oikein, suosittelemme seuraavia vaiheita:',
   'guideStep1Title': 'Myönnä "Näytä muiden sovellusten päällä" -lupa',
-  'guideStep1Sub1': 'Siirry kohtaan Asetukset → Sovellukset → Clock OS 26',
+  'guideStep1Sub1': 'Siirry kohtaan Asetukset → Sovellukset → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Valitse "Näytä muiden sovellusten päällä"',
   'guideStep1Sub3': 'Salli näyttäminen muiden sovellusten päällä',
   'guideStep2Title': 'Salli akunkulutus taustalla',
-  'guideStep2Sub1': 'Siirry kohtaan Asetukset → Sovellukset → Clock OS 26',
+  'guideStep2Sub1': 'Siirry kohtaan Asetukset → Sovellukset → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Valitse "Sovelluksen akunkulutus"',
   'guideStep2Sub3': 'Hallitse akunkulutusta → Salli akunkulutus taustalla',
   'gotIt': 'Selvä',

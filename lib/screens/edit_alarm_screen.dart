@@ -56,7 +56,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _label = '';
       _repeatDays = [];
       _sound = 'assets/sounds/alarm.mp3';
-      _soundDisplayName = 'Alarm OS 26';
+      _soundDisplayName = 'Alarm Phone 17 OS 26';
       _snooze = true;
       _vibrate = true;
     }
@@ -77,7 +77,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       return loc?.none ?? 'None';
     }
     if (sound == 'assets/sounds/alarm.mp3') {
-      return 'Alarm OS 26';
+      return 'Alarm Phone 17 OS 26';
     }
     // For system ringtones, we can't easily get the display name without loading the list
     // So we'll show a generic name or the URI basename
@@ -726,7 +726,7 @@ class _SoundSelectorState extends State<SoundSelector> {
           uri: 'None',
         );
         final alarmOS26 = CustomRingtone(
-          displayTitle: 'Alarm OS 26',
+          displayTitle: 'Alarm Phone 17 OS 26',
           uri: 'assets/sounds/alarm.mp3',
         );
         
@@ -761,7 +761,7 @@ class _SoundSelectorState extends State<SoundSelector> {
               uri: 'None',
             );
             final alarmOS26 = CustomRingtone(
-              displayTitle: 'Alarm OS 26',
+              displayTitle: 'Alarm Phone 17 OS 26',
               uri: 'assets/sounds/alarm.mp3',
             );
             
@@ -831,7 +831,7 @@ class _SoundSelectorState extends State<SoundSelector> {
               }
             });
           } else if (soundUri.startsWith('assets/')) {
-            // It's an asset file (like our custom Alarm OS 26)
+            // It's an asset file (like our custom Alarm Phone 17 OS 26)
             await _previewPlayer.setReleaseMode(ReleaseMode.stop);
             await _previewPlayer.setVolume(1.0);
             final assetPath = soundUri.replaceFirst('assets/', '');
