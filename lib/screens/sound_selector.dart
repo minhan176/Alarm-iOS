@@ -75,7 +75,7 @@ class _SoundSelectorState extends State<SoundSelector> {
           uri: 'None',
         );
         final alarmOS26 = CustomRingtone(
-          displayTitle: 'Alarm OS 26',
+          displayTitle: 'Alarm Phone 17 OS 26',
           uri: 'assets/sounds/alarm.mp3',
         );
         
@@ -110,7 +110,7 @@ class _SoundSelectorState extends State<SoundSelector> {
               uri: 'None',
             );
             final alarmOS26 = CustomRingtone(
-              displayTitle: 'Alarm OS 26',
+              displayTitle: 'Alarm Phone 17 OS 26',
               uri: 'assets/sounds/alarm.mp3',
             );
             
@@ -191,7 +191,7 @@ class _SoundSelectorState extends State<SoundSelector> {
               }
             });
           } else if (soundUri.startsWith('assets/')) {
-            // It's an asset file (like our custom Alarm OS 26)
+            // It's an asset file (like our custom Alarm Phone 17 OS 26)
             await _previewPlayer.setReleaseMode(ReleaseMode.stop);
             await _previewPlayer.setVolume(1.0);
             final assetPath = soundUri.replaceFirst('assets/', '');

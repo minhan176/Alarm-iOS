@@ -94,7 +94,7 @@ const Map<String, String> nlTranslations = {
   'rateApp': 'App beoordelen',
   'privacyPolicy': 'Privacybeleid',
   'privacyPolicyError': 'Kan het privacybeleid niet openen. Bezoek onze website.',
-  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Wekkermeldingen',
   'alarmNotificationsDesc': 'Meldingen voor wekkers',
   'dismiss': 'Negeren',
@@ -102,7 +102,7 @@ const Map<String, String> nlTranslations = {
   'pm': 'PM',
 
   // Rating dialog
-  'ratingTitle': 'Bevalt Clock OS 26 je?',
+  'ratingTitle': 'Bevalt Alarm Phone 17 OS 26 je?',
   'ratingContent': 'Tik op een ster om ons te beoordelen op\nGoogle Play.',
   'submit': 'Verzenden',
 
@@ -114,17 +114,17 @@ const Map<String, String> nlTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': '"Weergave over andere apps" toestaan',
-  'overlayDialogContent': 'Selecteer "Instellingen openen" → Clock OS 26 → Weergave over andere apps toestaan',
+  'overlayDialogContent': 'Selecteer "Instellingen openen" → Alarm Phone 17 OS 26 → Weergave over andere apps toestaan',
   'openSettings': 'Instellingen openen',
 
   // Guide screen
   'guideIntro': 'Om het alarm goed te laten werken, raden we aan deze stappen te volgen:',
   'guideStep1Title': 'Toestemming verlenen voor "Weergave over andere apps"',
-  'guideStep1Sub1': 'Ga naar Instellingen → Apps → Clock OS 26',
+  'guideStep1Sub1': 'Ga naar Instellingen → Apps → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Selecteer "Weergave over andere apps"',
   'guideStep1Sub3': 'Sta weergave over andere apps toe',
   'guideStep2Title': 'Batterijgebruik op achtergrond toestaan',
-  'guideStep2Sub1': 'Ga naar Instellingen → Apps → Clock OS 26',
+  'guideStep2Sub1': 'Ga naar Instellingen → Apps → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Selecteer "App-batterijgebruik"',
   'guideStep2Sub3': 'Batterijgebruik beheren → Batterijgebruik op achtergrond toestaan',
   'gotIt': 'Begrepen',

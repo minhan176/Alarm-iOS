@@ -94,7 +94,7 @@ const Map<String, String> viTranslations = {
   'rateApp': 'Đánh giá ứng dụng',
   'privacyPolicy': 'Chính sách bảo mật',
   'privacyPolicyError': 'Không thể mở chính sách bảo mật. Vui lòng truy cập trang web của chúng tôi.',
-  'shareMessage': 'Tải Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Tải Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Thông báo báo thức',
   'alarmNotificationsDesc': 'Thông báo cho báo thức',
   'dismiss': 'Bỏ qua',
@@ -102,7 +102,7 @@ const Map<String, String> viTranslations = {
   'pm': 'CH',
 
   // Rating dialog
-  'ratingTitle': 'Bạn có thích Clock OS 26 không?',
+  'ratingTitle': 'Bạn có thích Alarm Phone 17 OS 26 không?',
   'ratingContent': 'Nhấn vào ngôi sao để đánh giá chúng tôi trên\nGoogle Play.',
   'submit': 'Gửi',
 
@@ -114,17 +114,17 @@ const Map<String, String> viTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Cho phép "Hiển thị trên ứng dụng khác"',
-  'overlayDialogContent': 'Chọn "Mở cài đặt" → Clock OS 26 → Cho phép hiển thị trên ứng dụng khác',
+  'overlayDialogContent': 'Chọn "Mở cài đặt" → Alarm Phone 17 OS 26 → Cho phép hiển thị trên ứng dụng khác',
   'openSettings': 'Mở cài đặt',
 
   // Guide screen
   'guideIntro': 'Để báo thức hoạt động đúng cách, chúng tôi khuyên bạn làm theo các bước sau:',
   'guideStep1Title': 'Cấp quyền "Hiển thị trên ứng dụng khác"',
-  'guideStep1Sub1': 'Đi tới Cài đặt → Ứng dụng → Clock OS 26',
+  'guideStep1Sub1': 'Đi tới Cài đặt → Ứng dụng → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Chọn "Hiển thị trên ứng dụng khác"',
   'guideStep1Sub3': 'Cho phép hiển thị trên ứng dụng khác',
   'guideStep2Title': 'Cho phép sử dụng pin ở chế độ nền',
-  'guideStep2Sub1': 'Đi tới Cài đặt → Ứng dụng → Clock OS 26',
+  'guideStep2Sub1': 'Đi tới Cài đặt → Ứng dụng → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Chọn "Sử dụng pin ứng dụng"',
   'guideStep2Sub3': 'Quản lý sử dụng pin → Cho phép sử dụng pin ở chế độ nền',
   'gotIt': 'Đã hiểu',

@@ -94,7 +94,7 @@ const Map<String, String> bnTranslations = {
   'rateApp': 'অ্যাপ রেটিং দিন',
   'privacyPolicy': 'গোপনীয়তা নীতি',
   'privacyPolicyError': 'গোপনীয়তা নীতি খোলা যাচ্ছে না। অনুগ্রহ করে আমাদের ওয়েবসাইট দেখুন।',
-  'shareMessage': 'Clock OS 26 - Liquid Glass UI ডাউনলোড করুন:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UI ডাউনলোড করুন:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'অ্যালার্ম বিজ্ঞপ্তি',
   'alarmNotificationsDesc': 'অ্যালার্মের জন্য বিজ্ঞপ্তি',
   'dismiss': 'খারিজ',
@@ -102,7 +102,7 @@ const Map<String, String> bnTranslations = {
   'pm': 'অপরাহ্ন',
 
   // Rating dialog
-  'ratingTitle': 'Clock OS 26 উপভোগ করছেন?',
+  'ratingTitle': 'Alarm Phone 17 OS 26 উপভোগ করছেন?',
   'ratingContent': 'Google Play-তে আমাদের রেটিং দিতে\nএকটি তারায় ট্যাপ করুন।',
   'submit': 'জমা দিন',
 
@@ -114,17 +114,17 @@ const Map<String, String> bnTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': '"অন্যান্য অ্যাপের উপরে প্রদর্শন" অনুমতি দিন',
-  'overlayDialogContent': '"সেটিংস খুলুন" নির্বাচন করুন → Clock OS 26 → অন্যান্য অ্যাপের উপরে প্রদর্শনের অনুমতি দিন',
+  'overlayDialogContent': '"সেটিংস খুলুন" নির্বাচন করুন → Alarm Phone 17 OS 26 → অন্যান্য অ্যাপের উপরে প্রদর্শনের অনুমতি দিন',
   'openSettings': 'সেটিংস খুলুন',
 
   // Guide screen
   'guideIntro': 'অ্যালার্ম সঠিকভাবে কাজ করার জন্য, আমরা এই পদক্ষেপগুলি অনুসরণ করার পরামর্শ দিই:',
   'guideStep1Title': '"অন্যান্য অ্যাপের উপরে প্রদর্শন" অনুমতি প্রদান করুন',
-  'guideStep1Sub1': 'সেটিংস → অ্যাপস → Clock OS 26 এ যান',
+  'guideStep1Sub1': 'সেটিংস → অ্যাপস → Alarm Phone 17 OS 26 এ যান',
   'guideStep1Sub2': '"অন্যান্য অ্যাপের উপরে প্রদর্শন" নির্বাচন করুন',
   'guideStep1Sub3': 'অন্যান্য অ্যাপের উপরে প্রদর্শনের অনুমতি দিন',
   'guideStep2Title': 'ব্যাকগ্রাউন্ডে ব্যাটারি ব্যবহারের অনুমতি দিন',
-  'guideStep2Sub1': 'সেটিংস → অ্যাপস → Clock OS 26 এ যান',
+  'guideStep2Sub1': 'সেটিংস → অ্যাপস → Alarm Phone 17 OS 26 এ যান',
   'guideStep2Sub2': '"অ্যাপ ব্যাটারি ব্যবহার" নির্বাচন করুন',
   'guideStep2Sub3': 'ব্যাটারি ব্যবহার পরিচালনা করুন → ব্যাকগ্রাউন্ডে ব্যাটারি ব্যবহারের অনুমতি দিন',
   'gotIt': 'বুঝেছি',

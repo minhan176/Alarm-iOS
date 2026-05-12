@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
     String deviceInfo = await _getDeviceInfo(context);
 
     // Construct mailto URL manually to preserve spaces
-    final String subject = 'Feedback Clock OS 26';
+    final String subject = 'Feedback Alarm Phone 17 OS 26';
     final String mailtoUrl = 'mailto:oaptech.sp@gmail.com?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(deviceInfo)}';
 
     final Uri emailUri = Uri.parse(mailtoUrl);

@@ -94,7 +94,7 @@ const Map<String, String> daTranslations = {
   'rateApp': 'Bedøm app',
   'privacyPolicy': 'Privatlivspolitik',
   'privacyPolicyError': 'Kan ikke åbne privatlivspolitikken. Besøg venligst vores hjemmeside.',
-  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Alarmnotifikationer',
   'alarmNotificationsDesc': 'Notifikationer for alarmer',
   'dismiss': 'Afvis',
@@ -102,7 +102,7 @@ const Map<String, String> daTranslations = {
   'pm': 'PM',
 
   // Rating dialog
-  'ratingTitle': 'Nyder du Clock OS 26?',
+  'ratingTitle': 'Nyder du Alarm Phone 17 OS 26?',
   'ratingContent': 'Tryk på en stjerne for at bedømme os på\nGoogle Play.',
   'submit': 'Indsend',
 
@@ -114,17 +114,17 @@ const Map<String, String> daTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Tillad "Vis over andre apps"',
-  'overlayDialogContent': 'Vælg "Åbn indstillinger" → Clock OS 26 → Tillad visning over andre apps',
+  'overlayDialogContent': 'Vælg "Åbn indstillinger" → Alarm Phone 17 OS 26 → Tillad visning over andre apps',
   'openSettings': 'Åbn indstillinger',
 
   // Guide screen
   'guideIntro': 'For at alarmen fungerer korrekt, anbefaler vi at følge disse trin:',
   'guideStep1Title': 'Giv tilladelse til "Vis over andre apps"',
-  'guideStep1Sub1': 'Gå til Indstillinger → Apps → Clock OS 26',
+  'guideStep1Sub1': 'Gå til Indstillinger → Apps → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Vælg "Vis over andre apps"',
   'guideStep1Sub3': 'Tillad visning over andre apps',
   'guideStep2Title': 'Tillad batteriforbrug i baggrunden',
-  'guideStep2Sub1': 'Gå til Indstillinger → Apps → Clock OS 26',
+  'guideStep2Sub1': 'Gå til Indstillinger → Apps → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Vælg "App-batteriforbrug"',
   'guideStep2Sub3': 'Administrer batteriforbrug → Tillad batteriforbrug i baggrunden',
   'gotIt': 'Forstået',

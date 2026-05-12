@@ -454,7 +454,7 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
         Align(
           alignment: Alignment.bottomCenter,
           child: LiquidGlassBottomBar(
-            fake: true,
+            fake: false,
             barHeight: 57,
             bottomPadding: MediaQuery.of(context).padding.bottom + 16,
             tabs: [

@@ -107,7 +107,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
             await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': widget.selectedSound});
             print('Playing system ringtone: ${widget.selectedSound}');
           } else if (widget.selectedSound.startsWith('assets/')) {
-            // It's an asset file (like our custom Alarm OS 26)
+            // It's an asset file (like our custom Alarm Phone 17 OS 26)
             final assetPath = widget.selectedSound.replaceFirst('assets/', '');
             audioSource = AssetSource(assetPath);
             await _audioPlayer.play(audioSource);

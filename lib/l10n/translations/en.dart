@@ -123,7 +123,7 @@ const Map<String, String> enTranslations = {
   'rateApp': 'Rate App',
   'privacyPolicy': 'Privacy Policy',
   'privacyPolicyError': 'Unable to open privacy policy. Please visit our website.',
-  'shareMessage': 'Download Clock OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
 
   // Notification strings
   'alarmNotifications': 'Alarm Notifications',
@@ -135,7 +135,7 @@ const Map<String, String> enTranslations = {
   'pm': 'PM',
 
   // Rating dialog
-  'ratingTitle': 'Enjoying Clock OS 26?',
+  'ratingTitle': 'Enjoying Alarm Phone 17 OS 26?',
   'ratingContent': 'Tap a star to rate us on\nGoogle Play.',
   'submit': 'Submit',
 
@@ -147,17 +147,17 @@ const Map<String, String> enTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Allow "Display Over Other Apps"',
-  'overlayDialogContent': 'Select "Open Settings" → Clock OS 26 → Allow display over other apps',
+  'overlayDialogContent': 'Select "Open Settings" → Alarm Phone 17 OS 26 → Allow display over other apps',
   'openSettings': 'Open Settings',
 
   // Guide screen
   'guideIntro': 'For the alarm to work properly, we recommend following these steps:',
   'guideStep1Title': 'Grant "Display Over Other Apps" permission',
-  'guideStep1Sub1': 'Go to Settings → Apps → Clock OS 26',
+  'guideStep1Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Select "Display over other apps"',
   'guideStep1Sub3': 'Allow display over other apps',
   'guideStep2Title': 'Allow background battery usage',
-  'guideStep2Sub1': 'Go to Settings → Apps → Clock OS 26',
+  'guideStep2Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Select "App Battery Usage"',
   'guideStep2Sub3': 'Manage battery usage → Allow battery usage in background',
   'gotIt': 'Got it',

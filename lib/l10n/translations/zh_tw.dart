@@ -94,7 +94,7 @@ const Map<String, String> zhTwTranslations = {
   'rateApp': '評價應用程式',
   'privacyPolicy': '隱私權政策',
   'privacyPolicyError': '無法開啟隱私權政策。請造訪我們的網站。',
-  'shareMessage': '下載 Clock OS 26 - Liquid Glass UI：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage': '下載 Alarm Phone 17 OS 26 - Liquid Glass UI：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': '鬧鐘通知',
   'alarmNotificationsDesc': '鬧鐘通知',
   'dismiss': '關閉',
@@ -102,7 +102,7 @@ const Map<String, String> zhTwTranslations = {
   'pm': '下午',
 
   // Rating dialog
-  'ratingTitle': '您喜歡 Clock OS 26 嗎？',
+  'ratingTitle': '您喜歡 Alarm Phone 17 OS 26 嗎？',
   'ratingContent': '點擊星星在\nGoogle Play 上給我們評分。',
   'submit': '提交',
 
@@ -114,17 +114,17 @@ const Map<String, String> zhTwTranslations = {
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': '允許「顯示在其他應用程式上層」',
-  'overlayDialogContent': '選擇「開啟設定」→ Clock OS 26 → 允許顯示在其他應用程式上層',
+  'overlayDialogContent': '選擇「開啟設定」→ Alarm Phone 17 OS 26 → 允許顯示在其他應用程式上層',
   'openSettings': '開啟設定',
 
   // Guide screen
   'guideIntro': '為了讓鬧鐘正常運作，我們建議您按照以下步驟操作：',
   'guideStep1Title': '授予「顯示在其他應用程式上層」權限',
-  'guideStep1Sub1': '前往設定 → 應用程式 → Clock OS 26',
+  'guideStep1Sub1': '前往設定 → 應用程式 → Alarm Phone 17 OS 26',
   'guideStep1Sub2': '選擇「顯示在其他應用程式上層」',
   'guideStep1Sub3': '允許顯示在其他應用程式上層',
   'guideStep2Title': '允許在背景中使用電池',
-  'guideStep2Sub1': '前往設定 → 應用程式 → Clock OS 26',
+  'guideStep2Sub1': '前往設定 → 應用程式 → Alarm Phone 17 OS 26',
   'guideStep2Sub2': '選擇「應用程式電池用量」',
   'guideStep2Sub3': '管理電池用量 → 允許在背景中使用電池',
   'gotIt': '知道了',
