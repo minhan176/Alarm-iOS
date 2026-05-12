@@ -124,7 +124,7 @@ class AlarmRingActivity : FlutterActivity() {
     }
 
     override fun onDestroy() {
-        // Unregister receiver safely
+        // Unregister receiver safely on main thread
         try {
             unregisterReceiver(screenOffReceiver)
             println("DEBUG: Successfully unregistered screenOffReceiver")
@@ -134,27 +134,33 @@ class AlarmRingActivity : FlutterActivity() {
             println("DEBUG: Error unregistering receiver: ${e.message}")
         }
 
+        // Run heavy operations asynchronously to avoid ANR
         if (!isDismissed) {
-            // Snooze and cancel the alarm when activity is destroyed without user action
-            println("DEBUG: Snoozing and cancelling alarm because activity destroyed without user action")
-            snoozeAlarm()
-            val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-            if (vibrator != null) {
-                // Try multiple cancel methods
-                vibrator.cancel()
-                // For Android O+, try to vibrate with 0 amplitude to stop
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(1, 0))
+            println("DEBUG: Snoozing alarm asynchronously")
+            Thread {
+                try {
+                    snoozeAlarm()
+                } catch (e: Exception) {
+                    println("DEBUG: Error in async snooze: ${e.message}")
                 }
-                println("DEBUG: Force cancelled vibration with native vibrator")
-            }
+            }.start()
+
+            // Cancel vibration in background thread
+            Thread {
+                try {
+                    val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+                    if (vibrator != null) {
+                        vibrator.cancel()
+                        println("DEBUG: Force cancelled vibration with native vibrator")
+                    }
+                } catch (e: Exception) {
+                    println("DEBUG: Error cancelling vibrator: ${e.message}")
+                }
+            }.start()
         }
 
-
         super.onDestroy()
-        println("DEBUG: AlarmRingActivity onDestroy called")
-        
-        
+        println("DEBUG: AlarmRingActivity onDestroy completed")
     }
 
     // Override to specify the Flutter route for this activity
