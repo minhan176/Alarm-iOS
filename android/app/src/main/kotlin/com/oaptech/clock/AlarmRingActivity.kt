@@ -22,7 +22,8 @@ import org.json.JSONObject
 class AlarmRingActivity : FlutterActivity() {
     private val CHANNEL = "com.oaptech.clock/ring"
     private var isDismissed = false
-    private lateinit var screenOffReceiver: BroadcastReceiver
+    private var screenOffReceiver: BroadcastReceiver? = null
+    private var isReceiverRegistered = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +37,22 @@ class AlarmRingActivity : FlutterActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
 
         // Register receiver for screen off
-        screenOffReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent?.action == Intent.ACTION_SCREEN_OFF) {
-                    println("DEBUG: Screen off detected, finishing activity")
-                    finish()
+        try {
+            screenOffReceiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    if (intent?.action == Intent.ACTION_SCREEN_OFF) {
+                        println("DEBUG: Screen off detected, finishing activity")
+                        finish()
+                    }
                 }
             }
+            registerReceiver(screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
+            isReceiverRegistered = true
+            println("DEBUG: Successfully registered screenOffReceiver")
+        } catch (e: Exception) {
+            println("DEBUG: Error registering receiver: ${e.message}")
+            isReceiverRegistered = false
         }
-        registerReceiver(screenOffReceiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
 
         // Get alarm data from intent
         val alarmJson = intent.getStringExtra("alarm_data")
@@ -75,17 +83,27 @@ class AlarmRingActivity : FlutterActivity() {
                     }
                     "dismissAlarm" -> {
                         // Close the activity when alarm is dismissed
-                        println("DEBUG: AlarmRingActivity dismissAlarm called, finishing activity")
+                        println("DEBUG: AlarmRingActivity dismissAlarm called from Flutter")
                         isDismissed = true
-                        finish()
                         result.success(null)
+                        
+                        // Finish activity on main thread immediately after result sent
+                        runOnUiThread {
+                            println("DEBUG: Finishing activity after dismissAlarm")
+                            finish()
+                        }
                     }
                     "snoozeAlarm" -> {
                         // Close the activity when alarm is snoozed
-                        println("DEBUG: AlarmRingActivity snoozeAlarm called, finishing activity")
+                        println("DEBUG: AlarmRingActivity snoozeAlarm called from Flutter")
                         isDismissed = true
-                        finish()
                         result.success(null)
+                        
+                        // Finish activity on main thread immediately after result sent
+                        runOnUiThread {
+                            println("DEBUG: Finishing activity after snoozeAlarm")
+                            finish()
+                        }
                     }
                     else -> {
                         result.notImplemented()
@@ -124,14 +142,16 @@ class AlarmRingActivity : FlutterActivity() {
     }
 
     override fun onDestroy() {
-        // Unregister receiver safely on main thread
-        try {
-            unregisterReceiver(screenOffReceiver)
-            println("DEBUG: Successfully unregistered screenOffReceiver")
-        } catch (e: IllegalArgumentException) {
-            println("DEBUG: Receiver was already unregistered or not registered: ${e.message}")
-        } catch (e: Exception) {
-            println("DEBUG: Error unregistering receiver: ${e.message}")
+        // Unregister receiver safely on main thread - only if it was registered
+        if (isReceiverRegistered && screenOffReceiver != null) {
+            try {
+                unregisterReceiver(screenOffReceiver!!)
+                println("DEBUG: Successfully unregistered screenOffReceiver")
+            } catch (e: IllegalArgumentException) {
+                println("DEBUG: Receiver was already unregistered: ${e.message}")
+            } catch (e: Exception) {
+                println("DEBUG: Error unregistering receiver: ${e.message}")
+            }
         }
 
         // Run heavy operations asynchronously to avoid ANR
