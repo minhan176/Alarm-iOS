@@ -344,7 +344,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                   AppLocalizations.of(context).sound,
                   style: const TextStyle(
                     color: CupertinoColors.white,
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -363,7 +363,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                     children: [
                       Text(
                         AppLocalizations.of(context).vibrate,
-                        style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+                        style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
                       ),
                       Transform.scale(
                         scale: 0.8,
@@ -441,7 +441,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                                     _truncateSoundName(path.basename(_selectedCustomSound!)),
                                     style: const TextStyle(
                                       color: CupertinoColors.white,
-                                      fontSize: 17,
+                                      fontSize: 16,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -466,7 +466,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                                 AppLocalizations.of(context).pickASong,
                                 style: const TextStyle(
                                   color: CupertinoColors.white,
-                                  fontSize: 17,
+                                  fontSize: 16,
                                 ),
                               ),
                               const Spacer(),
@@ -546,7 +546,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                                     _truncateSoundName(ringtone.displayTitle),
                                     style: const TextStyle(
                                       color: CupertinoColors.white,
-                                      fontSize: 17,
+                                      fontSize: 16,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),

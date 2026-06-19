@@ -1,4 +1,4 @@
-﻿import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
@@ -214,7 +214,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 widget.alarm != null ? AppLocalizations.of(context).editAlarm : AppLocalizations.of(context).addAlarm,
                 style: const TextStyle(
                   color: CupertinoColors.white,
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               )),
@@ -304,7 +304,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                                           AppLocalizations.of(context).minutesValue(minutes),
                                           style: const TextStyle(
                                             color: CupertinoColors.white,
-                                            fontSize: 17,
+                                            fontSize: 16,
                                           ),
                                         ),
                                       );
@@ -332,7 +332,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                           AppLocalizations.of(context).deleteAlarm,
                           style: const TextStyle(
                             color: CupertinoColors.systemRed,
-                            fontSize: 17,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -382,7 +382,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+              style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
             ),
           ),
           Row(
@@ -391,7 +391,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 value,
                 style: TextStyle(
                   color: valueColor,
-                  fontSize: 17,
+                  fontSize: 16,
                 ),
               ),
               if (showArrow) ...[
@@ -417,7 +417,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+            style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
           ),
           Transform.scale(
             scale: 0.8,
@@ -440,7 +440,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
         children: [
           Text(
             AppLocalizations.of(context).label,
-            style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+            style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
           ),
           Expanded(
             child: CupertinoTextField(
@@ -449,9 +449,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               textAlign: TextAlign.right,
               style: TextStyle(
                 color: _label.isEmpty ? CupertinoColors.systemGrey : CupertinoColors.white,
-                fontSize: 17,
+                fontSize: 16,
               ),
-              placeholderStyle: const TextStyle(color: CupertinoColors.systemGrey, fontSize: 17),
+              placeholderStyle: const TextStyle(color: CupertinoColors.systemGrey, fontSize: 16),
               decoration: const BoxDecoration(),
               onChanged: (value) {
                 setState(() {
@@ -576,7 +576,7 @@ class _RepeatSelectorState extends State<RepeatSelector> {
                 AppLocalizations.of(context).repeat,
                 style: const TextStyle(
                   color: CupertinoColors.white,
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -622,7 +622,7 @@ class _RepeatSelectorState extends State<RepeatSelector> {
                           days[index],
                           style: const TextStyle(
                             color: CupertinoColors.white,
-                            fontSize: 17,
+                            fontSize: 16,
                           ),
                         ),
                         if (isSelected)
@@ -972,7 +972,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                   AppLocalizations.of(context).sound,
                   style: const TextStyle(
                     color: CupertinoColors.white,
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -991,7 +991,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                     children: [
                       Text(
                         AppLocalizations.of(context).vibrate,
-                        style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+                        style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
                       ),
                       Transform.scale(
                         scale: 0.8,
@@ -1069,7 +1069,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                                     _truncateSoundName(path.basename(_selectedCustomSound!)),
                                     style: const TextStyle(
                                       color: CupertinoColors.white,
-                                      fontSize: 17,
+                                      fontSize: 16,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -1094,7 +1094,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                                 AppLocalizations.of(context).pickASong,
                                 style: const TextStyle(
                                   color: CupertinoColors.white,
-                                  fontSize: 17,
+                                  fontSize: 16,
                                 ),
                               ),
                               const Spacer(),
@@ -1174,7 +1174,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                                     _truncateSoundName(ringtone.displayTitle),
                                     style: const TextStyle(
                                       color: CupertinoColors.white,
-                                      fontSize: 17,
+                                      fontSize: 16,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),

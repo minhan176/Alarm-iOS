@@ -137,7 +137,7 @@ Please describe your feedback below:
                 AppLocalizations.of(context).settings,
                 style: const TextStyle(
                   color: CupertinoColors.white,
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -172,7 +172,7 @@ Please describe your feedback below:
                             children: [
                               Text(
                                 AppLocalizations.of(context).twentyFourHourFormat,
-                                style: const TextStyle(color: CupertinoColors.white, fontSize: 17),
+                                style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
                               ),
                               Transform.scale(
                                 scale: 0.8,
@@ -226,7 +226,7 @@ Please describe your feedback below:
                                       AppLocalizations.of(context).guide,
                                       style: const TextStyle(
                                         color: CupertinoColors.white,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
@@ -261,7 +261,7 @@ Please describe your feedback below:
                                       AppLocalizations.of(context).sendFeedback,
                                       style: const TextStyle(
                                         color: CupertinoColors.white,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
@@ -316,7 +316,7 @@ Please describe your feedback below:
                                       AppLocalizations.of(context).shareApp,
                                       style: const TextStyle(
                                         color: CupertinoColors.white,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
@@ -351,7 +351,7 @@ Please describe your feedback below:
                                       AppLocalizations.of(context).rateApp,
                                       style: const TextStyle(
                                         color: CupertinoColors.white,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
@@ -386,7 +386,7 @@ Please describe your feedback below:
                                       AppLocalizations.of(context).privacyPolicy,
                                       style: const TextStyle(
                                         color: CupertinoColors.white,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),

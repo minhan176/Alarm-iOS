@@ -337,12 +337,12 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             primaryColor: CupertinoColors.white,
             textStyle: TextStyle(
               fontFamily: 'Inter',
-              fontSize: 17,
+              fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
             navTitleTextStyle: TextStyle(
               fontFamily: 'Inter',
-              fontSize: 17,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
             navLargeTitleTextStyle: TextStyle(

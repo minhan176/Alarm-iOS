@@ -27,7 +27,7 @@ class GuideScreen extends StatelessWidget {
                 AppLocalizations.of(context).guide,
                 style: TextStyle(
                   color: CupertinoColors.white,
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),

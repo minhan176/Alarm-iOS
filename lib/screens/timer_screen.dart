@@ -395,7 +395,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                             _getEndTime(),
                             style: const TextStyle(
                               color: CupertinoColors.systemGrey,
-                              fontSize: 17,
+                              fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -451,7 +451,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                     AppLocalizations.of(context).whenTimerEnds,
                     style: const TextStyle(
                       color: CupertinoColors.white,
-                      fontSize: 17,
+                      fontSize: 16,
                     ),
                   )),
                 ),
@@ -464,7 +464,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                         _getSoundDisplayName(),
                         style: const TextStyle(
                           color: CupertinoColors.systemGrey,
-                          fontSize: 17,
+                          fontSize: 16,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -683,7 +683,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                     AppLocalizations.of(context).whenTimerEnds,
                     style: const TextStyle(
                       color: CupertinoColors.white,
-                      fontSize: 17,
+                      fontSize: 16,
                     ),
                   )),
                 ),
@@ -696,7 +696,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                         _getSoundDisplayName(),
                         style: const TextStyle(
                           color: CupertinoColors.systemGrey,
-                          fontSize: 17,
+                          fontSize: 16,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -764,7 +764,7 @@ class _StopwatchStyleButton extends StatelessWidget {
                     color: onPressed == null
                         ? foregroundColor.withOpacity(0.3)
                         : foregroundColor,
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
                 ),

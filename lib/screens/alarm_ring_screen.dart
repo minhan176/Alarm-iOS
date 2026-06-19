@@ -379,6 +379,7 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
         final containerWidth = constraints.maxWidth;
         final buttonSize = 60.0;
         final slideThreshold = containerWidth - buttonSize - 20; // Leave some margin
+        final completionThreshold = slideThreshold * (2 / 3);
 
         return LiquidGlassLayer(
           fake: true,
@@ -441,7 +442,7 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
                     onHorizontalDragEnd: (details) {
                       if (_isCompleted) return;
 
-                      if (_dragPosition >= slideThreshold) {
+                      if (_dragPosition >= completionThreshold) {
                         // Completed slide
                         setState(() {
                           _isCompleted = true;

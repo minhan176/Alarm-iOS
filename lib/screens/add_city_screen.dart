@@ -96,7 +96,7 @@ class _AddCityScreenState extends State<AddCityScreen> {
                 AppLocalizations.of(context).chooseACity,
                 style: TextStyle(
                   color: CupertinoColors.white,
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -111,7 +111,7 @@ class _AddCityScreenState extends State<AddCityScreen> {
                 style: const TextStyle(color: CupertinoColors.white),
                 placeholderStyle: const TextStyle(
                   color: CupertinoColors.systemGrey,
-                  fontSize: 17,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -148,7 +148,7 @@ class _AddCityScreenState extends State<AddCityScreen> {
                                   cityData.city,
                                   style: const TextStyle(
                                     color: CupertinoColors.white,
-                                    fontSize: 17,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 const SizedBox(height: 2),

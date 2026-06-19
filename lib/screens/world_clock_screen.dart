@@ -62,7 +62,7 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                     AppLocalizations.of(context).chooseACity,
                     style: const TextStyle(
                       color: CupertinoColors.white,
-                      fontSize: 17,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -547,7 +547,7 @@ class _AddCityContentState extends State<_AddCityContent> {
             style: const TextStyle(color: CupertinoColors.white),
             placeholderStyle: const TextStyle(
               color: CupertinoColors.systemGrey,
-              fontSize: 17,
+              fontSize: 16,
             ),
           ),
         ),
@@ -576,7 +576,7 @@ class _AddCityContentState extends State<_AddCityContent> {
                             letter,
                             style: const TextStyle(
                               color: CupertinoColors.systemGrey,
-                              fontSize: 17,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -603,7 +603,7 @@ class _AddCityContentState extends State<_AddCityContent> {
                                             cityData.city,
                                             style: const TextStyle(
                                               color: CupertinoColors.white,
-                                              fontSize: 17,
+                                              fontSize: 16,
                                             ),
                                           ),
                                           const SizedBox(height: 2),

@@ -158,7 +158,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                               AppLocalizations.of(context).lapNumber(lapNumber),
                               style: const TextStyle(
                                 color: CupertinoColors.white,
-                                fontSize: 17,
+                                fontSize: 16,
                               ),
                             ),
                             Row(
@@ -167,7 +167,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                                   _formatLapDifference(lapTime, previousLapTime),
                                   style: const TextStyle(
                                     color: CupertinoColors.systemGrey,
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     fontFeatures: [
                                       FontFeature.tabularFigures(),
                                     ],
@@ -178,7 +178,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
                                   _formatTime(lapTime),
                                   style: const TextStyle(
                                     color: CupertinoColors.white,
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     fontFeatures: [
                                       FontFeature.tabularFigures(),
                                     ],
@@ -244,7 +244,7 @@ class _CircularButton extends StatelessWidget {
                                 color: onPressed == null
               ? foregroundColor.withOpacity(0.3)
               : foregroundColor,
-                                fontSize: 17,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),),
