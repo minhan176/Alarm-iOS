@@ -84,6 +84,32 @@ class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
   static bool _hasGraphicsError = false;
   bool _initialized = false;
 
+  bool _shouldReverseTabs(BuildContext context) {
+    return Localizations.localeOf(context).languageCode == 'ar';
+  }
+
+  int _visualIndexForLogicalIndex(
+    int logicalIndex,
+    int tabCount,
+    bool reverseTabs,
+  ) {
+    if (!reverseTabs) {
+      return logicalIndex;
+    }
+    return tabCount - 1 - logicalIndex;
+  }
+
+  int _logicalIndexForVisualIndex(
+    int visualIndex,
+    int tabCount,
+    bool reverseTabs,
+  ) {
+    if (!reverseTabs) {
+      return visualIndex;
+    }
+    return tabCount - 1 - visualIndex;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -121,6 +147,7 @@ class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
   Widget _buildLiquidGlassBar(BuildContext context) {
     final brightness = MediaQuery.platformBrightnessOf(context);
     final isDark = brightness == Brightness.dark;
+    final reverseTabs = _shouldReverseTabs(context);
 
     // Check if we should use simplified graphics for stability
     final shouldSimplify = _shouldSimplifyGraphics();
@@ -161,16 +188,29 @@ class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
             top: widget.bottomPadding,
           ),
           child: Row(
+            textDirection: TextDirection.ltr,
             spacing: widget.spacing,
             children: [
               Expanded(
                 child: _TabIndicator(
                   fake: widget.fake,
                   visible: widget.showIndicator,
-                  tabIndex: widget.selectedIndex,
+                  tabIndex: _visualIndexForLogicalIndex(
+                    widget.selectedIndex,
+                    widget.tabs.length,
+                    reverseTabs,
+                  ),
                   tabCount: widget.tabs.length,
                   indicatorColor: widget.indicatorColor,
-                  onTabChanged: widget.onTabSelected,
+                  onTabChanged: (visualIndex) {
+                    widget.onTabSelected(
+                      _logicalIndexForVisualIndex(
+                        visualIndex,
+                        widget.tabs.length,
+                        reverseTabs,
+                      ),
+                    );
+                  },
                   child: LiquidGlass.grouped(
                     clipBehavior: Clip.none,
                     shape: const LiquidRoundedSuperellipse(borderRadius: 32),
@@ -178,14 +218,32 @@ class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       height: widget.barHeight,
                       child: Row(
+                        textDirection: TextDirection.ltr,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           for (var i = 0; i < widget.tabs.length; i++)
                             Expanded(
                               child: _BottomBarTab(
-                                tab: widget.tabs[i],
-                                selected: widget.selectedIndex == i,
-                                onTap: () => widget.onTabSelected(i),
+                                tab: widget.tabs[
+                                  _logicalIndexForVisualIndex(
+                                    i,
+                                    widget.tabs.length,
+                                    reverseTabs,
+                                  )
+                                ],
+                                selected: widget.selectedIndex ==
+                                    _logicalIndexForVisualIndex(
+                                      i,
+                                      widget.tabs.length,
+                                      reverseTabs,
+                                    ),
+                                onTap: () => widget.onTabSelected(
+                                  _logicalIndexForVisualIndex(
+                                    i,
+                                    widget.tabs.length,
+                                    reverseTabs,
+                                  ),
+                                ),
                               ),
                             ),
                         ],
@@ -204,6 +262,8 @@ class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
   }
 
   Widget _buildFallbackBar(BuildContext context) {
+    final reverseTabs = _shouldReverseTabs(context);
+
     return Container(
       height: widget.barHeight + widget.bottomPadding * 2,
       decoration: BoxDecoration(
@@ -223,13 +283,31 @@ class _LiquidGlassBottomBarState extends State<LiquidGlassBottomBar> {
           top: widget.bottomPadding,
         ),
         child: Row(
+          textDirection: TextDirection.ltr,
           children: [
             for (var i = 0; i < widget.tabs.length; i++)
               Expanded(
                 child: _BottomBarTab(
-                  tab: widget.tabs[i],
-                  selected: widget.selectedIndex == i,
-                  onTap: () => widget.onTabSelected(i),
+                  tab: widget.tabs[
+                    _logicalIndexForVisualIndex(
+                      i,
+                      widget.tabs.length,
+                      reverseTabs,
+                    )
+                  ],
+                  selected: widget.selectedIndex ==
+                      _logicalIndexForVisualIndex(
+                        i,
+                        widget.tabs.length,
+                        reverseTabs,
+                      ),
+                  onTap: () => widget.onTabSelected(
+                    _logicalIndexForVisualIndex(
+                      i,
+                      widget.tabs.length,
+                      reverseTabs,
+                    ),
+                  ),
                 ),
               ),
           ],

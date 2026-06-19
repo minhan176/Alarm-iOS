@@ -143,9 +143,12 @@ class AlarmRingActivity : FlutterActivity() {
 
     override fun onDestroy() {
         // Unregister receiver safely on main thread - only if it was registered
-        if (isReceiverRegistered && screenOffReceiver != null) {
+        val receiver = screenOffReceiver
+        if (isReceiverRegistered && receiver != null) {
+            isReceiverRegistered = false
+            screenOffReceiver = null
             try {
-                unregisterReceiver(screenOffReceiver!!)
+                unregisterReceiver(receiver)
                 println("DEBUG: Successfully unregistered screenOffReceiver")
             } catch (e: IllegalArgumentException) {
                 println("DEBUG: Receiver was already unregistered: ${e.message}")

@@ -188,11 +188,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     });
   }
 
-  Future<void> _saveOverlayDialogState(bool shown) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('overlay_dialog_shown', shown);
-  }
-
   Future<void> _loadBatteryDialogState() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
