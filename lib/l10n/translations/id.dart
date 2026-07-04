@@ -87,6 +87,7 @@ const Map<String, String> idTranslations = {
   'timeFormat': 'FORMAT WAKTU',
   'twentyFourHourFormat': 'Format 24 Jam',
   'supportAndFeedback': 'DUKUNGAN & UMPAN BALIK',
+  'upgradePro': 'TINGKATKAN KE PRO',
   'guide': 'Panduan',
   'sendFeedback': 'Kirim Umpan Balik',
   'about': 'TENTANG',

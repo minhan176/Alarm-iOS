@@ -87,6 +87,7 @@ const Map<String, String> bnTranslations = {
   'timeFormat': 'সময়ের বিন্যাস',
   'twentyFourHourFormat': '২৪-ঘণ্টা বিন্যাস',
   'supportAndFeedback': 'সহায়তা ও মতামত',
+  'upgradePro': 'প্রো আপগ্রেড করুন',
   'guide': 'গাইড',
   'sendFeedback': 'মতামত পাঠান',
   'about': 'সম্পর্কে',

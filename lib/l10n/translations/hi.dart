@@ -87,6 +87,7 @@ const Map<String, String> hiTranslations = {
   'timeFormat': 'समय प्रारूप',
   'twentyFourHourFormat': '24-घंटे प्रारूप',
   'supportAndFeedback': 'सहायता और प्रतिक्रिया',
+  'upgradePro': 'प्रो में अपग्रेड करें',
   'guide': 'गाइड',
   'sendFeedback': 'प्रतिक्रिया भेजें',
   'about': 'के बारे में',

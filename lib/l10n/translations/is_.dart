@@ -87,6 +87,7 @@ const Map<String, String> isTranslations = {
   'timeFormat': 'TÍMASNIÐ',
   'twentyFourHourFormat': '24 stunda snið',
   'supportAndFeedback': 'STUÐNINGUR OG ENDURGJÖF',
+  'upgradePro': 'UPPFÆRA Í PRO',
   'guide': 'Leiðbeiningar',
   'sendFeedback': 'Senda endurgjöf',
   'about': 'UM',

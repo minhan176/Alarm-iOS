@@ -317,6 +317,11 @@ class AppLocalizations {
   String get timeFormat => _t('timeFormat');
   String get twentyFourHourFormat => _t('twentyFourHourFormat');
   String get supportAndFeedback => _t('supportAndFeedback');
+  String get upgradePro => _t('upgradePro');
+  String get proIntro => _t('proIntro');
+  String get proPriceLabel => _t('proPriceLabel');
+  String get proLifetimeNote => _t('proLifetimeNote');
+  String get proBuyNow => _t('proBuyNow');
   String get guide => _t('guide');
   String get sendFeedback => _t('sendFeedback');
   String get about => _t('about');

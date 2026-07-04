@@ -87,6 +87,7 @@ const Map<String, String> zhTwTranslations = {
   'timeFormat': '時間格式',
   'twentyFourHourFormat': '24小時制',
   'supportAndFeedback': '支援與回饋',
+  'upgradePro': '升級到 PRO',
   'guide': '指南',
   'sendFeedback': '傳送回饋',
   'about': '關於',

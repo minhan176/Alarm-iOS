@@ -87,6 +87,7 @@ const Map<String, String> caTranslations = {
   'timeFormat': 'FORMAT DE L\'HORA',
   'twentyFourHourFormat': 'Format de 24 hores',
   'supportAndFeedback': 'SUPORT I COMENTARIS',
+  'upgradePro': 'ACTUALITZA A PRO',
   'guide': 'Guia',
   'sendFeedback': 'Enviar comentaris',
   'about': 'QUANT A',

@@ -87,6 +87,7 @@ const Map<String, String> skTranslations = {
   'timeFormat': 'FORMÁT ČASU',
   'twentyFourHourFormat': '24-hodinový formát',
   'supportAndFeedback': 'PODPORA A SPÄTNÁ VÄZBA',
+  'upgradePro': 'UPGRADE NA PRO',
   'guide': 'Príručka',
   'sendFeedback': 'Odoslať spätnú väzbu',
   'about': 'O APLIKÁCII',

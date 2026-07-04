@@ -1,3 +1,4 @@
+import 'package:clock_os_26/widgets/settings_large_banner_ad.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -407,6 +408,7 @@ Please describe your feedback below:
                 },
               ),
             ),
+            const SettingsLargeBannerAd(),
           ],
         ),
       ),

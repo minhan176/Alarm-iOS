@@ -87,6 +87,7 @@ const Map<String, String> huTranslations = {
   'timeFormat': 'IDŐFORMÁTUM',
   'twentyFourHourFormat': '24 órás formátum',
   'supportAndFeedback': 'TÁMOGATÁS ÉS VISSZAJELZÉS',
+  'upgradePro': 'FRISSÍTÉS PRORA',
   'guide': 'Útmutató',
   'sendFeedback': 'Visszajelzés küldése',
   'about': 'NÉVJEGY',

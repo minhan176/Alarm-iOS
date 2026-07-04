@@ -87,6 +87,7 @@ const Map<String, String> lvTranslations = {
   'timeFormat': 'LAIKA FORMĀTS',
   'twentyFourHourFormat': '24 stundu formāts',
   'supportAndFeedback': 'ATBALSTS UN ATSAUKSMES',
+  'upgradePro': 'JAUNINĀT UZ PRO',
   'guide': 'Ceļvedis',
   'sendFeedback': 'Sūtīt atsauksmi',
   'about': 'PAR',

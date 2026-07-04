@@ -87,6 +87,7 @@ const Map<String, String> ruTranslations = {
   'timeFormat': 'ФОРМАТ ВРЕМЕНИ',
   'twentyFourHourFormat': '24-часовой формат',
   'supportAndFeedback': 'ПОДДЕРЖКА И ОБРАТНАЯ СВЯЗЬ',
+  'upgradePro': 'ОБНОВИТЬ ДО PRO',
   'guide': 'Руководство',
   'sendFeedback': 'Отправить отзыв',
   'about': 'О ПРИЛОЖЕНИИ',

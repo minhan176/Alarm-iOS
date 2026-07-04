@@ -287,7 +287,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 AppLocalizations.of(context).timer,
                 style: const TextStyle(
                   color: CupertinoColors.white,
-                  fontSize: 34,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),

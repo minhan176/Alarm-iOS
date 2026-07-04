@@ -13,6 +13,8 @@ import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
 import '../widgets/custom_buttons.dart';
+import '../widgets/settings_large_banner_ad.dart';
+import '../widgets/settings_banner_ad.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class EditAlarmScreen extends StatefulWidget {
@@ -316,7 +318,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       ],
                     ),
                   ]),
-                  
+                              
                   if (widget.alarm != null) ...[
                     const SizedBox(height: 40),
                     Container(
@@ -341,6 +343,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 ],
               ),
             ),
+            const SettingsBannerAd(),
           ],
         ),
       ),
@@ -637,6 +640,15 @@ class _RepeatSelectorState extends State<RepeatSelector> {
                     ),
                   );
                 },
+              ),
+            ),
+            Flexible(
+              child: Container(                
+              ),
+            ),
+            const SettingsLargeBannerAd(),
+            Flexible(
+              child: Container(                
               ),
             ),
           ],
@@ -1188,6 +1200,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                   ),
                 ),
               ],
+              const SettingsBannerAd(),
             ],
           ),
         ),

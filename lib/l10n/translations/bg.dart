@@ -87,6 +87,7 @@ const Map<String, String> bgTranslations = {
   'timeFormat': 'ФОРМАТ НА ВРЕМЕТО',
   'twentyFourHourFormat': '24-часов формат',
   'supportAndFeedback': 'ПОДДРЪЖКА И ОБРАТНА ВРЪЗКА',
+  'upgradePro': 'НАДГРАДИ PRO',
   'guide': 'Ръководство',
   'sendFeedback': 'Изпращане на отзив',
   'about': 'ОТНОСНО',

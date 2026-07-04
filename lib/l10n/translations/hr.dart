@@ -87,6 +87,7 @@ const Map<String, String> hrTranslations = {
   'timeFormat': 'FORMAT VREMENA',
   'twentyFourHourFormat': '24-satni format',
   'supportAndFeedback': 'PODRŠKA I POVRATNE INFORMACIJE',
+  'upgradePro': 'NADOGRADI NA PRO',
   'guide': 'Vodič',
   'sendFeedback': 'Pošalji povratne informacije',
   'about': 'O APLIKACIJI',

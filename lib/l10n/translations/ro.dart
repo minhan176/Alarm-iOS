@@ -87,6 +87,7 @@ const Map<String, String> roTranslations = {
   'timeFormat': 'FORMAT ORĂ',
   'twentyFourHourFormat': 'Format 24 de Ore',
   'supportAndFeedback': 'ASISTENȚĂ ȘI FEEDBACK',
+  'upgradePro': 'ACTUALIZEAZĂ LA PRO',
   'guide': 'Ghid',
   'sendFeedback': 'Trimiteți Feedback',
   'about': 'DESPRE',

@@ -87,6 +87,7 @@ const Map<String, String> frTranslations = {
   'timeFormat': 'FORMAT DE L\'HEURE',
   'twentyFourHourFormat': 'Format 24 heures',
   'supportAndFeedback': 'SUPPORT ET COMMENTAIRES',
+  'upgradePro': 'PASSER À PRO',
   'guide': 'Guide',
   'sendFeedback': 'Envoyer un commentaire',
   'about': 'À PROPOS',

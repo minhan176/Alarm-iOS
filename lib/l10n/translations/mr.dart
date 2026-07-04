@@ -87,6 +87,7 @@ const Map<String, String> mrTranslations = {
   'timeFormat': 'वेळ स्वरूप',
   'twentyFourHourFormat': '२४-तास स्वरूप',
   'supportAndFeedback': 'समर्थन आणि अभिप्राय',
+  'upgradePro': 'प्रो वर अपग्रेड करा',
   'guide': 'मार्गदर्शक',
   'sendFeedback': 'अभिप्राय पाठवा',
   'about': 'बद्दल',

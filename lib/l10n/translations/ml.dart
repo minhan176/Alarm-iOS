@@ -87,6 +87,7 @@ const Map<String, String> mlTranslations = {
   'timeFormat': 'സമയ ഫോർമാറ്റ്',
   'twentyFourHourFormat': '24 മണിക്കൂർ ഫോർമാറ്റ്',
   'supportAndFeedback': 'പിന്തുണയും ഫീഡ്‌ബാക്കും',
+  'upgradePro': 'പ്രോയ്ക്ക് അപ്‌ഗ്രേഡ് ചെയ്യുക',
   'guide': 'ഗൈഡ്',
   'sendFeedback': 'ഫീഡ്‌ബാക്ക് അയയ്ക്കുക',
   'about': 'കുറിച്ച്',

@@ -87,6 +87,7 @@ const Map<String, String> itTranslations = {
   'timeFormat': 'FORMATO ORA',
   'twentyFourHourFormat': 'Formato 24 ore',
   'supportAndFeedback': 'SUPPORTO E FEEDBACK',
+  'upgradePro': 'PASSA A PRO',
   'guide': 'Guida',
   'sendFeedback': 'Invia feedback',
   'about': 'INFO',

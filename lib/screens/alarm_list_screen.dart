@@ -8,6 +8,7 @@ import '../widgets/custom_buttons.dart';
 import 'edit_alarm_screen.dart';
 import '../utils/alarm_toast.dart';
 import 'settings_screen.dart';
+import 'upgrade_pro_screen.dart';
 import '../providers/settings_provider.dart';
 import '../l10n/app_localizations.dart';
 
@@ -131,19 +132,49 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
-                    Text(
-                      AppLocalizations.of(context).alarms,
-                      style: const TextStyle(
-                        color: CupertinoColors.white,
-                        fontSize: 34,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context).alarms,
+                          style: const TextStyle(
+                            color: CupertinoColors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        if (_isEditMode) ...[
+                          const SizedBox(width: 10),
+                          CupertinoButton(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            minSize: 0,
+                            color: CupertinoColors.systemOrange.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(999),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) => const UpgradeProScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              AppLocalizations.of(context).upgradePro,
+                              style: TextStyle(
+                                color: CupertinoColors.systemOrange,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                     if (_isEditMode)
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: CupertinoButton(
                           padding: EdgeInsets.zero,
+                          minSize: 0,
                           onPressed: () {
                             Navigator.of(context).push(
                               CupertinoPageRoute(
@@ -151,25 +182,10 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                               ),
                             );
                           },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const Icon(
-                              CupertinoIcons.settings,
-                              color: CupertinoColors.systemOrange,
-                              size: 24,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              AppLocalizations.of(context).settings,
-                              style: const TextStyle(
-                                color: CupertinoColors.systemOrange,
-                                fontSize: 16,
-                              ),
-                              
-                            ),
-                          ],
+                          child: const Icon(
+                            CupertinoIcons.settings,
+                            color: CupertinoColors.systemOrange,
+                            size: 24,
                           ),
                         ),
                       )

@@ -5,7 +5,9 @@ import '../providers/world_clock_provider.dart';
 import '../models/world_clock_model.dart';
 import '../widgets/custom_buttons.dart';
 import 'settings_screen.dart';
+import 'upgrade_pro_screen.dart';
 import '../providers/settings_provider.dart';
+import '../widgets/settings_banner_ad.dart';
 import '../l10n/app_localizations.dart';
 
 class WorldClockScreen extends StatefulWidget {
@@ -116,19 +118,49 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
-                  Text(
-                    AppLocalizations.of(context).worldClock,
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 34,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context).worldClock,
+                        style: const TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      if (_isEditMode) ...[
+                        const SizedBox(width: 10),
+                        CupertinoButton(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          minSize: 0,
+                          color: CupertinoColors.systemOrange.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(999),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (context) => const UpgradeProScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            AppLocalizations.of(context).upgradePro,
+                            style: TextStyle(
+                              color: CupertinoColors.systemOrange,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                   if (_isEditMode)
                     Padding(
                       padding: const EdgeInsets.only(right: 16),
                       child: CupertinoButton(
                         padding: EdgeInsets.zero,
+                        minSize: 0,
                         onPressed: () {
                           Navigator.of(context).push(
                             CupertinoPageRoute(
@@ -700,6 +732,9 @@ class _AddCityContentState extends State<_AddCityContent> {
             ],
           ),
         ),
+        
+        const SettingsBannerAd(),
+       
       ],
     );
   }

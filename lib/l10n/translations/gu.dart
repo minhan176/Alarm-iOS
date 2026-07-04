@@ -87,6 +87,7 @@ const Map<String, String> guTranslations = {
   'timeFormat': 'સમય ફોર્મેટ',
   'twentyFourHourFormat': '24-કલાક ફોર્મેટ',
   'supportAndFeedback': 'સપોર્ટ અને પ્રતિસાદ',
+  'upgradePro': 'પ્રો પર અપગ્રેડ કરો',
   'guide': 'માર્ગદર્શિકા',
   'sendFeedback': 'પ્રતિસાદ મોકલો',
   'about': 'વિશે',

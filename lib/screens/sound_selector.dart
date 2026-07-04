@@ -1,3 +1,4 @@
+import 'package:clock_os_26/widgets/settings_banner_ad.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -560,6 +561,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                   ),
                 ),
               ],
+              const SettingsBannerAd(),
             ],
           ),
         ),

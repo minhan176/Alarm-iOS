@@ -35,6 +35,8 @@ dependencies:
   store_redirect: ^2.0.2
   device_info_plus: ^10.1.0
   in_app_review: ^2.0.11
+  in_app_purchase: ^3.2.3
+  google_mobile_ads: ^5.1.0
   flutter_launcher_icons: ^0.14.4
   firebase_core: ^4.5.0
   firebase_analytics: ^12.1.3

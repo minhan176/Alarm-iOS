@@ -87,6 +87,7 @@ const Map<String, String> deTranslations = {
   'timeFormat': 'ZEITFORMAT',
   'twentyFourHourFormat': '24-Stunden-Format',
   'supportAndFeedback': 'SUPPORT & FEEDBACK',
+  'upgradePro': 'AUF PRO UPGRADEN',
   'guide': 'Anleitung',
   'sendFeedback': 'Feedback senden',
   'about': 'ÜBER',

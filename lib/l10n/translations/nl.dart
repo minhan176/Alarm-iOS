@@ -87,6 +87,7 @@ const Map<String, String> nlTranslations = {
   'timeFormat': 'TIJDNOTATIE',
   'twentyFourHourFormat': '24-uursnotatie',
   'supportAndFeedback': 'ONDERSTEUNING & FEEDBACK',
+  'upgradePro': 'UPGRADEN NAAR PRO',
   'guide': 'Handleiding',
   'sendFeedback': 'Feedback verzenden',
   'about': 'OVER',

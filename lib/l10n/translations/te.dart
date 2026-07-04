@@ -87,6 +87,7 @@ const Map<String, String> teTranslations = {
   'timeFormat': 'సమయ ఆకృతి',
   'twentyFourHourFormat': '24-గంటల ఆకృతి',
   'supportAndFeedback': 'మద్దతు & అభిప్రాయం',
+  'upgradePro': 'ప్రోకి అప్‌గ్రేడ్ చేయండి',
   'guide': 'గైడ్',
   'sendFeedback': 'అభిప్రాయం పంపండి',
   'about': 'గురించి',
