@@ -22,7 +22,7 @@ import 'translations/gu.dart';
 import 'translations/he.dart';
 import 'translations/hi.dart';
 import 'translations/hu.dart';
-import 'translations/is_.dart';
+import 'translations/is.dart';
 import 'translations/id.dart';
 import 'translations/it.dart';
 import 'translations/ja.dart';
@@ -380,7 +380,7 @@ class _AppLocalizationsDelegate
     }
     return ['ar', 'bn', 'bg', 'ca', 'hr', 'cs', 'da', 'nl', 'en', 'et',
             'fi', 'fr', 'de', 'el', 'gu', 'he', 'hi', 'hu', 'is', 'id',
-            'it', 'ja', 'kn', 'ko', 'lv', 'lt', 'ml', 'mr', 'no', 'nb',
+            'it', 'ja', 'kn', 'ko', 'lv', 'lt', 'ml', 'mr', 'no',
             'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sk', 'sl', 'es', 'sw',
             'sv', 'ta', 'te', 'th', 'tr', 'uk', 'ur', 'vi', 'zu']
         .contains(locale.languageCode);
