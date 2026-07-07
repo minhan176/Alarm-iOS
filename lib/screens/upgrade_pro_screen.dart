@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clock_os_26/widgets/custom_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -15,7 +16,7 @@ class UpgradeProScreen extends StatefulWidget {
 }
 
 class _UpgradeProScreenState extends State<UpgradeProScreen> {
-  static const String _productId = 'pro_lifetime';
+  static const String _productId = 'com.oaptech.clock_unlockpro';
 
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
@@ -25,8 +26,10 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
   bool _isLoading = true;
   bool _isPurchasing = false;
   bool _isProUnlocked = false;
-  String _priceText = '₫99.000';
   String? _statusMessage;
+
+  ProductDetails? get _product =>
+      _productDetails.isNotEmpty ? _productDetails.first : null;
 
   @override
   void initState() {
@@ -83,9 +86,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
       _isLoading = false;
       _isProUnlocked = unlocked;
       _productDetails = response.productDetails;
-      if (_productDetails.isNotEmpty) {
-        _priceText = _productDetails.first.price;
-      }
       if (response.notFoundIDs.isNotEmpty) {
         _statusMessage = 'Không tìm thấy gói Pro trong cửa hàng. Hãy kiểm tra product ID.';
       }
@@ -113,7 +113,14 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
       _statusMessage = null;
     });
 
-    final product = _productDetails.first;
+    final product = _product;
+    if (product == null) {
+      setState(() {
+        _isPurchasing = false;
+      });
+      return;
+    }
+
     final purchaseParam = PurchaseParam(productDetails: product);
 
     await _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
@@ -229,74 +236,67 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
+    final product = _product;
 
     return CupertinoPageScaffold(
       backgroundColor: const Color(0xFF0F0F12),
-      child: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              top: -60,
-              right: -50,
-              child: Container(
-                width: 180,
-                height: 180,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      CupertinoColors.systemOrange.withOpacity(0.24),
-                      CupertinoColors.systemOrange.withOpacity(0.0),
-                    ],
-                  ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: -60,
+            right: -50,
+            child: Container(
+              width: 180,
+              height: 180,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    CupertinoColors.systemOrange.withOpacity(0.24),
+                    CupertinoColors.systemOrange.withOpacity(0.0),
+                  ],
                 ),
               ),
             ),
-            Positioned(
-              bottom: -70,
-              left: -40,
-              child: Container(
-                width: 220,
-                height: 220,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      CupertinoColors.systemYellow.withOpacity(0.16),
-                      CupertinoColors.systemYellow.withOpacity(0.0),
-                    ],
-                  ),
+          ),
+          Positioned(
+            bottom: -70,
+            left: -40,
+            child: Container(
+              width: 220,
+              height: 220,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    CupertinoColors.systemYellow.withOpacity(0.16),
+                    CupertinoColors.systemYellow.withOpacity(0.0),
+                  ],
                 ),
               ),
             ),
-            Column(
+          ),
+          SafeArea(
+            child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Row(
-                    children: [
-                      CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        minSize: 0,
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Icon(
-                          CupertinoIcons.chevron_left,
-                          color: CupertinoColors.white,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        localizations.upgradePro,
-                        style: const TextStyle(
-                          color: CupertinoColors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                CustomNavBar(
+                              backgroundColor: Colors.transparent,
+                              leading: NavIconButton(
+                                icon: CupertinoIcons.xmark,
+                                iconColor: CupertinoColors.white,
+                                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+                              ),
+                              middle: FittedBox(
+                                fit: BoxFit.scaleDown, child: Text(
+                                localizations.upgradePro,
+                                style: const TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                                ),
+                              )),
+                              
+                            ),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
@@ -313,10 +313,10 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                             ),
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const Icon(
-                                CupertinoIcons.star_circle_fill,
+                                Icons.workspace_premium,
                                 color: CupertinoColors.systemOrange,
                                 size: 42,
                               ),
@@ -325,9 +325,9 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                                 localizations.proIntro,
                                 style: const TextStyle(
                                   color: CupertinoColors.white,
-                                  fontSize: 22,
+                                  fontSize: 18,
                                   height: 1.25,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               const SizedBox(height: 12),
@@ -352,27 +352,18 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    localizations.proPriceLabel,
-                                    style: const TextStyle(
-                                      color: CupertinoColors.systemGrey,
-                                      fontSize: 13,
-                                    ),
+                              
+                              if (_isLoading)
+                                const CupertinoActivityIndicator()
+                              else
+                                Text(
+                                  product?.price ?? '--',
+                                  style: const TextStyle(
+                                    color: CupertinoColors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w800,
                                   ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    _priceText,
-                                    style: const TextStyle(
-                                      color: CupertinoColors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                 decoration: BoxDecoration(
@@ -453,17 +444,17 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                 ),
               ],
             ),
-            if (_isLoading)
-              const Positioned.fill(
-                child: IgnorePointer(
-                  child: ColoredBox(
-                    color: Color(0x66000000),
-                    child: Center(child: CupertinoActivityIndicator()),
-                  ),
+          ),
+          if (_isLoading)
+            const Positioned.fill(
+              child: IgnorePointer(
+                child: ColoredBox(
+                  color: Color(0x66000000),
+                  child: Center(child: CupertinoActivityIndicator()),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

@@ -1,13 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'translations/ar.dart';
+import 'translations/am.dart';
+import 'translations/az.dart';
+import 'translations/be.dart';
 import 'translations/bn.dart';
 import 'translations/bg.dart';
+import 'translations/bs.dart';
 import 'translations/ca.dart';
 import 'translations/zh_cn.dart';
 import 'translations/zh_tw.dart';
+import 'translations/dv.dart';
+import 'translations/fil.dart';
 import 'translations/hr.dart';
 import 'translations/cs.dart';
 import 'translations/da.dart';
@@ -21,17 +28,25 @@ import 'translations/el.dart';
 import 'translations/gu.dart';
 import 'translations/he.dart';
 import 'translations/hi.dart';
+import 'translations/hy.dart';
 import 'translations/hu.dart';
 import 'translations/is.dart';
 import 'translations/id.dart';
 import 'translations/it.dart';
 import 'translations/ja.dart';
+import 'translations/ka.dart';
+import 'translations/kk.dart';
 import 'translations/kn.dart';
 import 'translations/ko.dart';
+import 'translations/km.dart';
+import 'translations/ky.dart';
 import 'translations/lv.dart';
 import 'translations/lt.dart';
+import 'translations/mg.dart';
+import 'translations/ms.dart';
 import 'translations/ml.dart';
 import 'translations/mr.dart';
+import 'translations/my.dart';
 import 'translations/no.dart';
 import 'translations/fa.dart';
 import 'translations/pl.dart';
@@ -41,15 +56,23 @@ import 'translations/ro.dart';
 import 'translations/ru.dart';
 import 'translations/sk.dart';
 import 'translations/sl.dart';
+import 'translations/si.dart';
+import 'translations/sq.dart';
+import 'translations/sr.dart';
+import 'translations/so.dart';
 import 'translations/es.dart';
 import 'translations/sw.dart';
 import 'translations/sv.dart';
 import 'translations/ta.dart';
 import 'translations/te.dart';
+import 'translations/tg.dart';
+import 'translations/ti.dart';
+import 'translations/tk.dart';
 import 'translations/th.dart';
 import 'translations/tr.dart';
 import 'translations/uk.dart';
 import 'translations/ur.dart';
+import 'translations/uz.dart';
 import 'translations/vi.dart';
 import 'translations/zu.dart';
 
@@ -70,15 +93,24 @@ class AppLocalizations {
     GlobalCupertinoLocalizations.delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
+    _FallbackCupertinoLocalizationsDelegate(),
+    _FallbackMaterialLocalizationsDelegate(),
+    DefaultWidgetsLocalizations.delegate,
   ];
 
   static const List<Locale> supportedLocales = [
     Locale('ar'),
+    Locale('am'),
+    Locale('az'),
+    Locale('be'),
     Locale('bn'),
     Locale('bg'),
+    Locale('bs'),
     Locale('ca'),
     Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
     Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
+    Locale('dv'),
+    Locale('fil'),
     Locale('hr'),
     Locale('cs'),
     Locale('da'),
@@ -92,17 +124,25 @@ class AppLocalizations {
     Locale('gu'),
     Locale('he'),
     Locale('hi'),
+    Locale('hy'),
     Locale('hu'),
     Locale('is'),
     Locale('id'),
     Locale('it'),
     Locale('ja'),
+    Locale('ka'),
+    Locale('kk'),
     Locale('kn'),
     Locale('ko'),
+    Locale('km'),
+    Locale('ky'),
     Locale('lv'),
     Locale('lt'),
+    Locale('mg'),
+    Locale('ms'),
     Locale('ml'),
     Locale('mr'),
+    Locale('my'),
     Locale('no'),
     Locale('nb'),
     Locale('fa'),
@@ -113,15 +153,23 @@ class AppLocalizations {
     Locale('ru'),
     Locale('sk'),
     Locale('sl'),
+    Locale('si'),
+    Locale('sq'),
+    Locale('sr'),
+    Locale('so'),
     Locale('es'),
     Locale('sw'),
     Locale('sv'),
     Locale('ta'),
     Locale('te'),
+    Locale('tg'),
+    Locale('ti'),
+    Locale('tk'),
     Locale('th'),
     Locale('tr'),
     Locale('uk'),
     Locale('ur'),
+    Locale('uz'),
     Locale('vi'),
     Locale('zu'),
   ];
@@ -142,11 +190,17 @@ class AppLocalizations {
 
     final Map<String, Map<String, String>> allTranslations = {
       'ar': arTranslations,
+      'am': amTranslations,
+      'az': azTranslations,
+      'be': beTranslations,
       'bn': bnTranslations,
       'bg': bgTranslations,
+      'bs': bsTranslations,
       'ca': caTranslations,
       'zh_cn': zhCnTranslations,
       'zh_tw': zhTwTranslations,
+      'dv': dvTranslations,
+      'fil': filTranslations,
       'hr': hrTranslations,
       'cs': csTranslations,
       'da': daTranslations,
@@ -160,17 +214,25 @@ class AppLocalizations {
       'gu': guTranslations,
       'he': heTranslations,
       'hi': hiTranslations,
+      'hy': hyTranslations,
       'hu': huTranslations,
       'is': isTranslations,
       'id': idTranslations,
       'it': itTranslations,
       'ja': jaTranslations,
+      'ka': kaTranslations,
+      'kk': kkTranslations,
       'kn': knTranslations,
       'ko': koTranslations,
+      'km': kmTranslations,
+      'ky': kyTranslations,
       'lv': lvTranslations,
       'lt': ltTranslations,
+      'mg': mgTranslations,
+      'ms': msTranslations,
       'ml': mlTranslations,
       'mr': mrTranslations,
+      'my': myTranslations,
       'no': noTranslations,
       'fa': faTranslations,
       'pl': plTranslations,
@@ -180,15 +242,23 @@ class AppLocalizations {
       'ru': ruTranslations,
       'sk': skTranslations,
       'sl': slTranslations,
+      'si': siTranslations,
+      'sq': sqTranslations,
+      'sr': srTranslations,
+      'so': soTranslations,
       'es': esTranslations,
       'sw': swTranslations,
       'sv': svTranslations,
       'ta': taTranslations,
       'te': teTranslations,
+      'tg': tgTranslations,
+      'ti': tiTranslations,
+      'tk': tkTranslations,
       'th': thTranslations,
       'tr': trTranslations,
       'uk': ukTranslations,
       'ur': urTranslations,
+      'uz': uzTranslations,
       'vi': viTranslations,
       'zu': zuTranslations,
     };
@@ -319,7 +389,6 @@ class AppLocalizations {
   String get supportAndFeedback => _t('supportAndFeedback');
   String get upgradePro => _t('upgradePro');
   String get proIntro => _t('proIntro');
-  String get proPriceLabel => _t('proPriceLabel');
   String get proLifetimeNote => _t('proLifetimeNote');
   String get proBuyNow => _t('proBuyNow');
   String get guide => _t('guide');
@@ -378,11 +447,13 @@ class _AppLocalizationsDelegate
     if (locale.languageCode == 'zh') {
       return true;
     }
-    return ['ar', 'bn', 'bg', 'ca', 'hr', 'cs', 'da', 'nl', 'en', 'et',
-            'fi', 'fr', 'de', 'el', 'gu', 'he', 'hi', 'hu', 'is', 'id',
-            'it', 'ja', 'kn', 'ko', 'lv', 'lt', 'ml', 'mr', 'no',
-            'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sk', 'sl', 'es', 'sw',
-            'sv', 'ta', 'te', 'th', 'tr', 'uk', 'ur', 'vi', 'zu']
+    return ['ar', 'am', 'az', 'be', 'bn', 'bg', 'bs', 'ca', 'hr', 'cs',
+            'da', 'nl', 'dv', 'en', 'et', 'fil', 'fi', 'fr', 'de', 'el',
+            'gu', 'he', 'hi', 'hy', 'hu', 'is', 'id', 'it', 'ja', 'ka', 'kk',
+            'kn', 'ko', 'km', 'ky', 'lv', 'lt', 'mg', 'ms', 'ml', 'mr', 'nb',
+            'my', 'no', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sk', 'sl',
+            'si', 'sq', 'sr', 'so', 'es', 'sw', 'sv', 'ta', 'te', 'tg',
+            'ti', 'tk', 'th', 'tr', 'uk', 'ur', 'uz', 'vi', 'zu']
         .contains(locale.languageCode);
   }
 
@@ -393,4 +464,36 @@ class _AppLocalizationsDelegate
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+class _FallbackCupertinoLocalizationsDelegate
+    extends LocalizationsDelegate<CupertinoLocalizations> {
+  const _FallbackCupertinoLocalizationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => true;
+
+  @override
+  Future<CupertinoLocalizations> load(Locale locale) {
+    return DefaultCupertinoLocalizations.load(const Locale('en'));
+  }
+
+  @override
+  bool shouldReload(_FallbackCupertinoLocalizationsDelegate old) => false;
+}
+
+class _FallbackMaterialLocalizationsDelegate
+    extends LocalizationsDelegate<MaterialLocalizations> {
+  const _FallbackMaterialLocalizationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => true;
+
+  @override
+  Future<MaterialLocalizations> load(Locale locale) {
+    return DefaultMaterialLocalizations.load(const Locale('en'));
+  }
+
+  @override
+  bool shouldReload(_FallbackMaterialLocalizationsDelegate old) => false;
 }

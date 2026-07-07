@@ -118,7 +118,6 @@ const Map<String, String> enTranslations = {
   'supportAndFeedback': 'SUPPORT & FEEDBACK',
   'upgradePro': 'UPGRADE PRO',
   'proIntro': 'Unlock Pro with a one-time purchase and keep it forever on this device.',
-  'proPriceLabel': 'Price',
   'proLifetimeNote': 'One payment. Lifetime Pro access.',
   'proBuyNow': 'Buy Now',
   'guide': 'Guide',

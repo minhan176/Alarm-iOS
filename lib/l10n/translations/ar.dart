@@ -89,7 +89,6 @@ const Map<String, String> arTranslations = {
   'supportAndFeedback': 'الدعم والملاحظات',
   'upgradePro': 'ترقية برو',
   'proIntro': 'افتح Pro بدفعة واحدة واحتفظ به للأبد على هذا الجهاز.',
-  'proPriceLabel': 'السعر',
   'proLifetimeNote': 'دفعة واحدة. وصول Pro مدى الحياة.',
   'proBuyNow': 'اشترِ الآن',
   'guide': 'الدليل',
