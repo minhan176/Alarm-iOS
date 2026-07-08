@@ -140,11 +140,12 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                             Navigator.of(context).push(
                               CupertinoPageRoute(
                                 builder: (context) => const UpgradeProScreen(),
+                                fullscreenDialog: true,
                               ),
                             );
                           },
                           child: Text(
-                            AppLocalizations.of(context).upgradePro,
+                            AppLocalizations.of(context).UPGRADE_PRO,
                             style: TextStyle(
                               color: CupertinoColors.systemOrange,
                               fontSize: 12,

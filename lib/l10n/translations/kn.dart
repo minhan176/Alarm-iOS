@@ -87,7 +87,7 @@ const Map<String, String> knTranslations = {
   'timeFormat': 'ಸಮಯ ಸ್ವರೂಪ',
   'twentyFourHourFormat': '24-ಗಂಟೆ ಸ್ವರೂಪ',
   'supportAndFeedback': 'ಬೆಂಬಲ ಮತ್ತು ಪ್ರತಿಕ್ರಿಯೆ',
-  'upgradePro': 'ಪ್ರೋಗೆ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ',
+  'UPGRADE_PRO': 'ಪ್ರೋಗೆ ಅಪ್‌ಗ್ರೇಡ್ ಮಾಡಿ',
   'guide': 'ಮಾರ್ಗದರ್ಶಿ',
   'sendFeedback': 'ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ',
   'about': 'ಕುರಿತು',

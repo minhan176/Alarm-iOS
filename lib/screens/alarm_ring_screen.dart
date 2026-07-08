@@ -12,6 +12,7 @@ import '../models/alarm_model.dart';
 import '../services/alarm_service.dart';
 import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
+import '../services/ad_service.dart';
 
 class AlarmRingScreen extends StatefulWidget {
   final AlarmModel alarm;
@@ -41,6 +42,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   @override
   void initState() {
     super.initState();
+    AdService.incrementRingingScreens();
 
     // Setup animations
     _pulseController = AnimationController(
@@ -208,6 +210,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     _pulseController.dispose();
     _rotationController.dispose();
     _shakeController.dispose();
+    AdService.decrementRingingScreens();
     super.dispose();
   }
 

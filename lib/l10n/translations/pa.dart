@@ -87,7 +87,7 @@ const Map<String, String> paTranslations = {
   'timeFormat': 'ਸਮੇਂ ਦਾ ਫਾਰਮੈਟ',
   'twentyFourHourFormat': '24-ਘੰਟੇ ਫਾਰਮੈਟ',
   'supportAndFeedback': 'ਸਹਾਇਤਾ ਅਤੇ ਫੀਡਬੈਕ',
-  'upgradePro': 'ਪ੍ਰੋ ਵਿੱਚ ਅੱਪਗ੍ਰੇਡ ਕਰੋ',
+  'UPGRADE_PRO': 'ਪ੍ਰੋ ਵਿੱਚ ਅੱਪਗ੍ਰੇਡ ਕਰੋ',
   'guide': 'ਗਾਈਡ',
   'sendFeedback': 'ਫੀਡਬੈਕ ਭੇਜੋ',
   'about': 'ਬਾਰੇ',

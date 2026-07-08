@@ -87,7 +87,7 @@ const Map<String, String> koTranslations = {
   'timeFormat': '시간 형식',
   'twentyFourHourFormat': '24시간 형식',
   'supportAndFeedback': '지원 및 피드백',
-  'upgradePro': '프로로 업그레이드',
+  'UPGRADE_PRO': '프로로 업그레이드',
   'guide': '가이드',
   'sendFeedback': '피드백 보내기',
   'about': '정보',

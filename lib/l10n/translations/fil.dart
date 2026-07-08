@@ -89,7 +89,7 @@ final Map<String, String> filTranslations = mergeTranslations({
   'timeFormat': 'FORMAT NG ORAS',
   'twentyFourHourFormat': '24-Oras na Format',
   'supportAndFeedback': 'SUPORTA AT FEEDBACK',
-  'upgradePro': 'MAG-UPGRADE SA PRO',
+  'UPGRADE_PRO': 'MAG-UPGRADE SA PRO',
   'guide': 'Gabay',
   'sendFeedback': 'Magpadala ng Feedback',
   'about': 'TUNGKOL',

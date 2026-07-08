@@ -87,7 +87,7 @@ const Map<String, String> slTranslations = {
   'timeFormat': 'OBLIKA ČASA',
   'twentyFourHourFormat': '24-urna oblika',
   'supportAndFeedback': 'PODPORA IN POVRATNE INFORMACIJE',
-  'upgradePro': 'NADGRADI NA PRO',
+  'UPGRADE_PRO': 'NADGRADI NA PRO',
   'guide': 'Vodnik',
   'sendFeedback': 'Pošlji povratne informacije',
   'about': 'O APLIKACIJI',

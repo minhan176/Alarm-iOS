@@ -87,7 +87,7 @@ const Map<String, String> thTranslations = {
   'timeFormat': 'รูปแบบเวลา',
   'twentyFourHourFormat': 'รูปแบบ 24 ชั่วโมง',
   'supportAndFeedback': 'การสนับสนุนและข้อเสนอแนะ',
-  'upgradePro': 'อัปเกรดเป็น PRO',
+  'UPGRADE_PRO': 'อัปเกรดเป็น PRO',
   'guide': 'คู่มือ',
   'sendFeedback': 'ส่งข้อเสนอแนะ',
   'about': 'เกี่ยวกับ',

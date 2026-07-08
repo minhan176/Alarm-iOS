@@ -87,7 +87,7 @@ const Map<String, String> ltTranslations = {
   'timeFormat': 'LAIKO FORMATAS',
   'twentyFourHourFormat': '24 valandų formatas',
   'supportAndFeedback': 'PAGALBA IR ATSILIEPIMAI',
-  'upgradePro': 'ATNAUJINTI Į PRO',
+  'UPGRADE_PRO': 'ATNAUJINTI Į PRO',
   'guide': 'Vadovas',
   'sendFeedback': 'Siųsti atsiliepimą',
   'about': 'APIE',

@@ -87,7 +87,7 @@ const Map<String, String> csTranslations = {
   'timeFormat': 'FORMÁT ČASU',
   'twentyFourHourFormat': '24hodinový formát',
   'supportAndFeedback': 'PODPORA A ZPĚTNÁ VAZBA',
-  'upgradePro': 'PŘEJÍT NA PRO',
+  'UPGRADE_PRO': 'PŘEJÍT NA PRO',
   'guide': 'Průvodce',
   'sendFeedback': 'Odeslat zpětnou vazbu',
   'about': 'O APLIKACI',

@@ -87,7 +87,7 @@ const Map<String, String> etTranslations = {
   'timeFormat': 'AJAVORMING',
   'twentyFourHourFormat': '24-tunnine vorming',
   'supportAndFeedback': 'TUGI JA TAGASISIDE',
-  'upgradePro': 'UPGRADE PRO',
+  'UPGRADE_PRO': 'UPGRADE PRO',
   'guide': 'Juhend',
   'sendFeedback': 'Saada tagasiside',
   'about': 'TEAVE',

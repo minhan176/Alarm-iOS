@@ -23,6 +23,7 @@ import 'screens/alarm_ring_screen.dart';
 import 'screens/timer_ring_screen.dart';
 import 'services/alarm_service.dart';
 import 'services/battery_optimization_service.dart';
+import 'services/ad_service.dart';
 import 'widgets/liquid_glass_bottom_bar.dart';
 import 'l10n/app_localizations.dart';
 
@@ -128,6 +129,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    AdService.loadAppOpenAd();
     
     // Skip permission checks if app is opened from ring screen
     if (!_skipPermissionCheck) {
@@ -423,6 +425,7 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
       final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
       Provider.of<SettingsProvider>(context, listen: false)
           .updateFromSystem(currentSystem24HourFormat);
+      AdService.showAppOpenAdIfAvailable();
     }
   }
 

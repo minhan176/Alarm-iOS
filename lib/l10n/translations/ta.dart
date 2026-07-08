@@ -87,7 +87,7 @@ const Map<String, String> taTranslations = {
   'timeFormat': 'நேர வடிவம்',
   'twentyFourHourFormat': '24 மணி நேர வடிவம்',
   'supportAndFeedback': 'ஆதரவு மற்றும் கருத்து',
-  'upgradePro': 'ப்ரோவுக்கு மேம்படுத்தவும்',
+  'UPGRADE_PRO': 'ப்ரோவுக்கு மேம்படுத்தவும்',
   'guide': 'வழிகாட்டி',
   'sendFeedback': 'கருத்து அனுப்பு',
   'about': 'பற்றி',

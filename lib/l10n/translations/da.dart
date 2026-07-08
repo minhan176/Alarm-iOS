@@ -87,7 +87,7 @@ const Map<String, String> daTranslations = {
   'timeFormat': 'TIDSFORMAT',
   'twentyFourHourFormat': '24-timers format',
   'supportAndFeedback': 'SUPPORT OG FEEDBACK',
-  'upgradePro': 'OPGRADER TIL PRO',
+  'UPGRADE_PRO': 'OPGRADER TIL PRO',
   'guide': 'Vejledning',
   'sendFeedback': 'Send feedback',
   'about': 'OM',

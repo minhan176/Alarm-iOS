@@ -116,7 +116,7 @@ const Map<String, String> enTranslations = {
   'timeFormat': 'TIME FORMAT',
   'twentyFourHourFormat': '24-Hour Format',
   'supportAndFeedback': 'SUPPORT & FEEDBACK',
-  'upgradePro': 'UPGRADE PRO',
+  'UPGRADE_PRO': 'UPGRADE PRO',
   'proIntro': 'Unlock Pro with a one-time purchase and keep it forever on this device.',
   'proLifetimeNote': 'One payment. Lifetime Pro access.',
   'proBuyNow': 'Buy Now',

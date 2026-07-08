@@ -6,6 +6,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter/services.dart' show SystemNavigator;
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 
 class TimerRingScreen extends StatefulWidget {
   final int remainingSeconds;
@@ -40,6 +41,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
   @override
   void initState() {
     super.initState();
+    AdService.incrementRingingScreens();
     _currentRemainingSeconds = widget.remainingSeconds;
 
     // Setup animations
@@ -171,6 +173,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
     _pulseController.dispose();
     _rotationController.dispose();
     _shakeController.dispose();
+    AdService.decrementRingingScreens();
     super.dispose();
   }
 

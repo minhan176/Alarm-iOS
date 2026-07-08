@@ -87,7 +87,7 @@ const Map<String, String> swTranslations = {
   'timeFormat': 'MUUNDO WA SAA',
   'twentyFourHourFormat': 'Muundo wa Masaa 24',
   'supportAndFeedback': 'MSAADA NA MAONI',
-  'upgradePro': 'BORESHA HADI PRO',
+  'UPGRADE_PRO': 'BORESHA HADI PRO',
   'guide': 'Mwongozo',
   'sendFeedback': 'Tuma Maoni',
   'about': 'KUHUSU',

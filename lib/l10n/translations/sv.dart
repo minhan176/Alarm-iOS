@@ -87,7 +87,7 @@ const Map<String, String> svTranslations = {
   'timeFormat': 'TIDSFORMAT',
   'twentyFourHourFormat': '24-timmarsformat',
   'supportAndFeedback': 'SUPPORT OCH FEEDBACK',
-  'upgradePro': 'UPPGRADERA TILL PRO',
+  'UPGRADE_PRO': 'UPPGRADERA TILL PRO',
   'guide': 'Guide',
   'sendFeedback': 'Skicka feedback',
   'about': 'OM',

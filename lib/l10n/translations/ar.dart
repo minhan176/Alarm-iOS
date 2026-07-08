@@ -87,7 +87,7 @@ const Map<String, String> arTranslations = {
   'timeFormat': 'تنسيق الوقت',
   'twentyFourHourFormat': 'تنسيق 24 ساعة',
   'supportAndFeedback': 'الدعم والملاحظات',
-  'upgradePro': 'ترقية برو',
+  'UPGRADE_PRO': 'ترقية برو',
   'proIntro': 'افتح Pro بدفعة واحدة واحتفظ به للأبد على هذا الجهاز.',
   'proLifetimeNote': 'دفعة واحدة. وصول Pro مدى الحياة.',
   'proBuyNow': 'اشترِ الآن',

@@ -72,7 +72,7 @@ final Map<String, String> uzTranslations = mergeTranslations({
   'timeFormat': 'VAQT FORMATI',
   'twentyFourHourFormat': '24 soatlik format',
   'supportAndFeedback': 'QO‘LLAB-QUVVATLASH VA FIKR',
-  'upgradePro': 'PRO GA O‘TISH',
+  'UPGRADE_PRO': 'PRO GA O‘TISH',
   'guide': 'Qo‘llanma',
   'sendFeedback': 'Fikr yuborish',
   'about': 'HAQIDA',

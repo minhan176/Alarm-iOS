@@ -72,7 +72,7 @@ final Map<String, String> azTranslations = mergeTranslations({
   'timeFormat': 'VAXT FORMATI',
   'twentyFourHourFormat': '24 saat formatı',
   'supportAndFeedback': 'DƏSTƏK VƏ RƏY',
-  'upgradePro': 'PRO VERSİYAYA KEÇ',
+  'UPGRADE_PRO': 'PRO VERSİYAYA KEÇ',
   'guide': 'Bələdçi',
   'sendFeedback': 'Rəy göndər',
   'about': 'HAQQINDA',

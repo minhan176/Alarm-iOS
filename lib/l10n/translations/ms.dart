@@ -89,7 +89,7 @@ final Map<String, String> msTranslations = mergeTranslations({
   'timeFormat': 'FORMAT MASA',
   'twentyFourHourFormat': 'Format 24 Jam',
   'supportAndFeedback': 'SOKONGAN & MAKLUM BALAS',
-  'upgradePro': 'NAIK TARAF PRO',
+  'UPGRADE_PRO': 'NAIK TARAF PRO',
   'guide': 'Panduan',
   'sendFeedback': 'Hantar Maklum Balas',
   'about': 'TENTANG',

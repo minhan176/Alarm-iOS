@@ -88,7 +88,7 @@ const Map<String, String> urTranslations = {
   'timeFormat': 'وقت کی شکل',
   'twentyFourHourFormat': '24 گھنٹے کی شکل',
   'supportAndFeedback': 'سپورٹ اور رائے',
-    'upgradePro': 'پرو میں اپ گریڈ کریں',
+    'UPGRADE_PRO': 'پرو میں اپ گریڈ کریں',
   'guide': 'رہنما',
   'sendFeedback': 'رائے بھیجیں',
   'about': 'کے بارے میں',

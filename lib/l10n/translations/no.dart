@@ -87,7 +87,7 @@ const Map<String, String> noTranslations = {
   'timeFormat': 'TIDSFORMAT',
   'twentyFourHourFormat': '24-timersformat',
   'supportAndFeedback': 'STØTTE OG TILBAKEMELDING',
-  'upgradePro': 'OPPGRADER TIL PRO',
+  'UPGRADE_PRO': 'OPPGRADER TIL PRO',
   'guide': 'Veiledning',
   'sendFeedback': 'Send tilbakemelding',
   'about': 'OM',

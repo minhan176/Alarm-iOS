@@ -87,7 +87,7 @@ const Map<String, String> ptTranslations = {
   'timeFormat': 'FORMATO DE HORA',
   'twentyFourHourFormat': 'Formato 24 Horas',
   'supportAndFeedback': 'SUPORTE E FEEDBACK',
-  'upgradePro': 'FAZER UPGRADE PARA PRO',
+  'UPGRADE_PRO': 'FAZER UPGRADE PARA PRO',
   'guide': 'Guia',
   'sendFeedback': 'Enviar Feedback',
   'about': 'SOBRE',

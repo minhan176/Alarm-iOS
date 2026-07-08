@@ -87,7 +87,7 @@ const Map<String, String> plTranslations = {
   'timeFormat': 'FORMAT CZASU',
   'twentyFourHourFormat': 'Format 24-godzinny',
   'supportAndFeedback': 'WSPARCIE I OPINIE',
-  'upgradePro': 'UPGRADE DO PRO',
+  'UPGRADE_PRO': 'UPGRADE DO PRO',
   'guide': 'Przewodnik',
   'sendFeedback': 'Wyślij opinię',
   'about': 'O APLIKACJI',

@@ -87,7 +87,7 @@ const Map<String, String> elTranslations = {
   'timeFormat': 'ΜΟΡΦΗ ΩΡΑΣ',
   'twentyFourHourFormat': 'Μορφή 24 ωρών',
   'supportAndFeedback': 'ΥΠΟΣΤΗΡΙΞΗ & ΣΧΟΛΙΑ',
-  'upgradePro': 'ΑΝΑΒΑΘΜΙΣΗ ΣΕ PRO',
+  'UPGRADE_PRO': 'ΑΝΑΒΑΘΜΙΣΗ ΣΕ PRO',
   'guide': 'Οδηγός',
   'sendFeedback': 'Αποστολή σχολίων',
   'about': 'ΣΧΕΤΙΚΑ',

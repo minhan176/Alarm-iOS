@@ -77,7 +77,7 @@ final Map<String, String> srTranslations = mergeTranslations({
   'timeFormat': 'FORMAT VREMENA',
   'twentyFourHourFormat': '24-časovni format',
   'supportAndFeedback': 'PODRŠKA I POVRATNE INFORMACIJE',
-  'upgradePro': 'NADOGRADI NA PRO',
+  'UPGRADE_PRO': 'NADOGRADI NA PRO',
   'guide': 'Vodič',
   'sendFeedback': 'Pošalji povratne informacije',
   'about': 'O APLIKACIJI',

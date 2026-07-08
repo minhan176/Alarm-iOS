@@ -88,7 +88,7 @@ const Map<String, String> ukTranslations = {
   'timeFormat': 'ФОРМАТ ЧАСУ',
   'twentyFourHourFormat': '24-годинний формат',
   'supportAndFeedback': 'ПІДТРИМКА ТА ВІДГУКИ',
-    'upgradePro': 'ОНОВИТИ ДО PRO',
+    'UPGRADE_PRO': 'ОНОВИТИ ДО PRO',
   'guide': 'Посібник',
   'sendFeedback': 'Надіслати відгук',
   'about': 'ПРО ДОДАТОК',

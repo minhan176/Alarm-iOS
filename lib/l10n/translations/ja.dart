@@ -87,7 +87,7 @@ const Map<String, String> jaTranslations = {
   'timeFormat': '時刻表示',
   'twentyFourHourFormat': '24時間表示',
   'supportAndFeedback': 'サポートとフィードバック',
-  'upgradePro': 'PRO にアップグレード',
+  'UPGRADE_PRO': 'PRO にアップグレード',
   'guide': 'ガイド',
   'sendFeedback': 'フィードバックを送信',
   'about': '情報',

@@ -88,7 +88,7 @@ const Map<String, String> zuTranslations = {
   'timeFormat': 'IFOMETHI YESIKHATHI',
   'twentyFourHourFormat': 'Ifomethi Yamahora angu-24',
   'supportAndFeedback': 'UKUSEKELA NEMPENDULO',
-    'upgradePro': 'THUTHUKELA KU-PRO',
+    'UPGRADE_PRO': 'THUTHUKELA KU-PRO',
   'guide': 'Umhlahlandlela',
   'sendFeedback': 'Thumela Impendulo',
   'about': 'MAYELANA',

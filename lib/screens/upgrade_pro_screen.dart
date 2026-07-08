@@ -26,7 +26,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
   bool _isLoading = true;
   bool _isPurchasing = false;
   bool _isProUnlocked = false;
-  String? _statusMessage;
 
   ProductDetails? get _product =>
       _productDetails.isNotEmpty ? _productDetails.first : null;
@@ -45,7 +44,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
         }
         setState(() {
           _isPurchasing = false;
-          _statusMessage = 'Không thể mở luồng mua hàng.';
         });
       },
     );
@@ -71,7 +69,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
         _isAvailable = false;
         _isLoading = false;
         _isProUnlocked = unlocked;
-        _statusMessage = 'Mua hàng trong ứng dụng hiện không khả dụng trên thiết bị này.';
       });
       return;
     }
@@ -86,12 +83,8 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
       _isLoading = false;
       _isProUnlocked = unlocked;
       _productDetails = response.productDetails;
-      if (response.notFoundIDs.isNotEmpty) {
-        _statusMessage = 'Không tìm thấy gói Pro trong cửa hàng. Hãy kiểm tra product ID.';
-      }
-      if (response.error != null) {
-        _statusMessage = response.error!.message;
-      }
+      if (response.notFoundIDs.isNotEmpty) {}
+      if (response.error != null) {}
     });
   }
 
@@ -101,16 +94,11 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
     }
 
     if (!_isAvailable || _productDetails.isEmpty) {
-      _showInfoDialog(
-        title: AppLocalizations.of(context).upgradePro,
-        content: 'Hiện chưa thể mua Pro. Kiểm tra product ID và trạng thái cửa hàng.',
-      );
       return;
     }
 
     setState(() {
       _isPurchasing = true;
-      _statusMessage = null;
     });
 
     final product = _product;
@@ -133,20 +121,20 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
 
     setState(() {
       _isPurchasing = true;
-      _statusMessage = null;
     });
 
     await _inAppPurchase.restorePurchases();
   }
 
-  Future<void> _onPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
+  Future<void> _onPurchaseUpdated(
+    List<PurchaseDetails> purchaseDetailsList,
+  ) async {
     for (final purchaseDetails in purchaseDetailsList) {
       switch (purchaseDetails.status) {
         case PurchaseStatus.pending:
           if (mounted) {
             setState(() {
               _isPurchasing = true;
-              _statusMessage = 'Đang xử lý giao dịch...';
             });
           }
           break;
@@ -158,7 +146,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
           if (mounted) {
             setState(() {
               _isPurchasing = false;
-              _statusMessage = purchaseDetails.error?.message ?? 'Giao dịch thất bại.';
             });
           }
           break;
@@ -166,7 +153,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
           if (mounted) {
             setState(() {
               _isPurchasing = false;
-              _statusMessage = 'Giao dịch đã bị hủy.';
             });
           }
           break;
@@ -178,7 +164,9 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
     }
   }
 
-  Future<void> _handleSuccessfulPurchase(PurchaseDetails purchaseDetails) async {
+  Future<void> _handleSuccessfulPurchase(
+    PurchaseDetails purchaseDetails,
+  ) async {
     if (purchaseDetails.productID != _productId) {
       return;
     }
@@ -192,7 +180,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
     setState(() {
       _isProUnlocked = true;
       _isPurchasing = false;
-      _statusMessage = 'Pro đã được mở khóa vĩnh viễn trên thiết bị này.';
     });
 
     _showSuccessDialog();
@@ -210,22 +197,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },
-            child: Text(AppLocalizations.of(context).ok),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showInfoDialog({required String title, required String content}) {
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: [
-          CupertinoDialogAction(
-            onPressed: () => Navigator.of(context).pop(),
             child: Text(AppLocalizations.of(context).ok),
           ),
         ],
@@ -280,23 +251,25 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
             child: Column(
               children: [
                 CustomNavBar(
-                              backgroundColor: Colors.transparent,
-                              leading: NavIconButton(
-                                icon: CupertinoIcons.xmark,
-                                iconColor: CupertinoColors.white,
-                                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-                              ),
-                              middle: FittedBox(
-                                fit: BoxFit.scaleDown, child: Text(
-                                localizations.upgradePro,
-                                style: const TextStyle(
-                color: CupertinoColors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                                ),
-                              )),
-                              
-                            ),
+                  backgroundColor: Colors.transparent,
+                  leading: NavIconButton(
+                    icon: CupertinoIcons.xmark,
+                    iconColor: CupertinoColors.white,
+                    onPressed: () =>
+                        Navigator.of(context, rootNavigator: true).pop(),
+                  ),
+                  middle: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      localizations.upgradePro,
+                      style: const TextStyle(
+                        color: CupertinoColors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
@@ -309,7 +282,9 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                             color: const Color(0xFF1C1C1E).withOpacity(0.92),
                             borderRadius: BorderRadius.circular(28),
                             border: Border.all(
-                              color: CupertinoColors.systemOrange.withOpacity(0.18),
+                              color: CupertinoColors.systemOrange.withOpacity(
+                                0.18,
+                              ),
                             ),
                           ),
                           child: Column(
@@ -333,10 +308,11 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                               const SizedBox(height: 12),
                               Text(
                                 localizations.proLifetimeNote,
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                  color: CupertinoColors.systemGrey,
+                                  color: CupertinoColors.systemOrange,
                                   fontSize: 14,
-                                  height: 1.4,
+                                  height: 2,
                                 ),
                               ),
                             ],
@@ -352,7 +328,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              
                               if (_isLoading)
                                 const CupertinoActivityIndicator()
                               else
@@ -365,9 +340,13 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                                   ),
                                 ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: CupertinoColors.systemGreen.withOpacity(0.16),
+                                  color: CupertinoColors.systemGreen
+                                      .withOpacity(0.16),
                                   borderRadius: BorderRadius.circular(999),
                                 ),
                                 child: const Text(
@@ -383,54 +362,28 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        if (_statusMessage != null) ...[
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: CupertinoColors.systemGrey.withOpacity(0.12),
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                            child: Text(
-                              _statusMessage!,
-                              style: const TextStyle(
-                                color: CupertinoColors.white,
-                                fontSize: 14,
-                                height: 1.4,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
                         CupertinoButton.filled(
                           borderRadius: BorderRadius.circular(18),
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          onPressed: _isPurchasing || _isProUnlocked ? null : _buyPro,
+                          onPressed: _isPurchasing || _isProUnlocked
+                              ? null
+                              : _buyPro,
                           child: _isPurchasing
                               ? const CupertinoActivityIndicator()
                               : Text(
-                                  _isProUnlocked ? 'Đã mở Pro' : localizations.proBuyNow,
+                                  _isProUnlocked
+                                      ? 'Đã mở Pro'
+                                      : localizations.proBuyNow,
                                   style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                         ),
-                        const SizedBox(height: 12),
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: _isPurchasing ? null : _restorePurchases,
-                          child: Text(
-                            'Khôi phục mua hàng',
-                            style: TextStyle(
-                              color: CupertinoColors.systemOrange.withOpacity(_isPurchasing ? 0.4 : 1),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
+                        //Spacer(),
+                        const SizedBox(height: 24),
                         const Text(
-                          'Sau khi mua, Pro sẽ được mở vĩnh viễn trên thiết bị này. Nếu đăng nhập lại cùng tài khoản cửa hàng, bạn có thể khôi phục mua hàng.',
+                          'Sau khi mua, Pro sẽ được mở vĩnh viễn trên thiết bị này. Nếu đăng nhập lại cùng tài khoản cửa hàng đã dùng để mua ở thiết bị khác, bạn chỉ cần nhấn Khôi phục mua hàng.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: CupertinoColors.systemGrey,
@@ -438,6 +391,21 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                             height: 1.4,
                           ),
                         ),
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: _isPurchasing ? null : _restorePurchases,
+                          child: Text(
+                            'Khôi phục mua hàng',
+                            style: TextStyle(
+                              color: CupertinoColors.systemOrange.withOpacity(
+                                _isPurchasing ? 0.4 : 1,
+                              ),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   ),

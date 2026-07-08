@@ -87,7 +87,7 @@ const Map<String, String> heTranslations = {
   'timeFormat': 'פורמט שעה',
   'twentyFourHourFormat': 'פורמט 24 שעות',
   'supportAndFeedback': 'תמיכה ומשוב',
-  'upgradePro': 'שדרג לפרו',
+  'UPGRADE_PRO': 'שדרג לפרו',
   'guide': 'מדריך',
   'sendFeedback': 'שלח משוב',
   'about': 'אודות',

@@ -88,7 +88,7 @@ const Map<String, String> trTranslations = {
   'timeFormat': 'SAAT BİÇİMİ',
   'twentyFourHourFormat': '24 Saat Biçimi',
   'supportAndFeedback': 'DESTEK VE GERİ BİLDİRİM',
-    'upgradePro': 'PRO’YA YÜKSELT',
+    'UPGRADE_PRO': 'PRO’YA YÜKSELT',
   'guide': 'Kılavuz',
   'sendFeedback': 'Geri Bildirim Gönder',
   'about': 'HAKKINDA',

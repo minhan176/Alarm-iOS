@@ -87,7 +87,7 @@ const Map<String, String> fiTranslations = {
   'timeFormat': 'AIKAMUOTO',
   'twentyFourHourFormat': '24 tunnin muoto',
   'supportAndFeedback': 'TUKI JA PALAUTE',
-  'upgradePro': 'PÄIVITÄ PROHON',
+  'UPGRADE_PRO': 'PÄIVITÄ PROHON',
   'guide': 'Opas',
   'sendFeedback': 'Lähetä palautetta',
   'about': 'TIETOJA',

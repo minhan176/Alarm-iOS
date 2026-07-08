@@ -87,7 +87,7 @@ const Map<String, String> faTranslations = {
   'timeFormat': 'قالب زمان',
   'twentyFourHourFormat': 'قالب ۲۴ ساعته',
   'supportAndFeedback': 'پشتیبانی و بازخورد',
-  'upgradePro': 'ارتقا به پرو',
+  'UPGRADE_PRO': 'ارتقا به پرو',
   'guide': 'راهنما',
   'sendFeedback': 'ارسال بازخورد',
   'about': 'درباره',

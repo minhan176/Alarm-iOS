@@ -89,7 +89,7 @@ final Map<String, String> bsTranslations = mergeTranslations({
   'timeFormat': 'FORMAT VREMENA',
   'twentyFourHourFormat': '24-satni format',
   'supportAndFeedback': 'PODRŠKA I POVRATNE INFORMACIJE',
-  'upgradePro': 'NADOGRADI NA PRO',
+  'UPGRADE_PRO': 'NADOGRADI NA PRO',
   'guide': 'Vodič',
   'sendFeedback': 'Pošalji povratne informacije',
   'about': 'O APLIKACIJI',
