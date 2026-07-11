@@ -98,6 +98,7 @@ const Map<String, String> viTranslations = {
   'shareApp': 'Chia sẻ ứng dụng',
   'rateApp': 'Đánh giá ứng dụng',
   'privacyPolicy': 'Chính sách bảo mật',
+  'checkForUpdates': 'Kiểm tra cập nhật',
   'privacyPolicyError': 'Không thể mở chính sách bảo mật. Vui lòng truy cập trang web của chúng tôi.',
   'shareMessage': 'Tải Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Thông báo báo thức',

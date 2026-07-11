@@ -22,7 +22,8 @@ class SettingsScreen extends StatelessWidget {
 
     // Construct mailto URL manually to preserve spaces
     final String subject = 'Feedback Alarm Phone 17 OS 26';
-    final String mailtoUrl = 'mailto:oaptech.sp@gmail.com?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(deviceInfo)}';
+    final String mailtoUrl =
+        'mailto:oaptech.sp@gmail.com?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(deviceInfo)}';
 
     final Uri emailUri = Uri.parse(mailtoUrl);
 
@@ -32,7 +33,7 @@ class SettingsScreen extends StatelessWidget {
   Future<String> _getDeviceInfo(BuildContext context) async {
     final deviceInfoPlugin = DeviceInfoPlugin();
     final mediaQuery = MediaQuery.of(context);
-    
+
     String deviceName = 'Unknown';
     String osVersion = 'Unknown';
     String language = 'Unknown';
@@ -43,22 +44,23 @@ class SettingsScreen extends StatelessWidget {
       if (Platform.isAndroid) {
         final androidInfo = await deviceInfoPlugin.androidInfo;
         deviceName = androidInfo.model;
-        osVersion = 'Android ${androidInfo.version.release} (API ${androidInfo.version.sdkInt})';
+        osVersion =
+            'Android ${androidInfo.version.release} (API ${androidInfo.version.sdkInt})';
       } else if (Platform.isIOS) {
         final iosInfo = await deviceInfoPlugin.iosInfo;
         deviceName = iosInfo.utsname.machine;
         osVersion = 'iOS ${iosInfo.systemVersion}';
       }
-      
+
       // Language
       language = Platform.localeName;
-      
+
       // Timezone
       timezone = DateTime.now().timeZoneName;
-      
+
       // Screen info
-      screenInfo = '${mediaQuery.size.width.toInt()} px x ${mediaQuery.size.height.toInt()} px';
-      
+      screenInfo =
+          '${mediaQuery.size.width.toInt()} px x ${mediaQuery.size.height.toInt()} px';
     } catch (e) {
       // If device info collection fails, use fallback
       deviceName = 'Device info collection failed';
@@ -114,6 +116,15 @@ Please describe your feedback below:
     }
   }
 
+  void _checkForUpdates(BuildContext context) async {
+    try {
+      print('DEBUG: Redirecting to store for updates');
+      await StoreRedirect.redirect();
+    } catch (e) {
+      print('DEBUG: Store redirect failed: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<SettingsProvider>(context, listen: false);
@@ -150,7 +161,12 @@ Please describe your feedback below:
                     children: [
                       // Section 1: Time Format
                       Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          top: 16,
+                          bottom: 8,
+                        ),
                         child: Text(
                           AppLocalizations.of(context).timeFormat,
                           style: const TextStyle(
@@ -161,26 +177,39 @@ Please describe your feedback below:
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        margin: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 16,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF2C2C2E),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 4,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppLocalizations.of(context).twentyFourHourFormat,
-                                style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
+                                AppLocalizations.of(
+                                  context,
+                                ).twentyFourHourFormat,
+                                style: const TextStyle(
+                                  color: CupertinoColors.white,
+                                  fontSize: 16,
+                                ),
                               ),
                               Transform.scale(
                                 scale: 0.8,
                                 child: CupertinoSwitch(
                                   value: settingsProvider.is24HourFormat,
                                   activeColor: CupertinoColors.systemGreen,
-                                  onChanged: (value) => settingsProvider.set24HourFormat(value),
+                                  onChanged: (value) =>
+                                      settingsProvider.set24HourFormat(value),
                                 ),
                               ),
                             ],
@@ -190,7 +219,12 @@ Please describe your feedback below:
 
                       // Section 2: Support & Feedback
                       Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          top: 16,
+                          bottom: 8,
+                        ),
                         child: Text(
                           AppLocalizations.of(context).supportAndFeedback,
                           style: const TextStyle(
@@ -201,7 +235,11 @@ Please describe your feedback below:
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        margin: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 16,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF2C2C2E),
                           borderRadius: BorderRadius.circular(16),
@@ -209,10 +247,15 @@ Please describe your feedback below:
                         child: Column(
                           children: [
                             CupertinoButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
                               pressedOpacity: 1.0,
                               onPressed: () => Navigator.of(context).push(
-                                CupertinoPageRoute(builder: (context) => const GuideScreen()),
+                                CupertinoPageRoute(
+                                  builder: (context) => const GuideScreen(),
+                                ),
                               ),
                               child: Row(
                                 children: [
@@ -246,7 +289,10 @@ Please describe your feedback below:
                               endIndent: 16,
                             ),
                             CupertinoButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
                               pressedOpacity: 1.0,
                               onPressed: () => _sendFeedback(context),
                               child: Row(
@@ -274,15 +320,18 @@ Please describe your feedback below:
                                 ],
                               ),
                             ),
-                            
-                            
                           ],
                         ),
                       ),
 
                       // Section 3: About
                       Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          top: 16,
+                          bottom: 8,
+                        ),
                         child: Text(
                           AppLocalizations.of(context).about,
                           style: const TextStyle(
@@ -293,7 +342,11 @@ Please describe your feedback below:
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        margin: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 16,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF2C2C2E),
                           borderRadius: BorderRadius.circular(16),
@@ -301,7 +354,10 @@ Please describe your feedback below:
                         child: Column(
                           children: [
                             CupertinoButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
                               pressedOpacity: 1.0,
                               onPressed: () => _shareApp(context),
                               child: Row(
@@ -336,7 +392,10 @@ Please describe your feedback below:
                               endIndent: 16,
                             ),
                             CupertinoButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
                               pressedOpacity: 1.0,
                               onPressed: () => _rateApp(context),
                               child: Row(
@@ -371,7 +430,10 @@ Please describe your feedback below:
                               endIndent: 16,
                             ),
                             CupertinoButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
                               pressedOpacity: 1.0,
                               onPressed: () => _openPrivacyPolicy(context),
                               child: Row(
@@ -384,7 +446,49 @@ Please describe your feedback below:
                                   const SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
-                                      AppLocalizations.of(context).privacyPolicy,
+                                      AppLocalizations.of(
+                                        context,
+                                      ).privacyPolicy,
+                                      style: const TextStyle(
+                                        color: CupertinoColors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                  const Icon(
+                                    CupertinoIcons.chevron_right,
+                                    color: CupertinoColors.systemGrey,
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              color: const Color(0xFF3C3C3E),
+                              height: 0.5,
+                              indent: 48,
+                              endIndent: 16,
+                            ),
+                            CupertinoButton(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              pressedOpacity: 1.0,
+                              onPressed: () => _checkForUpdates(context),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    CupertinoIcons.arrow_2_circlepath,
+                                    color: CupertinoColors.white,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      AppLocalizations.of(
+                                        context,
+                                      ).checkForUpdates,
                                       style: const TextStyle(
                                         color: CupertinoColors.white,
                                         fontSize: 16,

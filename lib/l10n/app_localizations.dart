@@ -437,6 +437,7 @@ class AppLocalizations {
   String get guideStep2Sub2 => _t('guideStep2Sub2');
   String get guideStep2Sub3 => _t('guideStep2Sub3');
   String get gotIt => _t('gotIt');
+  String get checkForUpdates => _t('checkForUpdates');
 }
 
 class _AppLocalizationsDelegate

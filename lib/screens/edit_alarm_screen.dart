@@ -39,7 +39,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late bool _showDurationOptions;
   late AudioPlayer _previewPlayer;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel(
+    'com.oaptech.clock/alarm',
+  );
 
   @override
   void initState() {
@@ -63,7 +65,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _vibrate = true;
     }
     _labelController = TextEditingController(text: _label);
-    _snoozeDuration = widget.alarm?.snoozeDuration ?? const Duration(minutes: 5);
+    _snoozeDuration =
+        widget.alarm?.snoozeDuration ?? const Duration(minutes: 5);
     _showDurationOptions = false;
     _previewPlayer = AudioPlayer();
   }
@@ -71,7 +74,10 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _soundDisplayName = _getSoundDisplayName(_sound, AppLocalizations.of(context));
+    _soundDisplayName = _getSoundDisplayName(
+      _sound,
+      AppLocalizations.of(context),
+    );
   }
 
   String _getSoundDisplayName(String sound, [AppLocalizations? loc]) {
@@ -134,18 +140,18 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   Future<void> _checkAndShowReviewDialog() async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     // Check if user already rated or dismissed
     final hasRated = prefs.getBool('has_rated_app') ?? false;
     final dismissed = prefs.getBool('rating_dialog_dismissed') ?? false;
-    
+
     if (hasRated || dismissed) return;
-    
+
     // Increment add alarm count
     int addCount = prefs.getInt('add_alarm_count') ?? 0;
     addCount++;
     await prefs.setInt('add_alarm_count', addCount);
-    
+
     // Show dialog after 3rd alarm
     if (addCount >= 3 && mounted) {
       showCupertinoDialog(
@@ -179,7 +185,10 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                   listen: false,
                 ).deleteAlarm(widget.alarm!.id);
                 Navigator.of(context).pop(); // Close dialog
-                Navigator.of(context, rootNavigator: true).pop(); // Close edit screen
+                Navigator.of(
+                  context,
+                  rootNavigator: true,
+                ).pop(); // Close edit screen
               },
             ),
           ],
@@ -191,8 +200,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   Future<void> _stopSystemRingtonePreview() async {
     try {
       await _alarmChannel.invokeMethod('stopSystemRingtonePreview');
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   @override
@@ -203,23 +211,28 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
         child: Column(
           children: [
             // Custom Navigation Bar
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             CustomNavBar(
               backgroundColor: const Color(0xFF1C1C1E),
               leading: NavIconButton(
                 icon: CupertinoIcons.xmark,
                 iconColor: CupertinoColors.white,
-                onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+                onPressed: () =>
+                    Navigator.of(context, rootNavigator: true).pop(),
               ),
               middle: FittedBox(
-                fit: BoxFit.scaleDown, child: Text(
-                widget.alarm != null ? AppLocalizations.of(context).editAlarm : AppLocalizations.of(context).addAlarm,
-                style: const TextStyle(
-                  color: CupertinoColors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  widget.alarm != null
+                      ? AppLocalizations.of(context).editAlarm
+                      : AppLocalizations.of(context).addAlarm,
+                  style: const TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              )),
+              ),
               trailing: NavIconButton(
                 icon: CupertinoIcons.checkmark,
                 iconColor: CupertinoColors.white,
@@ -233,7 +246,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 initialDateTime: _selectedTime,
-                use24hFormat: Provider.of<SettingsProvider>(context).is24HourFormat,
+                use24hFormat: Provider.of<SettingsProvider>(
+                  context,
+                ).is24HourFormat,
                 onDateTimeChanged: (DateTime newTime) {
                   setState(() {
                     _selectedTime = newTime;
@@ -269,8 +284,12 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       children: [
                         _buildSettingItem(
                           AppLocalizations.of(context).snoozeDuration,
-                          AppLocalizations.of(context).minutesValue(_snoozeDuration.inMinutes),
-                          () => setState(() => _showDurationOptions = !_showDurationOptions),
+                          AppLocalizations.of(
+                            context,
+                          ).minutesValue(_snoozeDuration.inMinutes),
+                          () => setState(
+                            () => _showDurationOptions = !_showDurationOptions,
+                          ),
                           valueColor: CupertinoColors.systemOrange,
                           showArrow: false,
                           pressedOpacity: 1.0,
@@ -291,19 +310,25 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                                   child: CupertinoPicker(
                                     backgroundColor: Colors.transparent,
                                     itemExtent: 40,
-                                    scrollController: FixedExtentScrollController(
-                                      initialItem: _snoozeDuration.inMinutes - 1,
-                                    ),
+                                    scrollController:
+                                        FixedExtentScrollController(
+                                          initialItem:
+                                              _snoozeDuration.inMinutes - 1,
+                                        ),
                                     onSelectedItemChanged: (index) {
                                       setState(() {
-                                        _snoozeDuration = Duration(minutes: index + 1);
+                                        _snoozeDuration = Duration(
+                                          minutes: index + 1,
+                                        );
                                       });
                                     },
                                     children: List.generate(15, (index) {
                                       final minutes = index + 1;
                                       return Center(
                                         child: Text(
-                                          AppLocalizations.of(context).minutesValue(minutes),
+                                          AppLocalizations.of(
+                                            context,
+                                          ).minutesValue(minutes),
                                           style: const TextStyle(
                                             color: CupertinoColors.white,
                                             fontSize: 16,
@@ -318,7 +343,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       ],
                     ),
                   ]),
-                              
+
                   if (widget.alarm != null) ...[
                     const SizedBox(height: 40),
                     Container(
@@ -374,7 +399,14 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     );
   }
 
-  Widget _buildSettingItem(String title, String value, VoidCallback onTap, {Color valueColor = CupertinoColors.systemGrey, bool showArrow = true, double pressedOpacity = 0.4}) {
+  Widget _buildSettingItem(
+    String title,
+    String value,
+    VoidCallback onTap, {
+    Color valueColor = CupertinoColors.systemGrey,
+    bool showArrow = true,
+    double pressedOpacity = 0.4,
+  }) {
     return CupertinoButton(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       pressedOpacity: pressedOpacity,
@@ -385,18 +417,15 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
+              style: const TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 16,
+              ),
             ),
           ),
           Row(
             children: [
-              Text(
-                value,
-                style: TextStyle(
-                  color: valueColor,
-                  fontSize: 16,
-                ),
-              ),
+              Text(value, style: TextStyle(color: valueColor, fontSize: 16)),
               if (showArrow) ...[
                 const SizedBox(width: 8),
                 const Icon(
@@ -451,10 +480,15 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               placeholder: AppLocalizations.of(context).alarm,
               textAlign: TextAlign.right,
               style: TextStyle(
-                color: _label.isEmpty ? CupertinoColors.systemGrey : CupertinoColors.white,
+                color: _label.isEmpty
+                    ? CupertinoColors.systemGrey
+                    : CupertinoColors.white,
                 fontSize: 16,
               ),
-              placeholderStyle: const TextStyle(color: CupertinoColors.systemGrey, fontSize: 16),
+              placeholderStyle: const TextStyle(
+                color: CupertinoColors.systemGrey,
+                fontSize: 16,
+              ),
               decoration: const BoxDecoration(),
               onChanged: (value) {
                 setState(() {
@@ -467,7 +501,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       ),
     );
   }
-
 
   String _getRepeatText(AppLocalizations loc) {
     if (_repeatDays.isEmpty) return loc.never;
@@ -485,19 +518,25 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
         _repeatDays.contains(7)) {
       return loc.weekends;
     }
-    final dayNames = [loc.mon, loc.tue, loc.wed, loc.thu, loc.fri, loc.sat, loc.sun];
+    final dayNames = [
+      loc.mon,
+      loc.tue,
+      loc.wed,
+      loc.thu,
+      loc.fri,
+      loc.sat,
+      loc.sun,
+    ];
     return _repeatDays.map((day) => dayNames[day - 1]).join(', ');
   }
 
   void _showRepeatDialog() async {
     final result = await Navigator.of(context).push<List<int>>(
       CupertinoPageRoute(
-        builder: (context) => RepeatSelector(
-          selectedDays: _repeatDays,
-        ),
+        builder: (context) => RepeatSelector(selectedDays: _repeatDays),
       ),
     );
-    
+
     if (result != null) {
       setState(() {
         _repeatDays = result;
@@ -508,27 +547,26 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   void _showSoundPage() async {
     final result = await Navigator.of(context).push<Map<String, dynamic>>(
       CupertinoPageRoute(
-        builder: (context) => SoundSelector(currentSound: _sound, currentVibrate: _vibrate),
+        builder: (context) =>
+            SoundSelector(currentSound: _sound, currentVibrate: _vibrate),
       ),
     );
     if (result != null) {
       setState(() {
         _sound = result['sound'];
-        _soundDisplayName = result['soundDisplayName'] ?? _getSoundDisplayName(result['sound'], AppLocalizations.of(context));
+        _soundDisplayName =
+            result['soundDisplayName'] ??
+            _getSoundDisplayName(result['sound'], AppLocalizations.of(context));
         _vibrate = result['vibrate'];
       });
     }
   }
-
 }
 
 class RepeatSelector extends StatefulWidget {
   final List<int> selectedDays;
 
-  const RepeatSelector({
-    super.key,
-    required this.selectedDays,
-  });
+  const RepeatSelector({super.key, required this.selectedDays});
 
   @override
   State<RepeatSelector> createState() => _RepeatSelectorState();
@@ -561,100 +599,99 @@ class _RepeatSelectorState extends State<RepeatSelector> {
         return false;
       },
       child: CupertinoPageScaffold(
-      backgroundColor: const Color(0xFF1C1C1E),
-      child: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 5),
-            CustomNavBar(
-              backgroundColor: const Color(0xFF1C1C1E),
-              leading: NavTextIconButton(
-                icon: CupertinoIcons.chevron_left,
-                text: AppLocalizations.of(context).back,
-                iconColor: CupertinoColors.white,
-                textColor: CupertinoColors.white,
-                onPressed: () => Navigator.of(context).pop(_selectedDays),
-              ),
-              middle: Text(
-                AppLocalizations.of(context).repeat,
-                style: const TextStyle(
-                  color: CupertinoColors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+        backgroundColor: const Color(0xFF1C1C1E),
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 5),
+              CustomNavBar(
+                backgroundColor: const Color(0xFF1C1C1E),
+                leading: NavTextIconButton(
+                  icon: CupertinoIcons.chevron_left,
+                  text: AppLocalizations.of(context).back,
+                  iconColor: CupertinoColors.white,
+                  textColor: CupertinoColors.white,
+                  onPressed: () => Navigator.of(context).pop(_selectedDays),
+                ),
+                middle: Text(
+                  AppLocalizations.of(context).repeat,
+                  style: const TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xFF2C2C2E),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: days.length,
-                separatorBuilder: (context, index) => Divider(
-                  color: const Color(0xFF3C3C3E),
-                  height: 0.5,
-                  indent: 16,
-                  endIndent: 16,
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 24,
+                  bottom: 4,
                 ),
-                itemBuilder: (context, index) {
-                  final dayIndex = index + 1;
-                  final isSelected = _selectedDays.contains(dayIndex);
-                  return CupertinoButton(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    pressedOpacity: 1.0,
-                    onPressed: () {
-                      setState(() {
-                        if (isSelected) {
-                          _selectedDays.remove(dayIndex);
-                        } else {
-                          _selectedDays.add(dayIndex);
-                        }
-                        _selectedDays.sort();
-                      });
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          days[index],
-                          style: const TextStyle(
-                            color: CupertinoColors.white,
-                            fontSize: 16,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2C2C2E),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: days.length,
+                  separatorBuilder: (context, index) => Divider(
+                    color: const Color(0xFF3C3C3E),
+                    height: 0.5,
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+                  itemBuilder: (context, index) {
+                    final dayIndex = index + 1;
+                    final isSelected = _selectedDays.contains(dayIndex);
+                    return CupertinoButton(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      pressedOpacity: 1.0,
+                      onPressed: () {
+                        setState(() {
+                          if (isSelected) {
+                            _selectedDays.remove(dayIndex);
+                          } else {
+                            _selectedDays.add(dayIndex);
+                          }
+                          _selectedDays.sort();
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            days[index],
+                            style: const TextStyle(
+                              color: CupertinoColors.white,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        if (isSelected)
-                          const Icon(
-                            CupertinoIcons.check_mark,
-                            color: CupertinoColors.systemOrange,
-                            size: 24,
-                          )
-                        else
-                          const SizedBox(width: 24, height: 24),
-                      ],
-                    ),
-                  );
-                },
+                          if (isSelected)
+                            const Icon(
+                              CupertinoIcons.check_mark,
+                              color: CupertinoColors.systemOrange,
+                              size: 24,
+                            )
+                          else
+                            const SizedBox(width: 24, height: 24),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-            Flexible(
-              child: Container(                
-              ),
-            ),
-            const SettingsLargeBannerAd(),
-            Flexible(
-              child: Container(                
-              ),
-            ),
-          ],
+              Flexible(child: Container()),
+              const SettingsLargeBannerAd(),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -668,7 +705,7 @@ String _truncateSoundName(String soundName, {int maxLength = 25}) {
 class CustomRingtone {
   final String displayTitle;
   final String uri;
-  
+
   CustomRingtone({required this.displayTitle, required this.uri});
 }
 
@@ -694,7 +731,9 @@ class _SoundSelectorState extends State<SoundSelector> {
   late String? _currentlyPreviewingUri;
   late String? _selectedCustomSound;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel(
+    'com.oaptech.clock/alarm',
+  );
 
   @override
   void initState() {
@@ -704,7 +743,8 @@ class _SoundSelectorState extends State<SoundSelector> {
     _previewPlayer = AudioPlayer();
     _currentlyPreviewingUri = null;
     _selectedCustomSound = null;
-    if (widget.currentSound.startsWith('/') || widget.currentSound.contains('\\')) {
+    if (widget.currentSound.startsWith('/') ||
+        widget.currentSound.contains('\\')) {
       _selectedCustomSound = widget.currentSound;
     }
     _loadSystemRingtones();
@@ -729,7 +769,6 @@ class _SoundSelectorState extends State<SoundSelector> {
           uniqueSounds[sound.uri] = sound;
         }
       }
-      
 
       setState(() {
         // Create the custom ringtones
@@ -741,7 +780,7 @@ class _SoundSelectorState extends State<SoundSelector> {
           displayTitle: 'Alarm Phone 17 OS 26',
           uri: 'assets/sounds/alarm.mp3',
         );
-        
+
         // Combine system ringtones with custom ringtones
         _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
       });
@@ -776,19 +815,21 @@ class _SoundSelectorState extends State<SoundSelector> {
               displayTitle: 'Alarm Phone 17 OS 26',
               uri: 'assets/sounds/alarm.mp3',
             );
-            
+
             // Combine system ringtones with custom ringtones
-            _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
+            _systemRingtones = [
+              noneRingtone,
+              alarmOS26,
+              ...uniqueSounds.values,
+            ];
           });
         } else {
           // Permission denied, just use built-in sounds
-          setState(() {
-          });
+          setState(() {});
         }
       } catch (e2) {
         // If still fails, just use built-in sounds
-        setState(() {
-        });
+        setState(() {});
       }
     }
   }
@@ -810,8 +851,7 @@ class _SoundSelectorState extends State<SoundSelector> {
         // Handle JbhRingtoneModel and other objects with uri property
         try {
           soundUri = (ringtone as dynamic).uri as String?;
-        } catch (e) {
-        }
+        } catch (e) {}
       }
 
       if (soundUri != null && soundUri != 'None') {
@@ -833,7 +873,9 @@ class _SoundSelectorState extends State<SoundSelector> {
 
           if (soundUri.startsWith('content://')) {
             // It's a system ringtone URI - use native RingtoneManager like alarm ring screen
-            await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': soundUri});
+            await _alarmChannel.invokeMethod('playSystemRingtone', {
+              'uri': soundUri,
+            });
             _currentlyPreviewingUri = soundUri;
 
             // Auto-stop after 30 seconds (since playSystemRingtone loops)
@@ -877,13 +919,13 @@ class _SoundSelectorState extends State<SoundSelector> {
             _currentlyPreviewingUri = soundUri;
           }
         } catch (e) {
-          if (!soundUri.startsWith('content://') && !soundUri.startsWith('/') && !soundUri.startsWith('assets/') && !soundUri.contains('\\')) {
-          }
+          if (!soundUri.startsWith('content://') &&
+              !soundUri.startsWith('/') &&
+              !soundUri.startsWith('assets/') &&
+              !soundUri.contains('\\')) {}
         }
-      } else {
-      }
-    } catch (e) {
-    }
+      } else {}
+    } catch (e) {}
   }
 
   Future<void> _stopRingtonePreview() async {
@@ -891,16 +933,14 @@ class _SoundSelectorState extends State<SoundSelector> {
       await _previewPlayer.stop();
 
       // Also stop system ringtone if playing
-      if (_currentlyPreviewingUri != null && _currentlyPreviewingUri!.startsWith('content://')) {
+      if (_currentlyPreviewingUri != null &&
+          _currentlyPreviewingUri!.startsWith('content://')) {
         await _alarmChannel.invokeMethod('stopSystemRingtone');
       }
 
       _currentlyPreviewingUri = null;
-    } catch (e) {
-    }
+    } catch (e) {}
   }
-
-
 
   void _pickFromDevice() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -928,16 +968,16 @@ class _SoundSelectorState extends State<SoundSelector> {
       (r) => r.uri == _selectedSound,
       orElse: () => null,
     );
-    
+
     if (ringtone != null) {
       return ringtone.displayTitle;
     }
-    
+
     // For custom sounds from device
     if (_selectedSound.startsWith('/') || _selectedSound.contains('\\')) {
       return _truncateSoundName(path.basename(_selectedSound));
     }
-    
+
     // For built-in sounds
     return _selectedSound;
   }
@@ -954,9 +994,9 @@ class _SoundSelectorState extends State<SoundSelector> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pop({
-          'sound': _selectedSound, 
+          'sound': _selectedSound,
           'soundDisplayName': _getSelectedSoundDisplayName(),
-          'vibrate': _vibrate
+          'vibrate': _vibrate,
         });
         return false;
       },
@@ -975,9 +1015,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                   iconColor: CupertinoColors.white,
                   textColor: CupertinoColors.white,
                   onPressed: () => Navigator.of(context).pop({
-                    'sound': _selectedSound, 
+                    'sound': _selectedSound,
                     'soundDisplayName': _getSelectedSoundDisplayName(),
-                    'vibrate': _vibrate
+                    'vibrate': _vibrate,
                   }),
                 ),
                 middle: Text(
@@ -991,26 +1031,38 @@ class _SoundSelectorState extends State<SoundSelector> {
               ),
               // Make the rest of the content scrollable
               Container(
-                margin: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                margin: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                  bottom: 8,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFF2C2C2E),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         AppLocalizations.of(context).vibrate,
-                        style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
+                        style: const TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 16,
+                        ),
                       ),
                       Transform.scale(
                         scale: 0.8,
                         child: CupertinoSwitch(
                           value: _vibrate,
                           activeColor: CupertinoColors.systemGreen,
-                          onChanged: (value) => setState(() => _vibrate = value),
+                          onChanged: (value) =>
+                              setState(() => _vibrate = value),
                         ),
                       ),
                     ],
@@ -1019,7 +1071,12 @@ class _SoundSelectorState extends State<SoundSelector> {
               ),
               // Section 1: Add from device
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                  bottom: 8,
+                ),
                 child: Text(
                   AppLocalizations.of(context).songs,
                   style: const TextStyle(
@@ -1038,7 +1095,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                 child: ListView.separated(
                   shrinkWrap: true,
                   //physics: const ClampingScrollPhysics(),
-                  itemCount: _selectedCustomSound != null ? 2 : 1, // Show custom song (if selected) and pick button
+                  itemCount: _selectedCustomSound != null
+                      ? 2
+                      : 1, // Show custom song (if selected) and pick button
                   separatorBuilder: (context, index) => Divider(
                     color: const Color(0xFF3C3C3E),
                     height: 0.5,
@@ -1051,7 +1110,10 @@ class _SoundSelectorState extends State<SoundSelector> {
                       // Selected custom song
                       final isSelected = _selectedSound == _selectedCustomSound;
                       return CupertinoButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         pressedOpacity: 1.0,
                         onPressed: () {
                           setState(() {
@@ -1076,9 +1138,13 @@ class _SoundSelectorState extends State<SoundSelector> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Container(
-                                  constraints: const BoxConstraints(maxWidth: 200),
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 200,
+                                  ),
                                   child: Text(
-                                    _truncateSoundName(path.basename(_selectedCustomSound!)),
+                                    _truncateSoundName(
+                                      path.basename(_selectedCustomSound!),
+                                    ),
                                     style: const TextStyle(
                                       color: CupertinoColors.white,
                                       fontSize: 16,
@@ -1094,7 +1160,10 @@ class _SoundSelectorState extends State<SoundSelector> {
                     } else if (index == 0 || index == 1) {
                       // Pick a song button
                       return CupertinoButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         pressedOpacity: 1.0,
                         onPressed: _pickFromDevice,
                         child: SizedBox(
@@ -1127,7 +1196,12 @@ class _SoundSelectorState extends State<SoundSelector> {
               // Section 2: System Ringtones
               if (_systemRingtones.isNotEmpty) ...[
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    top: 16,
+                    bottom: 8,
+                  ),
                   child: Text(
                     AppLocalizations.of(context).systemRingtones,
                     style: const TextStyle(
@@ -1139,7 +1213,11 @@ class _SoundSelectorState extends State<SoundSelector> {
                 ),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                    margin: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFF2C2C2E),
                       borderRadius: BorderRadius.circular(16),
@@ -1158,7 +1236,10 @@ class _SoundSelectorState extends State<SoundSelector> {
                         final ringtone = _systemRingtones[index];
                         final isSelected = _selectedSound == ringtone.uri;
                         return CupertinoButton(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
                           pressedOpacity: 1.0,
                           onPressed: () {
                             setState(() {
@@ -1181,7 +1262,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Container(
-                                  constraints: const BoxConstraints(maxWidth: 200),
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 200,
+                                  ),
                                   child: Text(
                                     _truncateSoundName(ringtone.displayTitle),
                                     style: const TextStyle(

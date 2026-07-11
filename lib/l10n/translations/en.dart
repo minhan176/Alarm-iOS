@@ -126,6 +126,7 @@ const Map<String, String> enTranslations = {
   'shareApp': 'Share App',
   'rateApp': 'Rate App',
   'privacyPolicy': 'Privacy Policy',
+  'checkForUpdates': 'Check for Updates',
   'privacyPolicyError': 'Unable to open privacy policy. Please visit our website.',
   'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
 
