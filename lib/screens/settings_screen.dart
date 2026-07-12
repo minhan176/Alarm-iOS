@@ -1,3 +1,4 @@
+import 'package:clock_os_26/screens/upgrade_pro_screen.dart';
 import 'package:clock_os_26/widgets/settings_large_banner_ad.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,11 +118,10 @@ Please describe your feedback below:
   }
 
   void _checkForUpdates(BuildContext context) async {
-    try {
-      print('DEBUG: Redirecting to store for updates');
-      await StoreRedirect.redirect();
-    } catch (e) {
-      print('DEBUG: Store redirect failed: $e');
+    const url = 'https://play.google.com/store/apps/details?id=com.oaptech.clock';
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     }
   }
 
@@ -159,6 +159,7 @@ Please describe your feedback below:
                 builder: (context, settingsProvider, child) {
                   return ListView(
                     children: [
+                      
                       // Section 1: Time Format
                       Padding(
                         padding: const EdgeInsets.only(
@@ -191,26 +192,105 @@ Please describe your feedback below:
                             horizontal: 16,
                             vertical: 4,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
                             children: [
-                              Text(
-                                AppLocalizations.of(
-                                  context,
-                                ).twentyFourHourFormat,
-                                style: const TextStyle(
-                                  color: CupertinoColors.white,
-                                  fontSize: 16,
+                              CupertinoButton(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 0,
+                                vertical: 0,
+                              ),
+                              pressedOpacity: 1.0,
+                              onPressed: () => Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) => const UpgradeProScreen(),
+                                  fullscreenDialog: true,
                                 ),
                               ),
-                              Transform.scale(
-                                scale: 0.8,
-                                child: CupertinoSwitch(
-                                  value: settingsProvider.is24HourFormat,
-                                  activeColor: CupertinoColors.systemGreen,
-                                  onChanged: (value) =>
-                                      settingsProvider.set24HourFormat(value),
-                                ),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.workspace_premium,
+                                color: CupertinoColors.systemOrange,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Trải nghiệm tốt nhất',                                        
+                                        style: const TextStyle(
+                                          color: CupertinoColors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 4),                                  
+                                  CupertinoButton(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                    minSize: 0,
+                                    color: CupertinoColors.systemOrange.withOpacity(0.15),
+                                    borderRadius: BorderRadius.circular(999),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                      builder: (context) => const UpgradeProScreen(),
+                                      fullscreenDialog: true,
+                                                                  ),
+                                                                );
+                                                              },
+                                                              child: Text(
+                                                                AppLocalizations.of(context).UPGRADE_PRO,
+                                                                style: TextStyle(
+                                                                  color: CupertinoColors.systemOrange,
+                                                                  fontSize: 12,
+                                                                  fontWeight: FontWeight.w600,
+                                                                ),
+                                                              ),
+                                                            ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              color: const Color(0xFF3C3C3E),
+                              height: 0.5,
+                              indent: 32,
+                              //endIndent: 0,
+
+                            ),
+                            SizedBox(height: 4),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.clock,
+                                        color: CupertinoColors.white,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    ).twentyFourHourFormat,
+                                    style: const TextStyle(
+                                      color: CupertinoColors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                    ],
+                                  ),
+                                  
+                                  CupertinoSwitch(
+                                    value: settingsProvider.is24HourFormat,
+                                    activeColor: CupertinoColors.systemGreen,
+                                    onChanged: (value) =>
+                                        settingsProvider.set24HourFormat(value),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
