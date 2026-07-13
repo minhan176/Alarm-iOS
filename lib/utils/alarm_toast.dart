@@ -4,11 +4,12 @@ import '../models/alarm_model.dart';
 import '../l10n/app_localizations.dart';
 
 class AlarmToast {
-  static void showAlarmToast(AlarmModel alarm, BuildContext context, {String? customMessage}) {
+  static void showAlarmToast(AlarmModel? alarm, BuildContext context, {String? customMessage, double bottom = 150}) {
     String displayMessage;
     if (customMessage != null) {
       displayMessage = customMessage;
     } else {
+      if (alarm == null) return;
       final nextAlarmTime = alarm.getNextAlarmTime();
       final now = DateTime.now();
       final difference = nextAlarmTime.difference(now);
@@ -73,7 +74,7 @@ class AlarmToast {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        bottom: 150, // Position from bottom - cao hơn BOTTOM toast thông thường
+        bottom: bottom, // Position from bottom - adjustable for different contexts
         left: 0,
         right: 0,
         child: Material(

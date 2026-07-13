@@ -7,6 +7,8 @@ import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -71,8 +73,10 @@ void main() {
   final system24HourFormat = mediaQuery.alwaysUse24HourFormat;
 
   // Check if app is opened from ring screen intent
-  final initialRoute = WidgetsBinding.instance.platformDispatcher.defaultRouteName;
-  _skipPermissionCheck = initialRoute == '/alarm_ring' || initialRoute == '/timer_ring';
+  final initialRoute =
+      WidgetsBinding.instance.platformDispatcher.defaultRouteName;
+  _skipPermissionCheck =
+      initialRoute == '/alarm_ring' || initialRoute == '/timer_ring';
 
   // Set up alarm callback
   AlarmService.onAlarmRing = (alarm) {
@@ -92,6 +96,8 @@ void main() {
 
 Future<void> _initializeServices() async {
   await AlarmService.initialize();
+  // final prefs = await SharedPreferences.getInstance();
+  // await prefs.setBool('pro_unlocked', false);
 }
 
 void _showAlarmScreen(AlarmModel alarm) {
@@ -130,13 +136,13 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     AdService.loadAppOpenAd();
-    
+
     // Skip permission checks if app is opened from ring screen
     if (!_skipPermissionCheck) {
       _checkOverlayPermission();
       _loadBatteryDialogState();
     }
-    
+
     // Set up method channel to listen for navigation calls from Android
     const platform = MethodChannel('com.oaptech.clock/navigation');
     platform.setMethodCallHandler((call) async {
@@ -177,10 +183,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     }
     if (state == AppLifecycleState.resumed) {
       // Update time format from system if user hasn't changed it
-      final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+      final mediaQuery = MediaQueryData.fromWindow(
+        WidgetsBinding.instance.window,
+      );
       final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
-      Provider.of<SettingsProvider>(navigatorKey.currentContext!, listen: false)
-          .updateFromSystem(currentSystem24HourFormat);
+      Provider.of<SettingsProvider>(
+        navigatorKey.currentContext!,
+        listen: false,
+      ).updateFromSystem(currentSystem24HourFormat);
     }
   }
 
@@ -195,7 +205,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   Future<void> _loadBatteryDialogState() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _batteryDialogDisplayedOnce = prefs.getBool('battery_dialog_shown') ?? false;
+      _batteryDialogDisplayedOnce =
+          prefs.getBool('battery_dialog_shown') ?? false;
     });
   }
 
@@ -284,7 +295,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     // Skip permission dialogs if app is opened from ring screen
     if (!_skipPermissionCheck) {
       // Battery optimization dialog logic - only show after overlay is granted and only once
-      if (_permissionChecked && _overlayGranted && !_batteryDialogDisplayedOnce && !_batteryDialogShown && !_skipBatteryAfterOverlayGrant) {
+      if (_permissionChecked &&
+          _overlayGranted &&
+          !_batteryDialogDisplayedOnce &&
+          !_batteryDialogShown &&
+          !_skipBatteryAfterOverlayGrant) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _showBatteryOptimizationDialog(context);
         });
@@ -298,7 +313,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           });
         });
       }
-      
+
       if (_permissionChecked && !_overlayGranted && !_dialogShown) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _showOverlayDialog(context);
@@ -315,13 +330,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       }
     }
 
-    
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AlarmProvider()),
         ChangeNotifierProvider(create: (context) => WorldClockProvider()),
-        ChangeNotifierProvider(create: (context) => SettingsProvider(initial24HourFormat: widget.system24HourFormat)),
+        ChangeNotifierProvider(
+          create: (context) =>
+              SettingsProvider(initial24HourFormat: widget.system24HourFormat),
+        ),
       ],
       child: CupertinoApp(
         navigatorKey: navigatorKey,
@@ -366,13 +382,13 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ),
         routes: {
           '/home': (context) => AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle.light,
-                child: CupertinoScaffold(
-                  topRadius: const Radius.circular(12),
-                  transitionBackgroundColor: CupertinoColors.black,
-                  body: const MainTabScreen(),
-                ),
-              ),
+            value: SystemUiOverlayStyle.light,
+            child: CupertinoScaffold(
+              topRadius: const Radius.circular(12),
+              transitionBackgroundColor: CupertinoColors.black,
+              body: const MainTabScreen(),
+            ),
+          ),
           '/alarm_ring': (context) => const AlarmRingScreenWidget(),
           '/timer_ring': (context) => const TimerRingScreenWidget(),
         },
@@ -389,7 +405,8 @@ class MainTabScreen extends StatefulWidget {
   State<MainTabScreen> createState() => _MainTabScreenState();
 }
 
-class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserver {
+class _MainTabScreenState extends State<MainTabScreen>
+    with WidgetsBindingObserver {
   int _currentIndex = 1; // Start with Alarm tab
 
   final List<Widget> _screens = const [
@@ -421,10 +438,14 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
     if (state == AppLifecycleState.resumed) {
       _checkPendingAlarm();
       // Update time format from system if user hasn't changed it
-      final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+      final mediaQuery = MediaQueryData.fromWindow(
+        WidgetsBinding.instance.window,
+      );
       final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
-      Provider.of<SettingsProvider>(context, listen: false)
-          .updateFromSystem(currentSystem24HourFormat);
+      Provider.of<SettingsProvider>(
+        context,
+        listen: false,
+      ).updateFromSystem(currentSystem24HourFormat);
       AdService.showAppOpenAdIfAvailable();
     }
   }
@@ -445,10 +466,7 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
         // Main content with SafeArea
         SafeArea(
           bottom: true,
-          child: IndexedStack(
-            index: _currentIndex,
-            children: _screens,
-          ),
+          child: IndexedStack(index: _currentIndex, children: _screens),
         ),
         // Liquid Glass Bottom Bar
         Align(
@@ -458,44 +476,44 @@ class _MainTabScreenState extends State<MainTabScreen> with WidgetsBindingObserv
             barHeight: 57,
             bottomPadding: MediaQuery.of(context).padding.bottom + 16,
             tabs: [
-                LiquidGlassBottomBarTab(
-                  label: AppLocalizations.of(context).tabWorldClock,
-                  icon: CupertinoIcons.globe,
-                ),
-                LiquidGlassBottomBarTab(
-                  label: AppLocalizations.of(context).tabAlarm,
-                  icon: CupertinoIcons.alarm,
-                ),
-                LiquidGlassBottomBarTab(
-                  label: AppLocalizations.of(context).tabStopwatch,
-                  icon: CupertinoIcons.stopwatch,
-                ),
-                LiquidGlassBottomBarTab(
-                  label: AppLocalizations.of(context).tabTimer,
-                  icon: CupertinoIcons.timer,
-                ),
-              ],
-              selectedIndex: _currentIndex,
-              onTabSelected: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              glassSettings: LiquidGlassSettings(
-                refractiveIndex: 1.21,
-                thickness: 30,
-                blur: 8,
-                saturation: 1.5,
-                lightIntensity: isDark ? .7 : 1,
-                ambientStrength: isDark ? .2 : .5,
-                lightAngle: math.pi / 4,
-                glassColor: const Color(0xFF3C3C3E).withValues(alpha: 1),
+              LiquidGlassBottomBarTab(
+                label: AppLocalizations.of(context).tabWorldClock,
+                icon: CupertinoIcons.globe,
               ),
+              LiquidGlassBottomBarTab(
+                label: AppLocalizations.of(context).tabAlarm,
+                icon: CupertinoIcons.alarm,
+              ),
+              LiquidGlassBottomBarTab(
+                label: AppLocalizations.of(context).tabStopwatch,
+                icon: CupertinoIcons.stopwatch,
+              ),
+              LiquidGlassBottomBarTab(
+                label: AppLocalizations.of(context).tabTimer,
+                icon: CupertinoIcons.timer,
+              ),
+            ],
+            selectedIndex: _currentIndex,
+            onTabSelected: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            glassSettings: LiquidGlassSettings(
+              refractiveIndex: 1.21,
+              thickness: 30,
+              blur: 8,
+              saturation: 1.5,
+              lightIntensity: isDark ? .7 : 1,
+              ambientStrength: isDark ? .2 : .5,
+              lightAngle: math.pi / 4,
+              glassColor: const Color(0xFF3C3C3E).withValues(alpha: 1),
             ),
           ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
+  }
 }
 
 // Widget for alarm ring screen that loads data from method channel
@@ -565,9 +583,7 @@ class _AlarmRingScreenWidgetState extends State<AlarmRingScreenWidget> {
     if (_isLoading) {
       return const CupertinoPageScaffold(
         backgroundColor: CupertinoColors.black,
-        child: Center(
-          child: CupertinoActivityIndicator(),
-        ),
+        child: Center(child: CupertinoActivityIndicator()),
       );
     }
 
@@ -615,13 +631,17 @@ class _TimerRingScreenWidgetState extends State<TimerRingScreenWidget> {
   Future<void> _loadTimerData() async {
     try {
       print('DEBUG: TimerRingScreenWidget loading timer data');
-      final Map<dynamic, dynamic>? timerData = await platform.invokeMethod('getTimerData');
+      final Map<dynamic, dynamic>? timerData = await platform.invokeMethod(
+        'getTimerData',
+      );
       if (timerData != null) {
         print('DEBUG: Received timer data: $timerData');
         final remainingSeconds = timerData['remainingSeconds'] as int? ?? 0;
         final selectedSound = timerData['selectedSound'] as String? ?? 'Radar';
         final selectedVibrate = timerData['selectedVibrate'] as bool? ?? false;
-        print('DEBUG: Parsed timer: remainingSeconds=$remainingSeconds, sound=$selectedSound, vibrate=$selectedVibrate');
+        print(
+          'DEBUG: Parsed timer: remainingSeconds=$remainingSeconds, sound=$selectedSound, vibrate=$selectedVibrate',
+        );
         setState(() {
           _remainingSeconds = remainingSeconds;
           _selectedSound = selectedSound;
@@ -655,9 +675,7 @@ class _TimerRingScreenWidgetState extends State<TimerRingScreenWidget> {
     if (_isLoading) {
       return const CupertinoPageScaffold(
         backgroundColor: CupertinoColors.black,
-        child: Center(
-          child: CupertinoActivityIndicator(),
-        ),
+        child: Center(child: CupertinoActivityIndicator()),
       );
     }
 

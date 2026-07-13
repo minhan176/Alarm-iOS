@@ -145,28 +145,29 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         ),
                         if (_isEditMode) ...[
                           const SizedBox(width: 10),
-                          CupertinoButton(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            minSize: 0,
-                            color: CupertinoColors.systemOrange.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(999),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                  builder: (context) => const UpgradeProScreen(),
-                                  fullscreenDialog: true,
+                          if (!Provider.of<SettingsProvider>(context).isProUnlocked)
+                            CupertinoButton(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              minSize: 0,
+                              color: CupertinoColors.systemOrange.withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(999),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (context) => const UpgradeProScreen(),
+                                    fullscreenDialog: true,
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                AppLocalizations.of(context).UPGRADE_PRO,
+                                style: const TextStyle(
+                                  color: CupertinoColors.systemOrange,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              );
-                            },
-                            child: Text(
-                              AppLocalizations.of(context).UPGRADE_PRO,
-                              style: TextStyle(
-                                color: CupertinoColors.systemOrange,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
                         ],
                       ],
                     ),

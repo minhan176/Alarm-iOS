@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
 
-import '../services/pro_access_service.dart';
+import '../providers/settings_provider.dart';
 
 class SettingsLargeBannerAd extends StatefulWidget {
   const SettingsLargeBannerAd({super.key});
@@ -16,12 +16,11 @@ class SettingsLargeBannerAd extends StatefulWidget {
 class _SettingsLargeBannerAdState extends State<SettingsLargeBannerAd> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
-  bool _isProUnlocked = false;
 
   @override
   void initState() {
     super.initState();
-    _loadProStateAndAd();
+    _loadAd();
   }
 
   @override
@@ -35,20 +34,6 @@ class _SettingsLargeBannerAdState extends State<SettingsLargeBannerAd> {
       return 'ca-app-pub-3940256099942544/6300978111';
     }
     return null;
-  }
-
-  Future<void> _loadProStateAndAd() async {
-    _isProUnlocked = await ProAccessService.isUnlocked();
-    if (!mounted) {
-      return;
-    }
-
-    if (_isProUnlocked) {
-      setState(() {});
-      return;
-    }
-
-    _loadAd();
   }
 
   void _loadAd() {
@@ -83,7 +68,8 @@ class _SettingsLargeBannerAdState extends State<SettingsLargeBannerAd> {
 
   @override
   Widget build(BuildContext context) {
-    if (!Platform.isAndroid || _isProUnlocked) {
+    final isProUnlocked = context.watch<SettingsProvider>().isProUnlocked;
+    if (!Platform.isAndroid || isProUnlocked) {
       return const SizedBox.shrink();
     }
 
@@ -94,7 +80,7 @@ class _SettingsLargeBannerAdState extends State<SettingsLargeBannerAd> {
     return Center(
       child: Column(
         children: [
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           SizedBox(
             width: _bannerAd!.size.width.toDouble(),
             height: _bannerAd!.size.height.toDouble(),

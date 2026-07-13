@@ -11,6 +11,12 @@ class AdService {
 
   static bool get isRingingScreenActive => _activeRingingScreensCount > 0;
 
+  /// Called when Pro is purchased to immediately discard any loaded ad.
+  static void clearAd() {
+    _appOpenAd?.dispose();
+    _appOpenAd = null;
+  }
+
   static void incrementRingingScreens() {
     _activeRingingScreensCount++;
     debugPrint(

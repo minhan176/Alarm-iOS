@@ -6,8 +6,10 @@ class SettingsProvider with ChangeNotifier {
   bool _is24HourFormat = false;
   bool _isInitialized = false;
   bool _userHasChangedFormat = false;
+  bool _isProUnlocked = false;
 
   bool get is24HourFormat => _is24HourFormat;
+  bool get isProUnlocked => _isProUnlocked;
 
   SettingsProvider({bool? initial24HourFormat}) {
     if (initial24HourFormat != null) {
@@ -32,8 +34,25 @@ class SettingsProvider with ChangeNotifier {
         _userHasChangedFormat = true;
         _isInitialized = true;
       }
+      _isProUnlocked = prefs.getBool('pro_unlocked') ?? false;
+      notifyListeners();
     } catch (e) {
       // If loading fails, keep default value
+    }
+  }
+
+  void setProUnlocked(bool value) {
+    _isProUnlocked = value;
+    _saveProUnlocked(value);
+    notifyListeners();
+  }
+
+  Future<void> _saveProUnlocked(bool value) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('pro_unlocked', value);
+    } catch (e) {
+      // If saving fails, ignore
     }
   }
 

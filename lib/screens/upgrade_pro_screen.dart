@@ -4,9 +4,13 @@ import 'package:clock_os_26/widgets/custom_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 import '../services/pro_access_service.dart';
+import '../providers/settings_provider.dart';
+import '../utils/alarm_toast.dart';
 
 class UpgradeProScreen extends StatefulWidget {
   const UpgradeProScreen({super.key});
@@ -122,8 +126,20 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
     setState(() {
       _isPurchasing = true;
     });
-
     await _inAppPurchase.restorePurchases();
+    Future.delayed(const Duration(seconds: 5), () {
+      if (_isPurchasing) {
+        setState(() {
+          _isPurchasing = false;
+        });
+        AlarmToast.showAlarmToast(
+          null,
+          context,
+          customMessage: 'Không tìm thấy giao dịch mua nào',
+          bottom: 70,
+        );
+      }
+    });
   }
 
   Future<void> _onPurchaseUpdated(
@@ -172,36 +188,52 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
     }
 
     await ProAccessService.setUnlocked(true);
+    AdService.clearAd();
 
     if (!mounted) {
       return;
     }
+
+    Provider.of<SettingsProvider>(context, listen: false).setProUnlocked(true);
 
     setState(() {
       _isProUnlocked = true;
       _isPurchasing = false;
     });
 
-    _showSuccessDialog();
+    AlarmToast.showAlarmToast(
+      null,
+      context,
+      customMessage: 'Đã kích hoạt Pro thành công!',
+    );
+    Navigator.of(context).pop();
   }
 
-  void _showSuccessDialog() {
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text(AppLocalizations.of(context).upgradePro),
-        content: const Text('Pro đã được mở khóa vĩnh viễn trên thiết bị này.'),
-        actions: [
-          CupertinoDialogAction(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            },
-            child: Text(AppLocalizations.of(context).ok),
-          ),
-        ],
-      ),
+  void _handleSuccessfulPurchase2() {
+    // if (purchaseDetails.productID != _productId) {
+    //   return;
+    // }
+
+    // await ProAccessService.setUnlocked(true);
+
+    if (!mounted) {
+      return;
+    }
+
+    Provider.of<SettingsProvider>(context, listen: false).setProUnlocked(true);
+
+    setState(() {
+      _isProUnlocked = true;
+      _isPurchasing = false;
+    });
+
+    AlarmToast.showAlarmToast(
+      null,
+      context,
+      customMessage: 'Đã kích hoạt Pro thành công!',
+      bottom: 70,
     );
+    Navigator.of(context).pop();
   }
 
   @override
@@ -371,9 +403,21 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                           child: _isPurchasing
                               ? const CupertinoActivityIndicator()
                               : Text(
-                                  _isProUnlocked
-                                      ? 'Đã mở Pro'
-                                      : localizations.proBuyNow,
+                                  localizations.proBuyNow,
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                        ),
+                        CupertinoButton.filled(
+                          borderRadius: BorderRadius.circular(18),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          onPressed: _handleSuccessfulPurchase2,
+                          child: _isPurchasing
+                              ? const CupertinoActivityIndicator()
+                              : Text(
+                                  'proBuyNow',
                                   style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w700,
