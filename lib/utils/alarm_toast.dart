@@ -4,7 +4,7 @@ import '../models/alarm_model.dart';
 import '../l10n/app_localizations.dart';
 
 class AlarmToast {
-  static void showAlarmToast(AlarmModel? alarm, BuildContext context, {String? customMessage, double bottom = 150}) {
+  static void showAlarmToast(AlarmModel? alarm, BuildContext context, {String? customMessage, double bottom = 150, OverlayState? overlayState}) {
     String displayMessage;
     if (customMessage != null) {
       displayMessage = customMessage;
@@ -71,7 +71,8 @@ class AlarmToast {
       );
     }
 
-    final overlay = Overlay.of(context);
+    final overlay = overlayState ?? Overlay.maybeOf(context);
+    if (overlay == null) return;
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         bottom: bottom, // Position from bottom - adjustable for different contexts

@@ -4,6 +4,7 @@ import 'package:clock_os_26/widgets/custom_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
@@ -135,7 +136,7 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
         AlarmToast.showAlarmToast(
           null,
           context,
-          customMessage: 'Không tìm thấy giao dịch mua nào',
+          customMessage: 'Không tìm thấy giao dịch mua nào!',
           bottom: 70,
         );
       }
@@ -205,35 +206,39 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
       null,
       context,
       customMessage: 'Đã kích hoạt Pro thành công!',
+      bottom: 70,
     );
     Navigator.of(context).pop();
   }
 
-  void _handleSuccessfulPurchase2() {
-    // if (purchaseDetails.productID != _productId) {
-    //   return;
-    // }
-
-    // await ProAccessService.setUnlocked(true);
-
-    if (!mounted) {
-      return;
+  String _getOriginalPrice(ProductDetails product) {
+    try {
+      final double doubledPrice = product.rawPrice * 2;
+      
+      final String originalString = product.price;
+      
+      // Simple heuristic for VND
+      if (product.currencyCode == 'VND' || originalString.contains('₫') || originalString.contains('đ')) {
+        final str = doubledPrice.toInt().toString();
+        String formatted = '';
+        for (int i = 0; i < str.length; i++) {
+          if (i > 0 && (str.length - i) % 3 == 0) {
+            formatted += '.';
+          }
+          formatted += str[i];
+        }
+        return '$formatted ${product.currencySymbol.trim()}';
+      }
+      
+      // Try using intl if it's not VND
+      final format = NumberFormat.currency(
+        symbol: product.currencySymbol,
+        decimalDigits: doubledPrice == doubledPrice.truncateToDouble() ? 0 : 2,
+      );
+      return format.format(doubledPrice);
+    } catch (e) {
+      return '${product.currencySymbol}${(product.rawPrice * 2).toStringAsFixed(2)}';
     }
-
-    Provider.of<SettingsProvider>(context, listen: false).setProUnlocked(true);
-
-    setState(() {
-      _isProUnlocked = true;
-      _isPurchasing = false;
-    });
-
-    AlarmToast.showAlarmToast(
-      null,
-      context,
-      customMessage: 'Đã kích hoạt Pro thành công!',
-      bottom: 70,
-    );
-    Navigator.of(context).pop();
   }
 
   @override
@@ -363,13 +368,30 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                               if (_isLoading)
                                 const CupertinoActivityIndicator()
                               else
-                                Text(
-                                  product?.price ?? '--',
-                                  style: const TextStyle(
-                                    color: CupertinoColors.white,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product?.price ?? '--',
+                                      style: const TextStyle(
+                                        color: CupertinoColors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                    if (product != null)
+                                      Text(
+                                        _getOriginalPrice(product),
+                                        style: TextStyle(
+                                          color: CupertinoColors.systemGrey.withOpacity(0.8),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          decoration: TextDecoration.lineThrough,
+                                          decorationColor: CupertinoColors.systemGrey.withOpacity(0.8),
+                                          decorationThickness: 1.5,
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               Container(
                                 padding: const EdgeInsets.symmetric(
@@ -404,20 +426,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                               ? const CupertinoActivityIndicator()
                               : Text(
                                   localizations.proBuyNow,
-                                  style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                        ),
-                        CupertinoButton.filled(
-                          borderRadius: BorderRadius.circular(18),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          onPressed: _handleSuccessfulPurchase2,
-                          child: _isPurchasing
-                              ? const CupertinoActivityIndicator()
-                              : Text(
-                                  'proBuyNow',
                                   style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.w700,

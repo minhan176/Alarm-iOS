@@ -1,14 +1,15 @@
+import 'package:clock_os_26/services/pro_access_service.dart';
+import 'package:clock_os_26/utils/alarm_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -96,8 +97,64 @@ void main() {
 
 Future<void> _initializeServices() async {
   await AlarmService.initialize();
-  // final prefs = await SharedPreferences.getInstance();
-  // await prefs.setBool('pro_unlocked', false);
+  await _restorePurchasesIfFirstLaunch();
+}
+
+Future<void> _restorePurchasesIfFirstLaunch() async {
+  final prefs = await SharedPreferences.getInstance();
+  final bool alreadyRestored = prefs.getBool('purchases_restored') ?? false;
+  if (alreadyRestored) return;
+
+  // Mark as restored so we don't run again on next launch
+  await prefs.setBool('purchases_restored', true);
+
+  // Subscribe to purchaseStream BEFORE calling restorePurchases,
+  // because results come through the stream, not as a return value.
+  late StreamSubscription<List<PurchaseDetails>> sub;
+  sub = InAppPurchase.instance.purchaseStream.listen(
+    (List<PurchaseDetails> purchaseDetailsList) async {
+      for (final purchase in purchaseDetailsList) {
+        // Acknowledge the purchase (required by Google Play)
+        if (purchase.pendingCompletePurchase) {
+          await InAppPurchase.instance.completePurchase(purchase);
+        }
+
+        if (purchase.status == PurchaseStatus.restored ||
+            purchase.status == PurchaseStatus.purchased) {
+          await _applyGlobalProUnlock();
+        }
+      }
+    },
+    onDone: () => sub.cancel(),
+    onError: (_) => sub.cancel(),
+  );
+
+  try {
+    await InAppPurchase.instance.restorePurchases();
+  } catch (_) {
+    sub.cancel();
+  }
+
+  // Auto-cancel listener after 15 seconds to avoid leaks
+  Future.delayed(const Duration(seconds: 15), sub.cancel);
+}
+
+/// Unlock Pro features after a successful restore/purchase (called globally).
+Future<void> _applyGlobalProUnlock() async {
+  await ProAccessService.setUnlocked(true);
+  AdService.clearAd();
+
+  // Update SettingsProvider and show toast via the navigator context
+  final ctx = navigatorKey.currentContext;
+  if (ctx != null) {
+    Provider.of<SettingsProvider>(ctx, listen: false).setProUnlocked(true);
+    AlarmToast.showAlarmToast(
+      null,
+      ctx,
+      customMessage: 'Đã kích hoạt Pro thành công!',
+      overlayState: navigatorKey.currentState?.overlay,
+    );
+  }
 }
 
 void _showAlarmScreen(AlarmModel alarm) {
