@@ -70,4 +70,13 @@ final Map<String, String> amTranslations = mergeTranslations({
   'proOneTime': 'አንዴ • ለዘላለም',
   'proRestoreDesc': 'አንዴ ከተገዛ በኋላ በዚህ መሳሪያ ላይ Pro በቋሚነት ይከፈታል። በሌላ መሣሪያ ላይ ግዢ ሲፈጽሙ በተጠቀሙበት የሱቅ መለያ ተመልሰው ከገቡ፣ ግዢን እነበረበት መልስ የሚለውን ብቻ ጠቅ ያድርጉ።',
   'proRestoreBtn': 'ግዢን ወደነበረበት መልስ',
+  'proNoPurchasesFound': 'ምንም ግዢዎች አልተገኙም!',
+  'proActivated': 'ፕሮ በተሳካ ሁኔታ ነቅቷል!',
+  'proActivatedStatus': 'ፕሮ ነቅቷል።',
+  'upgradePro': 'Pro አሻሽል።',
+  'proIntro': 'ምርጥ ተሞክሮ ያግኙ',
+  'proLifetimeNote': '✓ ማስታወቂያዎችን ያስወግዱ
+✓ የመተግበሪያ ማፋጠን
+✓ ልዩ ድምፆች
+✓ ሁሉንም ባህሪያት ክፈት',
 });

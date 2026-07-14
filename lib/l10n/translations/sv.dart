@@ -124,4 +124,13 @@ const Map<String, String> svTranslations = {
   'proOneTime': 'En gång för alltid',
   'proRestoreDesc': 'När du har köpt den kommer Pro att låsas upp permanent på den här enheten. Om du loggar in igen med samma butikskonto som du använde för att göra ett köp på en annan enhet klickar du bara på Återställ köp.',
   'proRestoreBtn': 'Återställ köp',
+  'proNoPurchasesFound': 'Inga köp hittades!',
+  'proActivated': 'Pro aktiverad framgångsrikt!',
+  'proActivatedStatus': 'Pro aktiverat',
+  'upgradePro': 'Uppgradera Pro',
+  'proIntro': 'Få den bästa upplevelsen',
+  'proLifetimeNote': '✓ Ta bort annonser
+✓ Applikationsacceleration
+✓ Exklusiva ljud
+✓ Lås upp alla funktioner',
 };

@@ -124,4 +124,13 @@ const Map<String, String> heTranslations = {
   'proOneTime': 'פעם אחת לנצח',
   'proRestoreDesc': 'לאחר הרכישה, Pro יבוטל לצמיתות במכשיר זה. אם אתה מתחבר שוב עם אותו חשבון חנות שבו השתמשת כדי לבצע רכישה במכשיר אחר, פשוט לחץ על שחזר רכישה.',
   'proRestoreBtn': 'שחזור רכישה',
+  'proNoPurchasesFound': 'לא נמצאו רכישות!',
+  'proActivated': 'Pro הופעל בהצלחה!',
+  'proActivatedStatus': 'פרו מופעל',
+  'upgradePro': 'שדרוג Pro',
+  'proIntro': 'קבל את החוויה הטובה ביותר',
+  'proLifetimeNote': '✓ הסר מודעות
+✓ האצת יישום
+✓ צלילים בלעדיים
+✓ פתח את כל התכונות',
 };

@@ -124,4 +124,13 @@ const Map<String, String> plTranslations = {
   'proOneTime': 'Raz • na zawsze',
   'proRestoreDesc': 'Po zakupie wersja Pro zostanie trwale odblokowana na tym urządzeniu. Jeśli zalogujesz się ponownie na to samo konto sklepowe, którego użyłeś do dokonania zakupu na innym urządzeniu, po prostu kliknij Przywróć zakup.',
   'proRestoreBtn': 'Przywróć zakup',
+  'proNoPurchasesFound': 'Nie znaleziono zakupów!',
+  'proActivated': 'Pro aktywowano pomyślnie!',
+  'proActivatedStatus': 'Włączono wersję profesjonalną',
+  'upgradePro': 'Uaktualnij Pro',
+  'proIntro': 'Zdobądź najlepsze doświadczenia',
+  'proLifetimeNote': '✓ Usuń reklamy
+✓ Przyspieszenie aplikacji
+✓ Ekskluzywne dźwięki
+✓ Odblokuj wszystkie funkcje',
 };

@@ -137,4 +137,7 @@ const Map<String, String> viTranslations = {
   'proOneTime': '1 lần • mãi mãi',
   'proRestoreDesc': 'Sau khi mua, Pro sẽ được mở vĩnh viễn trên thiết bị này. Nếu đăng nhập lại cùng tài khoản cửa hàng đã dùng để mua ở thiết bị khác, bạn chỉ cần nhấn Khôi phục mua hàng.',
   'proRestoreBtn': 'Khôi phục mua hàng',
+  'proNoPurchasesFound': 'Không tìm thấy giao dịch mua nào!',
+  'proActivated': 'Đã kích hoạt Pro thành công!',
+  'proActivatedStatus': 'Đã kích hoạt Pro',
 };

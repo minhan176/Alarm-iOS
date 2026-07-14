@@ -90,4 +90,13 @@ final Map<String, String> uzTranslations = mergeTranslations({
   'proOneTime': 'Bir marta • abadiy',
   'proRestoreDesc': 'Xarid qilinganidan keyin Pro ushbu qurilmada doimiy ravishda qulfdan chiqariladi. Agar siz boshqa qurilmada xarid qilgan doʻkon hisobi bilan qayta kirsangiz, “Xaridni tiklash” tugmasini bosing.',
   'proRestoreBtn': 'Xaridni tiklash',
+  'proNoPurchasesFound': 'Hech qanday xarid topilmadi!',
+  'proActivated': 'Pro muvaffaqiyatli faollashtirildi!',
+  'proActivatedStatus': 'Pro yoqilgan',
+  'upgradePro': 'Pro-ni yangilang',
+  'proIntro': 'Eng yaxshi tajribaga ega bo\'ling',
+  'proLifetimeNote': '✓ Reklamalarni olib tashlash
+✓ Ilovani tezlashtirish
+✓ Eksklyuziv tovushlar
+✓ Barcha funksiyalarni qulfdan chiqaring',
 });

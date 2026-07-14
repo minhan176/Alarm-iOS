@@ -132,4 +132,13 @@ const Map<String, String> csTranslations = {
   'proOneTime': 'Jednou • navždy',
   'proRestoreDesc': 'Po zakoupení bude Pro na tomto zařízení trvale odemčeno. Pokud se znovu přihlásíte pomocí stejného účtu obchodu, který jste použili k nákupu na jiném zařízení, stačí kliknout na Obnovit nákup.',
   'proRestoreBtn': 'Obnovit nákup',
+  'proNoPurchasesFound': 'Nebyly nalezeny žádné nákupy!',
+  'proActivated': 'Pro byla úspěšně aktivována!',
+  'proActivatedStatus': 'Pro povoleno',
+  'upgradePro': 'Upgrade Pro',
+  'proIntro': 'Získejte nejlepší zážitek',
+  'proLifetimeNote': '✓ Odstraňte reklamy
+✓ Zrychlení aplikace
+✓ Exkluzivní zvuky
+✓ Odemkněte všechny funkce',
 };

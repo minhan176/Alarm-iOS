@@ -125,4 +125,13 @@ const Map<String, String> lvTranslations = {
   'proOneTime': 'Vienreiz • uz visiem laikiem',
   'proRestoreDesc': 'Pēc iegādes Pro šajā ierīcē tiks neatgriezeniski atbloķēts. Ja piesakāties atpakaļ, izmantojot to pašu veikala kontu, ko izmantojāt pirkuma veikšanai citā ierīcē, vienkārši noklikšķiniet uz Atjaunot pirkumu.',
   'proRestoreBtn': 'Atjaunot pirkumu',
+  'proNoPurchasesFound': 'Nav atrasts neviens pirkums!',
+  'proActivated': 'Pro veiksmīgi aktivizēts!',
+  'proActivatedStatus': 'Pro iespējots',
+  'upgradePro': 'Jauniniet Pro',
+  'proIntro': 'Iegūstiet vislabāko pieredzi',
+  'proLifetimeNote': '✓ Noņemiet reklāmas
+✓ Lietojumprogrammas paātrinājums
+✓ Ekskluzīvas skaņas
+✓ Atbloķējiet visas funkcijas',
 };

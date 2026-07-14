@@ -124,4 +124,13 @@ const Map<String, String> slTranslations = {
   'proOneTime': 'Enkrat • za vedno',
   'proRestoreDesc': 'Po nakupu bo Pro v tej napravi trajno odklenjen. Če se znova prijavite z istim računom trgovine, ki ste ga uporabili za nakup v drugi napravi, preprosto kliknite Obnovi nakup.',
   'proRestoreBtn': 'Obnovi nakup',
+  'proNoPurchasesFound': 'Ni najdenih nakupov!',
+  'proActivated': 'Pro uspešno aktiviran!',
+  'proActivatedStatus': 'Pro omogočen',
+  'upgradePro': 'Nadgradnja Pro',
+  'proIntro': 'Pridobite najboljšo izkušnjo',
+  'proLifetimeNote': '✓ Odstranite oglase
+✓ Pospeševanje aplikacij
+✓ Ekskluzivni zvoki
+✓ Odklenite vse funkcije',
 };

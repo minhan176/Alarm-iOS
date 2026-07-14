@@ -124,4 +124,13 @@ const Map<String, String> koTranslations = {
   'proOneTime': '한 번 • 영원히',
   'proRestoreDesc': '구매하면 이 장치에서 Pro가 영구적으로 잠금 해제됩니다. 다른 기기에서 구매할 때 사용한 것과 동일한 스토어 계정으로 다시 로그인하는 경우 구매 복원을 클릭하세요.',
   'proRestoreBtn': '구매 복원',
+  'proNoPurchasesFound': '구매 내역이 없습니다.',
+  'proActivated': 'Pro가 성공적으로 활성화되었습니다!',
+  'proActivatedStatus': '프로 지원',
+  'upgradePro': '업그레이드 프로',
+  'proIntro': '최고의 경험을 얻으세요',
+  'proLifetimeNote': '✓ 광고 제거
+✓ 애플리케이션 가속
+✓ 독점 사운드
+✓ 모든 기능 잠금 해제',
 };

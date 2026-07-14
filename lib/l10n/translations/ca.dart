@@ -132,4 +132,13 @@ const Map<String, String> caTranslations = {
   'proOneTime': 'Una vegada • per sempre',
   'proRestoreDesc': 'Un cop comprat, Pro es desbloquejarà permanentment en aquest dispositiu. Si torneu a iniciar sessió amb el mateix compte de botiga que vau utilitzar per fer una compra en un altre dispositiu, feu clic a Restaura la compra.',
   'proRestoreBtn': 'Restaurar la compra',
+  'proNoPurchasesFound': 'No s\'han trobat compres!',
+  'proActivated': 'Pro activat correctament!',
+  'proActivatedStatus': 'Pro habilitat',
+  'upgradePro': 'Actualitza Pro',
+  'proIntro': 'Aconsegueix la millor experiència',
+  'proLifetimeNote': '✓ Elimina els anuncis
+✓ Acceleració de l\'aplicació
+✓ Sons exclusius
+✓ Desbloqueja totes les funcions',
 };

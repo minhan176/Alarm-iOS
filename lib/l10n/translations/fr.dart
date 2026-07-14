@@ -124,4 +124,13 @@ const Map<String, String> frTranslations = {
   'proOneTime': 'Une fois • pour toujours',
   'proRestoreDesc': 'Une fois acheté, Pro sera définitivement déverrouillé sur cet appareil. Si vous vous reconnectez avec le même compte de magasin que celui que vous avez utilisé pour effectuer un achat sur un autre appareil, cliquez simplement sur Restaurer l\'achat.',
   'proRestoreBtn': 'Restaurer l\'achat',
+  'proNoPurchasesFound': 'Aucun achat trouvé !',
+  'proActivated': 'Pro activé avec succès !',
+  'proActivatedStatus': 'Pro activé',
+  'upgradePro': 'Mettre à niveau Pro',
+  'proIntro': 'Obtenez la meilleure expérience',
+  'proLifetimeNote': '✓ Supprimer les publicités
+✓ Accélération des applications
+✓ Des sons exclusifs
+✓ Débloquez toutes les fonctionnalités',
 };

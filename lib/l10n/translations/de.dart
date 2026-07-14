@@ -124,4 +124,13 @@ const Map<String, String> deTranslations = {
   'proOneTime': 'Einmal • für immer',
   'proRestoreDesc': 'Nach dem Kauf wird Pro dauerhaft auf diesem Gerät freigeschaltet. Wenn Sie sich mit demselben Shop-Konto erneut anmelden, mit dem Sie auf einem anderen Gerät einen Kauf getätigt haben, klicken Sie einfach auf „Kauf wiederherstellen“.',
   'proRestoreBtn': 'Kauf wiederherstellen',
+  'proNoPurchasesFound': 'Keine Käufe gefunden!',
+  'proActivated': 'Pro erfolgreich aktiviert!',
+  'proActivatedStatus': 'Pro aktiviert',
+  'upgradePro': 'Upgrade Pro',
+  'proIntro': 'Holen Sie sich das beste Erlebnis',
+  'proLifetimeNote': '✓ Werbung entfernen
+✓ Anwendungsbeschleunigung
+✓ Exklusive Sounds
+✓ Schalten Sie alle Funktionen frei',
 };

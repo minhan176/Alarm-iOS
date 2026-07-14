@@ -132,4 +132,13 @@ const Map<String, String> etTranslations = {
   'proOneTime': 'Üks kord • igavesti',
   'proRestoreDesc': 'Pärast ostmist avatakse Pro selles seadmes jäädavalt. Kui logite uuesti sisse sama poekontoga, mida kasutasite teises seadmes ostu sooritamiseks, klõpsake lihtsalt nuppu Taasta ost.',
   'proRestoreBtn': 'Taasta ost',
+  'proNoPurchasesFound': 'Ühtegi ostu ei leitud!',
+  'proActivated': 'Pro aktiveeriti edukalt!',
+  'proActivatedStatus': 'Pro lubatud',
+  'upgradePro': 'Uuendage Pro',
+  'proIntro': 'Hankige parim kogemus',
+  'proLifetimeNote': '✓ Eemaldage reklaamid
+✓ Rakenduse kiirendus
+✓ Eksklusiivsed helid
+✓ Avage kõik funktsioonid',
 };

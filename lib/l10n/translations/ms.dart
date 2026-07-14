@@ -112,4 +112,13 @@ final Map<String, String> msTranslations = mergeTranslations({
   'proOneTime': 'Sekali • selamanya',
   'proRestoreDesc': 'Setelah dibeli, Pro akan dibuka kunci secara kekal pada peranti ini. Jika anda log masuk semula dengan akaun kedai yang sama yang anda gunakan untuk membuat pembelian pada peranti lain, cuma klik Pulihkan Pembelian.',
   'proRestoreBtn': 'Pulihkan pembelian',
+  'proNoPurchasesFound': 'Tiada pembelian ditemui!',
+  'proActivated': 'Pro telah berjaya diaktifkan!',
+  'proActivatedStatus': 'Pro didayakan',
+  'upgradePro': 'Tingkatkan Pro',
+  'proIntro': 'Dapatkan pengalaman terbaik',
+  'proLifetimeNote': '✓ Alih keluar iklan
+✓ Pecutan aplikasi
+✓ Bunyi eksklusif
+✓ Buka kunci semua ciri',
 });

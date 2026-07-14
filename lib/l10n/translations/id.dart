@@ -124,4 +124,13 @@ const Map<String, String> idTranslations = {
   'proOneTime': 'Sekali • selamanya',
   'proRestoreDesc': 'Setelah dibeli, Pro akan dibuka kuncinya secara permanen di perangkat ini. Jika Anda masuk kembali dengan akun toko yang sama dengan yang Anda gunakan untuk melakukan pembelian di perangkat lain, cukup klik Pulihkan Pembelian.',
   'proRestoreBtn': 'Pulihkan pembelian',
+  'proNoPurchasesFound': 'Tidak ada pembelian yang ditemukan!',
+  'proActivated': 'Pro berhasil diaktifkan!',
+  'proActivatedStatus': 'Pro diaktifkan',
+  'upgradePro': 'Tingkatkan Pro',
+  'proIntro': 'Dapatkan pengalaman terbaik',
+  'proLifetimeNote': '✓ Hapus iklan
+✓ Akselerasi aplikasi
+✓ Suara eksklusif
+✓ Buka kunci semua fitur',
 };

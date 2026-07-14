@@ -124,4 +124,13 @@ const Map<String, String> huTranslations = {
   'proOneTime': 'Egyszer • örökre',
   'proRestoreDesc': 'Vásárlás után a Pro véglegesen fel lesz oldva ezen az eszközön. Ha ugyanazzal az áruházi fiókkal jelentkezik be újra, amellyel egy másik eszközön vásárolt, kattintson a Vásárlás visszaállítása lehetőségre.',
   'proRestoreBtn': 'Vásárlás visszaállítása',
+  'proNoPurchasesFound': 'Nem található vásárlás!',
+  'proActivated': 'Pro sikeresen aktiválva!',
+  'proActivatedStatus': 'Pro engedélyezve',
+  'upgradePro': 'Frissítse a Pro-t',
+  'proIntro': 'Szerezze meg a legjobb élményt',
+  'proLifetimeNote': '✓ Távolítsa el a hirdetéseket
+✓ Alkalmazásgyorsítás
+✓ Exkluzív hangok
+✓ Oldja fel az összes funkciót',
 };

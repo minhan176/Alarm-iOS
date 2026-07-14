@@ -132,4 +132,13 @@ const Map<String, String> nlTranslations = {
   'proOneTime': 'Eens • voor altijd',
   'proRestoreDesc': 'Na aankoop wordt Pro permanent ontgrendeld op dit apparaat. Als u zich opnieuw aanmeldt met hetzelfde winkelaccount dat u hebt gebruikt om een ​​aankoop te doen op een ander apparaat, klikt u gewoon op Aankoop herstellen.',
   'proRestoreBtn': 'Aankoop herstellen',
+  'proNoPurchasesFound': 'Geen aankopen gevonden!',
+  'proActivated': 'Pro succesvol geactiveerd!',
+  'proActivatedStatus': 'Pro ingeschakeld',
+  'upgradePro': 'Upgrade Pro',
+  'proIntro': 'Krijg de beste ervaring',
+  'proLifetimeNote': '✓ Advertenties verwijderen
+✓ Applicatieversnelling
+✓ Exclusieve geluiden
+✓ Ontgrendel alle functies',
 };

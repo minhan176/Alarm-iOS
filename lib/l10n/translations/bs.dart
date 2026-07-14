@@ -110,4 +110,13 @@ final Map<String, String> bsTranslations = mergeTranslations({
   'proOneTime': 'Jednom • zauvijek',
   'proRestoreDesc': 'Nakon kupovine, Pro će biti trajno otključan na ovom uređaju. Ako se ponovo prijavite s istim računom trgovine koji ste koristili za kupovinu na drugom uređaju, samo kliknite na Vrati kupovinu.',
   'proRestoreBtn': 'Vratite kupovinu',
+  'proNoPurchasesFound': 'Nisu pronađene kupovine!',
+  'proActivated': 'Pro uspješno aktiviran!',
+  'proActivatedStatus': 'Pro enabled',
+  'upgradePro': 'Upgrade Pro',
+  'proIntro': 'Dobijte najbolje iskustvo',
+  'proLifetimeNote': '✓ Uklonite oglase
+✓ Ubrzanje aplikacije
+✓ Ekskluzivni zvuci
+✓ Otključajte sve funkcije',
 });

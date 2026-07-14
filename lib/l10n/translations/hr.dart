@@ -132,4 +132,13 @@ const Map<String, String> hrTranslations = {
   'proOneTime': 'Jednom • zauvijek',
   'proRestoreDesc': 'Nakon kupnje, Pro će biti trajno otključan na ovom uređaju. Ako se ponovno prijavite s istim računom trgovine koji ste koristili za kupnju na drugom uređaju, samo kliknite Vrati kupnju.',
   'proRestoreBtn': 'Obnovi kupnju',
+  'proNoPurchasesFound': 'Nema pronađenih kupnji!',
+  'proActivated': 'Pro uspješno aktiviran!',
+  'proActivatedStatus': 'Pro omogućen',
+  'upgradePro': 'Nadogradnja Pro',
+  'proIntro': 'Dobijte najbolje iskustvo',
+  'proLifetimeNote': '✓ Uklonite oglase
+✓ Ubrzanje aplikacije
+✓ Ekskluzivni zvukovi
+✓ Otključajte sve značajke',
 };

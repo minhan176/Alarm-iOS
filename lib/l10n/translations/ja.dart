@@ -124,4 +124,13 @@ const Map<String, String> jaTranslations = {
   'proOneTime': '一度だけ • 永遠に',
   'proRestoreDesc': '購入すると、このデバイスで Pro のロックが永久に解除されます。別のデバイスでの購入に使用したのと同じストア アカウントで再度ログインする場合は、[購入を復元] をクリックするだけです。',
   'proRestoreBtn': '購入を復元する',
+  'proNoPurchasesFound': '購入した商品が見つかりません!',
+  'proActivated': 'プロは正常にアクティベートされました。',
+  'proActivatedStatus': 'プロ対応',
+  'upgradePro': 'アップグレードプロ',
+  'proIntro': '最高の体験を得る',
+  'proLifetimeNote': '✓ 広告を削除する
+✓ アプリケーションの高速化
+✓ 独自のサウンド
+✓ すべての機能のロックを解除します',
 };

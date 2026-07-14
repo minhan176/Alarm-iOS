@@ -132,4 +132,13 @@ const Map<String, String> fiTranslations = {
   'proOneTime': 'Kerran • ikuisesti',
   'proRestoreDesc': 'Kun Pro on ostettu, sen lukitus avataan pysyvästi tällä laitteella. Jos kirjaudut takaisin sisään samalla kauppatilillä, jolla teit ostoksen toisella laitteella, napsauta Palauta ostos.',
   'proRestoreBtn': 'Palauta ostos',
+  'proNoPurchasesFound': 'Ostoksia ei löytynyt!',
+  'proActivated': 'Pro aktivoitu onnistuneesti!',
+  'proActivatedStatus': 'Pro käytössä',
+  'upgradePro': 'Päivitä Pro',
+  'proIntro': 'Hanki paras kokemus',
+  'proLifetimeNote': '✓ Poista mainokset
+✓ Sovelluksen kiihtyvyys
+✓ Ainutlaatuiset äänet
+✓ Avaa kaikki ominaisuudet',
 };

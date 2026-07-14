@@ -90,4 +90,13 @@ final Map<String, String> azTranslations = mergeTranslations({
   'proOneTime': 'Bir dəfə • əbədi',
   'proRestoreDesc': 'Satın alındıqdan sonra Pro bu cihazda həmişəlik kiliddən çıxarılacaq. Başqa cihazda alış-veriş etmək üçün istifadə etdiyiniz eyni mağaza hesabı ilə yenidən daxil olsanız, sadəcə olaraq Satınalmanı Bərpa et üzərinə klikləyin.',
   'proRestoreBtn': 'Satınalmanı bərpa edin',
+  'proNoPurchasesFound': 'Heç bir alış tapılmadı!',
+  'proActivated': 'Pro uğurla aktivləşdirildi!',
+  'proActivatedStatus': 'Pro aktivdir',
+  'upgradePro': 'Pro-nu təkmilləşdirin',
+  'proIntro': 'Ən yaxşı təcrübə əldə edin',
+  'proLifetimeNote': '✓ Reklamları silin
+✓ Tətbiqin sürətləndirilməsi
+✓ Eksklüziv səslər
+✓ Bütün xüsusiyyətlərin kilidini açın',
 });

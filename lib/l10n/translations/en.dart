@@ -117,8 +117,6 @@ const Map<String, String> enTranslations = {
   'twentyFourHourFormat': '24-Hour Format',
   'supportAndFeedback': 'SUPPORT & FEEDBACK',
   'UPGRADE_PRO': 'UPGRADE PRO',
-  'proIntro': 'Unlock Pro with a one-time purchase and keep it forever on this device.',
-  'proLifetimeNote': 'One payment. Lifetime Pro access.',
   'proBuyNow': 'Buy Now',
   'guide': 'Guide',
   'sendFeedback': 'Send Feedback',
@@ -169,4 +167,13 @@ const Map<String, String> enTranslations = {
   'proOneTime': 'Once • forever',
   'proRestoreDesc': 'Once purchased, Pro will be permanently unlocked on this device. If you log back in with the same store account you used to make a purchase on another device, just click Restore Purchase.',
   'proRestoreBtn': 'Restore purchase',
+  'proNoPurchasesFound': 'No purchases found!',
+  'proActivated': 'Pro activated successfully!',
+  'proActivatedStatus': 'Pro Activated',
+  'upgradePro': 'Upgrade Pro',
+  'proIntro': 'Get the best experience',
+  'proLifetimeNote': '✓ Remove ads
+✓ Speed up app
+✓ Exclusive sounds
+✓ Unlock all features',
 };

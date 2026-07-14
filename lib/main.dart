@@ -151,7 +151,7 @@ Future<void> _applyGlobalProUnlock() async {
     AlarmToast.showAlarmToast(
       null,
       ctx,
-      customMessage: 'Đã kích hoạt Pro thành công!',
+      customMessage: AppLocalizations.of(ctx).proActivated,
       overlayState: navigatorKey.currentState?.overlay,
     );
   }

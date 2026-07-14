@@ -124,4 +124,13 @@ const Map<String, String> itTranslations = {
   'proOneTime': 'Una volta • per sempre',
   'proRestoreDesc': 'Una volta acquistato, Pro verrà sbloccato in modo permanente su questo dispositivo. Se accedi di nuovo con lo stesso account del negozio utilizzato per effettuare un acquisto su un altro dispositivo, fai semplicemente clic su Ripristina acquisto.',
   'proRestoreBtn': 'Ripristina l\'acquisto',
+  'proNoPurchasesFound': 'Nessun acquisto trovato!',
+  'proActivated': 'Pro attivato con successo!',
+  'proActivatedStatus': 'Abilitato per la versione professionale',
+  'upgradePro': 'Aggiorna Pro',
+  'proIntro': 'Ottieni la migliore esperienza',
+  'proLifetimeNote': '✓ Rimuovi gli annunci
+✓ Accelerazione delle applicazioni
+✓ Suoni esclusivi
+✓ Sblocca tutte le funzionalità',
 };

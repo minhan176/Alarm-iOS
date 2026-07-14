@@ -124,4 +124,13 @@ const Map<String, String> isTranslations = {
   'proOneTime': 'Einu sinni • að eilífu',
   'proRestoreDesc': 'Þegar búið er að kaupa Pro verður varanlega opnað á þessu tæki. Ef þú skráir þig aftur inn með sama verslunarreikningi og þú notaðir til að kaupa í öðru tæki, smelltu bara á Endurheimta kaup.',
   'proRestoreBtn': 'Endurheimta kaup',
+  'proNoPurchasesFound': 'Engin kaup fundust!',
+  'proActivated': 'Pro virkjað með góðum árangri!',
+  'proActivatedStatus': 'Pro virkt',
+  'upgradePro': 'Uppfærsla Pro',
+  'proIntro': 'Fáðu bestu upplifunina',
+  'proLifetimeNote': '✓ Fjarlægðu auglýsingar
+✓ Umsókn hröðun
+✓ Einkahljóð
+✓ Opnaðu alla eiginleika',
 };

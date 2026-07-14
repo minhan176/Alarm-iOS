@@ -127,4 +127,13 @@ const Map<String, String> trTranslations = {
   'proOneTime': 'Bir kez • sonsuza kadar',
   'proRestoreDesc': 'Satın alındıktan sonra Pro\'nun kilidi bu cihazda kalıcı olarak açılacaktır. Başka bir cihazda alışveriş yaparken kullandığınız mağaza hesabıyla tekrar oturum açarsanız Satın Alma İşlemini Geri Yükle\'ye tıklamanız yeterlidir.',
   'proRestoreBtn': 'Satın alma işlemini geri yükle',
+  'proNoPurchasesFound': 'Hiçbir satın alma bulunamadı!',
+  'proActivated': 'Pro başarıyla etkinleştirildi!',
+  'proActivatedStatus': 'Profesyonel etkin',
+  'upgradePro': 'Pro\'yu Yükselt',
+  'proIntro': 'En iyi deneyimi yaşayın',
+  'proLifetimeNote': '✓ Reklamları kaldırın
+✓ Uygulama hızlandırma
+✓ Özel sesler
+✓ Tüm özelliklerin kilidini aç',
 };

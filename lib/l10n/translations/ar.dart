@@ -88,8 +88,6 @@ const Map<String, String> arTranslations = {
   'twentyFourHourFormat': 'تنسيق 24 ساعة',
   'supportAndFeedback': 'الدعم والملاحظات',
   'UPGRADE_PRO': 'ترقية برو',
-  'proIntro': 'افتح Pro بدفعة واحدة واحتفظ به للأبد على هذا الجهاز.',
-  'proLifetimeNote': 'دفعة واحدة. وصول Pro مدى الحياة.',
   'proBuyNow': 'اشترِ الآن',
   'guide': 'الدليل',
   'sendFeedback': 'إرسال ملاحظات',
@@ -135,4 +133,13 @@ const Map<String, String> arTranslations = {
   'proOneTime': 'مرة واحدة • إلى الأبد',
   'proRestoreDesc': 'بمجرد الشراء، سيتم إلغاء قفل Pro بشكل دائم على هذا الجهاز. إذا قمت بتسجيل الدخول مرة أخرى باستخدام حساب المتجر نفسه الذي استخدمته لإجراء عملية شراء على جهاز آخر، فما عليك سوى النقر فوق "استعادة الشراء".',
   'proRestoreBtn': 'استعادة الشراء',
+  'proNoPurchasesFound': 'لم يتم العثور على مشتريات!',
+  'proActivated': 'تم تفعيل برو بنجاح!',
+  'proActivatedStatus': 'تمكين برو',
+  'upgradePro': 'ترقية برو',
+  'proIntro': 'احصل على أفضل تجربة',
+  'proLifetimeNote': '✓ إزالة الإعلانات
+✓ تسريع التطبيق
+✓ الأصوات الحصرية
+✓ فتح كافة الميزات',
 };

@@ -127,4 +127,13 @@ const Map<String, String> zuTranslations = {
   'proOneTime': 'Kanye • phakade',
   'proRestoreDesc': 'Uma isithengiwe, i-Pro izovulwa unomphela kule divayisi. Uma uphinda ungena ngemvume nge-akhawunti yesitolo oyisebenzisele ukuthenga kwenye idivayisi, vele uchofoze okuthi Buyisela Ukuthenga.',
   'proRestoreBtn': 'Buyisela ukuthenga',
+  'proNoPurchasesFound': 'Akukho ukuthenga okutholiwe!',
+  'proActivated': 'I-Pro yenziwe yasebenza ngempumelelo!',
+  'proActivatedStatus': 'I-Pro inikwe amandla',
+  'upgradePro': 'Thuthukisa i-Pro',
+  'proIntro': 'Thola ukuzizwisa okungcono kakhulu',
+  'proLifetimeNote': '✓ Susa izikhangiso
+✓ Ukusheshisa isicelo
+✓ Imisindo Ekhethekile
+✓ Vula zonke izici',
 };

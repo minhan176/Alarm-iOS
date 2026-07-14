@@ -132,4 +132,13 @@ const Map<String, String> zhTwTranslations = {
   'proOneTime': '一次•永遠',
   'proRestoreDesc': '購買後，Pro 將在此裝置上永久解鎖。如果您使用在另一台裝置上購買時使用的相同商店帳戶重新登錄，只需按一下「恢復購買」即可。',
   'proRestoreBtn': '恢復購買',
+  'proNoPurchasesFound': '沒有找到購買的商品！',
+  'proActivated': '專業版啟動成功！',
+  'proActivatedStatus': '專業版啟用',
+  'upgradePro': '升級專業版',
+  'proIntro': '獲得最佳體驗',
+  'proLifetimeNote': '✓ 刪除廣告
+✓ 應用加速
+✓ 獨特的聲音
+✓ 解鎖所有功能',
 };

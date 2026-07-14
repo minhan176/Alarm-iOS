@@ -125,4 +125,13 @@ const Map<String, String> ltTranslations = {
   'proOneTime': 'Kartą • amžinai',
   'proRestoreDesc': 'Įsigijus „Pro“ bus visam laikui atrakintas šiame įrenginyje. Jei vėl prisijungiate naudodami tą pačią parduotuvės paskyrą, kurią naudojote pirkdami kitame įrenginyje, tiesiog spustelėkite Atkurti pirkinį.',
   'proRestoreBtn': 'Atkurti pirkinį',
+  'proNoPurchasesFound': 'Pirkinių nerasta!',
+  'proActivated': 'Pro sėkmingai suaktyvintas!',
+  'proActivatedStatus': 'Pro įjungtas',
+  'upgradePro': 'Atnaujinkite Pro',
+  'proIntro': 'Gaukite geriausią patirtį',
+  'proLifetimeNote': '✓ Pašalinkite skelbimus
+✓ Taikymo pagreitis
+✓ Išskirtiniai garsai
+✓ Atrakinkite visas funkcijas',
 };

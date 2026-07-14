@@ -132,4 +132,13 @@ const Map<String, String> daTranslations = {
   'proOneTime': 'Én gang for altid',
   'proRestoreDesc': 'Når den er købt, låses Pro permanent op på denne enhed. Hvis du logger ind igen med den samme butikskonto, som du brugte til at foretage et køb på en anden enhed, skal du blot klikke på Gendan køb.',
   'proRestoreBtn': 'Gendan køb',
+  'proNoPurchasesFound': 'Ingen køb fundet!',
+  'proActivated': 'Pro aktiveret med succes!',
+  'proActivatedStatus': 'Pro aktiveret',
+  'upgradePro': 'Opgrader Pro',
+  'proIntro': 'Få den bedste oplevelse',
+  'proLifetimeNote': '✓ Fjern annoncer
+✓ Applikationsacceleration
+✓ Eksklusive lyde
+✓ Lås op for alle funktioner',
 };

@@ -222,8 +222,8 @@ Please describe your feedback below:
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           settingsProvider.isProUnlocked
-                                              ? 'Đã kích hoạt Pro'
-                                              : 'Trải nghiệm tốt nhất',
+                                              ? AppLocalizations.of(context).proActivatedStatus
+                                              : AppLocalizations.of(context).proIntro,
                                           style: const TextStyle(
                                             color: CupertinoColors.white,
                                             fontSize: 16,

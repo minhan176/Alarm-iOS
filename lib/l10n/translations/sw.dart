@@ -124,4 +124,13 @@ const Map<String, String> swTranslations = {
   'proOneTime': 'Mara moja • milele',
   'proRestoreDesc': 'Baada ya kununuliwa, Pro itafunguliwa kabisa kwenye kifaa hiki. Ukiingia tena ukitumia akaunti ile ile ya duka uliyotumia kufanya ununuzi kwenye kifaa kingine, bofya tu Rejesha Ununuzi.',
   'proRestoreBtn': 'Rejesha ununuzi',
+  'proNoPurchasesFound': 'Hakuna ununuzi uliopatikana!',
+  'proActivated': 'Pro imewezeshwa!',
+  'proActivatedStatus': 'Pro imewashwa',
+  'upgradePro': 'Boresha Pro',
+  'proIntro': 'Pata matumizi bora zaidi',
+  'proLifetimeNote': '✓ Ondoa matangazo
+✓ Kuongeza kasi ya maombi
+✓ Sauti za kipekee
+✓ Fungua vipengele vyote',
 };

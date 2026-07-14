@@ -124,4 +124,13 @@ const Map<String, String> ptTranslations = {
   'proOneTime': 'Uma vez • para sempre',
   'proRestoreDesc': 'Depois de adquirido, o Pro será desbloqueado permanentemente neste dispositivo. Se você fizer login novamente com a mesma conta da loja usada para fazer uma compra em outro dispositivo, basta clicar em Restaurar compra.',
   'proRestoreBtn': 'Restaurar compra',
+  'proNoPurchasesFound': 'Nenhuma compra encontrada!',
+  'proActivated': 'Pro ativado com sucesso!',
+  'proActivatedStatus': 'Pro habilitado',
+  'upgradePro': 'Atualizar Pro',
+  'proIntro': 'Obtenha a melhor experiência',
+  'proLifetimeNote': '✓ Remover anúncios
+✓ Aceleração de aplicativos
+✓ Sons exclusivos
+✓ Desbloqueie todos os recursos',
 };

@@ -124,4 +124,13 @@ const Map<String, String> roTranslations = {
   'proOneTime': 'O dată • pentru totdeauna',
   'proRestoreDesc': 'Odată achiziționat, Pro va fi deblocat permanent pe acest dispozitiv. Dacă vă conectați din nou cu același cont de magazin pe care l-ați folosit pentru a face o achiziție pe alt dispozitiv, faceți clic pe Restabiliți achiziția.',
   'proRestoreBtn': 'Restabiliți achiziția',
+  'proNoPurchasesFound': 'Nu s-au găsit achiziții!',
+  'proActivated': 'Pro activat cu succes!',
+  'proActivatedStatus': 'Pro activat',
+  'upgradePro': 'Upgrade Pro',
+  'proIntro': 'Obțineți cea mai bună experiență',
+  'proLifetimeNote': '✓ Eliminați reclamele
+✓ Accelerarea aplicației
+✓ Sunete exclusive
+✓ Deblocați toate funcțiile',
 };

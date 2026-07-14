@@ -136,7 +136,7 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
         AlarmToast.showAlarmToast(
           null,
           context,
-          customMessage: 'Không tìm thấy giao dịch mua nào!',
+          customMessage: AppLocalizations.of(context).proNoPurchasesFound,
           bottom: 70,
         );
       }
@@ -205,7 +205,7 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
     AlarmToast.showAlarmToast(
       null,
       context,
-      customMessage: 'Đã kích hoạt Pro thành công!',
+      customMessage: AppLocalizations.of(context).proActivated,
       bottom: 70,
     );
     Navigator.of(context).pop();

@@ -112,4 +112,13 @@ final Map<String, String> filTranslations = mergeTranslations({
   'proOneTime': 'Minsan • magpakailanman',
   'proRestoreDesc': 'Kapag nabili na, permanenteng ia-unlock ang Pro sa device na ito. Kung mag-log in ka ulit gamit ang parehong store account na ginamit mo para bumili sa ibang device, i-click lang ang I-restore ang Pagbili.',
   'proRestoreBtn': 'Ibalik ang pagbili',
+  'proNoPurchasesFound': 'Walang nakitang mga pagbili!',
+  'proActivated': 'Matagumpay na na-activate ang Pro!',
+  'proActivatedStatus': 'Naka-enable ang Pro',
+  'upgradePro': 'I-upgrade ang Pro',
+  'proIntro': 'Kunin ang pinakamahusay na karanasan',
+  'proLifetimeNote': '✓ Alisin ang mga ad
+✓ Pagpapabilis ng aplikasyon
+✓ Eksklusibong mga tunog
+✓ I-unlock ang lahat ng mga tampok',
 });

@@ -124,4 +124,13 @@ const Map<String, String> skTranslations = {
   'proOneTime': 'Raz • navždy',
   'proRestoreDesc': 'Po zakúpení bude Pro na tomto zariadení natrvalo odomknutý. Ak sa znova prihlásite pomocou rovnakého účtu obchodu, ktorý ste použili na nákup na inom zariadení, stačí kliknúť na Obnoviť nákup.',
   'proRestoreBtn': 'Obnoviť nákup',
+  'proNoPurchasesFound': 'Nenašli sa žiadne nákupy!',
+  'proActivated': 'Pro úspešne aktivovaný!',
+  'proActivatedStatus': 'Pro povolené',
+  'upgradePro': 'Upgrade Pro',
+  'proIntro': 'Získajte najlepší zážitok',
+  'proLifetimeNote': '✓ Odstráňte reklamy
+✓ Zrýchlenie aplikácie
+✓ Exkluzívne zvuky
+✓ Odomknite všetky funkcie',
 };
