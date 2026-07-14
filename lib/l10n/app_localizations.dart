@@ -392,6 +392,9 @@ class AppLocalizations {
   String get proIntro => _t('proIntro');
   String get proLifetimeNote => _t('proLifetimeNote');
   String get proBuyNow => _t('proBuyNow');
+  String get proOneTime => _t('proOneTime');
+  String get proRestoreDesc => _t('proRestoreDesc');
+  String get proRestoreBtn => _t('proRestoreBtn');
   String get guide => _t('guide');
   String get sendFeedback => _t('sendFeedback');
   String get about => _t('about');

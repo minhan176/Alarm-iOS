@@ -121,4 +121,7 @@ const Map<String, String> ptTranslations = {
   'guideStep2Sub2': 'Selecione "Uso da bateria do app"',
   'guideStep2Sub3': 'Gerenciar uso da bateria → Permitir uso da bateria em segundo plano',
   'gotIt': 'Entendi',
+  'proOneTime': 'Uma vez • para sempre',
+  'proRestoreDesc': 'Depois de adquirido, o Pro será desbloqueado permanentemente neste dispositivo. Se você fizer login novamente com a mesma conta da loja usada para fazer uma compra em outro dispositivo, basta clicar em Restaurar compra.',
+  'proRestoreBtn': 'Restaurar compra',
 };

@@ -121,4 +121,7 @@ const Map<String, String> deTranslations = {
   'guideStep2Sub2': 'Wählen Sie "Akkuverbrauch der App"',
   'guideStep2Sub3': 'Akkuverbrauch verwalten → Akkuverbrauch im Hintergrund zulassen',
   'gotIt': 'Verstanden',
+  'proOneTime': 'Einmal • für immer',
+  'proRestoreDesc': 'Nach dem Kauf wird Pro dauerhaft auf diesem Gerät freigeschaltet. Wenn Sie sich mit demselben Shop-Konto erneut anmelden, mit dem Sie auf einem anderen Gerät einen Kauf getätigt haben, klicken Sie einfach auf „Kauf wiederherstellen“.',
+  'proRestoreBtn': 'Kauf wiederherstellen',
 };

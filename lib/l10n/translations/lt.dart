@@ -122,4 +122,7 @@ const Map<String, String> ltTranslations = {
   'guideStep2Sub2': 'Pasirinkite „Programos baterijos naudojimas"',
   'guideStep2Sub3': 'Tvarkyti baterijos naudojimą → Leisti naudoti bateriją fone',
   'gotIt': 'Supratau',
+  'proOneTime': 'Kartą • amžinai',
+  'proRestoreDesc': 'Įsigijus „Pro“ bus visam laikui atrakintas šiame įrenginyje. Jei vėl prisijungiate naudodami tą pačią parduotuvės paskyrą, kurią naudojote pirkdami kitame įrenginyje, tiesiog spustelėkite Atkurti pirkinį.',
+  'proRestoreBtn': 'Atkurti pirkinį',
 };

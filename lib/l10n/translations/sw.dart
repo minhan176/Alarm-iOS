@@ -121,4 +121,7 @@ const Map<String, String> swTranslations = {
   'guideStep2Sub2': 'Chagua "Matumizi ya Betri ya Programu"',
   'guideStep2Sub3': 'Dhibiti matumizi ya betri → Ruhusu matumizi ya betri nyuma',
   'gotIt': 'Nimeelewa',
+  'proOneTime': 'Mara moja • milele',
+  'proRestoreDesc': 'Baada ya kununuliwa, Pro itafunguliwa kabisa kwenye kifaa hiki. Ukiingia tena ukitumia akaunti ile ile ya duka uliyotumia kufanya ununuzi kwenye kifaa kingine, bofya tu Rejesha Ununuzi.',
+  'proRestoreBtn': 'Rejesha ununuzi',
 };

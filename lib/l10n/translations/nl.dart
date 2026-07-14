@@ -129,4 +129,7 @@ const Map<String, String> nlTranslations = {
   'guideStep2Sub2': 'Selecteer "App-batterijgebruik"',
   'guideStep2Sub3': 'Batterijgebruik beheren → Batterijgebruik op achtergrond toestaan',
   'gotIt': 'Begrepen',
+  'proOneTime': 'Eens • voor altijd',
+  'proRestoreDesc': 'Na aankoop wordt Pro permanent ontgrendeld op dit apparaat. Als u zich opnieuw aanmeldt met hetzelfde winkelaccount dat u hebt gebruikt om een ​​aankoop te doen op een ander apparaat, klikt u gewoon op Aankoop herstellen.',
+  'proRestoreBtn': 'Aankoop herstellen',
 };

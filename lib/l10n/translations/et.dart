@@ -129,4 +129,7 @@ const Map<String, String> etTranslations = {
   'guideStep2Sub2': 'Valige "Rakenduse akukasutus"',
   'guideStep2Sub3': 'Halda akukasutust → Luba akukasutus taustal',
   'gotIt': 'Selge',
+  'proOneTime': 'Üks kord • igavesti',
+  'proRestoreDesc': 'Pärast ostmist avatakse Pro selles seadmes jäädavalt. Kui logite uuesti sisse sama poekontoga, mida kasutasite teises seadmes ostu sooritamiseks, klõpsake lihtsalt nuppu Taasta ost.',
+  'proRestoreBtn': 'Taasta ost',
 };

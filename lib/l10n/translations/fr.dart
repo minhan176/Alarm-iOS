@@ -121,4 +121,7 @@ const Map<String, String> frTranslations = {
   'guideStep2Sub2': 'Sélectionnez "Utilisation de la batterie de l\'application"',
   'guideStep2Sub3': 'Gérer l\'utilisation de la batterie → Autoriser l\'utilisation de la batterie en arrière-plan',
   'gotIt': 'Compris',
+  'proOneTime': 'Une fois • pour toujours',
+  'proRestoreDesc': 'Une fois acheté, Pro sera définitivement déverrouillé sur cet appareil. Si vous vous reconnectez avec le même compte de magasin que celui que vous avez utilisé pour effectuer un achat sur un autre appareil, cliquez simplement sur Restaurer l\'achat.',
+  'proRestoreBtn': 'Restaurer l\'achat',
 };

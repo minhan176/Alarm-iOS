@@ -121,4 +121,7 @@ const Map<String, String> plTranslations = {
   'guideStep2Sub2': 'Wybierz "Zużycie baterii aplikacji"',
   'guideStep2Sub3': 'Zarządzaj zużyciem baterii → Zezwól na zużycie baterii w tle',
   'gotIt': 'Rozumiem',
+  'proOneTime': 'Raz • na zawsze',
+  'proRestoreDesc': 'Po zakupie wersja Pro zostanie trwale odblokowana na tym urządzeniu. Jeśli zalogujesz się ponownie na to samo konto sklepowe, którego użyłeś do dokonania zakupu na innym urządzeniu, po prostu kliknij Przywróć zakup.',
+  'proRestoreBtn': 'Przywróć zakup',
 };

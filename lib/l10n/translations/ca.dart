@@ -129,4 +129,7 @@ const Map<String, String> caTranslations = {
   'guideStep2Sub2': 'Selecciona "Ús de bateria de l\'aplicació"',
   'guideStep2Sub3': 'Gestionar l\'ús de la bateria → Permetre l\'ús de la bateria en segon pla',
   'gotIt': 'Entès',
+  'proOneTime': 'Una vegada • per sempre',
+  'proRestoreDesc': 'Un cop comprat, Pro es desbloquejarà permanentment en aquest dispositiu. Si torneu a iniciar sessió amb el mateix compte de botiga que vau utilitzar per fer una compra en un altre dispositiu, feu clic a Restaura la compra.',
+  'proRestoreBtn': 'Restaurar la compra',
 };

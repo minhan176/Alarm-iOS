@@ -109,4 +109,7 @@ final Map<String, String> filTranslations = mergeTranslations({
   'allowDisplayOverOtherApps': 'Payagan ang "Display Over Other Apps"',
   'openSettings': 'Buksan ang Mga Setting',
   'gotIt': 'Nakuha ko',
+  'proOneTime': 'Minsan • magpakailanman',
+  'proRestoreDesc': 'Kapag nabili na, permanenteng ia-unlock ang Pro sa device na ito. Kung mag-log in ka ulit gamit ang parehong store account na ginamit mo para bumili sa ibang device, i-click lang ang I-restore ang Pagbili.',
+  'proRestoreBtn': 'Ibalik ang pagbili',
 });

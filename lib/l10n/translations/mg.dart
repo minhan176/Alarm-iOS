@@ -67,4 +67,7 @@ final Map<String, String> mgTranslations = mergeTranslations({
   'close': 'Akombony',
   'openSettings': 'Sokafy ny fikirana',
   'gotIt': 'Azoko',
+  'proOneTime': 'Indray mandeha • mandrakizay',
+  'proRestoreDesc': 'Rehefa novidina dia ho voahidy tanteraka amin\'ity fitaovana ity ny Pro. Raha miditra indray miaraka amin\'ny kaonty fivarotana izay nampiasainao nividianana fitaovana hafa ianao, tsindrio fotsiny ny Avereno ny fividianana.',
+  'proRestoreBtn': 'Avereno ny fividianana',
 });

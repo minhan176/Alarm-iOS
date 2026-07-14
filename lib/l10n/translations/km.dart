@@ -67,4 +67,7 @@ final Map<String, String> kmTranslations = mergeTranslations({
   'close': 'បិទ',
   'openSettings': 'បើកការកំណត់',
   'gotIt': 'យល់ហើយ',
+  'proOneTime': 'ម្តង • ជារៀងរហូត',
+  'proRestoreDesc': 'នៅពេលដែលបានទិញ Pro នឹងត្រូវបានដោះសោជាអចិន្ត្រៃយ៍នៅលើឧបករណ៍នេះ។ ប្រសិនបើអ្នកចូលវិញដោយប្រើគណនីហាងដដែលដែលអ្នកធ្លាប់ធ្វើការទិញនៅលើឧបករណ៍ផ្សេងទៀត គ្រាន់តែចុច Restore Purchase។',
+  'proRestoreBtn': 'ទិញឡើងវិញ',
 });

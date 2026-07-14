@@ -67,4 +67,7 @@ final Map<String, String> amTranslations = mergeTranslations({
   'close': 'ዝጋ',
   'openSettings': 'ቅንብሮችን ክፈት',
   'gotIt': 'ገባኝ',
+  'proOneTime': 'አንዴ • ለዘላለም',
+  'proRestoreDesc': 'አንዴ ከተገዛ በኋላ በዚህ መሳሪያ ላይ Pro በቋሚነት ይከፈታል። በሌላ መሣሪያ ላይ ግዢ ሲፈጽሙ በተጠቀሙበት የሱቅ መለያ ተመልሰው ከገቡ፣ ግዢን እነበረበት መልስ የሚለውን ብቻ ጠቅ ያድርጉ።',
+  'proRestoreBtn': 'ግዢን ወደነበረበት መልስ',
 });

@@ -109,4 +109,7 @@ final Map<String, String> msTranslations = mergeTranslations({
   'allowDisplayOverOtherApps': 'Benarkan "Papar di Atas Aplikasi Lain"',
   'openSettings': 'Buka Tetapan',
   'gotIt': 'Faham',
+  'proOneTime': 'Sekali • selamanya',
+  'proRestoreDesc': 'Setelah dibeli, Pro akan dibuka kunci secara kekal pada peranti ini. Jika anda log masuk semula dengan akaun kedai yang sama yang anda gunakan untuk membuat pembelian pada peranti lain, cuma klik Pulihkan Pembelian.',
+  'proRestoreBtn': 'Pulihkan pembelian',
 });

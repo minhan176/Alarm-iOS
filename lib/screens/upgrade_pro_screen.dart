@@ -217,6 +217,11 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
       
       final String originalString = product.price;
       
+      String currencyUnit = originalString.replaceAll(RegExp(r'[0-9.,\s\u00A0]'), '');
+      if (currencyUnit.isEmpty) {
+        currencyUnit = product.currencySymbol.trim();
+      }
+      
       // Simple heuristic for VND
       if (product.currencyCode == 'VND' || originalString.contains('₫') || originalString.contains('đ')) {
         final str = doubledPrice.toInt().toString();
@@ -227,17 +232,27 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
           }
           formatted += str[i];
         }
-        return '$formatted ${product.currencySymbol.trim()}';
+        
+        if (originalString.trim().startsWith(currencyUnit) && currencyUnit.isNotEmpty) {
+          return '$currencyUnit $formatted';
+        }
+        return '$formatted $currencyUnit';
       }
       
       // Try using intl if it's not VND
       final format = NumberFormat.currency(
-        symbol: product.currencySymbol,
+        symbol: currencyUnit.isNotEmpty ? currencyUnit : product.currencySymbol,
         decimalDigits: doubledPrice == doubledPrice.truncateToDouble() ? 0 : 2,
       );
       return format.format(doubledPrice);
     } catch (e) {
-      return '${product.currencySymbol}${(product.rawPrice * 2).toStringAsFixed(2)}';
+      String currencyUnit = product.price.replaceAll(RegExp(r'[0-9.,\s\u00A0]'), '');
+      if (currencyUnit.isEmpty) currencyUnit = product.currencySymbol;
+      
+      if (product.price.trim().startsWith(currencyUnit) && currencyUnit.isNotEmpty) {
+        return '$currencyUnit${(product.rawPrice * 2).toStringAsFixed(2)}';
+      }
+      return '${(product.rawPrice * 2).toStringAsFixed(2)}$currencyUnit';
     }
   }
 
@@ -371,6 +386,7 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    
                                     Text(
                                       product?.price ?? '--',
                                       style: const TextStyle(
@@ -403,9 +419,9 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                                       .withOpacity(0.16),
                                   borderRadius: BorderRadius.circular(999),
                                 ),
-                                child: const Text(
-                                  '1 lần • mãi mãi',
-                                  style: TextStyle(
+                                child: Text(
+                                  localizations.proOneTime,
+                                  style: const TextStyle(
                                     color: CupertinoColors.systemGreen,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
@@ -434,10 +450,10 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                         ),
                         //Spacer(),
                         const SizedBox(height: 24),
-                        const Text(
-                          'Sau khi mua, Pro sẽ được mở vĩnh viễn trên thiết bị này. Nếu đăng nhập lại cùng tài khoản cửa hàng đã dùng để mua ở thiết bị khác, bạn chỉ cần nhấn Khôi phục mua hàng.',
+                        Text(
+                          localizations.proRestoreDesc,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: CupertinoColors.systemGrey,
                             fontSize: 13,
                             height: 1.4,
@@ -447,7 +463,7 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                           padding: EdgeInsets.zero,
                           onPressed: _isPurchasing ? null : _restorePurchases,
                           child: Text(
-                            'Khôi phục mua hàng',
+                            localizations.proRestoreBtn,
                             style: TextStyle(
                               color: CupertinoColors.systemOrange.withOpacity(
                                 _isPurchasing ? 0.4 : 1,

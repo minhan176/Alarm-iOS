@@ -124,4 +124,7 @@ const Map<String, String> zuTranslations = {
   'guideStep2Sub2': 'Khetha "Ukusetshenziswa Kwebhethri Ye-App"',
   'guideStep2Sub3': 'Phatha ukusetshenziswa kwebhethri → Vumela ukusetshenziswa kwebhethri ngemuva',
   'gotIt': 'Ngiyezwa',
+  'proOneTime': 'Kanye • phakade',
+  'proRestoreDesc': 'Uma isithengiwe, i-Pro izovulwa unomphela kule divayisi. Uma uphinda ungena ngemvume nge-akhawunti yesitolo oyisebenzisele ukuthenga kwenye idivayisi, vele uchofoze okuthi Buyisela Ukuthenga.',
+  'proRestoreBtn': 'Buyisela ukuthenga',
 };

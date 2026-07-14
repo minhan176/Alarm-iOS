@@ -107,4 +107,7 @@ final Map<String, String> bsTranslations = mergeTranslations({
   'allowDisplayOverOtherApps': 'Dozvoli "Prikaz preko drugih aplikacija"',
   'openSettings': 'Otvori postavke',
   'gotIt': 'Razumijem',
+  'proOneTime': 'Jednom • zauvijek',
+  'proRestoreDesc': 'Nakon kupovine, Pro će biti trajno otključan na ovom uređaju. Ako se ponovo prijavite s istim računom trgovine koji ste koristili za kupovinu na drugom uređaju, samo kliknite na Vrati kupovinu.',
+  'proRestoreBtn': 'Vratite kupovinu',
 });

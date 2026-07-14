@@ -129,4 +129,7 @@ const Map<String, String> zhTwTranslations = {
   'guideStep2Sub2': '選擇「應用程式電池用量」',
   'guideStep2Sub3': '管理電池用量 → 允許在背景中使用電池',
   'gotIt': '知道了',
+  'proOneTime': '一次•永遠',
+  'proRestoreDesc': '購買後，Pro 將在此裝置上永久解鎖。如果您使用在另一台裝置上購買時使用的相同商店帳戶重新登錄，只需按一下「恢復購買」即可。',
+  'proRestoreBtn': '恢復購買',
 };

@@ -121,4 +121,7 @@ const Map<String, String> roTranslations = {
   'guideStep2Sub2': 'Selectați "Utilizarea bateriei aplicației"',
   'guideStep2Sub3': 'Gestionați utilizarea bateriei → Permiteți utilizarea bateriei în fundal',
   'gotIt': 'Am înțeles',
+  'proOneTime': 'O dată • pentru totdeauna',
+  'proRestoreDesc': 'Odată achiziționat, Pro va fi deblocat permanent pe acest dispozitiv. Dacă vă conectați din nou cu același cont de magazin pe care l-ați folosit pentru a face o achiziție pe alt dispozitiv, faceți clic pe Restabiliți achiziția.',
+  'proRestoreBtn': 'Restabiliți achiziția',
 };

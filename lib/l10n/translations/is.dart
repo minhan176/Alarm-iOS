@@ -121,4 +121,7 @@ const Map<String, String> isTranslations = {
   'guideStep2Sub2': 'Veldu "Rafhlöðunotkun forrits"',
   'guideStep2Sub3': 'Stjórna rafhlöðunotkun → Leyfa rafhlöðunotkun í bakgrunni',
   'gotIt': 'Ég skil',
+  'proOneTime': 'Einu sinni • að eilífu',
+  'proRestoreDesc': 'Þegar búið er að kaupa Pro verður varanlega opnað á þessu tæki. Ef þú skráir þig aftur inn með sama verslunarreikningi og þú notaðir til að kaupa í öðru tæki, smelltu bara á Endurheimta kaup.',
+  'proRestoreBtn': 'Endurheimta kaup',
 };

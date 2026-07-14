@@ -87,4 +87,7 @@ final Map<String, String> uzTranslations = mergeTranslations({
   'close': 'Yopish',
   'openSettings': 'Sozlamalarni ochish',
   'gotIt': 'Tushunarli',
+  'proOneTime': 'Bir marta • abadiy',
+  'proRestoreDesc': 'Xarid qilinganidan keyin Pro ushbu qurilmada doimiy ravishda qulfdan chiqariladi. Agar siz boshqa qurilmada xarid qilgan doʻkon hisobi bilan qayta kirsangiz, “Xaridni tiklash” tugmasini bosing.',
+  'proRestoreBtn': 'Xaridni tiklash',
 });

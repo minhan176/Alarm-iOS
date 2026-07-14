@@ -121,4 +121,7 @@ const Map<String, String> idTranslations = {
   'guideStep2Sub2': 'Pilih "Penggunaan Baterai Aplikasi"',
   'guideStep2Sub3': 'Kelola penggunaan baterai → Izinkan penggunaan baterai di latar belakang',
   'gotIt': 'Mengerti',
+  'proOneTime': 'Sekali • selamanya',
+  'proRestoreDesc': 'Setelah dibeli, Pro akan dibuka kuncinya secara permanen di perangkat ini. Jika Anda masuk kembali dengan akun toko yang sama dengan yang Anda gunakan untuk melakukan pembelian di perangkat lain, cukup klik Pulihkan Pembelian.',
+  'proRestoreBtn': 'Pulihkan pembelian',
 };

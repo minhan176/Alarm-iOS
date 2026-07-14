@@ -129,4 +129,7 @@ const Map<String, String> hrTranslations = {
   'guideStep2Sub2': 'Odaberite "Korištenje baterije aplikacije"',
   'guideStep2Sub3': 'Upravljanje korištenjem baterije → Dopusti korištenje baterije u pozadini',
   'gotIt': 'Razumijem',
+  'proOneTime': 'Jednom • zauvijek',
+  'proRestoreDesc': 'Nakon kupnje, Pro će biti trajno otključan na ovom uređaju. Ako se ponovno prijavite s istim računom trgovine koji ste koristili za kupnju na drugom uređaju, samo kliknite Vrati kupnju.',
+  'proRestoreBtn': 'Obnovi kupnju',
 };

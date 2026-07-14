@@ -121,4 +121,7 @@ const Map<String, String> huTranslations = {
   'guideStep2Sub2': 'Válassza az "Alkalmazás akkumulátorhasználata" lehetőséget',
   'guideStep2Sub3': 'Akkumulátorhasználat kezelése → Akkumulátorhasználat engedélyezése a háttérben',
   'gotIt': 'Értem',
+  'proOneTime': 'Egyszer • örökre',
+  'proRestoreDesc': 'Vásárlás után a Pro véglegesen fel lesz oldva ezen az eszközön. Ha ugyanazzal az áruházi fiókkal jelentkezik be újra, amellyel egy másik eszközön vásárolt, kattintson a Vásárlás visszaállítása lehetőségre.',
+  'proRestoreBtn': 'Vásárlás visszaállítása',
 };

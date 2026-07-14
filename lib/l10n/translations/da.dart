@@ -129,4 +129,7 @@ const Map<String, String> daTranslations = {
   'guideStep2Sub2': 'Vælg "App-batteriforbrug"',
   'guideStep2Sub3': 'Administrer batteriforbrug → Tillad batteriforbrug i baggrunden',
   'gotIt': 'Forstået',
+  'proOneTime': 'Én gang for altid',
+  'proRestoreDesc': 'Når den er købt, låses Pro permanent op på denne enhed. Hvis du logger ind igen med den samme butikskonto, som du brugte til at foretage et køb på en anden enhed, skal du blot klikke på Gendan køb.',
+  'proRestoreBtn': 'Gendan køb',
 };

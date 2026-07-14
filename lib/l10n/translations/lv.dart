@@ -122,4 +122,7 @@ const Map<String, String> lvTranslations = {
   'guideStep2Sub2': 'Atlasiet "Lietotnes akumulatora lietojums"',
   'guideStep2Sub3': 'Pārvaldīt akumulatora lietojumu → Atļaut akumulatora lietojumu fonā',
   'gotIt': 'Sapratu',
+  'proOneTime': 'Vienreiz • uz visiem laikiem',
+  'proRestoreDesc': 'Pēc iegādes Pro šajā ierīcē tiks neatgriezeniski atbloķēts. Ja piesakāties atpakaļ, izmantojot to pašu veikala kontu, ko izmantojāt pirkuma veikšanai citā ierīcē, vienkārši noklikšķiniet uz Atjaunot pirkumu.',
+  'proRestoreBtn': 'Atjaunot pirkumu',
 };

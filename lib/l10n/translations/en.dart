@@ -166,4 +166,7 @@ const Map<String, String> enTranslations = {
   'guideStep2Sub2': 'Select "App Battery Usage"',
   'guideStep2Sub3': 'Manage battery usage → Allow battery usage in background',
   'gotIt': 'Got it',
+  'proOneTime': 'Once • forever',
+  'proRestoreDesc': 'Once purchased, Pro will be permanently unlocked on this device. If you log back in with the same store account you used to make a purchase on another device, just click Restore Purchase.',
+  'proRestoreBtn': 'Restore purchase',
 };

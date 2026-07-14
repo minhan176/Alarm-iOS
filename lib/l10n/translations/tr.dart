@@ -124,4 +124,7 @@ const Map<String, String> trTranslations = {
   'guideStep2Sub2': '"Uygulama Pil Kullanımı" seçeneğini seçin',
   'guideStep2Sub3': 'Pil kullanımını yönet → Arka planda pil kullanımına izin ver',
   'gotIt': 'Anladım',
+  'proOneTime': 'Bir kez • sonsuza kadar',
+  'proRestoreDesc': 'Satın alındıktan sonra Pro\'nun kilidi bu cihazda kalıcı olarak açılacaktır. Başka bir cihazda alışveriş yaparken kullandığınız mağaza hesabıyla tekrar oturum açarsanız Satın Alma İşlemini Geri Yükle\'ye tıklamanız yeterlidir.',
+  'proRestoreBtn': 'Satın alma işlemini geri yükle',
 };

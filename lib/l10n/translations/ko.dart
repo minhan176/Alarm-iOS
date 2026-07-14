@@ -121,4 +121,7 @@ const Map<String, String> koTranslations = {
   'guideStep2Sub2': '"앱 배터리 사용량" 선택',
   'guideStep2Sub3': '배터리 사용량 관리 → 백그라운드에서 배터리 사용 허용',
   'gotIt': '알겠습니다',
+  'proOneTime': '한 번 • 영원히',
+  'proRestoreDesc': '구매하면 이 장치에서 Pro가 영구적으로 잠금 해제됩니다. 다른 기기에서 구매할 때 사용한 것과 동일한 스토어 계정으로 다시 로그인하는 경우 구매 복원을 클릭하세요.',
+  'proRestoreBtn': '구매 복원',
 };

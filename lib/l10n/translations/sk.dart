@@ -121,4 +121,7 @@ const Map<String, String> skTranslations = {
   'guideStep2Sub2': 'Vyberte „Využitie batérie aplikáciou"',
   'guideStep2Sub3': 'Spravovať využitie batérie → Povoliť využitie batérie na pozadí',
   'gotIt': 'Rozumiem',
+  'proOneTime': 'Raz • navždy',
+  'proRestoreDesc': 'Po zakúpení bude Pro na tomto zariadení natrvalo odomknutý. Ak sa znova prihlásite pomocou rovnakého účtu obchodu, ktorý ste použili na nákup na inom zariadení, stačí kliknúť na Obnoviť nákup.',
+  'proRestoreBtn': 'Obnoviť nákup',
 };

@@ -68,4 +68,7 @@ final Map<String, String> tkTranslations = mergeTranslations({
   'close': 'Ýap',
   'openSettings': 'Sazlamalary aç',
   'gotIt': 'Düşündim',
+  'proOneTime': 'Bir gezek • hemişelik',
+  'proRestoreDesc': 'Satyn alnandan soň, Pro bu enjamda hemişelik açylar. Başga enjamda satyn almak üçin ulanan şol bir dükan hasaby bilen gaýtadan girseňiz, “Satyn almagy dikelt” düwmesine basyň.',
+  'proRestoreBtn': 'Satyn almagy dikelt',
 });

@@ -87,4 +87,7 @@ final Map<String, String> azTranslations = mergeTranslations({
   'close': 'Bağla',
   'openSettings': 'Parametrləri aç',
   'gotIt': 'Anladım',
+  'proOneTime': 'Bir dəfə • əbədi',
+  'proRestoreDesc': 'Satın alındıqdan sonra Pro bu cihazda həmişəlik kiliddən çıxarılacaq. Başqa cihazda alış-veriş etmək üçün istifadə etdiyiniz eyni mağaza hesabı ilə yenidən daxil olsanız, sadəcə olaraq Satınalmanı Bərpa et üzərinə klikləyin.',
+  'proRestoreBtn': 'Satınalmanı bərpa edin',
 });

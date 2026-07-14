@@ -129,4 +129,7 @@ const Map<String, String> zhCnTranslations = {
   'guideStep2Sub2': '选择"应用电池用量"',
   'guideStep2Sub3': '管理电池用量 → 允许后台使用电池',
   'gotIt': '知道了',
+  'proOneTime': '一次•永远',
+  'proRestoreDesc': '购买后，Pro 将在此设备上永久解锁。如果您使用在另一台设备上购买时使用的同一商店帐户重新登录，只需单击“恢复购买”即可。',
+  'proRestoreBtn': '恢复购买',
 };

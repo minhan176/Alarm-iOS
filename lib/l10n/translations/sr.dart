@@ -93,4 +93,7 @@ final Map<String, String> srTranslations = mergeTranslations({
   'close': 'Zatvori',
   'openSettings': 'Otvori podešavanja',
   'gotIt': 'Razumem',
+  'proOneTime': 'Једном • заувек',
+  'proRestoreDesc': 'Када се купи, Про ће бити трајно откључан на овом уређају. Ако се поново пријавите са истим налогом продавнице који сте користили за куповину на другом уређају, само кликните на Врати куповину.',
+  'proRestoreBtn': 'Вратите куповину',
 });

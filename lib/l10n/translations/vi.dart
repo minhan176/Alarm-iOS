@@ -134,4 +134,7 @@ const Map<String, String> viTranslations = {
   'guideStep2Sub2': 'Chọn "Sử dụng pin ứng dụng"',
   'guideStep2Sub3': 'Quản lý sử dụng pin → Cho phép sử dụng pin ở chế độ nền',
   'gotIt': 'Đã hiểu',
+  'proOneTime': '1 lần • mãi mãi',
+  'proRestoreDesc': 'Sau khi mua, Pro sẽ được mở vĩnh viễn trên thiết bị này. Nếu đăng nhập lại cùng tài khoản cửa hàng đã dùng để mua ở thiết bị khác, bạn chỉ cần nhấn Khôi phục mua hàng.',
+  'proRestoreBtn': 'Khôi phục mua hàng',
 };

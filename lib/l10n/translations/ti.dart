@@ -57,4 +57,7 @@ final Map<String, String> tiTranslations = mergeTranslations({
   'submit': 'ስደድ',
   'close': 'ዕጾ',
   'gotIt': 'ተረዲኡኒ',
+  'proOneTime': 'ሓንሳብ • ንዘልኣለም',
+  'proRestoreDesc': 'ምስ ተዓደገ ፕሮ ኣብዚ መሳርሒ ንሓዋሩ ክኽፈት እዩ። በቲ ኣብ ካልእ መሳርሒ ዕድጊ ንምግባር ዝጥቀመሉ ዝነበርካ ናይ ድኳን ኣካውንት ተመሊስካ እንተ ኣቲኻ፡ ዕድጊ ምምላስ ጥራይ ጠውቕ።',
+  'proRestoreBtn': 'ዕድጊ ምምላስ',
 });

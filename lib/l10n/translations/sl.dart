@@ -121,4 +121,7 @@ const Map<String, String> slTranslations = {
   'guideStep2Sub2': 'Izberite „Poraba baterije aplikacije"',
   'guideStep2Sub3': 'Upravljaj porabo baterije → Dovoli porabo baterije v ozadju',
   'gotIt': 'Razumem',
+  'proOneTime': 'Enkrat • za vedno',
+  'proRestoreDesc': 'Po nakupu bo Pro v tej napravi trajno odklenjen. Če se znova prijavite z istim računom trgovine, ki ste ga uporabili za nakup v drugi napravi, preprosto kliknite Obnovi nakup.',
+  'proRestoreBtn': 'Obnovi nakup',
 };

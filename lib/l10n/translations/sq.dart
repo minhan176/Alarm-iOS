@@ -69,4 +69,7 @@ final Map<String, String> sqTranslations = mergeTranslations({
   'close': 'Mbyll',
   'openSettings': 'Hap cilësimet',
   'gotIt': 'E kuptova',
+  'proOneTime': 'Një herë • përgjithmonë',
+  'proRestoreDesc': 'Pasi të blihet, Pro do të shkyçet përgjithmonë në këtë pajisje. Nëse identifikoheni përsëri me të njëjtën llogari dyqani që keni përdorur për të bërë një blerje në një pajisje tjetër, thjesht klikoni "Rivendo blerjen".',
+  'proRestoreBtn': 'Rivendos blerjen',
 });

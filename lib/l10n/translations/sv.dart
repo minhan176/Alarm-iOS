@@ -121,4 +121,7 @@ const Map<String, String> svTranslations = {
   'guideStep2Sub2': 'Välj "Appens batterianvändning"',
   'guideStep2Sub3': 'Hantera batterianvändning → Tillåt batterianvändning i bakgrunden',
   'gotIt': 'Förstått',
+  'proOneTime': 'En gång för alltid',
+  'proRestoreDesc': 'När du har köpt den kommer Pro att låsas upp permanent på den här enheten. Om du loggar in igen med samma butikskonto som du använde för att göra ett köp på en annan enhet klickar du bara på Återställ köp.',
+  'proRestoreBtn': 'Återställ köp',
 };

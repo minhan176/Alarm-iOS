@@ -67,4 +67,7 @@ final Map<String, String> soTranslations = mergeTranslations({
   'close': 'Xir',
   'openSettings': 'Fur dejimaha',
   'gotIt': 'Waan fahmay',
+  'proOneTime': 'Mar • weligeed',
+  'proRestoreDesc': 'Marka la iibsado, Pro si joogto ah ayaa loogu furi doonaa qalabkan. Haddii aad dib ugu soo noqoto akoonkii dukaanka ee aad wax ku iibsan jirtay qalab kale, kaliya dhagsii Soo Celinta Iibka.',
+  'proRestoreBtn': 'Soo celinta iibka',
 });

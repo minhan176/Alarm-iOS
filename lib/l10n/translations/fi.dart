@@ -129,4 +129,7 @@ const Map<String, String> fiTranslations = {
   'guideStep2Sub2': 'Valitse "Sovelluksen akunkulutus"',
   'guideStep2Sub3': 'Hallitse akunkulutusta → Salli akunkulutus taustalla',
   'gotIt': 'Selvä',
+  'proOneTime': 'Kerran • ikuisesti',
+  'proRestoreDesc': 'Kun Pro on ostettu, sen lukitus avataan pysyvästi tällä laitteella. Jos kirjaudut takaisin sisään samalla kauppatilillä, jolla teit ostoksen toisella laitteella, napsauta Palauta ostos.',
+  'proRestoreBtn': 'Palauta ostos',
 };
