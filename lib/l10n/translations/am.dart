@@ -84,4 +84,81 @@ final Map<String, String> amTranslations = mergeTranslations({
   'bestExperience': 'Best experience',
   'proBuyNow': 'አሁን ይግዙ',
   'checkForUpdates': 'ዝማኔዎችን ያረጋግጡ',
+  'ok': 'OK',
+  'noAlarmData': 'No Alarm Data',
+  'tipKeepAppRunning':
+      'Tip: It is recommended not to close the app in multitasking to ensure better alarm functionality.',
+
+  // Time remaining
+  'mon': 'Mon',
+  'tue': 'Tue',
+  'wed': 'Wed',
+  'thu': 'Thu',
+  'fri': 'Fri',
+  'sat': 'Sat',
+  'sun': 'Sun',
+
+  // Month names
+  'january': 'January',
+  'february': 'February',
+  'march': 'March',
+  'april': 'April',
+  'may': 'May',
+  'june': 'June',
+  'july': 'July',
+  'august': 'August',
+  'september': 'September',
+  'october': 'October',
+  'november': 'November',
+  'december': 'December',
+
+  // Edit alarm screen
+  'deleteAlarmConfirm': 'Are you sure you want to delete this alarm?',
+  'snoozeDuration': 'Snooze Duration',
+  'systemRingtone': 'System Ringtone',
+
+  // Sound selector
+  'systemRingtones': 'SYSTEM RINGTONES',
+  'whenTimerEnds': 'When Timer Ends',
+
+  // World clock screen
+  'noWorldClocks': 'No World Clocks',
+  'hoursLabel': 'hours',
+  'minLabel': 'min',
+  'secLabel': 'sec',
+
+  // Stopwatch screen
+  'twentyFourHourFormat': '24-Hour Format',
+  'supportAndFeedback': 'SUPPORT & FEEDBACK',
+  'privacyPolicyError':
+      'Unable to open privacy policy. Please visit our website.',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+
+  // Notification strings
+  'alarmNotifications': 'Alarm Notifications',
+  'alarmNotificationsDesc': 'Notifications for alarms',
+  'am': 'AM',
+  'pm': 'PM',
+
+  // Rating dialog
+  'ratingTitle': 'Enjoying Alarm Phone 17 OS 26?',
+  'ratingContent': 'Tap a star to rate us on\nGoogle Play.',
+  'allowBackgroundRunning': 'Allow Background Running',
+  'batteryDialogContent':
+      'Select "Open App Settings" → Battery → Manage battery usage → Allow battery usage in background',
+  'openAppSettings': 'Open App Settings',
+  'allowDisplayOverOtherApps': 'Allow "Display Over Other Apps"',
+  'overlayDialogContent':
+      'Select "Open Settings" → Alarm Phone 17 OS 26 → Allow display over other apps',
+  'guideIntro':
+      'For the alarm to work properly, we recommend following these steps:',
+  'guideStep1Title': 'Grant "Display Over Other Apps" permission',
+  'guideStep1Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
+  'guideStep1Sub2': 'Select "Display over other apps"',
+  'guideStep1Sub3': 'Allow display over other apps',
+  'guideStep2Title': 'Allow background battery usage',
+  'guideStep2Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
+  'guideStep2Sub2': 'Select "App Battery Usage"',
+  'guideStep2Sub3': 'Manage battery usage → Allow battery usage in background',
 });

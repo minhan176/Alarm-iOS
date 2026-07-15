@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:vibration/vibration.dart';
-import 'package:flutter/services.dart' show SystemNavigator;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../services/ad_service.dart';
 
@@ -36,7 +36,9 @@ class _TimerRingScreenState extends State<TimerRingScreen>
   Timer? _countdownTimer;
   Timer? _vibrateTimer;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel(
+    'com.oaptech.clock/alarm',
+  );
 
   @override
   void initState() {
@@ -106,7 +108,9 @@ class _TimerRingScreenState extends State<TimerRingScreen>
           Source audioSource;
           if (widget.selectedSound.startsWith('content://')) {
             // It's a system ringtone URI - use native RingtoneManager
-            await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': widget.selectedSound});
+            await _alarmChannel.invokeMethod('playSystemRingtone', {
+              'uri': widget.selectedSound,
+            });
             print('Playing system ringtone: ${widget.selectedSound}');
           } else if (widget.selectedSound.startsWith('assets/')) {
             // It's an asset file (like our custom Alarm Phone 17 OS 26)
@@ -114,7 +118,8 @@ class _TimerRingScreenState extends State<TimerRingScreen>
             audioSource = AssetSource(assetPath);
             await _audioPlayer.play(audioSource);
             print('Playing asset sound: ${widget.selectedSound}');
-          } else if (widget.selectedSound.startsWith('/') || widget.selectedSound.contains('\\')) {
+          } else if (widget.selectedSound.startsWith('/') ||
+              widget.selectedSound.contains('\\')) {
             audioSource = DeviceFileSource(widget.selectedSound);
             await _audioPlayer.play(audioSource);
             print('Playing file sound: ${widget.selectedSound}');
@@ -165,6 +170,12 @@ class _TimerRingScreenState extends State<TimerRingScreen>
     }
   }
 
+  void _repeatTimer() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('timer_restart_pending', true);
+    _stopTimer();
+  }
+
   @override
   void dispose() {
     _stopTimerRing();
@@ -195,7 +206,8 @@ class _TimerRingScreenState extends State<TimerRingScreen>
                   animation: _shakeController,
                   builder: (context, child) {
                     return Transform.rotate(
-                      angle: math.sin(_shakeController.value * 2 * math.pi) * 0.1,
+                      angle:
+                          math.sin(_shakeController.value * 2 * math.pi) * 0.1,
                       child: const Icon(
                         CupertinoIcons.timer,
                         color: CupertinoColors.systemGrey,
@@ -220,7 +232,9 @@ class _TimerRingScreenState extends State<TimerRingScreen>
 
             // Countdown timer display
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8, // Limit width to 80% of screen
+              width:
+                  MediaQuery.of(context).size.width *
+                  0.8, // Limit width to 80% of screen
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
@@ -238,10 +252,35 @@ class _TimerRingScreenState extends State<TimerRingScreen>
 
             const Spacer(),
 
+            // Repeat button - translucent
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35),
+              child: SizedBox(
+                width: double.infinity,
+                height: 75,
+                child: CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  color: CupertinoColors.darkBackgroundGray.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(32),
+                  onPressed: _repeatTimer,
+                  child: Text(
+                    AppLocalizations.of(context).repeat,
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
             // Stop button - orange
             Padding(
-              padding: const EdgeInsets.only(left: 35, right: 35, top: 40, bottom: 60),
-              child: Container(
+              padding: const EdgeInsets.only(left: 35, right: 35, bottom: 60),
+              child: SizedBox(
                 width: double.infinity,
                 height: 75,
                 child: CupertinoButton(

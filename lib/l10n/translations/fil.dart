@@ -128,4 +128,26 @@ final Map<String, String> filTranslations = mergeTranslations({
   'bestExperience': 'Best experience',
   'proBuyNow': 'Bilhin ngayon',
   'checkForUpdates': 'Tingnan ang mga update',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+
+  // Notification strings
+  'am': 'AM',
+  'pm': 'PM',
+
+  // Rating dialog
+  'batteryDialogContent':
+      'Select "Open App Settings" → Battery → Manage battery usage → Allow battery usage in background',
+  'overlayDialogContent':
+      'Select "Open Settings" → Alarm Phone 17 OS 26 → Allow display over other apps',
+  'guideIntro':
+      'For the alarm to work properly, we recommend following these steps:',
+  'guideStep1Title': 'Grant "Display Over Other Apps" permission',
+  'guideStep1Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
+  'guideStep1Sub2': 'Select "Display over other apps"',
+  'guideStep1Sub3': 'Allow display over other apps',
+  'guideStep2Title': 'Allow background battery usage',
+  'guideStep2Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
+  'guideStep2Sub2': 'Select "App Battery Usage"',
+  'guideStep2Sub3': 'Manage battery usage → Allow battery usage in background',
 });

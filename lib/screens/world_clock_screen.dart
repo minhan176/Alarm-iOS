@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../providers/world_clock_provider.dart';
@@ -239,49 +240,40 @@ class _WorldClockItem extends StatelessWidget {
   });
 
   String _getTimeDifference(BuildContext context) {
-    final now = DateTime.now();
-    final localTime = now;
-    final clockTime = DateTime.now().toUtc().add(
-      Duration(
-        milliseconds: DateTime.now()
-            .toUtc()
-            .add(Duration(hours: _getTimezoneOffset(clock.timezone)))
-            .millisecondsSinceEpoch - 
-            DateTime.now().toUtc().millisecondsSinceEpoch,
-      ),
-    );
-    
-    final difference = clockTime.hour - localTime.hour;
-    
-    if (difference == 0) {
+    try {
+      final now = DateTime.now();
+      final location = tz.getLocation(clock.timezone);
+      final tzTime = tz.TZDateTime.now(location);
+      
+      final diffDuration = tzTime.timeZoneOffset - now.timeZoneOffset;
+      
+      int diffHours = diffDuration.inHours;
+      int diffMinutes = diffDuration.inMinutes.abs() % 60;
+      
+      if (diffHours == 0 && diffMinutes == 0) {
+        return AppLocalizations.of(context).today;
+      } else {
+        String sign = diffDuration.inMinutes > 0 ? '+' : (diffDuration.inMinutes < 0 ? '-' : '');
+        if (diffMinutes == 0) {
+          return '$sign${diffHours.abs()}HRS';
+        } else {
+          return '$sign${diffHours.abs()}:${diffMinutes.toString().padLeft(2, '0')}HRS';
+        }
+      }
+    } catch (e) {
+      // Fallback if timezone not found or initialized
       return AppLocalizations.of(context).today;
-    } else if (difference > 0) {
-      return '+${difference}HRS';
-    } else {
-      return '${difference}HRS';
     }
   }
 
-  int _getTimezoneOffset(String timezone) {
-    // Simple timezone offset mapping for common cities
-    final timezones = {
-      'Asia/Ho_Chi_Minh': 7,
-      'America/New_York': -5,
-      'America/Los_Angeles': -8,
-      'Europe/London': 0,
-      'Europe/Paris': 1,
-      'Asia/Tokyo': 9,
-      'Asia/Shanghai': 8,
-      'Asia/Dubai': 4,
-      'Australia/Sydney': 11,
-      'Pacific/Auckland': 13,
-    };
-    return timezones[timezone] ?? 0;
-  }
-
   DateTime _getCurrentTimeInTimezone() {
-    final offset = _getTimezoneOffset(clock.timezone);
-    return DateTime.now().toUtc().add(Duration(hours: offset));
+    try {
+      final location = tz.getLocation(clock.timezone);
+      return tz.TZDateTime.now(location);
+    } catch (e) {
+      // Fallback
+      return DateTime.now().toUtc();
+    }
   }
 
   @override
