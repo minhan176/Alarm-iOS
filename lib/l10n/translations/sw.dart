@@ -17,7 +17,8 @@ const Map<String, String> swTranslations = {
   'noAlarm': 'Hakuna Kengele',
   'settings': 'Mipangilio',
   'noAlarmData': 'Hakuna Data ya Kengele',
-  'tipKeepAppRunning': 'Kidokezo: Inashauriwa usifunge programu katika kazi nyingi ili kuhakikisha utendaji bora wa kengele.',
+  'tipKeepAppRunning':
+      'Kidokezo: Inashauriwa usifunge programu katika kazi nyingi ili kuhakikisha utendaji bora wa kengele.',
   'days': 'siku',
   'hours': 'masaa',
   'minutes': 'dakika',
@@ -94,8 +95,10 @@ const Map<String, String> swTranslations = {
   'shareApp': 'Shiriki Programu',
   'rateApp': 'Kadiria Programu',
   'privacyPolicy': 'Sera ya Faragha',
-  'privacyPolicyError': 'Haiwezekani kufungua sera ya faragha. Tafadhali tembelea tovuti yetu.',
-  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Haiwezekani kufungua sera ya faragha. Tafadhali tembelea tovuti yetu.',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Arifa za Kengele',
   'alarmNotificationsDesc': 'Arifa za kengele',
   'dismiss': 'Ondoa',
@@ -105,13 +108,16 @@ const Map<String, String> swTranslations = {
   'ratingContent': 'Gusa nyota kutukadiri kwenye\nGoogle Play.',
   'submit': 'Wasilisha',
   'allowBackgroundRunning': 'Ruhusu Kuendesha Nyuma',
-  'batteryDialogContent': 'Chagua "Fungua Mipangilio ya Programu" → Betri → Dhibiti matumizi ya betri → Ruhusu matumizi ya betri nyuma',
+  'batteryDialogContent':
+      'Chagua "Fungua Mipangilio ya Programu" → Betri → Dhibiti matumizi ya betri → Ruhusu matumizi ya betri nyuma',
   'openAppSettings': 'Fungua Mipangilio ya Programu',
   'close': 'Funga',
   'allowDisplayOverOtherApps': 'Ruhusu "Onyesha Juu ya Programu Nyingine"',
-  'overlayDialogContent': 'Chagua "Fungua Mipangilio" → Alarm Phone 17 OS 26 → Ruhusu kuonyesha juu ya programu nyingine',
+  'overlayDialogContent':
+      'Chagua "Fungua Mipangilio" → Alarm Phone 17 OS 26 → Ruhusu kuonyesha juu ya programu nyingine',
   'openSettings': 'Fungua Mipangilio',
-  'guideIntro': 'Ili kengele ifanye kazi vizuri, tunapendekeza kufuata hatua hizi:',
+  'guideIntro':
+      'Ili kengele ifanye kazi vizuri, tunapendekeza kufuata hatua hizi:',
   'guideStep1Title': 'Toa ruhusa ya "Onyesha Juu ya Programu Nyingine"',
   'guideStep1Sub1': 'Nenda Mipangilio → Programu → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Chagua "Onyesha juu ya programu nyingine"',
@@ -119,18 +125,23 @@ const Map<String, String> swTranslations = {
   'guideStep2Title': 'Ruhusu matumizi ya betri nyuma',
   'guideStep2Sub1': 'Nenda Mipangilio → Programu → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Chagua "Matumizi ya Betri ya Programu"',
-  'guideStep2Sub3': 'Dhibiti matumizi ya betri → Ruhusu matumizi ya betri nyuma',
+  'guideStep2Sub3':
+      'Dhibiti matumizi ya betri → Ruhusu matumizi ya betri nyuma',
   'gotIt': 'Nimeelewa',
   'proOneTime': 'Mara moja • milele',
-  'proRestoreDesc': 'Baada ya kununuliwa, Pro itafunguliwa kabisa kwenye kifaa hiki. Ukiingia tena ukitumia akaunti ile ile ya duka uliyotumia kufanya ununuzi kwenye kifaa kingine, bofya tu Rejesha Ununuzi.',
+  'proRestoreDesc':
+      'Baada ya kununuliwa, Pro itafunguliwa kabisa kwenye kifaa hiki. Ukiingia tena ukitumia akaunti ile ile ya duka uliyotumia kufanya ununuzi kwenye kifaa kingine, bofya tu Rejesha Ununuzi.',
   'proRestoreBtn': 'Rejesha ununuzi',
   'proNoPurchasesFound': 'Hakuna ununuzi uliopatikana!',
   'proActivated': 'Pro imewezeshwa!',
   'proActivatedStatus': 'Pro imewashwa',
   'upgradePro': 'Boresha Pro',
   'proIntro': 'Pata matumizi bora zaidi',
-  'proLifetimeNote': '✓ Ondoa matangazo
+  'proLifetimeNote': '''✓ Ondoa matangazo
 ✓ Kuongeza kasi ya maombi
 ✓ Sauti za kipekee
-✓ Fungua vipengele vyote',
+✓ Fungua vipengele vyote''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Nunua Sasa',
+  'checkForUpdates': 'Angalia masasisho',
 };

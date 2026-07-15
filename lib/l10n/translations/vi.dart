@@ -17,7 +17,8 @@ const Map<String, String> viTranslations = {
   'noAlarm': 'Không có báo thức',
   'settings': 'Cài đặt',
   'noAlarmData': 'Không có dữ liệu báo thức',
-  'tipKeepAppRunning': 'Mẹo: Nên giữ ứng dụng chạy trong nền để đảm bảo báo thức hoạt động tốt hơn.',
+  'tipKeepAppRunning':
+      'Mẹo: Nên giữ ứng dụng chạy trong nền để đảm bảo báo thức hoạt động tốt hơn.',
   'days': 'ngày',
   'hours': 'giờ',
   'minutes': 'phút',
@@ -90,7 +91,8 @@ const Map<String, String> viTranslations = {
   'UPGRADE_PRO': 'NÂNG CẤP PRO',
   'upgradePro': 'Nâng cấp Pro',
   'proIntro': 'Nhận được trải nghiệm tốt nhất',
-  'proLifetimeNote': '✓ Xoá quảng cáo\n✓ Tăng tốc ứng dụng\n✓ Âm thanh độc quyền\n✓ Mở khoá tất cả tính năng',
+  'proLifetimeNote':
+      '''✓ Xoá quảng cáo\n✓ Tăng tốc ứng dụng\n✓ Âm thanh độc quyền\n✓ Mở khoá tất cả tính năng''',
   'proBuyNow': 'Mua ngay',
   'guide': 'Hướng dẫn',
   'sendFeedback': 'Gửi phản hồi',
@@ -99,8 +101,10 @@ const Map<String, String> viTranslations = {
   'rateApp': 'Đánh giá ứng dụng',
   'privacyPolicy': 'Chính sách bảo mật',
   'checkForUpdates': 'Kiểm tra cập nhật',
-  'privacyPolicyError': 'Không thể mở chính sách bảo mật. Vui lòng truy cập trang web của chúng tôi.',
-  'shareMessage': 'Tải Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Không thể mở chính sách bảo mật. Vui lòng truy cập trang web của chúng tôi.',
+  'shareMessage':
+      'Tải Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Thông báo báo thức',
   'alarmNotificationsDesc': 'Thông báo cho báo thức',
   'dismiss': 'Bỏ qua',
@@ -114,17 +118,20 @@ const Map<String, String> viTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Cho phép chạy nền',
-  'batteryDialogContent': 'Chọn "Mở cài đặt ứng dụng" → Pin → Quản lý sử dụng pin → Cho phép sử dụng pin ở chế độ nền',
+  'batteryDialogContent':
+      'Chọn "Mở cài đặt ứng dụng" → Pin → Quản lý sử dụng pin → Cho phép sử dụng pin ở chế độ nền',
   'openAppSettings': 'Mở cài đặt ứng dụng',
   'close': 'Đóng',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Cho phép "Hiển thị trên ứng dụng khác"',
-  'overlayDialogContent': 'Chọn "Mở cài đặt" → Alarm Phone 17 OS 26 → Cho phép hiển thị trên ứng dụng khác',
+  'overlayDialogContent':
+      'Chọn "Mở cài đặt" → Alarm Phone 17 OS 26 → Cho phép hiển thị trên ứng dụng khác',
   'openSettings': 'Mở cài đặt',
 
   // Guide screen
-  'guideIntro': 'Để báo thức hoạt động đúng cách, chúng tôi khuyên bạn làm theo các bước sau:',
+  'guideIntro':
+      'Để báo thức hoạt động đúng cách, chúng tôi khuyên bạn làm theo các bước sau:',
   'guideStep1Title': 'Cấp quyền "Hiển thị trên ứng dụng khác"',
   'guideStep1Sub1': 'Đi tới Cài đặt → Ứng dụng → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Chọn "Hiển thị trên ứng dụng khác"',
@@ -135,9 +142,11 @@ const Map<String, String> viTranslations = {
   'guideStep2Sub3': 'Quản lý sử dụng pin → Cho phép sử dụng pin ở chế độ nền',
   'gotIt': 'Đã hiểu',
   'proOneTime': '1 lần • mãi mãi',
-  'proRestoreDesc': 'Sau khi mua, Pro sẽ được mở vĩnh viễn trên thiết bị này. Nếu đăng nhập lại cùng tài khoản cửa hàng đã dùng để mua ở thiết bị khác, bạn chỉ cần nhấn Khôi phục mua hàng.',
+  'proRestoreDesc':
+      'Sau khi mua, Pro sẽ được mở vĩnh viễn trên thiết bị này. Nếu đăng nhập lại cùng tài khoản cửa hàng đã dùng để mua ở thiết bị khác, bạn chỉ cần nhấn Khôi phục mua hàng.',
   'proRestoreBtn': 'Khôi phục mua hàng',
   'proNoPurchasesFound': 'Không tìm thấy giao dịch mua nào!',
   'proActivated': 'Đã kích hoạt Pro thành công!',
   'proActivatedStatus': 'Đã kích hoạt Pro',
+  'bestExperience': 'Trải nghiệm tốt nhất',
 };

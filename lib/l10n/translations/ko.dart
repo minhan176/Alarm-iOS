@@ -95,7 +95,8 @@ const Map<String, String> koTranslations = {
   'rateApp': '앱 평가',
   'privacyPolicy': '개인정보 처리방침',
   'privacyPolicyError': '개인정보 처리방침을 열 수 없습니다. 웹사이트를 방문해 주세요.',
-  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UI 다운로드:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage':
+      'Alarm Phone 17 OS 26 - Liquid Glass UI 다운로드:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': '알람 알림',
   'alarmNotificationsDesc': '알람 알림',
   'dismiss': '닫기',
@@ -105,11 +106,13 @@ const Map<String, String> koTranslations = {
   'ratingContent': 'Google Play에서 평가하려면\n별을 탭하세요.',
   'submit': '제출',
   'allowBackgroundRunning': '백그라운드 실행 허용',
-  'batteryDialogContent': '"앱 설정 열기" → 배터리 → 배터리 사용량 관리 → 백그라운드에서 배터리 사용 허용을 선택하세요',
+  'batteryDialogContent':
+      '"앱 설정 열기" → 배터리 → 배터리 사용량 관리 → 백그라운드에서 배터리 사용 허용을 선택하세요',
   'openAppSettings': '앱 설정 열기',
   'close': '닫기',
   'allowDisplayOverOtherApps': '"다른 앱 위에 표시" 허용',
-  'overlayDialogContent': '"설정 열기" → Alarm Phone 17 OS 26 → 다른 앱 위에 표시 허용을 선택하세요',
+  'overlayDialogContent':
+      '"설정 열기" → Alarm Phone 17 OS 26 → 다른 앱 위에 표시 허용을 선택하세요',
   'openSettings': '설정 열기',
   'guideIntro': '알람이 제대로 작동하려면 다음 단계를 따르는 것이 좋습니다:',
   'guideStep1Title': '"다른 앱 위에 표시" 권한 부여',
@@ -122,15 +125,19 @@ const Map<String, String> koTranslations = {
   'guideStep2Sub3': '배터리 사용량 관리 → 백그라운드에서 배터리 사용 허용',
   'gotIt': '알겠습니다',
   'proOneTime': '한 번 • 영원히',
-  'proRestoreDesc': '구매하면 이 장치에서 Pro가 영구적으로 잠금 해제됩니다. 다른 기기에서 구매할 때 사용한 것과 동일한 스토어 계정으로 다시 로그인하는 경우 구매 복원을 클릭하세요.',
+  'proRestoreDesc':
+      '구매하면 이 장치에서 Pro가 영구적으로 잠금 해제됩니다. 다른 기기에서 구매할 때 사용한 것과 동일한 스토어 계정으로 다시 로그인하는 경우 구매 복원을 클릭하세요.',
   'proRestoreBtn': '구매 복원',
   'proNoPurchasesFound': '구매 내역이 없습니다.',
   'proActivated': 'Pro가 성공적으로 활성화되었습니다!',
   'proActivatedStatus': '프로 지원',
   'upgradePro': '업그레이드 프로',
   'proIntro': '최고의 경험을 얻으세요',
-  'proLifetimeNote': '✓ 광고 제거
+  'proLifetimeNote': '''✓ 광고 제거
 ✓ 애플리케이션 가속
 ✓ 독점 사운드
-✓ 모든 기능 잠금 해제',
+✓ 모든 기능 잠금 해제''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': '지금 구매',
+  'checkForUpdates': '업데이트 확인',
 };

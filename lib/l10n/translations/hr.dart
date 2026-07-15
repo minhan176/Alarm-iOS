@@ -17,7 +17,8 @@ const Map<String, String> hrTranslations = {
   'noAlarm': 'Nema alarma',
   'settings': 'Postavke',
   'noAlarmData': 'Nema podataka o alarmu',
-  'tipKeepAppRunning': 'Savjet: Preporučuje se ne zatvarati aplikaciju u višezadaćnom radu kako bi alarm funkcionirao što bolje.',
+  'tipKeepAppRunning':
+      'Savjet: Preporučuje se ne zatvarati aplikaciju u višezadaćnom radu kako bi alarm funkcionirao što bolje.',
   'days': 'dana',
   'hours': 'sati',
   'minutes': 'minuta',
@@ -94,8 +95,10 @@ const Map<String, String> hrTranslations = {
   'shareApp': 'Podijeli aplikaciju',
   'rateApp': 'Ocijeni aplikaciju',
   'privacyPolicy': 'Pravila privatnosti',
-  'privacyPolicyError': 'Nije moguće otvoriti pravila privatnosti. Posjetite našu web stranicu.',
-  'shareMessage': 'Preuzmite Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Nije moguće otvoriti pravila privatnosti. Posjetite našu web stranicu.',
+  'shareMessage':
+      'Preuzmite Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Obavijesti alarma',
   'alarmNotificationsDesc': 'Obavijesti za alarme',
   'dismiss': 'Odbaci',
@@ -109,17 +112,20 @@ const Map<String, String> hrTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Dopusti rad u pozadini',
-  'batteryDialogContent': 'Odaberite "Otvori postavke aplikacije" → Baterija → Upravljanje korištenjem baterije → Dopusti korištenje baterije u pozadini',
+  'batteryDialogContent':
+      'Odaberite "Otvori postavke aplikacije" → Baterija → Upravljanje korištenjem baterije → Dopusti korištenje baterije u pozadini',
   'openAppSettings': 'Otvori postavke aplikacije',
   'close': 'Zatvori',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Dopusti "Prikaz preko drugih aplikacija"',
-  'overlayDialogContent': 'Odaberite "Otvori postavke" → Alarm Phone 17 OS 26 → Dopusti prikaz preko drugih aplikacija',
+  'overlayDialogContent':
+      'Odaberite "Otvori postavke" → Alarm Phone 17 OS 26 → Dopusti prikaz preko drugih aplikacija',
   'openSettings': 'Otvori postavke',
 
   // Guide screen
-  'guideIntro': 'Kako bi alarm ispravno radio, preporučujemo da slijedite ove korake:',
+  'guideIntro':
+      'Kako bi alarm ispravno radio, preporučujemo da slijedite ove korake:',
   'guideStep1Title': 'Dodijelite dozvolu "Prikaz preko drugih aplikacija"',
   'guideStep1Sub1': 'Idite na Postavke → Aplikacije → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Odaberite "Prikaz preko drugih aplikacija"',
@@ -127,18 +133,23 @@ const Map<String, String> hrTranslations = {
   'guideStep2Title': 'Dopusti korištenje baterije u pozadini',
   'guideStep2Sub1': 'Idite na Postavke → Aplikacije → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Odaberite "Korištenje baterije aplikacije"',
-  'guideStep2Sub3': 'Upravljanje korištenjem baterije → Dopusti korištenje baterije u pozadini',
+  'guideStep2Sub3':
+      'Upravljanje korištenjem baterije → Dopusti korištenje baterije u pozadini',
   'gotIt': 'Razumijem',
   'proOneTime': 'Jednom • zauvijek',
-  'proRestoreDesc': 'Nakon kupnje, Pro će biti trajno otključan na ovom uređaju. Ako se ponovno prijavite s istim računom trgovine koji ste koristili za kupnju na drugom uređaju, samo kliknite Vrati kupnju.',
+  'proRestoreDesc':
+      'Nakon kupnje, Pro će biti trajno otključan na ovom uređaju. Ako se ponovno prijavite s istim računom trgovine koji ste koristili za kupnju na drugom uređaju, samo kliknite Vrati kupnju.',
   'proRestoreBtn': 'Obnovi kupnju',
   'proNoPurchasesFound': 'Nema pronađenih kupnji!',
   'proActivated': 'Pro uspješno aktiviran!',
   'proActivatedStatus': 'Pro omogućen',
   'upgradePro': 'Nadogradnja Pro',
   'proIntro': 'Dobijte najbolje iskustvo',
-  'proLifetimeNote': '✓ Uklonite oglase
+  'proLifetimeNote': '''✓ Uklonite oglase
 ✓ Ubrzanje aplikacije
 ✓ Ekskluzivni zvukovi
-✓ Otključajte sve značajke',
+✓ Otključajte sve značajke''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Kupi sada',
+  'checkForUpdates': 'Provjerite ažuriranja',
 };

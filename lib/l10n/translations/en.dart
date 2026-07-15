@@ -24,7 +24,8 @@ const Map<String, String> enTranslations = {
   'noAlarm': 'No Alarm',
   'settings': 'Settings',
   'noAlarmData': 'No Alarm Data',
-  'tipKeepAppRunning': 'Tip: It is recommended not to close the app in multitasking to ensure better alarm functionality.',
+  'tipKeepAppRunning':
+      'Tip: It is recommended not to close the app in multitasking to ensure better alarm functionality.',
 
   // Time remaining
   'days': 'days',
@@ -125,8 +126,10 @@ const Map<String, String> enTranslations = {
   'rateApp': 'Rate App',
   'privacyPolicy': 'Privacy Policy',
   'checkForUpdates': 'Check for Updates',
-  'privacyPolicyError': 'Unable to open privacy policy. Please visit our website.',
-  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Unable to open privacy policy. Please visit our website.',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
 
   // Notification strings
   'alarmNotifications': 'Alarm Notifications',
@@ -144,17 +147,20 @@ const Map<String, String> enTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Allow Background Running',
-  'batteryDialogContent': 'Select "Open App Settings" → Battery → Manage battery usage → Allow battery usage in background',
+  'batteryDialogContent':
+      'Select "Open App Settings" → Battery → Manage battery usage → Allow battery usage in background',
   'openAppSettings': 'Open App Settings',
   'close': 'Close',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Allow "Display Over Other Apps"',
-  'overlayDialogContent': 'Select "Open Settings" → Alarm Phone 17 OS 26 → Allow display over other apps',
+  'overlayDialogContent':
+      'Select "Open Settings" → Alarm Phone 17 OS 26 → Allow display over other apps',
   'openSettings': 'Open Settings',
 
   // Guide screen
-  'guideIntro': 'For the alarm to work properly, we recommend following these steps:',
+  'guideIntro':
+      'For the alarm to work properly, we recommend following these steps:',
   'guideStep1Title': 'Grant "Display Over Other Apps" permission',
   'guideStep1Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Select "Display over other apps"',
@@ -165,15 +171,17 @@ const Map<String, String> enTranslations = {
   'guideStep2Sub3': 'Manage battery usage → Allow battery usage in background',
   'gotIt': 'Got it',
   'proOneTime': 'Once • forever',
-  'proRestoreDesc': 'Once purchased, Pro will be permanently unlocked on this device. If you log back in with the same store account you used to make a purchase on another device, just click Restore Purchase.',
+  'proRestoreDesc':
+      'Once purchased, Pro will be permanently unlocked on this device. If you log back in with the same store account you used to make a purchase on another device, just click Restore Purchase.',
   'proRestoreBtn': 'Restore purchase',
   'proNoPurchasesFound': 'No purchases found!',
   'proActivated': 'Pro activated successfully!',
   'proActivatedStatus': 'Pro Activated',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Get the best experience',
-  'proLifetimeNote': '✓ Remove ads
+  'proLifetimeNote': '''✓ Remove ads
 ✓ Speed up app
 ✓ Exclusive sounds
-✓ Unlock all features',
+✓ Unlock all features''',
+  'bestExperience': 'Best experience',
 };

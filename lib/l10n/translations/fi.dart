@@ -17,7 +17,8 @@ const Map<String, String> fiTranslations = {
   'noAlarm': 'Ei herätystä',
   'settings': 'Asetukset',
   'noAlarmData': 'Ei herätystietoja',
-  'tipKeepAppRunning': 'Vinkki: On suositeltavaa olla sulkematta sovellusta moniajossa herätyksen paremman toiminnan varmistamiseksi.',
+  'tipKeepAppRunning':
+      'Vinkki: On suositeltavaa olla sulkematta sovellusta moniajossa herätyksen paremman toiminnan varmistamiseksi.',
   'days': 'päivää',
   'hours': 'tuntia',
   'minutes': 'minuuttia',
@@ -94,8 +95,10 @@ const Map<String, String> fiTranslations = {
   'shareApp': 'Jaa sovellus',
   'rateApp': 'Arvostele sovellus',
   'privacyPolicy': 'Tietosuojakäytäntö',
-  'privacyPolicyError': 'Tietosuojakäytäntöä ei voi avata. Käy verkkosivuillamme.',
-  'shareMessage': 'Lataa Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Tietosuojakäytäntöä ei voi avata. Käy verkkosivuillamme.',
+  'shareMessage':
+      'Lataa Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Herätysilmoitukset',
   'alarmNotificationsDesc': 'Ilmoitukset herätyksistä',
   'dismiss': 'Hylkää',
@@ -109,36 +112,45 @@ const Map<String, String> fiTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Salli taustakäyttö',
-  'batteryDialogContent': 'Valitse "Avaa sovelluksen asetukset" → Akku → Hallitse akunkulutusta → Salli akunkulutus taustalla',
+  'batteryDialogContent':
+      'Valitse "Avaa sovelluksen asetukset" → Akku → Hallitse akunkulutusta → Salli akunkulutus taustalla',
   'openAppSettings': 'Avaa sovelluksen asetukset',
   'close': 'Sulje',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Salli "Näytä muiden sovellusten päällä"',
-  'overlayDialogContent': 'Valitse "Avaa asetukset" → Alarm Phone 17 OS 26 → Salli näyttäminen muiden sovellusten päällä',
+  'overlayDialogContent':
+      'Valitse "Avaa asetukset" → Alarm Phone 17 OS 26 → Salli näyttäminen muiden sovellusten päällä',
   'openSettings': 'Avaa asetukset',
 
   // Guide screen
-  'guideIntro': 'Jotta hälytys toimisi oikein, suosittelemme seuraavia vaiheita:',
+  'guideIntro':
+      'Jotta hälytys toimisi oikein, suosittelemme seuraavia vaiheita:',
   'guideStep1Title': 'Myönnä "Näytä muiden sovellusten päällä" -lupa',
-  'guideStep1Sub1': 'Siirry kohtaan Asetukset → Sovellukset → Alarm Phone 17 OS 26',
+  'guideStep1Sub1':
+      'Siirry kohtaan Asetukset → Sovellukset → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Valitse "Näytä muiden sovellusten päällä"',
   'guideStep1Sub3': 'Salli näyttäminen muiden sovellusten päällä',
   'guideStep2Title': 'Salli akunkulutus taustalla',
-  'guideStep2Sub1': 'Siirry kohtaan Asetukset → Sovellukset → Alarm Phone 17 OS 26',
+  'guideStep2Sub1':
+      'Siirry kohtaan Asetukset → Sovellukset → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Valitse "Sovelluksen akunkulutus"',
   'guideStep2Sub3': 'Hallitse akunkulutusta → Salli akunkulutus taustalla',
   'gotIt': 'Selvä',
   'proOneTime': 'Kerran • ikuisesti',
-  'proRestoreDesc': 'Kun Pro on ostettu, sen lukitus avataan pysyvästi tällä laitteella. Jos kirjaudut takaisin sisään samalla kauppatilillä, jolla teit ostoksen toisella laitteella, napsauta Palauta ostos.',
+  'proRestoreDesc':
+      'Kun Pro on ostettu, sen lukitus avataan pysyvästi tällä laitteella. Jos kirjaudut takaisin sisään samalla kauppatilillä, jolla teit ostoksen toisella laitteella, napsauta Palauta ostos.',
   'proRestoreBtn': 'Palauta ostos',
   'proNoPurchasesFound': 'Ostoksia ei löytynyt!',
   'proActivated': 'Pro aktivoitu onnistuneesti!',
   'proActivatedStatus': 'Pro käytössä',
   'upgradePro': 'Päivitä Pro',
   'proIntro': 'Hanki paras kokemus',
-  'proLifetimeNote': '✓ Poista mainokset
+  'proLifetimeNote': '''✓ Poista mainokset
 ✓ Sovelluksen kiihtyvyys
 ✓ Ainutlaatuiset äänet
-✓ Avaa kaikki ominaisuudet',
+✓ Avaa kaikki ominaisuudet''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Osta nyt',
+  'checkForUpdates': 'Tarkista päivitykset',
 };

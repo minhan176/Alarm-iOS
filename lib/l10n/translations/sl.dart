@@ -17,7 +17,8 @@ const Map<String, String> slTranslations = {
   'noAlarm': 'Ni budilke',
   'settings': 'Nastavitve',
   'noAlarmData': 'Ni podatkov o budilki',
-  'tipKeepAppRunning': 'Nasvet: Priporočamo, da aplikacije ne zapirate v večopravilnosti, da bo budilka bolje delovala.',
+  'tipKeepAppRunning':
+      'Nasvet: Priporočamo, da aplikacije ne zapirate v večopravilnosti, da bo budilka bolje delovala.',
   'days': 'dni',
   'hours': 'ure',
   'minutes': 'minute',
@@ -94,8 +95,10 @@ const Map<String, String> slTranslations = {
   'shareApp': 'Deli aplikacijo',
   'rateApp': 'Oceni aplikacijo',
   'privacyPolicy': 'Pravilnik o zasebnosti',
-  'privacyPolicyError': 'Pravilnika o zasebnosti ni mogoče odpreti. Obiščite našo spletno stran.',
-  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Pravilnika o zasebnosti ni mogoče odpreti. Obiščite našo spletno stran.',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Obvestila budilke',
   'alarmNotificationsDesc': 'Obvestila za budilke',
   'dismiss': 'Opusti',
@@ -105,13 +108,16 @@ const Map<String, String> slTranslations = {
   'ratingContent': 'Tapnite zvezdico, da nas ocenite na\nGoogle Play.',
   'submit': 'Pošlji',
   'allowBackgroundRunning': 'Dovoli izvajanje v ozadju',
-  'batteryDialogContent': 'Izberite „Odpri nastavitve aplikacije" → Baterija → Upravljaj porabo baterije → Dovoli porabo baterije v ozadju',
+  'batteryDialogContent':
+      'Izberite „Odpri nastavitve aplikacije" → Baterija → Upravljaj porabo baterije → Dovoli porabo baterije v ozadju',
   'openAppSettings': 'Odpri nastavitve aplikacije',
   'close': 'Zapri',
   'allowDisplayOverOtherApps': 'Dovoli „Prikaz čez druge aplikacije"',
-  'overlayDialogContent': 'Izberite „Odpri nastavitve" → Alarm Phone 17 OS 26 → Dovoli prikaz čez druge aplikacije',
+  'overlayDialogContent':
+      'Izberite „Odpri nastavitve" → Alarm Phone 17 OS 26 → Dovoli prikaz čez druge aplikacije',
   'openSettings': 'Odpri nastavitve',
-  'guideIntro': 'Da bo budilka pravilno delovala, priporočamo, da sledite tem korakom:',
+  'guideIntro':
+      'Da bo budilka pravilno delovala, priporočamo, da sledite tem korakom:',
   'guideStep1Title': 'Dodelite dovoljenje „Prikaz čez druge aplikacije"',
   'guideStep1Sub1': 'Pojdite na Nastavitve → Aplikacije → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Izberite „Prikaz čez druge aplikacije"',
@@ -119,18 +125,23 @@ const Map<String, String> slTranslations = {
   'guideStep2Title': 'Dovoli porabo baterije v ozadju',
   'guideStep2Sub1': 'Pojdite na Nastavitve → Aplikacije → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Izberite „Poraba baterije aplikacije"',
-  'guideStep2Sub3': 'Upravljaj porabo baterije → Dovoli porabo baterije v ozadju',
+  'guideStep2Sub3':
+      'Upravljaj porabo baterije → Dovoli porabo baterije v ozadju',
   'gotIt': 'Razumem',
   'proOneTime': 'Enkrat • za vedno',
-  'proRestoreDesc': 'Po nakupu bo Pro v tej napravi trajno odklenjen. Če se znova prijavite z istim računom trgovine, ki ste ga uporabili za nakup v drugi napravi, preprosto kliknite Obnovi nakup.',
+  'proRestoreDesc':
+      'Po nakupu bo Pro v tej napravi trajno odklenjen. Če se znova prijavite z istim računom trgovine, ki ste ga uporabili za nakup v drugi napravi, preprosto kliknite Obnovi nakup.',
   'proRestoreBtn': 'Obnovi nakup',
   'proNoPurchasesFound': 'Ni najdenih nakupov!',
   'proActivated': 'Pro uspešno aktiviran!',
   'proActivatedStatus': 'Pro omogočen',
   'upgradePro': 'Nadgradnja Pro',
   'proIntro': 'Pridobite najboljšo izkušnjo',
-  'proLifetimeNote': '✓ Odstranite oglase
+  'proLifetimeNote': '''✓ Odstranite oglase
 ✓ Pospeševanje aplikacij
 ✓ Ekskluzivni zvoki
-✓ Odklenite vse funkcije',
+✓ Odklenite vse funkcije''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Kupi zdaj',
+  'checkForUpdates': 'Preveri posodobitve',
 };

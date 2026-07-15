@@ -17,7 +17,8 @@ const Map<String, String> daTranslations = {
   'noAlarm': 'Ingen alarm',
   'settings': 'Indstillinger',
   'noAlarmData': 'Ingen alarmdata',
-  'tipKeepAppRunning': 'Tip: Det anbefales ikke at lukke appen i multitasking for at sikre bedre alarmfunktion.',
+  'tipKeepAppRunning':
+      'Tip: Det anbefales ikke at lukke appen i multitasking for at sikre bedre alarmfunktion.',
   'days': 'dage',
   'hours': 'timer',
   'minutes': 'minutter',
@@ -94,8 +95,10 @@ const Map<String, String> daTranslations = {
   'shareApp': 'Del app',
   'rateApp': 'Bedøm app',
   'privacyPolicy': 'Privatlivspolitik',
-  'privacyPolicyError': 'Kan ikke åbne privatlivspolitikken. Besøg venligst vores hjemmeside.',
-  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Kan ikke åbne privatlivspolitikken. Besøg venligst vores hjemmeside.',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Alarmnotifikationer',
   'alarmNotificationsDesc': 'Notifikationer for alarmer',
   'dismiss': 'Afvis',
@@ -109,17 +112,20 @@ const Map<String, String> daTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Tillad kørsel i baggrunden',
-  'batteryDialogContent': 'Vælg "Åbn appindstillinger" → Batteri → Administrer batteriforbrug → Tillad batteriforbrug i baggrunden',
+  'batteryDialogContent':
+      'Vælg "Åbn appindstillinger" → Batteri → Administrer batteriforbrug → Tillad batteriforbrug i baggrunden',
   'openAppSettings': 'Åbn appindstillinger',
   'close': 'Luk',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Tillad "Vis over andre apps"',
-  'overlayDialogContent': 'Vælg "Åbn indstillinger" → Alarm Phone 17 OS 26 → Tillad visning over andre apps',
+  'overlayDialogContent':
+      'Vælg "Åbn indstillinger" → Alarm Phone 17 OS 26 → Tillad visning over andre apps',
   'openSettings': 'Åbn indstillinger',
 
   // Guide screen
-  'guideIntro': 'For at alarmen fungerer korrekt, anbefaler vi at følge disse trin:',
+  'guideIntro':
+      'For at alarmen fungerer korrekt, anbefaler vi at følge disse trin:',
   'guideStep1Title': 'Giv tilladelse til "Vis over andre apps"',
   'guideStep1Sub1': 'Gå til Indstillinger → Apps → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Vælg "Vis over andre apps"',
@@ -127,18 +133,23 @@ const Map<String, String> daTranslations = {
   'guideStep2Title': 'Tillad batteriforbrug i baggrunden',
   'guideStep2Sub1': 'Gå til Indstillinger → Apps → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Vælg "App-batteriforbrug"',
-  'guideStep2Sub3': 'Administrer batteriforbrug → Tillad batteriforbrug i baggrunden',
+  'guideStep2Sub3':
+      'Administrer batteriforbrug → Tillad batteriforbrug i baggrunden',
   'gotIt': 'Forstået',
   'proOneTime': 'Én gang for altid',
-  'proRestoreDesc': 'Når den er købt, låses Pro permanent op på denne enhed. Hvis du logger ind igen med den samme butikskonto, som du brugte til at foretage et køb på en anden enhed, skal du blot klikke på Gendan køb.',
+  'proRestoreDesc':
+      'Når den er købt, låses Pro permanent op på denne enhed. Hvis du logger ind igen med den samme butikskonto, som du brugte til at foretage et køb på en anden enhed, skal du blot klikke på Gendan køb.',
   'proRestoreBtn': 'Gendan køb',
   'proNoPurchasesFound': 'Ingen køb fundet!',
   'proActivated': 'Pro aktiveret med succes!',
   'proActivatedStatus': 'Pro aktiveret',
   'upgradePro': 'Opgrader Pro',
   'proIntro': 'Få den bedste oplevelse',
-  'proLifetimeNote': '✓ Fjern annoncer
+  'proLifetimeNote': '''✓ Fjern annoncer
 ✓ Applikationsacceleration
 ✓ Eksklusive lyde
-✓ Lås op for alle funktioner',
+✓ Lås op for alle funktioner''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Køb nu',
+  'checkForUpdates': 'Søg efter opdateringer',
 };

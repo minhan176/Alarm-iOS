@@ -17,7 +17,8 @@ const Map<String, String> plTranslations = {
   'noAlarm': 'Brak alarmu',
   'settings': 'Ustawienia',
   'noAlarmData': 'Brak danych alarmu',
-  'tipKeepAppRunning': 'Wskazówka: Zaleca się nie zamykać aplikacji w trybie wielozadaniowości, aby zapewnić lepsze działanie alarmu.',
+  'tipKeepAppRunning':
+      'Wskazówka: Zaleca się nie zamykać aplikacji w trybie wielozadaniowości, aby zapewnić lepsze działanie alarmu.',
   'days': 'dni',
   'hours': 'godziny',
   'minutes': 'minuty',
@@ -94,8 +95,10 @@ const Map<String, String> plTranslations = {
   'shareApp': 'Udostępnij aplikację',
   'rateApp': 'Oceń aplikację',
   'privacyPolicy': 'Polityka prywatności',
-  'privacyPolicyError': 'Nie można otworzyć polityki prywatności. Odwiedź naszą stronę internetową.',
-  'shareMessage': 'Pobierz Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Nie można otworzyć polityki prywatności. Odwiedź naszą stronę internetową.',
+  'shareMessage':
+      'Pobierz Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Powiadomienia alarmowe',
   'alarmNotificationsDesc': 'Powiadomienia dla alarmów',
   'dismiss': 'Odrzuć',
@@ -105,32 +108,42 @@ const Map<String, String> plTranslations = {
   'ratingContent': 'Dotknij gwiazdki, aby ocenić nas na\nGoogle Play.',
   'submit': 'Wyślij',
   'allowBackgroundRunning': 'Zezwól na działanie w tle',
-  'batteryDialogContent': 'Wybierz "Otwórz ustawienia aplikacji" → Bateria → Zarządzaj zużyciem baterii → Zezwól na zużycie baterii w tle',
+  'batteryDialogContent':
+      'Wybierz "Otwórz ustawienia aplikacji" → Bateria → Zarządzaj zużyciem baterii → Zezwól na zużycie baterii w tle',
   'openAppSettings': 'Otwórz ustawienia aplikacji',
   'close': 'Zamknij',
-  'allowDisplayOverOtherApps': 'Zezwól na "Wyświetlanie nad innymi aplikacjami"',
-  'overlayDialogContent': 'Wybierz "Otwórz ustawienia" → Alarm Phone 17 OS 26 → Zezwól na wyświetlanie nad innymi aplikacjami',
+  'allowDisplayOverOtherApps':
+      'Zezwól na "Wyświetlanie nad innymi aplikacjami"',
+  'overlayDialogContent':
+      'Wybierz "Otwórz ustawienia" → Alarm Phone 17 OS 26 → Zezwól na wyświetlanie nad innymi aplikacjami',
   'openSettings': 'Otwórz ustawienia',
-  'guideIntro': 'Aby alarm działał prawidłowo, zalecamy wykonanie następujących kroków:',
-  'guideStep1Title': 'Przyznaj uprawnienie "Wyświetlanie nad innymi aplikacjami"',
+  'guideIntro':
+      'Aby alarm działał prawidłowo, zalecamy wykonanie następujących kroków:',
+  'guideStep1Title':
+      'Przyznaj uprawnienie "Wyświetlanie nad innymi aplikacjami"',
   'guideStep1Sub1': 'Przejdź do Ustawienia → Aplikacje → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Wybierz "Wyświetlanie nad innymi aplikacjami"',
   'guideStep1Sub3': 'Zezwól na wyświetlanie nad innymi aplikacjami',
   'guideStep2Title': 'Zezwól na zużycie baterii w tle',
   'guideStep2Sub1': 'Przejdź do Ustawienia → Aplikacje → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Wybierz "Zużycie baterii aplikacji"',
-  'guideStep2Sub3': 'Zarządzaj zużyciem baterii → Zezwól na zużycie baterii w tle',
+  'guideStep2Sub3':
+      'Zarządzaj zużyciem baterii → Zezwól na zużycie baterii w tle',
   'gotIt': 'Rozumiem',
   'proOneTime': 'Raz • na zawsze',
-  'proRestoreDesc': 'Po zakupie wersja Pro zostanie trwale odblokowana na tym urządzeniu. Jeśli zalogujesz się ponownie na to samo konto sklepowe, którego użyłeś do dokonania zakupu na innym urządzeniu, po prostu kliknij Przywróć zakup.',
+  'proRestoreDesc':
+      'Po zakupie wersja Pro zostanie trwale odblokowana na tym urządzeniu. Jeśli zalogujesz się ponownie na to samo konto sklepowe, którego użyłeś do dokonania zakupu na innym urządzeniu, po prostu kliknij Przywróć zakup.',
   'proRestoreBtn': 'Przywróć zakup',
   'proNoPurchasesFound': 'Nie znaleziono zakupów!',
   'proActivated': 'Pro aktywowano pomyślnie!',
   'proActivatedStatus': 'Włączono wersję profesjonalną',
   'upgradePro': 'Uaktualnij Pro',
   'proIntro': 'Zdobądź najlepsze doświadczenia',
-  'proLifetimeNote': '✓ Usuń reklamy
+  'proLifetimeNote': '''✓ Usuń reklamy
 ✓ Przyspieszenie aplikacji
 ✓ Ekskluzywne dźwięki
-✓ Odblokuj wszystkie funkcje',
+✓ Odblokuj wszystkie funkcje''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Kup teraz',
+  'checkForUpdates': 'Sprawdź aktualizacje',
 };

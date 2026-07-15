@@ -17,7 +17,8 @@ const Map<String, String> deTranslations = {
   'noAlarm': 'Kein Wecker',
   'settings': 'Einstellungen',
   'noAlarmData': 'Keine Weckerdaten',
-  'tipKeepAppRunning': 'Tipp: Es wird empfohlen, die App im Multitasking nicht zu schließen, um eine bessere Weckerfunktion zu gewährleisten.',
+  'tipKeepAppRunning':
+      'Tipp: Es wird empfohlen, die App im Multitasking nicht zu schließen, um eine bessere Weckerfunktion zu gewährleisten.',
   'days': 'Tage',
   'hours': 'Stunden',
   'minutes': 'Minuten',
@@ -94,24 +95,30 @@ const Map<String, String> deTranslations = {
   'shareApp': 'App teilen',
   'rateApp': 'App bewerten',
   'privacyPolicy': 'Datenschutzrichtlinie',
-  'privacyPolicyError': 'Die Datenschutzrichtlinie konnte nicht geöffnet werden. Bitte besuchen Sie unsere Website.',
-  'shareMessage': 'Laden Sie Alarm Phone 17 OS 26 - Liquid Glass UI herunter:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Die Datenschutzrichtlinie konnte nicht geöffnet werden. Bitte besuchen Sie unsere Website.',
+  'shareMessage':
+      'Laden Sie Alarm Phone 17 OS 26 - Liquid Glass UI herunter:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Weckerbenachrichtigungen',
   'alarmNotificationsDesc': 'Benachrichtigungen für Wecker',
   'dismiss': 'Verwerfen',
   'am': 'AM',
   'pm': 'PM',
   'ratingTitle': 'Gefällt Ihnen Alarm Phone 17 OS 26?',
-  'ratingContent': 'Tippen Sie auf einen Stern, um uns auf\nGoogle Play zu bewerten.',
+  'ratingContent':
+      'Tippen Sie auf einen Stern, um uns auf\nGoogle Play zu bewerten.',
   'submit': 'Absenden',
   'allowBackgroundRunning': 'Hintergrundausführung zulassen',
-  'batteryDialogContent': 'Wählen Sie "App-Einstellungen öffnen" → Akku → Akkuverbrauch verwalten → Akkuverbrauch im Hintergrund zulassen',
+  'batteryDialogContent':
+      'Wählen Sie "App-Einstellungen öffnen" → Akku → Akkuverbrauch verwalten → Akkuverbrauch im Hintergrund zulassen',
   'openAppSettings': 'App-Einstellungen öffnen',
   'close': 'Schließen',
   'allowDisplayOverOtherApps': '"Über anderen Apps anzeigen" zulassen',
-  'overlayDialogContent': 'Wählen Sie "Einstellungen öffnen" → Alarm Phone 17 OS 26 → Über anderen Apps anzeigen zulassen',
+  'overlayDialogContent':
+      'Wählen Sie "Einstellungen öffnen" → Alarm Phone 17 OS 26 → Über anderen Apps anzeigen zulassen',
   'openSettings': 'Einstellungen öffnen',
-  'guideIntro': 'Damit der Wecker ordnungsgemäß funktioniert, empfehlen wir folgende Schritte:',
+  'guideIntro':
+      'Damit der Wecker ordnungsgemäß funktioniert, empfehlen wir folgende Schritte:',
   'guideStep1Title': 'Berechtigung "Über anderen Apps anzeigen" erteilen',
   'guideStep1Sub1': 'Gehen Sie zu Einstellungen → Apps → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Wählen Sie "Über anderen Apps anzeigen"',
@@ -119,18 +126,23 @@ const Map<String, String> deTranslations = {
   'guideStep2Title': 'Akkuverbrauch im Hintergrund zulassen',
   'guideStep2Sub1': 'Gehen Sie zu Einstellungen → Apps → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Wählen Sie "Akkuverbrauch der App"',
-  'guideStep2Sub3': 'Akkuverbrauch verwalten → Akkuverbrauch im Hintergrund zulassen',
+  'guideStep2Sub3':
+      'Akkuverbrauch verwalten → Akkuverbrauch im Hintergrund zulassen',
   'gotIt': 'Verstanden',
   'proOneTime': 'Einmal • für immer',
-  'proRestoreDesc': 'Nach dem Kauf wird Pro dauerhaft auf diesem Gerät freigeschaltet. Wenn Sie sich mit demselben Shop-Konto erneut anmelden, mit dem Sie auf einem anderen Gerät einen Kauf getätigt haben, klicken Sie einfach auf „Kauf wiederherstellen“.',
+  'proRestoreDesc':
+      'Nach dem Kauf wird Pro dauerhaft auf diesem Gerät freigeschaltet. Wenn Sie sich mit demselben Shop-Konto erneut anmelden, mit dem Sie auf einem anderen Gerät einen Kauf getätigt haben, klicken Sie einfach auf „Kauf wiederherstellen“.',
   'proRestoreBtn': 'Kauf wiederherstellen',
   'proNoPurchasesFound': 'Keine Käufe gefunden!',
   'proActivated': 'Pro erfolgreich aktiviert!',
   'proActivatedStatus': 'Pro aktiviert',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Holen Sie sich das beste Erlebnis',
-  'proLifetimeNote': '✓ Werbung entfernen
+  'proLifetimeNote': '''✓ Werbung entfernen
 ✓ Anwendungsbeschleunigung
 ✓ Exklusive Sounds
-✓ Schalten Sie alle Funktionen frei',
+✓ Schalten Sie alle Funktionen frei''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Jetzt kaufen',
+  'checkForUpdates': 'Nach Updates suchen',
 };

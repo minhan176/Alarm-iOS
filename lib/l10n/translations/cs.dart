@@ -17,7 +17,8 @@ const Map<String, String> csTranslations = {
   'noAlarm': 'Žádný budík',
   'settings': 'Nastavení',
   'noAlarmData': 'Žádná data budíku',
-  'tipKeepAppRunning': 'Tip: Doporučujeme nezavírat aplikaci v multitaskingu, aby byl zajištěn lepší chod budíku.',
+  'tipKeepAppRunning':
+      'Tip: Doporučujeme nezavírat aplikaci v multitaskingu, aby byl zajištěn lepší chod budíku.',
   'days': 'dní',
   'hours': 'hodin',
   'minutes': 'minut',
@@ -94,8 +95,10 @@ const Map<String, String> csTranslations = {
   'shareApp': 'Sdílet aplikaci',
   'rateApp': 'Ohodnotit aplikaci',
   'privacyPolicy': 'Zásady ochrany osobních údajů',
-  'privacyPolicyError': 'Nelze otevřít zásady ochrany osobních údajů. Navštivte prosím naše webové stránky.',
-  'shareMessage': 'Stáhněte si Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Nelze otevřít zásady ochrany osobních údajů. Navštivte prosím naše webové stránky.',
+  'shareMessage':
+      'Stáhněte si Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Oznámení budíku',
   'alarmNotificationsDesc': 'Oznámení pro budíky',
   'dismiss': 'Zavřít',
@@ -109,17 +112,20 @@ const Map<String, String> csTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Povolit běh na pozadí',
-  'batteryDialogContent': 'Vyberte "Otevřít nastavení aplikace" → Baterie → Správa využití baterie → Povolit využití baterie na pozadí',
+  'batteryDialogContent':
+      'Vyberte "Otevřít nastavení aplikace" → Baterie → Správa využití baterie → Povolit využití baterie na pozadí',
   'openAppSettings': 'Otevřít nastavení aplikace',
   'close': 'Zavřít',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Povolit "Zobrazení přes jiné aplikace"',
-  'overlayDialogContent': 'Vyberte "Otevřít nastavení" → Alarm Phone 17 OS 26 → Povolit zobrazení přes jiné aplikace',
+  'overlayDialogContent':
+      'Vyberte "Otevřít nastavení" → Alarm Phone 17 OS 26 → Povolit zobrazení přes jiné aplikace',
   'openSettings': 'Otevřít nastavení',
 
   // Guide screen
-  'guideIntro': 'Pro správné fungování budíku doporučujeme postupovat podle těchto kroků:',
+  'guideIntro':
+      'Pro správné fungování budíku doporučujeme postupovat podle těchto kroků:',
   'guideStep1Title': 'Udělte oprávnění "Zobrazení přes jiné aplikace"',
   'guideStep1Sub1': 'Přejděte do Nastavení → Aplikace → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Vyberte "Zobrazení přes jiné aplikace"',
@@ -127,18 +133,23 @@ const Map<String, String> csTranslations = {
   'guideStep2Title': 'Povolit využití baterie na pozadí',
   'guideStep2Sub1': 'Přejděte do Nastavení → Aplikace → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Vyberte "Využití baterie aplikace"',
-  'guideStep2Sub3': 'Správa využití baterie → Povolit využití baterie na pozadí',
+  'guideStep2Sub3':
+      'Správa využití baterie → Povolit využití baterie na pozadí',
   'gotIt': 'Rozumím',
   'proOneTime': 'Jednou • navždy',
-  'proRestoreDesc': 'Po zakoupení bude Pro na tomto zařízení trvale odemčeno. Pokud se znovu přihlásíte pomocí stejného účtu obchodu, který jste použili k nákupu na jiném zařízení, stačí kliknout na Obnovit nákup.',
+  'proRestoreDesc':
+      'Po zakoupení bude Pro na tomto zařízení trvale odemčeno. Pokud se znovu přihlásíte pomocí stejného účtu obchodu, který jste použili k nákupu na jiném zařízení, stačí kliknout na Obnovit nákup.',
   'proRestoreBtn': 'Obnovit nákup',
   'proNoPurchasesFound': 'Nebyly nalezeny žádné nákupy!',
   'proActivated': 'Pro byla úspěšně aktivována!',
   'proActivatedStatus': 'Pro povoleno',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Získejte nejlepší zážitek',
-  'proLifetimeNote': '✓ Odstraňte reklamy
+  'proLifetimeNote': '''✓ Odstraňte reklamy
 ✓ Zrychlení aplikace
 ✓ Exkluzivní zvuky
-✓ Odemkněte všechny funkce',
+✓ Odemkněte všechny funkce''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Koupit nyní',
+  'checkForUpdates': 'Zkontrolovat aktualizace',
 };

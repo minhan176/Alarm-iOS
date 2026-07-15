@@ -19,7 +19,8 @@ final Map<String, String> filTranslations = mergeTranslations({
   'noAlarm': 'Walang Alarm',
   'settings': 'Mga Setting',
   'noAlarmData': 'Walang Data ng Alarm',
-  'tipKeepAppRunning': 'Tip: Inirerekomenda na huwag isara ang app sa multitasking upang mas gumana ang alarm.',
+  'tipKeepAppRunning':
+      'Tip: Inirerekomenda na huwag isara ang app sa multitasking upang mas gumana ang alarm.',
   'days': 'araw',
   'hours': 'oras',
   'minutes': 'minuto',
@@ -58,7 +59,8 @@ final Map<String, String> filTranslations = mergeTranslations({
   'editAlarm': 'I-edit ang Alarm',
   'addAlarm': 'Magdagdag ng Alarm',
   'deleteAlarm': 'Tanggalin ang Alarm',
-  'deleteAlarmConfirm': 'Sigurado ka bang gusto mong tanggalin ang alarm na ito?',
+  'deleteAlarmConfirm':
+      'Sigurado ka bang gusto mong tanggalin ang alarm na ito?',
   'repeat': 'Ulitin',
   'sound': 'Tunog',
   'snoozeDuration': 'Tagal ng Snooze',
@@ -96,7 +98,8 @@ final Map<String, String> filTranslations = mergeTranslations({
   'shareApp': 'Ibahagi ang App',
   'rateApp': 'I-rate ang App',
   'privacyPolicy': 'Patakaran sa Privacy',
-  'privacyPolicyError': 'Hindi mabuksan ang patakaran sa privacy. Pakibisita ang aming website.',
+  'privacyPolicyError':
+      'Hindi mabuksan ang patakaran sa privacy. Pakibisita ang aming website.',
   'alarmNotifications': 'Mga Notification ng Alarm',
   'alarmNotificationsDesc': 'Mga notification para sa alarm',
   'dismiss': 'I-dismiss',
@@ -110,15 +113,19 @@ final Map<String, String> filTranslations = mergeTranslations({
   'openSettings': 'Buksan ang Mga Setting',
   'gotIt': 'Nakuha ko',
   'proOneTime': 'Minsan • magpakailanman',
-  'proRestoreDesc': 'Kapag nabili na, permanenteng ia-unlock ang Pro sa device na ito. Kung mag-log in ka ulit gamit ang parehong store account na ginamit mo para bumili sa ibang device, i-click lang ang I-restore ang Pagbili.',
+  'proRestoreDesc':
+      'Kapag nabili na, permanenteng ia-unlock ang Pro sa device na ito. Kung mag-log in ka ulit gamit ang parehong store account na ginamit mo para bumili sa ibang device, i-click lang ang I-restore ang Pagbili.',
   'proRestoreBtn': 'Ibalik ang pagbili',
   'proNoPurchasesFound': 'Walang nakitang mga pagbili!',
   'proActivated': 'Matagumpay na na-activate ang Pro!',
   'proActivatedStatus': 'Naka-enable ang Pro',
   'upgradePro': 'I-upgrade ang Pro',
   'proIntro': 'Kunin ang pinakamahusay na karanasan',
-  'proLifetimeNote': '✓ Alisin ang mga ad
+  'proLifetimeNote': '''✓ Alisin ang mga ad
 ✓ Pagpapabilis ng aplikasyon
 ✓ Eksklusibong mga tunog
-✓ I-unlock ang lahat ng mga tampok',
+✓ I-unlock ang lahat ng mga tampok''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Bilhin ngayon',
+  'checkForUpdates': 'Tingnan ang mga update',
 });

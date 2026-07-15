@@ -17,7 +17,8 @@ const Map<String, String> caTranslations = {
   'noAlarm': 'Sense alarma',
   'settings': 'Configuració',
   'noAlarmData': 'Sense dades d\'alarma',
-  'tipKeepAppRunning': 'Consell: Es recomana no tancar l\'aplicació en multitasca per garantir un millor funcionament de l\'alarma.',
+  'tipKeepAppRunning':
+      'Consell: Es recomana no tancar l\'aplicació en multitasca per garantir un millor funcionament de l\'alarma.',
   'days': 'dies',
   'hours': 'hores',
   'minutes': 'minuts',
@@ -94,8 +95,10 @@ const Map<String, String> caTranslations = {
   'shareApp': 'Compartir l\'aplicació',
   'rateApp': 'Valorar l\'aplicació',
   'privacyPolicy': 'Política de privacitat',
-  'privacyPolicyError': 'No es pot obrir la política de privacitat. Si us plau, visiteu el nostre lloc web.',
-  'shareMessage': 'Descarrega Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'No es pot obrir la política de privacitat. Si us plau, visiteu el nostre lloc web.',
+  'shareMessage':
+      'Descarrega Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notificacions d\'alarma',
   'alarmNotificationsDesc': 'Notificacions per a alarmes',
   'dismiss': 'Descartar',
@@ -109,17 +112,20 @@ const Map<String, String> caTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Permetre l\'execució en segon pla',
-  'batteryDialogContent': 'Selecciona "Obrir configuració de l\'aplicació" → Bateria → Gestionar l\'ús de la bateria → Permetre l\'ús de la bateria en segon pla',
+  'batteryDialogContent':
+      'Selecciona "Obrir configuració de l\'aplicació" → Bateria → Gestionar l\'ús de la bateria → Permetre l\'ús de la bateria en segon pla',
   'openAppSettings': 'Obrir configuració de l\'aplicació',
   'close': 'Tancar',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Permetre "Mostrar sobre altres aplicacions"',
-  'overlayDialogContent': 'Selecciona "Obrir configuració" → Alarm Phone 17 OS 26 → Permetre mostrar sobre altres aplicacions',
+  'overlayDialogContent':
+      'Selecciona "Obrir configuració" → Alarm Phone 17 OS 26 → Permetre mostrar sobre altres aplicacions',
   'openSettings': 'Obrir configuració',
 
   // Guide screen
-  'guideIntro': 'Perquè l\'alarma funcioni correctament, recomanem seguir aquests passos:',
+  'guideIntro':
+      'Perquè l\'alarma funcioni correctament, recomanem seguir aquests passos:',
   'guideStep1Title': 'Concedir el permís de "Mostrar sobre altres aplicacions"',
   'guideStep1Sub1': 'Ves a Configuració → Aplicacions → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Selecciona "Mostrar sobre altres aplicacions"',
@@ -127,18 +133,23 @@ const Map<String, String> caTranslations = {
   'guideStep2Title': 'Permetre l\'ús de la bateria en segon pla',
   'guideStep2Sub1': 'Ves a Configuració → Aplicacions → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Selecciona "Ús de bateria de l\'aplicació"',
-  'guideStep2Sub3': 'Gestionar l\'ús de la bateria → Permetre l\'ús de la bateria en segon pla',
+  'guideStep2Sub3':
+      'Gestionar l\'ús de la bateria → Permetre l\'ús de la bateria en segon pla',
   'gotIt': 'Entès',
   'proOneTime': 'Una vegada • per sempre',
-  'proRestoreDesc': 'Un cop comprat, Pro es desbloquejarà permanentment en aquest dispositiu. Si torneu a iniciar sessió amb el mateix compte de botiga que vau utilitzar per fer una compra en un altre dispositiu, feu clic a Restaura la compra.',
+  'proRestoreDesc':
+      'Un cop comprat, Pro es desbloquejarà permanentment en aquest dispositiu. Si torneu a iniciar sessió amb el mateix compte de botiga que vau utilitzar per fer una compra en un altre dispositiu, feu clic a Restaura la compra.',
   'proRestoreBtn': 'Restaurar la compra',
   'proNoPurchasesFound': 'No s\'han trobat compres!',
   'proActivated': 'Pro activat correctament!',
   'proActivatedStatus': 'Pro habilitat',
   'upgradePro': 'Actualitza Pro',
   'proIntro': 'Aconsegueix la millor experiència',
-  'proLifetimeNote': '✓ Elimina els anuncis
+  'proLifetimeNote': '''✓ Elimina els anuncis
 ✓ Acceleració de l\'aplicació
 ✓ Sons exclusius
-✓ Desbloqueja totes les funcions',
+✓ Desbloqueja totes les funcions''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Compra ara',
+  'checkForUpdates': 'Comprovar actualitzacions',
 };

@@ -17,7 +17,8 @@ const Map<String, String> hiTranslations = {
   'noAlarm': 'कोई अलार्म नहीं',
   'settings': 'सेटिंग्स',
   'noAlarmData': 'कोई अलार्म डेटा नहीं',
-  'tipKeepAppRunning': 'सुझाव: बेहतर अलार्म कार्यक्षमता सुनिश्चित करने के लिए मल्टीटास्किंग में ऐप को बंद न करने की सलाह दी जाती है।',
+  'tipKeepAppRunning':
+      'सुझाव: बेहतर अलार्म कार्यक्षमता सुनिश्चित करने के लिए मल्टीटास्किंग में ऐप को बंद न करने की सलाह दी जाती है।',
   'days': 'दिन',
   'hours': 'घंटे',
   'minutes': 'मिनट',
@@ -94,8 +95,10 @@ const Map<String, String> hiTranslations = {
   'shareApp': 'ऐप साझा करें',
   'rateApp': 'ऐप को रेट करें',
   'privacyPolicy': 'गोपनीयता नीति',
-  'privacyPolicyError': 'गोपनीयता नीति खोलने में असमर्थ। कृपया हमारी वेबसाइट पर जाएं।',
-  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UI डाउनलोड करें:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'गोपनीयता नीति खोलने में असमर्थ। कृपया हमारी वेबसाइट पर जाएं।',
+  'shareMessage':
+      'Alarm Phone 17 OS 26 - Liquid Glass UI डाउनलोड करें:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'अलार्म सूचनाएं',
   'alarmNotificationsDesc': 'अलार्म के लिए सूचनाएं',
   'dismiss': 'खारिज करें',
@@ -105,13 +108,16 @@ const Map<String, String> hiTranslations = {
   'ratingContent': 'Google Play पर हमें रेट करने के लिए\nएक स्टार टैप करें.',
   'submit': 'सबमिट करें',
   'allowBackgroundRunning': 'बैकग्राउंड में चलने दें',
-  'batteryDialogContent': '"ऐप सेटिंग्स खोलें" चुनें → बैटरी → बैटरी उपयोग प्रबंधित करें → बैकग्राउंड में बैटरी उपयोग की अनुमति दें',
+  'batteryDialogContent':
+      '"ऐप सेटिंग्स खोलें" चुनें → बैटरी → बैटरी उपयोग प्रबंधित करें → बैकग्राउंड में बैटरी उपयोग की अनुमति दें',
   'openAppSettings': 'ऐप सेटिंग्स खोलें',
   'close': 'बंद करें',
   'allowDisplayOverOtherApps': '"अन्य ऐप्स के ऊपर दिखाएं" की अनुमति दें',
-  'overlayDialogContent': '"सेटिंग्स खोलें" चुनें → Alarm Phone 17 OS 26 → अन्य ऐप्स के ऊपर दिखाने की अनुमति दें',
+  'overlayDialogContent':
+      '"सेटिंग्स खोलें" चुनें → Alarm Phone 17 OS 26 → अन्य ऐप्स के ऊपर दिखाने की अनुमति दें',
   'openSettings': 'सेटिंग्स खोलें',
-  'guideIntro': 'अलार्म ठीक से काम करे, इसके लिए हम इन चरणों का पालन करने की सलाह देते हैं:',
+  'guideIntro':
+      'अलार्म ठीक से काम करे, इसके लिए हम इन चरणों का पालन करने की सलाह देते हैं:',
   'guideStep1Title': '"अन्य ऐप्स के ऊपर दिखाएं" अनुमति दें',
   'guideStep1Sub1': 'सेटिंग्स → ऐप्स → Alarm Phone 17 OS 26 पर जाएं',
   'guideStep1Sub2': '"अन्य ऐप्स के ऊपर दिखाएं" चुनें',
@@ -119,18 +125,23 @@ const Map<String, String> hiTranslations = {
   'guideStep2Title': 'बैकग्राउंड में बैटरी उपयोग की अनुमति दें',
   'guideStep2Sub1': 'सेटिंग्स → ऐप्स → Alarm Phone 17 OS 26 पर जाएं',
   'guideStep2Sub2': '"ऐप बैटरी उपयोग" चुनें',
-  'guideStep2Sub3': 'बैटरी उपयोग प्रबंधित करें → बैकग्राउंड में बैटरी उपयोग की अनुमति दें',
+  'guideStep2Sub3':
+      'बैटरी उपयोग प्रबंधित करें → बैकग्राउंड में बैटरी उपयोग की अनुमति दें',
   'gotIt': 'समझ गया',
   'proOneTime': 'एक बार • हमेशा के लिए',
-  'proRestoreDesc': 'एक बार खरीदने के बाद, प्रो इस डिवाइस पर स्थायी रूप से अनलॉक हो जाएगा। यदि आप उसी स्टोर खाते से वापस लॉग इन करते हैं जिसका उपयोग आपने किसी अन्य डिवाइस पर खरीदारी करने के लिए किया था, तो बस खरीदारी पुनर्स्थापित करें पर क्लिक करें।',
+  'proRestoreDesc':
+      'एक बार खरीदने के बाद, प्रो इस डिवाइस पर स्थायी रूप से अनलॉक हो जाएगा। यदि आप उसी स्टोर खाते से वापस लॉग इन करते हैं जिसका उपयोग आपने किसी अन्य डिवाइस पर खरीदारी करने के लिए किया था, तो बस खरीदारी पुनर्स्थापित करें पर क्लिक करें।',
   'proRestoreBtn': 'पुनःस्थापन क्रय',
   'proNoPurchasesFound': 'कोई खरीदारी नहीं मिली!',
   'proActivated': 'प्रो सफलतापूर्वक सक्रिय हुआ!',
   'proActivatedStatus': 'प्रो सक्षम',
   'upgradePro': 'अपग्रेड प्रो',
   'proIntro': 'सर्वोत्तम अनुभव प्राप्त करें',
-  'proLifetimeNote': '✓ विज्ञापन हटाएँ
+  'proLifetimeNote': '''✓ विज्ञापन हटाएँ
 ✓ अनुप्रयोग त्वरण
 ✓ विशेष ध्वनियाँ
-✓ सभी सुविधाओं को अनलॉक करें',
+✓ सभी सुविधाओं को अनलॉक करें''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'अभी खरीदें',
+  'checkForUpdates': 'अपडेट जांचें',
 };

@@ -17,7 +17,8 @@ const Map<String, String> paTranslations = {
   'noAlarm': 'ਕੋਈ ਅਲਾਰਮ ਨਹੀਂ',
   'settings': 'ਸੈਟਿੰਗਾਂ',
   'noAlarmData': 'ਕੋਈ ਅਲਾਰਮ ਡਾਟਾ ਨਹੀਂ',
-  'tipKeepAppRunning': 'ਸੁਝਾਅ: ਅਲਾਰਮ ਦੀ ਬਿਹਤਰ ਕਾਰਗੁਜ਼ਾਰੀ ਲਈ ਮਲਟੀਟਾਸਕਿੰਗ ਵਿੱਚ ਐਪ ਨੂੰ ਬੰਦ ਨਾ ਕਰਨ ਦੀ ਸਿਫ਼ਾਰਿਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।',
+  'tipKeepAppRunning':
+      'ਸੁਝਾਅ: ਅਲਾਰਮ ਦੀ ਬਿਹਤਰ ਕਾਰਗੁਜ਼ਾਰੀ ਲਈ ਮਲਟੀਟਾਸਕਿੰਗ ਵਿੱਚ ਐਪ ਨੂੰ ਬੰਦ ਨਾ ਕਰਨ ਦੀ ਸਿਫ਼ਾਰਿਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।',
   'days': 'ਦਿਨ',
   'hours': 'ਘੰਟੇ',
   'minutes': 'ਮਿੰਟ',
@@ -94,8 +95,10 @@ const Map<String, String> paTranslations = {
   'shareApp': 'ਐਪ ਸਾਂਝੀ ਕਰੋ',
   'rateApp': 'ਐਪ ਦੀ ਰੇਟਿੰਗ ਕਰੋ',
   'privacyPolicy': 'ਗੋਪਨੀਯਤਾ ਨੀਤੀ',
-  'privacyPolicyError': 'ਗੋਪਨੀਯਤਾ ਨੀਤੀ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਮਰੱਥ। ਕਿਰਪਾ ਕਰਕੇ ਸਾਡੀ ਵੈੱਬਸਾਈਟ \'ਤੇ ਜਾਓ।',
-  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UI ਡਾਊਨਲੋਡ ਕਰੋ:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'ਗੋਪਨੀਯਤਾ ਨੀਤੀ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਮਰੱਥ। ਕਿਰਪਾ ਕਰਕੇ ਸਾਡੀ ਵੈੱਬਸਾਈਟ \'ਤੇ ਜਾਓ।',
+  'shareMessage':
+      'Alarm Phone 17 OS 26 - Liquid Glass UI ਡਾਊਨਲੋਡ ਕਰੋ:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'ਅਲਾਰਮ ਸੂਚਨਾਵਾਂ',
   'alarmNotificationsDesc': 'ਅਲਾਰਮ ਲਈ ਸੂਚਨਾਵਾਂ',
   'dismiss': 'ਖਾਰਜ ਕਰੋ',
@@ -105,13 +108,16 @@ const Map<String, String> paTranslations = {
   'ratingContent': 'Google Play ਉੱਤੇ ਸਾਨੂੰ ਰੇਟ ਕਰਨ ਲਈ\nਇੱਕ ਤਾਰਾ ਟੈਪ ਕਰੋ.',
   'submit': 'ਜਮ੍ਹਾਂ ਕਰੋ',
   'allowBackgroundRunning': 'ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚੱਲਣ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ',
-  'batteryDialogContent': '"ਐਪ ਸੈਟਿੰਗਜ਼ ਖੋਲ੍ਹੋ" → ਬੈਟਰੀ → ਬੈਟਰੀ ਵਰਤੋਂ ਦਾ ਪ੍ਰਬੰਧ ਕਰੋ → ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਬੈਟਰੀ ਵਰਤੋਂ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ ਚੁਣੋ',
+  'batteryDialogContent':
+      '"ਐਪ ਸੈਟਿੰਗਜ਼ ਖੋਲ੍ਹੋ" → ਬੈਟਰੀ → ਬੈਟਰੀ ਵਰਤੋਂ ਦਾ ਪ੍ਰਬੰਧ ਕਰੋ → ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਬੈਟਰੀ ਵਰਤੋਂ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ ਚੁਣੋ',
   'openAppSettings': 'ਐਪ ਸੈਟਿੰਗਜ਼ ਖੋਲ੍ਹੋ',
   'close': 'ਬੰਦ ਕਰੋ',
   'allowDisplayOverOtherApps': '"ਹੋਰ ਐਪਾਂ ਉੱਤੇ ਦਿਖਾਓ" ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ',
-  'overlayDialogContent': '"ਸੈਟਿੰਗਜ਼ ਖੋਲ੍ਹੋ" → Alarm Phone 17 OS 26 → ਹੋਰ ਐਪਾਂ ਉੱਤੇ ਦਿਖਾਉਣ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ ਚੁਣੋ',
+  'overlayDialogContent':
+      '"ਸੈਟਿੰਗਜ਼ ਖੋਲ੍ਹੋ" → Alarm Phone 17 OS 26 → ਹੋਰ ਐਪਾਂ ਉੱਤੇ ਦਿਖਾਉਣ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ ਚੁਣੋ',
   'openSettings': 'ਸੈਟਿੰਗਜ਼ ਖੋਲ੍ਹੋ',
-  'guideIntro': 'ਅਲਾਰਮ ਸਹੀ ਤਰ੍ਹਾਂ ਕੰਮ ਕਰਨ ਲਈ, ਅਸੀਂ ਇਹ ਕਦਮ ਅਪਣਾਉਣ ਦੀ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ:',
+  'guideIntro':
+      'ਅਲਾਰਮ ਸਹੀ ਤਰ੍ਹਾਂ ਕੰਮ ਕਰਨ ਲਈ, ਅਸੀਂ ਇਹ ਕਦਮ ਅਪਣਾਉਣ ਦੀ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ:',
   'guideStep1Title': '"ਹੋਰ ਐਪਾਂ ਉੱਤੇ ਦਿਖਾਓ" ਇਜਾਜ਼ਤ ਦਿਓ',
   'guideStep1Sub1': 'ਸੈਟਿੰਗਜ਼ → ਐਪਾਂ → Alarm Phone 17 OS 26 ਤੇ ਜਾਓ',
   'guideStep1Sub2': '"ਹੋਰ ਐਪਾਂ ਉੱਤੇ ਦਿਖਾਓ" ਚੁਣੋ',
@@ -119,18 +125,23 @@ const Map<String, String> paTranslations = {
   'guideStep2Title': 'ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਬੈਟਰੀ ਵਰਤੋਂ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ',
   'guideStep2Sub1': 'ਸੈਟਿੰਗਜ਼ → ਐਪਾਂ → Alarm Phone 17 OS 26 ਤੇ ਜਾਓ',
   'guideStep2Sub2': '"ਐਪ ਬੈਟਰੀ ਵਰਤੋਂ" ਚੁਣੋ',
-  'guideStep2Sub3': 'ਬੈਟਰੀ ਵਰਤੋਂ ਦਾ ਪ੍ਰਬੰਧ ਕਰੋ → ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਬੈਟਰੀ ਵਰਤੋਂ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ',
+  'guideStep2Sub3':
+      'ਬੈਟਰੀ ਵਰਤੋਂ ਦਾ ਪ੍ਰਬੰਧ ਕਰੋ → ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਬੈਟਰੀ ਵਰਤੋਂ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ',
   'gotIt': 'ਸਮਝ ਗਏ',
   'proOneTime': 'ਇੱਕ ਵਾਰ • ਹਮੇਸ਼ਾ ਲਈ',
-  'proRestoreDesc': 'ਇੱਕ ਵਾਰ ਖਰੀਦੇ ਜਾਣ \'ਤੇ, ਪ੍ਰੋ ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਸਥਾਈ ਤੌਰ \'ਤੇ ਅਨਲੌਕ ਹੋ ਜਾਵੇਗਾ। ਜੇਕਰ ਤੁਸੀਂ ਉਸੇ ਸਟੋਰ ਖਾਤੇ ਨਾਲ ਵਾਪਸ ਲੌਗ ਇਨ ਕਰਦੇ ਹੋ ਜਿਸਦੀ ਵਰਤੋਂ ਤੁਸੀਂ ਕਿਸੇ ਹੋਰ ਡਿਵਾਈਸ \'ਤੇ ਖਰੀਦਦਾਰੀ ਕਰਨ ਲਈ ਕੀਤੀ ਸੀ, ਤਾਂ ਬਸ ਖਰੀਦ ਨੂੰ ਰੀਸਟੋਰ ਕਰੋ \'ਤੇ ਕਲਿੱਕ ਕਰੋ।',
+  'proRestoreDesc':
+      'ਇੱਕ ਵਾਰ ਖਰੀਦੇ ਜਾਣ \'ਤੇ, ਪ੍ਰੋ ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਸਥਾਈ ਤੌਰ \'ਤੇ ਅਨਲੌਕ ਹੋ ਜਾਵੇਗਾ। ਜੇਕਰ ਤੁਸੀਂ ਉਸੇ ਸਟੋਰ ਖਾਤੇ ਨਾਲ ਵਾਪਸ ਲੌਗ ਇਨ ਕਰਦੇ ਹੋ ਜਿਸਦੀ ਵਰਤੋਂ ਤੁਸੀਂ ਕਿਸੇ ਹੋਰ ਡਿਵਾਈਸ \'ਤੇ ਖਰੀਦਦਾਰੀ ਕਰਨ ਲਈ ਕੀਤੀ ਸੀ, ਤਾਂ ਬਸ ਖਰੀਦ ਨੂੰ ਰੀਸਟੋਰ ਕਰੋ \'ਤੇ ਕਲਿੱਕ ਕਰੋ।',
   'proRestoreBtn': 'ਖਰੀਦ ਮੁੜ-ਬਹਾਲ ਕਰੋ',
   'proNoPurchasesFound': 'ਕੋਈ ਖਰੀਦਦਾਰੀ ਨਹੀਂ ਮਿਲੀ!',
   'proActivated': 'ਪ੍ਰੋ ਸਫਲਤਾਪੂਰਵਕ ਸਰਗਰਮ ਹੋਇਆ!',
   'proActivatedStatus': 'ਪ੍ਰੋ ਸਮਰਥਿਤ',
   'upgradePro': 'ਅੱਪਗ੍ਰੇਡ ਪ੍ਰੋ',
   'proIntro': 'ਸਭ ਤੋਂ ਵਧੀਆ ਅਨੁਭਵ ਪ੍ਰਾਪਤ ਕਰੋ',
-  'proLifetimeNote': '✓ ਵਿਗਿਆਪਨ ਹਟਾਓ
+  'proLifetimeNote': '''✓ ਵਿਗਿਆਪਨ ਹਟਾਓ
 ✓ ਐਪਲੀਕੇਸ਼ਨ ਪ੍ਰਵੇਗ
 ✓ ਵਿਸ਼ੇਸ਼ ਆਵਾਜ਼ਾਂ
-✓ ਸਾਰੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਨੂੰ ਅਨਲੌਕ ਕਰੋ',
+✓ ਸਾਰੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਨੂੰ ਅਨਲੌਕ ਕਰੋ''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'ਹੁਣੇ ਖਰੀਦੋ',
+  'checkForUpdates': 'ਅੱਪਡੇਟ ਲਈ ਜਾਂਚੋ',
 };

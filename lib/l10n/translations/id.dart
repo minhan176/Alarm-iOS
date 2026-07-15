@@ -17,7 +17,8 @@ const Map<String, String> idTranslations = {
   'noAlarm': 'Tidak Ada Alarm',
   'settings': 'Pengaturan',
   'noAlarmData': 'Tidak Ada Data Alarm',
-  'tipKeepAppRunning': 'Tips: Disarankan untuk tidak menutup aplikasi di multitasking untuk memastikan fungsi alarm yang lebih baik.',
+  'tipKeepAppRunning':
+      'Tips: Disarankan untuk tidak menutup aplikasi di multitasking untuk memastikan fungsi alarm yang lebih baik.',
   'days': 'hari',
   'hours': 'jam',
   'minutes': 'menit',
@@ -94,8 +95,10 @@ const Map<String, String> idTranslations = {
   'shareApp': 'Bagikan Aplikasi',
   'rateApp': 'Beri Nilai Aplikasi',
   'privacyPolicy': 'Kebijakan Privasi',
-  'privacyPolicyError': 'Tidak dapat membuka kebijakan privasi. Silakan kunjungi situs web kami.',
-  'shareMessage': 'Unduh Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Tidak dapat membuka kebijakan privasi. Silakan kunjungi situs web kami.',
+  'shareMessage':
+      'Unduh Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notifikasi Alarm',
   'alarmNotificationsDesc': 'Notifikasi untuk alarm',
   'dismiss': 'Tutup',
@@ -105,13 +108,16 @@ const Map<String, String> idTranslations = {
   'ratingContent': 'Ketuk bintang untuk memberi kami nilai di\nGoogle Play.',
   'submit': 'Kirim',
   'allowBackgroundRunning': 'Izinkan Berjalan di Latar Belakang',
-  'batteryDialogContent': 'Pilih "Buka Pengaturan Aplikasi" → Baterai → Kelola penggunaan baterai → Izinkan penggunaan baterai di latar belakang',
+  'batteryDialogContent':
+      'Pilih "Buka Pengaturan Aplikasi" → Baterai → Kelola penggunaan baterai → Izinkan penggunaan baterai di latar belakang',
   'openAppSettings': 'Buka Pengaturan Aplikasi',
   'close': 'Tutup',
   'allowDisplayOverOtherApps': 'Izinkan "Tampilkan di Atas Aplikasi Lain"',
-  'overlayDialogContent': 'Pilih "Buka Pengaturan" → Alarm Phone 17 OS 26 → Izinkan tampilan di atas aplikasi lain',
+  'overlayDialogContent':
+      'Pilih "Buka Pengaturan" → Alarm Phone 17 OS 26 → Izinkan tampilan di atas aplikasi lain',
   'openSettings': 'Buka Pengaturan',
-  'guideIntro': 'Agar alarm berfungsi dengan baik, kami sarankan untuk mengikuti langkah-langkah berikut:',
+  'guideIntro':
+      'Agar alarm berfungsi dengan baik, kami sarankan untuk mengikuti langkah-langkah berikut:',
   'guideStep1Title': 'Berikan izin "Tampilkan di Atas Aplikasi Lain"',
   'guideStep1Sub1': 'Buka Pengaturan → Aplikasi → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Pilih "Tampilkan di atas aplikasi lain"',
@@ -119,18 +125,23 @@ const Map<String, String> idTranslations = {
   'guideStep2Title': 'Izinkan penggunaan baterai di latar belakang',
   'guideStep2Sub1': 'Buka Pengaturan → Aplikasi → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Pilih "Penggunaan Baterai Aplikasi"',
-  'guideStep2Sub3': 'Kelola penggunaan baterai → Izinkan penggunaan baterai di latar belakang',
+  'guideStep2Sub3':
+      'Kelola penggunaan baterai → Izinkan penggunaan baterai di latar belakang',
   'gotIt': 'Mengerti',
   'proOneTime': 'Sekali • selamanya',
-  'proRestoreDesc': 'Setelah dibeli, Pro akan dibuka kuncinya secara permanen di perangkat ini. Jika Anda masuk kembali dengan akun toko yang sama dengan yang Anda gunakan untuk melakukan pembelian di perangkat lain, cukup klik Pulihkan Pembelian.',
+  'proRestoreDesc':
+      'Setelah dibeli, Pro akan dibuka kuncinya secara permanen di perangkat ini. Jika Anda masuk kembali dengan akun toko yang sama dengan yang Anda gunakan untuk melakukan pembelian di perangkat lain, cukup klik Pulihkan Pembelian.',
   'proRestoreBtn': 'Pulihkan pembelian',
   'proNoPurchasesFound': 'Tidak ada pembelian yang ditemukan!',
   'proActivated': 'Pro berhasil diaktifkan!',
   'proActivatedStatus': 'Pro diaktifkan',
   'upgradePro': 'Tingkatkan Pro',
   'proIntro': 'Dapatkan pengalaman terbaik',
-  'proLifetimeNote': '✓ Hapus iklan
+  'proLifetimeNote': '''✓ Hapus iklan
 ✓ Akselerasi aplikasi
 ✓ Suara eksklusif
-✓ Buka kunci semua fitur',
+✓ Buka kunci semua fitur''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Beli Sekarang',
+  'checkForUpdates': 'Periksa Pembaruan',
 };

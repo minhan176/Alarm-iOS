@@ -95,7 +95,8 @@ const Map<String, String> zhTwTranslations = {
   'rateApp': '評價應用程式',
   'privacyPolicy': '隱私權政策',
   'privacyPolicyError': '無法開啟隱私權政策。請造訪我們的網站。',
-  'shareMessage': '下載 Alarm Phone 17 OS 26 - Liquid Glass UI：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage':
+      '下載 Alarm Phone 17 OS 26 - Liquid Glass UI：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': '鬧鐘通知',
   'alarmNotificationsDesc': '鬧鐘通知',
   'dismiss': '關閉',
@@ -130,15 +131,19 @@ const Map<String, String> zhTwTranslations = {
   'guideStep2Sub3': '管理電池用量 → 允許在背景中使用電池',
   'gotIt': '知道了',
   'proOneTime': '一次•永遠',
-  'proRestoreDesc': '購買後，Pro 將在此裝置上永久解鎖。如果您使用在另一台裝置上購買時使用的相同商店帳戶重新登錄，只需按一下「恢復購買」即可。',
+  'proRestoreDesc':
+      '購買後，Pro 將在此裝置上永久解鎖。如果您使用在另一台裝置上購買時使用的相同商店帳戶重新登錄，只需按一下「恢復購買」即可。',
   'proRestoreBtn': '恢復購買',
   'proNoPurchasesFound': '沒有找到購買的商品！',
   'proActivated': '專業版啟動成功！',
   'proActivatedStatus': '專業版啟用',
   'upgradePro': '升級專業版',
   'proIntro': '獲得最佳體驗',
-  'proLifetimeNote': '✓ 刪除廣告
+  'proLifetimeNote': '''✓ 刪除廣告
 ✓ 應用加速
 ✓ 獨特的聲音
-✓ 解鎖所有功能',
+✓ 解鎖所有功能''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': '立即購買',
+  'checkForUpdates': '檢查更新',
 };

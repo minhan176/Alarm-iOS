@@ -58,15 +58,19 @@ final Map<String, String> tiTranslations = mergeTranslations({
   'close': 'ዕጾ',
   'gotIt': 'ተረዲኡኒ',
   'proOneTime': 'ሓንሳብ • ንዘልኣለም',
-  'proRestoreDesc': 'ምስ ተዓደገ ፕሮ ኣብዚ መሳርሒ ንሓዋሩ ክኽፈት እዩ። በቲ ኣብ ካልእ መሳርሒ ዕድጊ ንምግባር ዝጥቀመሉ ዝነበርካ ናይ ድኳን ኣካውንት ተመሊስካ እንተ ኣቲኻ፡ ዕድጊ ምምላስ ጥራይ ጠውቕ።',
+  'proRestoreDesc':
+      'ምስ ተዓደገ ፕሮ ኣብዚ መሳርሒ ንሓዋሩ ክኽፈት እዩ። በቲ ኣብ ካልእ መሳርሒ ዕድጊ ንምግባር ዝጥቀመሉ ዝነበርካ ናይ ድኳን ኣካውንት ተመሊስካ እንተ ኣቲኻ፡ ዕድጊ ምምላስ ጥራይ ጠውቕ።',
   'proRestoreBtn': 'ዕድጊ ምምላስ',
   'proNoPurchasesFound': 'ዝኾነ ዕድጊ ኣይተረኽበን!',
   'proActivated': 'ፕሮ ብዓወት ተነቒሉ!',
   'proActivatedStatus': 'ፕሮ ተኸፊቱ',
   'upgradePro': 'ፕሮ ምዕባይ',
   'proIntro': 'ዝበለጸ ተመክሮ ረኸብ',
-  'proLifetimeNote': '✓ መወዓውዒታት ምእላይ
+  'proLifetimeNote': '''✓ መወዓውዒታት ምእላይ
 ✓ ምቅልጣፍ መተግበሪ
 ✓ ፍሉያት ድምጽታት
-✓ ኩሎም ባህርያት ምኽፋት።',
+✓ ኩሎም ባህርያት ምኽፋት።''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'ሕጂ ዕደጎ',
+  'checkForUpdates': 'ምሕዳስ ፈትሽ',
 });

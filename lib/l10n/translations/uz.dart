@@ -18,7 +18,8 @@ final Map<String, String> uzTranslations = mergeTranslations({
   'noAlarm': 'Budilnik yo‘q',
   'settings': 'Sozlamalar',
   'noAlarmData': 'Budilnik ma’lumoti yo‘q',
-  'tipKeepAppRunning': 'Maslahat: Budilnik yaxshiroq ishlashi uchun ilovani multitaskingda yopmaslik tavsiya etiladi.',
+  'tipKeepAppRunning':
+      'Maslahat: Budilnik yaxshiroq ishlashi uchun ilovani multitaskingda yopmaslik tavsiya etiladi.',
   'days': 'kun',
   'hours': 'soat',
   'minutes': 'daqiqa',
@@ -88,15 +89,19 @@ final Map<String, String> uzTranslations = mergeTranslations({
   'openSettings': 'Sozlamalarni ochish',
   'gotIt': 'Tushunarli',
   'proOneTime': 'Bir marta • abadiy',
-  'proRestoreDesc': 'Xarid qilinganidan keyin Pro ushbu qurilmada doimiy ravishda qulfdan chiqariladi. Agar siz boshqa qurilmada xarid qilgan doʻkon hisobi bilan qayta kirsangiz, “Xaridni tiklash” tugmasini bosing.',
+  'proRestoreDesc':
+      'Xarid qilinganidan keyin Pro ushbu qurilmada doimiy ravishda qulfdan chiqariladi. Agar siz boshqa qurilmada xarid qilgan doʻkon hisobi bilan qayta kirsangiz, “Xaridni tiklash” tugmasini bosing.',
   'proRestoreBtn': 'Xaridni tiklash',
   'proNoPurchasesFound': 'Hech qanday xarid topilmadi!',
   'proActivated': 'Pro muvaffaqiyatli faollashtirildi!',
   'proActivatedStatus': 'Pro yoqilgan',
   'upgradePro': 'Pro-ni yangilang',
   'proIntro': 'Eng yaxshi tajribaga ega bo\'ling',
-  'proLifetimeNote': '✓ Reklamalarni olib tashlash
+  'proLifetimeNote': '''✓ Reklamalarni olib tashlash
 ✓ Ilovani tezlashtirish
 ✓ Eksklyuziv tovushlar
-✓ Barcha funksiyalarni qulfdan chiqaring',
+✓ Barcha funksiyalarni qulfdan chiqaring''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Hozir sotib oling',
+  'checkForUpdates': 'Yangilanishlarni tekshirish',
 });

@@ -17,7 +17,8 @@ const Map<String, String> faTranslations = {
   'noAlarm': 'بدون زنگ هشدار',
   'settings': 'تنظیمات',
   'noAlarmData': 'داده زنگ هشدار موجود نیست',
-  'tipKeepAppRunning': 'نکته: برای عملکرد بهتر زنگ هشدار، توصیه می‌شود برنامه را در حالت چندوظیفه‌ای نبندید.',
+  'tipKeepAppRunning':
+      'نکته: برای عملکرد بهتر زنگ هشدار، توصیه می‌شود برنامه را در حالت چندوظیفه‌ای نبندید.',
   'days': 'روز',
   'hours': 'ساعت',
   'minutes': 'دقیقه',
@@ -56,7 +57,8 @@ const Map<String, String> faTranslations = {
   'editAlarm': 'ویرایش زنگ هشدار',
   'addAlarm': 'افزودن زنگ هشدار',
   'deleteAlarm': 'حذف زنگ هشدار',
-  'deleteAlarmConfirm': 'آیا مطمئن هستید که می‌خواهید این زنگ هشدار را حذف کنید؟',
+  'deleteAlarmConfirm':
+      'آیا مطمئن هستید که می‌خواهید این زنگ هشدار را حذف کنید؟',
   'repeat': 'تکرار',
   'sound': 'صدا',
   'snoozeDuration': 'مدت چرت',
@@ -94,24 +96,30 @@ const Map<String, String> faTranslations = {
   'shareApp': 'اشتراک‌گذاری برنامه',
   'rateApp': 'امتیازدهی به برنامه',
   'privacyPolicy': 'سیاست حفظ حریم خصوصی',
-  'privacyPolicyError': 'امکان باز کردن سیاست حفظ حریم خصوصی وجود ندارد. لطفاً از وب‌سایت ما بازدید کنید.',
-  'shareMessage': 'دانلود Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'امکان باز کردن سیاست حفظ حریم خصوصی وجود ندارد. لطفاً از وب‌سایت ما بازدید کنید.',
+  'shareMessage':
+      'دانلود Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'اعلان‌های زنگ هشدار',
   'alarmNotificationsDesc': 'اعلان‌ها برای زنگ‌های هشدار',
   'dismiss': 'رد کردن',
   'am': 'ق.ظ',
   'pm': 'ب.ظ',
   'ratingTitle': 'از Alarm Phone 17 OS 26 لذت می‌برید؟',
-  'ratingContent': 'برای امتیاز دادن به ما در Google Play\nروی یک ستاره ضربه بزنید.',
+  'ratingContent':
+      'برای امتیاز دادن به ما در Google Play\nروی یک ستاره ضربه بزنید.',
   'submit': 'ارسال',
   'allowBackgroundRunning': 'اجازه اجرا در پس‌زمینه',
-  'batteryDialogContent': '"تنظیمات برنامه را باز کنید" → باتری → مدیریت مصرف باتری → اجازه مصرف باتری در پس‌زمینه را انتخاب کنید',
+  'batteryDialogContent':
+      '"تنظیمات برنامه را باز کنید" → باتری → مدیریت مصرف باتری → اجازه مصرف باتری در پس‌زمینه را انتخاب کنید',
   'openAppSettings': 'باز کردن تنظیمات برنامه',
   'close': 'بستن',
   'allowDisplayOverOtherApps': 'اجازه "نمایش روی سایر برنامه‌ها"',
-  'overlayDialogContent': '"باز کردن تنظیمات" → Alarm Phone 17 OS 26 → اجازه نمایش روی سایر برنامه‌ها را انتخاب کنید',
+  'overlayDialogContent':
+      '"باز کردن تنظیمات" → Alarm Phone 17 OS 26 → اجازه نمایش روی سایر برنامه‌ها را انتخاب کنید',
   'openSettings': 'باز کردن تنظیمات',
-  'guideIntro': 'برای عملکرد صحیح زنگ هشدار، توصیه می‌کنیم این مراحل را دنبال کنید:',
+  'guideIntro':
+      'برای عملکرد صحیح زنگ هشدار، توصیه می‌کنیم این مراحل را دنبال کنید:',
   'guideStep1Title': 'اعطای مجوز "نمایش روی سایر برنامه‌ها"',
   'guideStep1Sub1': 'به تنظیمات → برنامه‌ها → Alarm Phone 17 OS 26 بروید',
   'guideStep1Sub2': '"نمایش روی سایر برنامه‌ها" را انتخاب کنید',
@@ -122,15 +130,19 @@ const Map<String, String> faTranslations = {
   'guideStep2Sub3': 'مدیریت مصرف باتری → اجازه مصرف باتری در پس‌زمینه',
   'gotIt': 'متوجه شدم',
   'proOneTime': 'یک بار • برای همیشه',
-  'proRestoreDesc': 'پس از خرید، Pro برای همیشه در این دستگاه باز می شود. اگر با همان حساب فروشگاهی که برای خرید در دستگاه دیگری استفاده می‌کردید، دوباره وارد سیستم شدید، فقط روی Restore Purchase کلیک کنید.',
+  'proRestoreDesc':
+      'پس از خرید، Pro برای همیشه در این دستگاه باز می شود. اگر با همان حساب فروشگاهی که برای خرید در دستگاه دیگری استفاده می‌کردید، دوباره وارد سیستم شدید، فقط روی Restore Purchase کلیک کنید.',
   'proRestoreBtn': 'خرید را بازیابی کنید',
   'proNoPurchasesFound': 'هیچ خریدی پیدا نشد!',
   'proActivated': 'Pro با موفقیت فعال شد!',
   'proActivatedStatus': 'حرفه ای فعال است',
   'upgradePro': 'ارتقاء حرفه ای',
   'proIntro': 'بهترین تجربه را بدست آورید',
-  'proLifetimeNote': '✓ تبلیغات را حذف کنید
+  'proLifetimeNote': '''✓ تبلیغات را حذف کنید
 ✓ شتاب برنامه
 ✓ برای تلفن های موبایل منحصر به فرد
-✓ تمام ویژگی ها را باز کنید',
+✓ تمام ویژگی ها را باز کنید''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'اکنون بخرید',
+  'checkForUpdates': 'بررسی برای به‌روزرسانی',
 };

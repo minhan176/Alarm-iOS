@@ -17,7 +17,8 @@ const Map<String, String> skTranslations = {
   'noAlarm': 'Žiadny budík',
   'settings': 'Nastavenia',
   'noAlarmData': 'Žiadne údaje o budíku',
-  'tipKeepAppRunning': 'Tip: Odporúčame nezatvárať aplikáciu v multitaskingu, aby bola zabezpečená lepšia funkčnosť budíka.',
+  'tipKeepAppRunning':
+      'Tip: Odporúčame nezatvárať aplikáciu v multitaskingu, aby bola zabezpečená lepšia funkčnosť budíka.',
   'days': 'dni',
   'hours': 'hodiny',
   'minutes': 'minúty',
@@ -94,8 +95,10 @@ const Map<String, String> skTranslations = {
   'shareApp': 'Zdieľať aplikáciu',
   'rateApp': 'Ohodnotiť aplikáciu',
   'privacyPolicy': 'Zásady ochrany osobných údajov',
-  'privacyPolicyError': 'Nepodarilo sa otvoriť zásady ochrany osobných údajov. Navštívte naše webové stránky.',
-  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Nepodarilo sa otvoriť zásady ochrany osobných údajov. Navštívte naše webové stránky.',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Upozornenia budíka',
   'alarmNotificationsDesc': 'Upozornenia pre budíky',
   'dismiss': 'Zamietnuť',
@@ -105,13 +108,16 @@ const Map<String, String> skTranslations = {
   'ratingContent': 'Klepnite na hviezdičku a ohodnoťte nás na\nGoogle Play.',
   'submit': 'Odoslať',
   'allowBackgroundRunning': 'Povoliť spustenie na pozadí',
-  'batteryDialogContent': 'Vyberte „Otvoriť nastavenia aplikácie" → Batéria → Spravovať využitie batérie → Povoliť využitie batérie na pozadí',
+  'batteryDialogContent':
+      'Vyberte „Otvoriť nastavenia aplikácie" → Batéria → Spravovať využitie batérie → Povoliť využitie batérie na pozadí',
   'openAppSettings': 'Otvoriť nastavenia aplikácie',
   'close': 'Zavrieť',
   'allowDisplayOverOtherApps': 'Povoliť „Zobrazenie cez iné aplikácie"',
-  'overlayDialogContent': 'Vyberte „Otvoriť nastavenia" → Alarm Phone 17 OS 26 → Povoliť zobrazenie cez iné aplikácie',
+  'overlayDialogContent':
+      'Vyberte „Otvoriť nastavenia" → Alarm Phone 17 OS 26 → Povoliť zobrazenie cez iné aplikácie',
   'openSettings': 'Otvoriť nastavenia',
-  'guideIntro': 'Aby budík fungoval správne, odporúčame postupovať podľa týchto krokov:',
+  'guideIntro':
+      'Aby budík fungoval správne, odporúčame postupovať podľa týchto krokov:',
   'guideStep1Title': 'Udeľte povolenie „Zobrazenie cez iné aplikácie"',
   'guideStep1Sub1': 'Prejdite na Nastavenia → Aplikácie → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Vyberte „Zobrazenie cez iné aplikácie"',
@@ -119,18 +125,23 @@ const Map<String, String> skTranslations = {
   'guideStep2Title': 'Povoliť využitie batérie na pozadí',
   'guideStep2Sub1': 'Prejdite na Nastavenia → Aplikácie → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Vyberte „Využitie batérie aplikáciou"',
-  'guideStep2Sub3': 'Spravovať využitie batérie → Povoliť využitie batérie na pozadí',
+  'guideStep2Sub3':
+      'Spravovať využitie batérie → Povoliť využitie batérie na pozadí',
   'gotIt': 'Rozumiem',
   'proOneTime': 'Raz • navždy',
-  'proRestoreDesc': 'Po zakúpení bude Pro na tomto zariadení natrvalo odomknutý. Ak sa znova prihlásite pomocou rovnakého účtu obchodu, ktorý ste použili na nákup na inom zariadení, stačí kliknúť na Obnoviť nákup.',
+  'proRestoreDesc':
+      'Po zakúpení bude Pro na tomto zariadení natrvalo odomknutý. Ak sa znova prihlásite pomocou rovnakého účtu obchodu, ktorý ste použili na nákup na inom zariadení, stačí kliknúť na Obnoviť nákup.',
   'proRestoreBtn': 'Obnoviť nákup',
   'proNoPurchasesFound': 'Nenašli sa žiadne nákupy!',
   'proActivated': 'Pro úspešne aktivovaný!',
   'proActivatedStatus': 'Pro povolené',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Získajte najlepší zážitok',
-  'proLifetimeNote': '✓ Odstráňte reklamy
+  'proLifetimeNote': '''✓ Odstráňte reklamy
 ✓ Zrýchlenie aplikácie
 ✓ Exkluzívne zvuky
-✓ Odomknite všetky funkcie',
+✓ Odomknite všetky funkcie''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Kúpiť teraz',
+  'checkForUpdates': 'Skontrolovať aktualizácie',
 };

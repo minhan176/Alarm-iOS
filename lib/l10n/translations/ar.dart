@@ -17,7 +17,8 @@ const Map<String, String> arTranslations = {
   'noAlarm': 'لا يوجد منبه',
   'settings': 'الإعدادات',
   'noAlarmData': 'لا توجد بيانات منبه',
-  'tipKeepAppRunning': 'نصيحة: يُنصح بعدم إغلاق التطبيق في تعدد المهام لضمان عمل المنبه بشكل أفضل.',
+  'tipKeepAppRunning':
+      'نصيحة: يُنصح بعدم إغلاق التطبيق في تعدد المهام لضمان عمل المنبه بشكل أفضل.',
   'days': 'أيام',
   'hours': 'ساعات',
   'minutes': 'دقائق',
@@ -95,8 +96,10 @@ const Map<String, String> arTranslations = {
   'shareApp': 'مشاركة التطبيق',
   'rateApp': 'تقييم التطبيق',
   'privacyPolicy': 'سياسة الخصوصية',
-  'privacyPolicyError': 'تعذر فتح سياسة الخصوصية. يرجى زيارة موقعنا الإلكتروني.',
-  'shareMessage': 'حمّل Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'تعذر فتح سياسة الخصوصية. يرجى زيارة موقعنا الإلكتروني.',
+  'shareMessage':
+      'حمّل Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'إشعارات المنبه',
   'alarmNotificationsDesc': 'إشعارات للمنبهات',
   'dismiss': 'رفض',
@@ -110,13 +113,15 @@ const Map<String, String> arTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'السماح بالتشغيل في الخلفية',
-  'batteryDialogContent': 'اختر "فتح إعدادات التطبيق" → البطارية → إدارة استخدام البطارية → السماح باستخدام البطارية في الخلفية',
+  'batteryDialogContent':
+      'اختر "فتح إعدادات التطبيق" → البطارية → إدارة استخدام البطارية → السماح باستخدام البطارية في الخلفية',
   'openAppSettings': 'فتح إعدادات التطبيق',
   'close': 'إغلاق',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'السماح بـ "العرض فوق التطبيقات الأخرى"',
-  'overlayDialogContent': 'اختر "فتح الإعدادات" → Alarm Phone 17 OS 26 → السماح بالعرض فوق التطبيقات الأخرى',
+  'overlayDialogContent':
+      'اختر "فتح الإعدادات" → Alarm Phone 17 OS 26 → السماح بالعرض فوق التطبيقات الأخرى',
   'openSettings': 'فتح الإعدادات',
 
   // Guide screen
@@ -128,18 +133,22 @@ const Map<String, String> arTranslations = {
   'guideStep2Title': 'السماح باستخدام البطارية في الخلفية',
   'guideStep2Sub1': 'انتقل إلى الإعدادات → التطبيقات → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'اختر "استخدام بطارية التطبيق"',
-  'guideStep2Sub3': 'إدارة استخدام البطارية → السماح باستخدام البطارية في الخلفية',
+  'guideStep2Sub3':
+      'إدارة استخدام البطارية → السماح باستخدام البطارية في الخلفية',
   'gotIt': 'فهمت',
   'proOneTime': 'مرة واحدة • إلى الأبد',
-  'proRestoreDesc': 'بمجرد الشراء، سيتم إلغاء قفل Pro بشكل دائم على هذا الجهاز. إذا قمت بتسجيل الدخول مرة أخرى باستخدام حساب المتجر نفسه الذي استخدمته لإجراء عملية شراء على جهاز آخر، فما عليك سوى النقر فوق "استعادة الشراء".',
+  'proRestoreDesc':
+      'بمجرد الشراء، سيتم إلغاء قفل Pro بشكل دائم على هذا الجهاز. إذا قمت بتسجيل الدخول مرة أخرى باستخدام حساب المتجر نفسه الذي استخدمته لإجراء عملية شراء على جهاز آخر، فما عليك سوى النقر فوق "استعادة الشراء".',
   'proRestoreBtn': 'استعادة الشراء',
   'proNoPurchasesFound': 'لم يتم العثور على مشتريات!',
   'proActivated': 'تم تفعيل برو بنجاح!',
   'proActivatedStatus': 'تمكين برو',
   'upgradePro': 'ترقية برو',
   'proIntro': 'احصل على أفضل تجربة',
-  'proLifetimeNote': '✓ إزالة الإعلانات
+  'proLifetimeNote': '''✓ إزالة الإعلانات
 ✓ تسريع التطبيق
 ✓ الأصوات الحصرية
-✓ فتح كافة الميزات',
+✓ فتح كافة الميزات''',
+  'bestExperience': 'Best experience',
+  'checkForUpdates': 'التحقق من وجود تحديثات',
 };

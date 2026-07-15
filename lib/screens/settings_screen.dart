@@ -222,8 +222,12 @@ Please describe your feedback below:
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           settingsProvider.isProUnlocked
-                                              ? AppLocalizations.of(context).proActivatedStatus
-                                              : AppLocalizations.of(context).proIntro,
+                                              ? AppLocalizations.of(
+                                                  context,
+                                                ).proActivatedStatus
+                                              : AppLocalizations.of(
+                                                  context,
+                                                ).bestExperience,
                                           style: const TextStyle(
                                             color: CupertinoColors.white,
                                             fontSize: 16,

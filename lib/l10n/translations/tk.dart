@@ -69,15 +69,19 @@ final Map<String, String> tkTranslations = mergeTranslations({
   'openSettings': 'Sazlamalary aç',
   'gotIt': 'Düşündim',
   'proOneTime': 'Bir gezek • hemişelik',
-  'proRestoreDesc': 'Satyn alnandan soň, Pro bu enjamda hemişelik açylar. Başga enjamda satyn almak üçin ulanan şol bir dükan hasaby bilen gaýtadan girseňiz, “Satyn almagy dikelt” düwmesine basyň.',
+  'proRestoreDesc':
+      'Satyn alnandan soň, Pro bu enjamda hemişelik açylar. Başga enjamda satyn almak üçin ulanan şol bir dükan hasaby bilen gaýtadan girseňiz, “Satyn almagy dikelt” düwmesine basyň.',
   'proRestoreBtn': 'Satyn almagy dikelt',
   'proNoPurchasesFound': 'Satyn alma tapylmady',
   'proActivated': 'Pro üstünlikli işjeňleşdirildi!',
   'proActivatedStatus': 'Pro açyk',
   'upgradePro': 'Pro täzelen',
   'proIntro': 'Iň oňat tejribe alyň',
-  'proLifetimeNote': 'Ads Mahabaty aýyryň
+  'proLifetimeNote': '''Ads Mahabaty aýyryň
 ✓ Programmanyň tizlenmegi
 ✓ Aýratyn sesler
-All allhli aýratynlyklary açyň',
+All allhli aýratynlyklary açyň''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Häzir satyn al',
+  'checkForUpdates': 'Täzeleme barla',
 });

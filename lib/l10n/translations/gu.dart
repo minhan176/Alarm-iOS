@@ -17,7 +17,8 @@ const Map<String, String> guTranslations = {
   'noAlarm': 'કોઈ એલાર્મ નથી',
   'settings': 'સેટિંગ્સ',
   'noAlarmData': 'કોઈ એલાર્મ ડેટા નથી',
-  'tipKeepAppRunning': 'ટિપ: એલાર્મની સારી કાર્યક્ષમતા માટે મલ્ટિટાસ્કિંગમાં એપ બંધ ન કરવાની ભલામણ કરવામાં આવે છે.',
+  'tipKeepAppRunning':
+      'ટિપ: એલાર્મની સારી કાર્યક્ષમતા માટે મલ્ટિટાસ્કિંગમાં એપ બંધ ન કરવાની ભલામણ કરવામાં આવે છે.',
   'days': 'દિવસો',
   'hours': 'કલાકો',
   'minutes': 'મિનિટો',
@@ -94,8 +95,10 @@ const Map<String, String> guTranslations = {
   'shareApp': 'એપ શેર કરો',
   'rateApp': 'એપને રેટ કરો',
   'privacyPolicy': 'ગોપનીયતા નીતિ',
-  'privacyPolicyError': 'ગોપનીયતા નીતિ ખોલવામાં અસમર્થ. કૃપા કરીને અમારી વેબસાઇટની મુલાકાત લો.',
-  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UI ડાઉનલોડ કરો:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'ગોપનીયતા નીતિ ખોલવામાં અસમર્થ. કૃપા કરીને અમારી વેબસાઇટની મુલાકાત લો.',
+  'shareMessage':
+      'Alarm Phone 17 OS 26 - Liquid Glass UI ડાઉનલોડ કરો:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'એલાર્મ સૂચનાઓ',
   'alarmNotificationsDesc': 'એલાર્મ માટે સૂચનાઓ',
   'dismiss': 'રદ કરો',
@@ -105,13 +108,16 @@ const Map<String, String> guTranslations = {
   'ratingContent': 'Google Play પર અમને રેટ કરવા\nએક સ્ટાર ટેપ કરો.',
   'submit': 'સબમિટ કરો',
   'allowBackgroundRunning': 'બેકગ્રાઉન્ડમાં ચાલવાની મંજૂરી આપો',
-  'batteryDialogContent': '"એપ સેટિંગ્સ ખોલો" પસંદ કરો → બેટરી → બેટરી વપરાશ મેનેજ કરો → બેકગ્રાઉન્ડમાં બેટરી વપરાશની મંજૂરી આપો',
+  'batteryDialogContent':
+      '"એપ સેટિંગ્સ ખોલો" પસંદ કરો → બેટરી → બેટરી વપરાશ મેનેજ કરો → બેકગ્રાઉન્ડમાં બેટરી વપરાશની મંજૂરી આપો',
   'openAppSettings': 'એપ સેટિંગ્સ ખોલો',
   'close': 'બંધ કરો',
   'allowDisplayOverOtherApps': '"અન્ય એપ્સ ઉપર દર્શાવો" ની મંજૂરી આપો',
-  'overlayDialogContent': '"સેટિંગ્સ ખોલો" પસંદ કરો → Alarm Phone 17 OS 26 → અન્ય એપ્સ ઉપર દર્શાવવાની મંજૂરી આપો',
+  'overlayDialogContent':
+      '"સેટિંગ્સ ખોલો" પસંદ કરો → Alarm Phone 17 OS 26 → અન્ય એપ્સ ઉપર દર્શાવવાની મંજૂરી આપો',
   'openSettings': 'સેટિંગ્સ ખોલો',
-  'guideIntro': 'એલાર્મ યોગ્ય રીતે કામ કરે તે માટે, અમે આ પગલાં અનુસરવાની ભલામણ કરીએ છીએ:',
+  'guideIntro':
+      'એલાર્મ યોગ્ય રીતે કામ કરે તે માટે, અમે આ પગલાં અનુસરવાની ભલામણ કરીએ છીએ:',
   'guideStep1Title': '"અન્ય એપ્સ ઉપર દર્શાવો" ની પરવાનગી આપો',
   'guideStep1Sub1': 'સેટિંગ્સ → એપ્સ → Alarm Phone 17 OS 26 પર જાઓ',
   'guideStep1Sub2': '"અન્ય એપ્સ ઉપર દર્શાવો" પસંદ કરો',
@@ -119,18 +125,23 @@ const Map<String, String> guTranslations = {
   'guideStep2Title': 'બેકગ્રાઉન્ડમાં બેટરી વપરાશની મંજૂરી આપો',
   'guideStep2Sub1': 'સેટિંગ્સ → એપ્સ → Alarm Phone 17 OS 26 પર જાઓ',
   'guideStep2Sub2': '"એપ બેટરી વપરાશ" પસંદ કરો',
-  'guideStep2Sub3': 'બેટરી વપરાશ મેનેજ કરો → બેકગ્રાઉન્ડમાં બેટરી વપરાશની મંજૂરી આપો',
+  'guideStep2Sub3':
+      'બેટરી વપરાશ મેનેજ કરો → બેકગ્રાઉન્ડમાં બેટરી વપરાશની મંજૂરી આપો',
   'gotIt': 'સમજાયું',
   'proOneTime': 'એકવાર • કાયમ',
-  'proRestoreDesc': 'એકવાર ખરીદી લીધા પછી, પ્રો આ ઉપકરણ પર કાયમ માટે અનલૉક થઈ જશે. જો તમે તે જ સ્ટોર એકાઉન્ટ વડે ફરી લોગ ઇન કરો છો જેનો ઉપયોગ તમે અન્ય ઉપકરણ પર ખરીદી કરવા માટે કર્યો હતો, તો ફક્ત પુનઃસ્થાપિત ખરીદી પર ક્લિક કરો.',
+  'proRestoreDesc':
+      'એકવાર ખરીદી લીધા પછી, પ્રો આ ઉપકરણ પર કાયમ માટે અનલૉક થઈ જશે. જો તમે તે જ સ્ટોર એકાઉન્ટ વડે ફરી લોગ ઇન કરો છો જેનો ઉપયોગ તમે અન્ય ઉપકરણ પર ખરીદી કરવા માટે કર્યો હતો, તો ફક્ત પુનઃસ્થાપિત ખરીદી પર ક્લિક કરો.',
   'proRestoreBtn': 'ખરીદી પુનઃસ્થાપિત કરો',
   'proNoPurchasesFound': 'કોઈ ખરીદીઓ મળી નથી!',
   'proActivated': 'પ્રો સફળતાપૂર્વક સક્રિય થયું!',
   'proActivatedStatus': 'પ્રો સક્ષમ',
   'upgradePro': 'પ્રો અપગ્રેડ કરો',
   'proIntro': 'શ્રેષ્ઠ અનુભવ મેળવો',
-  'proLifetimeNote': '✓ જાહેરાતો દૂર કરો
+  'proLifetimeNote': '''✓ જાહેરાતો દૂર કરો
 ✓ એપ્લિકેશન પ્રવેગક
 ✓ વિશિષ્ટ અવાજો
-✓ બધી સુવિધાઓને અનલૉક કરો',
+✓ બધી સુવિધાઓને અનલૉક કરો''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'હવે ખરીદો',
+  'checkForUpdates': 'અપડેટ્સ તપાસો',
 };

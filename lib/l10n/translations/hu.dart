@@ -17,7 +17,8 @@ const Map<String, String> huTranslations = {
   'noAlarm': 'Nincs ébresztő',
   'settings': 'Beállítások',
   'noAlarmData': 'Nincs ébresztő adat',
-  'tipKeepAppRunning': 'Tipp: A jobb ébresztő működés érdekében ajánlott nem zárni be az alkalmazást a multitaskingban.',
+  'tipKeepAppRunning':
+      'Tipp: A jobb ébresztő működés érdekében ajánlott nem zárni be az alkalmazást a multitaskingban.',
   'days': 'nap',
   'hours': 'óra',
   'minutes': 'perc',
@@ -94,43 +95,59 @@ const Map<String, String> huTranslations = {
   'shareApp': 'Alkalmazás megosztása',
   'rateApp': 'Alkalmazás értékelése',
   'privacyPolicy': 'Adatvédelmi irányelvek',
-  'privacyPolicyError': 'Nem sikerült megnyitni az adatvédelmi irányelveket. Kérjük, látogasson el weboldalunkra.',
-  'shareMessage': 'Töltse le a Alarm Phone 17 OS 26 - Liquid Glass UI alkalmazást:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Nem sikerült megnyitni az adatvédelmi irányelveket. Kérjük, látogasson el weboldalunkra.',
+  'shareMessage':
+      'Töltse le a Alarm Phone 17 OS 26 - Liquid Glass UI alkalmazást:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Ébresztő értesítések',
   'alarmNotificationsDesc': 'Értesítések az ébresztőkhöz',
   'dismiss': 'Elvetés',
   'am': 'DE',
   'pm': 'DU',
   'ratingTitle': 'Tetszik a Alarm Phone 17 OS 26?',
-  'ratingContent': 'Koppintson egy csillagra, hogy értékeljen minket\na Google Play-en.',
+  'ratingContent':
+      'Koppintson egy csillagra, hogy értékeljen minket\na Google Play-en.',
   'submit': 'Küldés',
   'allowBackgroundRunning': 'Háttérben futás engedélyezése',
-  'batteryDialogContent': 'Válassza az "Alkalmazásbeállítások megnyitása" → Akkumulátor → Akkumulátorhasználat kezelése → Akkumulátorhasználat engedélyezése a háttérben',
+  'batteryDialogContent':
+      'Válassza az "Alkalmazásbeállítások megnyitása" → Akkumulátor → Akkumulátorhasználat kezelése → Akkumulátorhasználat engedélyezése a háttérben',
   'openAppSettings': 'Alkalmazásbeállítások megnyitása',
   'close': 'Bezárás',
-  'allowDisplayOverOtherApps': '"Megjelenítés más alkalmazások felett" engedélyezése',
-  'overlayDialogContent': 'Válassza a "Beállítások megnyitása" → Alarm Phone 17 OS 26 → Megjelenítés más alkalmazások felett engedélyezése',
+  'allowDisplayOverOtherApps':
+      '"Megjelenítés más alkalmazások felett" engedélyezése',
+  'overlayDialogContent':
+      'Válassza a "Beállítások megnyitása" → Alarm Phone 17 OS 26 → Megjelenítés más alkalmazások felett engedélyezése',
   'openSettings': 'Beállítások megnyitása',
-  'guideIntro': 'Az ébresztő megfelelő működéséhez javasoljuk az alábbi lépések követését:',
+  'guideIntro':
+      'Az ébresztő megfelelő működéséhez javasoljuk az alábbi lépések követését:',
   'guideStep1Title': '"Megjelenítés más alkalmazások felett" engedély megadása',
-  'guideStep1Sub1': 'Lépjen a Beállítások → Alkalmazások → Alarm Phone 17 OS 26 menübe',
-  'guideStep1Sub2': 'Válassza a "Megjelenítés más alkalmazások felett" lehetőséget',
+  'guideStep1Sub1':
+      'Lépjen a Beállítások → Alkalmazások → Alarm Phone 17 OS 26 menübe',
+  'guideStep1Sub2':
+      'Válassza a "Megjelenítés más alkalmazások felett" lehetőséget',
   'guideStep1Sub3': 'Engedélyezze a megjelenítést más alkalmazások felett',
   'guideStep2Title': 'Akkumulátorhasználat engedélyezése a háttérben',
-  'guideStep2Sub1': 'Lépjen a Beállítások → Alkalmazások → Alarm Phone 17 OS 26 menübe',
-  'guideStep2Sub2': 'Válassza az "Alkalmazás akkumulátorhasználata" lehetőséget',
-  'guideStep2Sub3': 'Akkumulátorhasználat kezelése → Akkumulátorhasználat engedélyezése a háttérben',
+  'guideStep2Sub1':
+      'Lépjen a Beállítások → Alkalmazások → Alarm Phone 17 OS 26 menübe',
+  'guideStep2Sub2':
+      'Válassza az "Alkalmazás akkumulátorhasználata" lehetőséget',
+  'guideStep2Sub3':
+      'Akkumulátorhasználat kezelése → Akkumulátorhasználat engedélyezése a háttérben',
   'gotIt': 'Értem',
   'proOneTime': 'Egyszer • örökre',
-  'proRestoreDesc': 'Vásárlás után a Pro véglegesen fel lesz oldva ezen az eszközön. Ha ugyanazzal az áruházi fiókkal jelentkezik be újra, amellyel egy másik eszközön vásárolt, kattintson a Vásárlás visszaállítása lehetőségre.',
+  'proRestoreDesc':
+      'Vásárlás után a Pro véglegesen fel lesz oldva ezen az eszközön. Ha ugyanazzal az áruházi fiókkal jelentkezik be újra, amellyel egy másik eszközön vásárolt, kattintson a Vásárlás visszaállítása lehetőségre.',
   'proRestoreBtn': 'Vásárlás visszaállítása',
   'proNoPurchasesFound': 'Nem található vásárlás!',
   'proActivated': 'Pro sikeresen aktiválva!',
   'proActivatedStatus': 'Pro engedélyezve',
   'upgradePro': 'Frissítse a Pro-t',
   'proIntro': 'Szerezze meg a legjobb élményt',
-  'proLifetimeNote': '✓ Távolítsa el a hirdetéseket
+  'proLifetimeNote': '''✓ Távolítsa el a hirdetéseket
 ✓ Alkalmazásgyorsítás
 ✓ Exkluzív hangok
-✓ Oldja fel az összes funkciót',
+✓ Oldja fel az összes funkciót''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Vásárolj most',
+  'checkForUpdates': 'Frissítések keresése',
 };

@@ -17,7 +17,8 @@ const Map<String, String> lvTranslations = {
   'noAlarm': 'Nav modinātāja',
   'settings': 'Iestatījumi',
   'noAlarmData': 'Nav modinātāja datu',
-  'tipKeepAppRunning': 'Padoms: Lai nodrošinātu labāku modinātāja darbību, ieteicams neaizvērt lietotni daudzuzdevumu režīmā.',
+  'tipKeepAppRunning':
+      'Padoms: Lai nodrošinātu labāku modinātāja darbību, ieteicams neaizvērt lietotni daudzuzdevumu režīmā.',
   'days': 'dienas',
   'hours': 'stundas',
   'minutes': 'minūtes',
@@ -94,7 +95,8 @@ const Map<String, String> lvTranslations = {
   'shareApp': 'Kopīgot lietotni',
   'rateApp': 'Novērtēt lietotni',
   'privacyPolicy': 'Privātuma politika',
-  'privacyPolicyError': 'Nevar atvērt privātuma politiku. Lūdzu, apmeklējiet mūsu tīmekļa vietni.',
+  'privacyPolicyError':
+      'Nevar atvērt privātuma politiku. Lūdzu, apmeklējiet mūsu tīmekļa vietni.',
   'shareMessage':
       'Lejupielādējiet Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Modinātāja paziņojumi',
@@ -106,32 +108,42 @@ const Map<String, String> lvTranslations = {
   'ratingContent': 'Pieskarieties zvaigznei, lai novērtētu mūs\nGoogle Play.',
   'submit': 'Iesniegt',
   'allowBackgroundRunning': 'Atļaut darbību fonā',
-  'batteryDialogContent': 'Atlasiet "Atvērt lietotnes iestatījumus" → Akumulators → Pārvaldīt akumulatora lietojumu → Atļaut akumulatora lietojumu fonā',
+  'batteryDialogContent':
+      'Atlasiet "Atvērt lietotnes iestatījumus" → Akumulators → Pārvaldīt akumulatora lietojumu → Atļaut akumulatora lietojumu fonā',
   'openAppSettings': 'Atvērt lietotnes iestatījumus',
   'close': 'Aizvērt',
   'allowDisplayOverOtherApps': 'Atļaut "Rādīt virs citām lietotnēm"',
-  'overlayDialogContent': 'Atlasiet "Atvērt iestatījumus" → Alarm Phone 17 OS 26 → Atļaut rādīt virs citām lietotnēm',
+  'overlayDialogContent':
+      'Atlasiet "Atvērt iestatījumus" → Alarm Phone 17 OS 26 → Atļaut rādīt virs citām lietotnēm',
   'openSettings': 'Atvērt iestatījumus',
-  'guideIntro': 'Lai modinātājs darbotos pareizi, iesakām veikt šādas darbības:',
+  'guideIntro':
+      'Lai modinātājs darbotos pareizi, iesakām veikt šādas darbības:',
   'guideStep1Title': 'Piešķirt "Rādīt virs citām lietotnēm" atļauju',
-  'guideStep1Sub1': 'Dodieties uz Iestatījumi → Lietotnes → Alarm Phone 17 OS 26',
+  'guideStep1Sub1':
+      'Dodieties uz Iestatījumi → Lietotnes → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Atlasiet "Rādīt virs citām lietotnēm"',
   'guideStep1Sub3': 'Atļaut rādīt virs citām lietotnēm',
   'guideStep2Title': 'Atļaut akumulatora lietojumu fonā',
-  'guideStep2Sub1': 'Dodieties uz Iestatījumi → Lietotnes → Alarm Phone 17 OS 26',
+  'guideStep2Sub1':
+      'Dodieties uz Iestatījumi → Lietotnes → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Atlasiet "Lietotnes akumulatora lietojums"',
-  'guideStep2Sub3': 'Pārvaldīt akumulatora lietojumu → Atļaut akumulatora lietojumu fonā',
+  'guideStep2Sub3':
+      'Pārvaldīt akumulatora lietojumu → Atļaut akumulatora lietojumu fonā',
   'gotIt': 'Sapratu',
   'proOneTime': 'Vienreiz • uz visiem laikiem',
-  'proRestoreDesc': 'Pēc iegādes Pro šajā ierīcē tiks neatgriezeniski atbloķēts. Ja piesakāties atpakaļ, izmantojot to pašu veikala kontu, ko izmantojāt pirkuma veikšanai citā ierīcē, vienkārši noklikšķiniet uz Atjaunot pirkumu.',
+  'proRestoreDesc':
+      'Pēc iegādes Pro šajā ierīcē tiks neatgriezeniski atbloķēts. Ja piesakāties atpakaļ, izmantojot to pašu veikala kontu, ko izmantojāt pirkuma veikšanai citā ierīcē, vienkārši noklikšķiniet uz Atjaunot pirkumu.',
   'proRestoreBtn': 'Atjaunot pirkumu',
   'proNoPurchasesFound': 'Nav atrasts neviens pirkums!',
   'proActivated': 'Pro veiksmīgi aktivizēts!',
   'proActivatedStatus': 'Pro iespējots',
   'upgradePro': 'Jauniniet Pro',
   'proIntro': 'Iegūstiet vislabāko pieredzi',
-  'proLifetimeNote': '✓ Noņemiet reklāmas
+  'proLifetimeNote': '''✓ Noņemiet reklāmas
 ✓ Lietojumprogrammas paātrinājums
 ✓ Ekskluzīvas skaņas
-✓ Atbloķējiet visas funkcijas',
+✓ Atbloķējiet visas funkcijas''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Pirkt tagad',
+  'checkForUpdates': 'Pārbaudīt atjauninājumus',
 };

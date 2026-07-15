@@ -19,7 +19,8 @@ final Map<String, String> msTranslations = mergeTranslations({
   'noAlarm': 'Tiada Penggera',
   'settings': 'Tetapan',
   'noAlarmData': 'Tiada Data Penggera',
-  'tipKeepAppRunning': 'Petua: Disarankan agar tidak menutup aplikasi dalam multitugas supaya penggera berfungsi dengan lebih baik.',
+  'tipKeepAppRunning':
+      'Petua: Disarankan agar tidak menutup aplikasi dalam multitugas supaya penggera berfungsi dengan lebih baik.',
   'days': 'hari',
   'hours': 'jam',
   'minutes': 'minit',
@@ -96,7 +97,8 @@ final Map<String, String> msTranslations = mergeTranslations({
   'shareApp': 'Kongsi Aplikasi',
   'rateApp': 'Nilai Aplikasi',
   'privacyPolicy': 'Dasar Privasi',
-  'privacyPolicyError': 'Tidak dapat membuka dasar privasi. Sila lawati laman web kami.',
+  'privacyPolicyError':
+      'Tidak dapat membuka dasar privasi. Sila lawati laman web kami.',
   'alarmNotifications': 'Pemberitahuan Penggera',
   'alarmNotificationsDesc': 'Pemberitahuan untuk penggera',
   'dismiss': 'Tutup',
@@ -110,15 +112,19 @@ final Map<String, String> msTranslations = mergeTranslations({
   'openSettings': 'Buka Tetapan',
   'gotIt': 'Faham',
   'proOneTime': 'Sekali • selamanya',
-  'proRestoreDesc': 'Setelah dibeli, Pro akan dibuka kunci secara kekal pada peranti ini. Jika anda log masuk semula dengan akaun kedai yang sama yang anda gunakan untuk membuat pembelian pada peranti lain, cuma klik Pulihkan Pembelian.',
+  'proRestoreDesc':
+      'Setelah dibeli, Pro akan dibuka kunci secara kekal pada peranti ini. Jika anda log masuk semula dengan akaun kedai yang sama yang anda gunakan untuk membuat pembelian pada peranti lain, cuma klik Pulihkan Pembelian.',
   'proRestoreBtn': 'Pulihkan pembelian',
   'proNoPurchasesFound': 'Tiada pembelian ditemui!',
   'proActivated': 'Pro telah berjaya diaktifkan!',
   'proActivatedStatus': 'Pro didayakan',
   'upgradePro': 'Tingkatkan Pro',
   'proIntro': 'Dapatkan pengalaman terbaik',
-  'proLifetimeNote': '✓ Alih keluar iklan
+  'proLifetimeNote': '''✓ Alih keluar iklan
 ✓ Pecutan aplikasi
 ✓ Bunyi eksklusif
-✓ Buka kunci semua ciri',
+✓ Buka kunci semua ciri''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Beli Sekarang',
+  'checkForUpdates': 'Semak Kemas Kini',
 });

@@ -17,7 +17,8 @@ const Map<String, String> frTranslations = {
   'noAlarm': 'Aucune alarme',
   'settings': 'Réglages',
   'noAlarmData': 'Aucune donnée d\'alarme',
-  'tipKeepAppRunning': 'Conseil : Il est recommandé de ne pas fermer l\'application en multitâche pour assurer un meilleur fonctionnement de l\'alarme.',
+  'tipKeepAppRunning':
+      'Conseil : Il est recommandé de ne pas fermer l\'application en multitâche pour assurer un meilleur fonctionnement de l\'alarme.',
   'days': 'jours',
   'hours': 'heures',
   'minutes': 'minutes',
@@ -94,8 +95,10 @@ const Map<String, String> frTranslations = {
   'shareApp': 'Partager l\'application',
   'rateApp': 'Évaluer l\'application',
   'privacyPolicy': 'Politique de confidentialité',
-  'privacyPolicyError': 'Impossible d\'ouvrir la politique de confidentialité. Veuillez visiter notre site web.',
-  'shareMessage': 'Téléchargez Alarm Phone 17 OS 26 - Liquid Glass UI :\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Impossible d\'ouvrir la politique de confidentialité. Veuillez visiter notre site web.',
+  'shareMessage':
+      'Téléchargez Alarm Phone 17 OS 26 - Liquid Glass UI :\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notifications d\'alarme',
   'alarmNotificationsDesc': 'Notifications pour les alarmes',
   'dismiss': 'Ignorer',
@@ -105,32 +108,46 @@ const Map<String, String> frTranslations = {
   'ratingContent': 'Appuyez sur une étoile pour nous évaluer sur\nGoogle Play.',
   'submit': 'Envoyer',
   'allowBackgroundRunning': 'Autoriser l\'exécution en arrière-plan',
-  'batteryDialogContent': 'Sélectionnez "Ouvrir les paramètres de l\'application" → Batterie → Gérer l\'utilisation de la batterie → Autoriser l\'utilisation de la batterie en arrière-plan',
+  'batteryDialogContent':
+      'Sélectionnez "Ouvrir les paramètres de l\'application" → Batterie → Gérer l\'utilisation de la batterie → Autoriser l\'utilisation de la batterie en arrière-plan',
   'openAppSettings': 'Ouvrir les paramètres de l\'application',
   'close': 'Fermer',
-  'allowDisplayOverOtherApps': 'Autoriser "Afficher par-dessus les autres applications"',
-  'overlayDialogContent': 'Sélectionnez "Ouvrir les paramètres" → Alarm Phone 17 OS 26 → Autoriser l\'affichage par-dessus les autres applications',
+  'allowDisplayOverOtherApps':
+      'Autoriser "Afficher par-dessus les autres applications"',
+  'overlayDialogContent':
+      'Sélectionnez "Ouvrir les paramètres" → Alarm Phone 17 OS 26 → Autoriser l\'affichage par-dessus les autres applications',
   'openSettings': 'Ouvrir les paramètres',
-  'guideIntro': 'Pour que l\'alarme fonctionne correctement, nous vous recommandons de suivre ces étapes :',
-  'guideStep1Title': 'Accorder la permission "Afficher par-dessus les autres applications"',
-  'guideStep1Sub1': 'Allez dans Paramètres → Applications → Alarm Phone 17 OS 26',
-  'guideStep1Sub2': 'Sélectionnez "Afficher par-dessus les autres applications"',
+  'guideIntro':
+      'Pour que l\'alarme fonctionne correctement, nous vous recommandons de suivre ces étapes :',
+  'guideStep1Title':
+      'Accorder la permission "Afficher par-dessus les autres applications"',
+  'guideStep1Sub1':
+      'Allez dans Paramètres → Applications → Alarm Phone 17 OS 26',
+  'guideStep1Sub2':
+      'Sélectionnez "Afficher par-dessus les autres applications"',
   'guideStep1Sub3': 'Autoriser l\'affichage par-dessus les autres applications',
   'guideStep2Title': 'Autoriser l\'utilisation de la batterie en arrière-plan',
-  'guideStep2Sub1': 'Allez dans Paramètres → Applications → Alarm Phone 17 OS 26',
-  'guideStep2Sub2': 'Sélectionnez "Utilisation de la batterie de l\'application"',
-  'guideStep2Sub3': 'Gérer l\'utilisation de la batterie → Autoriser l\'utilisation de la batterie en arrière-plan',
+  'guideStep2Sub1':
+      'Allez dans Paramètres → Applications → Alarm Phone 17 OS 26',
+  'guideStep2Sub2':
+      'Sélectionnez "Utilisation de la batterie de l\'application"',
+  'guideStep2Sub3':
+      'Gérer l\'utilisation de la batterie → Autoriser l\'utilisation de la batterie en arrière-plan',
   'gotIt': 'Compris',
   'proOneTime': 'Une fois • pour toujours',
-  'proRestoreDesc': 'Une fois acheté, Pro sera définitivement déverrouillé sur cet appareil. Si vous vous reconnectez avec le même compte de magasin que celui que vous avez utilisé pour effectuer un achat sur un autre appareil, cliquez simplement sur Restaurer l\'achat.',
+  'proRestoreDesc':
+      'Une fois acheté, Pro sera définitivement déverrouillé sur cet appareil. Si vous vous reconnectez avec le même compte de magasin que celui que vous avez utilisé pour effectuer un achat sur un autre appareil, cliquez simplement sur Restaurer l\'achat.',
   'proRestoreBtn': 'Restaurer l\'achat',
   'proNoPurchasesFound': 'Aucun achat trouvé !',
   'proActivated': 'Pro activé avec succès !',
   'proActivatedStatus': 'Pro activé',
   'upgradePro': 'Mettre à niveau Pro',
   'proIntro': 'Obtenez la meilleure expérience',
-  'proLifetimeNote': '✓ Supprimer les publicités
+  'proLifetimeNote': '''✓ Supprimer les publicités
 ✓ Accélération des applications
 ✓ Des sons exclusifs
-✓ Débloquez toutes les fonctionnalités',
+✓ Débloquez toutes les fonctionnalités''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Acheter maintenant',
+  'checkForUpdates': 'Vérifier les mises à jour',
 };

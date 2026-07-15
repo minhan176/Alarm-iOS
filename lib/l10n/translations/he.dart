@@ -17,7 +17,8 @@ const Map<String, String> heTranslations = {
   'noAlarm': 'אין שעון מעורר',
   'settings': 'הגדרות',
   'noAlarmData': 'אין נתוני שעון מעורר',
-  'tipKeepAppRunning': 'טיפ: מומלץ לא לסגור את האפליקציה בריבוי משימות כדי להבטיח פעולת שעון מעורר טובה יותר.',
+  'tipKeepAppRunning':
+      'טיפ: מומלץ לא לסגור את האפליקציה בריבוי משימות כדי להבטיח פעולת שעון מעורר טובה יותר.',
   'days': 'ימים',
   'hours': 'שעות',
   'minutes': 'דקות',
@@ -95,7 +96,8 @@ const Map<String, String> heTranslations = {
   'rateApp': 'דרג אפליקציה',
   'privacyPolicy': 'מדיניות פרטיות',
   'privacyPolicyError': 'לא ניתן לפתוח את מדיניות הפרטיות. אנא בקר באתר שלנו.',
-  'shareMessage': 'הורד את Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage':
+      'הורד את Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'התראות שעון מעורר',
   'alarmNotificationsDesc': 'התראות עבור שעונים מעוררים',
   'dismiss': 'סגור',
@@ -105,13 +107,16 @@ const Map<String, String> heTranslations = {
   'ratingContent': 'הקישו על כוכב כדי לדרג אותנו\nב-Google Play.',
   'submit': 'שלח',
   'allowBackgroundRunning': 'אפשר הפעלה ברקע',
-  'batteryDialogContent': 'בחרו "פתח הגדרות אפליקציה" → סוללה → נהל שימוש בסוללה → אפשר שימוש בסוללה ברקע',
+  'batteryDialogContent':
+      'בחרו "פתח הגדרות אפליקציה" → סוללה → נהל שימוש בסוללה → אפשר שימוש בסוללה ברקע',
   'openAppSettings': 'פתח הגדרות אפליקציה',
   'close': 'סגור',
   'allowDisplayOverOtherApps': 'אפשר "תצוגה מעל אפליקציות אחרות"',
-  'overlayDialogContent': 'בחרו "פתח הגדרות" → Alarm Phone 17 OS 26 → אפשר תצוגה מעל אפליקציות אחרות',
+  'overlayDialogContent':
+      'בחרו "פתח הגדרות" → Alarm Phone 17 OS 26 → אפשר תצוגה מעל אפליקציות אחרות',
   'openSettings': 'פתח הגדרות',
-  'guideIntro': 'כדי שהשעון המעורר יעבוד כראוי, אנו ממליצים לבצע את השלבים הבאים:',
+  'guideIntro':
+      'כדי שהשעון המעורר יעבוד כראוי, אנו ממליצים לבצע את השלבים הבאים:',
   'guideStep1Title': 'הענק הרשאת "תצוגה מעל אפליקציות אחרות"',
   'guideStep1Sub1': 'עברו להגדרות → אפליקציות → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'בחרו "תצוגה מעל אפליקציות אחרות"',
@@ -122,15 +127,19 @@ const Map<String, String> heTranslations = {
   'guideStep2Sub3': 'נהלו שימוש בסוללה → אפשרו שימוש בסוללה ברקע',
   'gotIt': 'הבנתי',
   'proOneTime': 'פעם אחת לנצח',
-  'proRestoreDesc': 'לאחר הרכישה, Pro יבוטל לצמיתות במכשיר זה. אם אתה מתחבר שוב עם אותו חשבון חנות שבו השתמשת כדי לבצע רכישה במכשיר אחר, פשוט לחץ על שחזר רכישה.',
+  'proRestoreDesc':
+      'לאחר הרכישה, Pro יבוטל לצמיתות במכשיר זה. אם אתה מתחבר שוב עם אותו חשבון חנות שבו השתמשת כדי לבצע רכישה במכשיר אחר, פשוט לחץ על שחזר רכישה.',
   'proRestoreBtn': 'שחזור רכישה',
   'proNoPurchasesFound': 'לא נמצאו רכישות!',
   'proActivated': 'Pro הופעל בהצלחה!',
   'proActivatedStatus': 'פרו מופעל',
   'upgradePro': 'שדרוג Pro',
   'proIntro': 'קבל את החוויה הטובה ביותר',
-  'proLifetimeNote': '✓ הסר מודעות
+  'proLifetimeNote': '''✓ הסר מודעות
 ✓ האצת יישום
 ✓ צלילים בלעדיים
-✓ פתח את כל התכונות',
+✓ פתח את כל התכונות''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'קנה עכשיו',
+  'checkForUpdates': 'בדוק עדכונים',
 };

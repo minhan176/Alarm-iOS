@@ -68,15 +68,19 @@ final Map<String, String> kmTranslations = mergeTranslations({
   'openSettings': 'បើកការកំណត់',
   'gotIt': 'យល់ហើយ',
   'proOneTime': 'ម្តង • ជារៀងរហូត',
-  'proRestoreDesc': 'នៅពេលដែលបានទិញ Pro នឹងត្រូវបានដោះសោជាអចិន្ត្រៃយ៍នៅលើឧបករណ៍នេះ។ ប្រសិនបើអ្នកចូលវិញដោយប្រើគណនីហាងដដែលដែលអ្នកធ្លាប់ធ្វើការទិញនៅលើឧបករណ៍ផ្សេងទៀត គ្រាន់តែចុច Restore Purchase។',
+  'proRestoreDesc':
+      'នៅពេលដែលបានទិញ Pro នឹងត្រូវបានដោះសោជាអចិន្ត្រៃយ៍នៅលើឧបករណ៍នេះ។ ប្រសិនបើអ្នកចូលវិញដោយប្រើគណនីហាងដដែលដែលអ្នកធ្លាប់ធ្វើការទិញនៅលើឧបករណ៍ផ្សេងទៀត គ្រាន់តែចុច Restore Purchase។',
   'proRestoreBtn': 'ទិញឡើងវិញ',
   'proNoPurchasesFound': 'រកមិនឃើញការទិញទេ!',
   'proActivated': 'Pro ដំណើរការដោយជោគជ័យ!',
   'proActivatedStatus': 'បានបើកដំណើរការ',
   'upgradePro': 'ដំឡើងកំណែ Pro',
   'proIntro': 'ទទួលបានបទពិសោធន៍ល្អបំផុត',
-  'proLifetimeNote': '✓ លុបការផ្សាយពាណិជ្ជកម្ម
+  'proLifetimeNote': '''✓ លុបការផ្សាយពាណិជ្ជកម្ម
 ✓ការបង្កើនល្បឿនកម្មវិធី
 ✓សំឡេងផ្តាច់មុខ
-✓ដោះសោលក្ខណៈពិសេសទាំងអស់។',
+✓ដោះសោលក្ខណៈពិសេសទាំងអស់។''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'ទិញឥឡូវ',
+  'checkForUpdates': 'ពិនិត្យការអាប់ដេត',
 });

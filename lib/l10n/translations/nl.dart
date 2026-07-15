@@ -17,7 +17,8 @@ const Map<String, String> nlTranslations = {
   'noAlarm': 'Geen wekker',
   'settings': 'Instellingen',
   'noAlarmData': 'Geen wekkergegevens',
-  'tipKeepAppRunning': 'Tip: Het wordt aanbevolen de app niet te sluiten in multitasking om een betere werking van de wekker te garanderen.',
+  'tipKeepAppRunning':
+      'Tip: Het wordt aanbevolen de app niet te sluiten in multitasking om een betere werking van de wekker te garanderen.',
   'days': 'dagen',
   'hours': 'uur',
   'minutes': 'minuten',
@@ -94,8 +95,10 @@ const Map<String, String> nlTranslations = {
   'shareApp': 'App delen',
   'rateApp': 'App beoordelen',
   'privacyPolicy': 'Privacybeleid',
-  'privacyPolicyError': 'Kan het privacybeleid niet openen. Bezoek onze website.',
-  'shareMessage': 'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Kan het privacybeleid niet openen. Bezoek onze website.',
+  'shareMessage':
+      'Download Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Wekkermeldingen',
   'alarmNotificationsDesc': 'Meldingen voor wekkers',
   'dismiss': 'Negeren',
@@ -109,17 +112,20 @@ const Map<String, String> nlTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Achtergrondactiviteit toestaan',
-  'batteryDialogContent': 'Selecteer "App-instellingen openen" → Batterij → Batterijgebruik beheren → Batterijgebruik op achtergrond toestaan',
+  'batteryDialogContent':
+      'Selecteer "App-instellingen openen" → Batterij → Batterijgebruik beheren → Batterijgebruik op achtergrond toestaan',
   'openAppSettings': 'App-instellingen openen',
   'close': 'Sluiten',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': '"Weergave over andere apps" toestaan',
-  'overlayDialogContent': 'Selecteer "Instellingen openen" → Alarm Phone 17 OS 26 → Weergave over andere apps toestaan',
+  'overlayDialogContent':
+      'Selecteer "Instellingen openen" → Alarm Phone 17 OS 26 → Weergave over andere apps toestaan',
   'openSettings': 'Instellingen openen',
 
   // Guide screen
-  'guideIntro': 'Om het alarm goed te laten werken, raden we aan deze stappen te volgen:',
+  'guideIntro':
+      'Om het alarm goed te laten werken, raden we aan deze stappen te volgen:',
   'guideStep1Title': 'Toestemming verlenen voor "Weergave over andere apps"',
   'guideStep1Sub1': 'Ga naar Instellingen → Apps → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Selecteer "Weergave over andere apps"',
@@ -127,18 +133,23 @@ const Map<String, String> nlTranslations = {
   'guideStep2Title': 'Batterijgebruik op achtergrond toestaan',
   'guideStep2Sub1': 'Ga naar Instellingen → Apps → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Selecteer "App-batterijgebruik"',
-  'guideStep2Sub3': 'Batterijgebruik beheren → Batterijgebruik op achtergrond toestaan',
+  'guideStep2Sub3':
+      'Batterijgebruik beheren → Batterijgebruik op achtergrond toestaan',
   'gotIt': 'Begrepen',
   'proOneTime': 'Eens • voor altijd',
-  'proRestoreDesc': 'Na aankoop wordt Pro permanent ontgrendeld op dit apparaat. Als u zich opnieuw aanmeldt met hetzelfde winkelaccount dat u hebt gebruikt om een ​​aankoop te doen op een ander apparaat, klikt u gewoon op Aankoop herstellen.',
+  'proRestoreDesc':
+      'Na aankoop wordt Pro permanent ontgrendeld op dit apparaat. Als u zich opnieuw aanmeldt met hetzelfde winkelaccount dat u hebt gebruikt om een ​​aankoop te doen op een ander apparaat, klikt u gewoon op Aankoop herstellen.',
   'proRestoreBtn': 'Aankoop herstellen',
   'proNoPurchasesFound': 'Geen aankopen gevonden!',
   'proActivated': 'Pro succesvol geactiveerd!',
   'proActivatedStatus': 'Pro ingeschakeld',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Krijg de beste ervaring',
-  'proLifetimeNote': '✓ Advertenties verwijderen
+  'proLifetimeNote': '''✓ Advertenties verwijderen
 ✓ Applicatieversnelling
 ✓ Exclusieve geluiden
-✓ Ontgrendel alle functies',
+✓ Ontgrendel alle functies''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Nu kopen',
+  'checkForUpdates': 'Controleer op updates',
 };

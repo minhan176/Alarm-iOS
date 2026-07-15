@@ -17,7 +17,8 @@ const Map<String, String> ltTranslations = {
   'noAlarm': 'Nėra žadintuvo',
   'settings': 'Nustatymai',
   'noAlarmData': 'Nėra žadintuvo duomenų',
-  'tipKeepAppRunning': 'Patarimas: Rekomenduojama neuždaryti programėlės daugiafunkciniame režime, kad žadintuvas veiktų geriau.',
+  'tipKeepAppRunning':
+      'Patarimas: Rekomenduojama neuždaryti programėlės daugiafunkciniame režime, kad žadintuvas veiktų geriau.',
   'days': 'dienos',
   'hours': 'valandos',
   'minutes': 'minutės',
@@ -94,7 +95,8 @@ const Map<String, String> ltTranslations = {
   'shareApp': 'Dalintis programėle',
   'rateApp': 'Įvertinti programėlę',
   'privacyPolicy': 'Privatumo politika',
-  'privacyPolicyError': 'Nepavyko atidaryti privatumo politikos. Apsilankykite mūsų svetainėje.',
+  'privacyPolicyError':
+      'Nepavyko atidaryti privatumo politikos. Apsilankykite mūsų svetainėje.',
   'shareMessage':
       'Atsisiųskite Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Žadintuvo pranešimai',
@@ -106,13 +108,16 @@ const Map<String, String> ltTranslations = {
   'ratingContent': 'Bakstelėkite žvaigždę, kad įvertintumėte mus\nGoogle Play.',
   'submit': 'Pateikti',
   'allowBackgroundRunning': 'Leisti veikti fone',
-  'batteryDialogContent': 'Pasirinkite „Atidaryti programos nustatymus" → Baterija → Tvarkyti baterijos naudojimą → Leisti naudoti bateriją fone',
+  'batteryDialogContent':
+      'Pasirinkite „Atidaryti programos nustatymus" → Baterija → Tvarkyti baterijos naudojimą → Leisti naudoti bateriją fone',
   'openAppSettings': 'Atidaryti programos nustatymus',
   'close': 'Uždaryti',
   'allowDisplayOverOtherApps': 'Leisti „Rodyti virš kitų programų"',
-  'overlayDialogContent': 'Pasirinkite „Atidaryti nustatymus" → Alarm Phone 17 OS 26 → Leisti rodyti virš kitų programų',
+  'overlayDialogContent':
+      'Pasirinkite „Atidaryti nustatymus" → Alarm Phone 17 OS 26 → Leisti rodyti virš kitų programų',
   'openSettings': 'Atidaryti nustatymus',
-  'guideIntro': 'Kad žadintuvas veiktų tinkamai, rekomenduojame atlikti šiuos veiksmus:',
+  'guideIntro':
+      'Kad žadintuvas veiktų tinkamai, rekomenduojame atlikti šiuos veiksmus:',
   'guideStep1Title': 'Suteikti „Rodyti virš kitų programų" leidimą',
   'guideStep1Sub1': 'Eikite į Nustatymai → Programos → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Pasirinkite „Rodyti virš kitų programų"',
@@ -120,18 +125,23 @@ const Map<String, String> ltTranslations = {
   'guideStep2Title': 'Leisti naudoti bateriją fone',
   'guideStep2Sub1': 'Eikite į Nustatymai → Programos → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Pasirinkite „Programos baterijos naudojimas"',
-  'guideStep2Sub3': 'Tvarkyti baterijos naudojimą → Leisti naudoti bateriją fone',
+  'guideStep2Sub3':
+      'Tvarkyti baterijos naudojimą → Leisti naudoti bateriją fone',
   'gotIt': 'Supratau',
   'proOneTime': 'Kartą • amžinai',
-  'proRestoreDesc': 'Įsigijus „Pro“ bus visam laikui atrakintas šiame įrenginyje. Jei vėl prisijungiate naudodami tą pačią parduotuvės paskyrą, kurią naudojote pirkdami kitame įrenginyje, tiesiog spustelėkite Atkurti pirkinį.',
+  'proRestoreDesc':
+      'Įsigijus „Pro“ bus visam laikui atrakintas šiame įrenginyje. Jei vėl prisijungiate naudodami tą pačią parduotuvės paskyrą, kurią naudojote pirkdami kitame įrenginyje, tiesiog spustelėkite Atkurti pirkinį.',
   'proRestoreBtn': 'Atkurti pirkinį',
   'proNoPurchasesFound': 'Pirkinių nerasta!',
   'proActivated': 'Pro sėkmingai suaktyvintas!',
   'proActivatedStatus': 'Pro įjungtas',
   'upgradePro': 'Atnaujinkite Pro',
   'proIntro': 'Gaukite geriausią patirtį',
-  'proLifetimeNote': '✓ Pašalinkite skelbimus
+  'proLifetimeNote': '''✓ Pašalinkite skelbimus
 ✓ Taikymo pagreitis
 ✓ Išskirtiniai garsai
-✓ Atrakinkite visas funkcijas',
+✓ Atrakinkite visas funkcijas''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Pirkti dabar',
+  'checkForUpdates': 'Tikrinti atnaujinimus',
 };

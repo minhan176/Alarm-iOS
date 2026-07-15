@@ -17,7 +17,8 @@ const Map<String, String> thTranslations = {
   'noAlarm': 'ไม่มีนาฬิกาปลุก',
   'settings': 'การตั้งค่า',
   'noAlarmData': 'ไม่มีข้อมูลนาฬิกาปลุก',
-  'tipKeepAppRunning': 'เคล็ดลับ: แนะนำไม่ให้ปิดแอปในมัลติทาสกิ้งเพื่อให้นาฬิกาปลุกทำงานได้ดียิ่งขึ้น',
+  'tipKeepAppRunning':
+      'เคล็ดลับ: แนะนำไม่ให้ปิดแอปในมัลติทาสกิ้งเพื่อให้นาฬิกาปลุกทำงานได้ดียิ่งขึ้น',
   'days': 'วัน',
   'hours': 'ชั่วโมง',
   'minutes': 'นาที',
@@ -94,8 +95,10 @@ const Map<String, String> thTranslations = {
   'shareApp': 'แชร์แอป',
   'rateApp': 'ให้คะแนนแอป',
   'privacyPolicy': 'นโยบายความเป็นส่วนตัว',
-  'privacyPolicyError': 'ไม่สามารถเปิดนโยบายความเป็นส่วนตัวได้ กรุณาเยี่ยมชมเว็บไซต์ของเรา',
-  'shareMessage': 'ดาวน์โหลด Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'ไม่สามารถเปิดนโยบายความเป็นส่วนตัวได้ กรุณาเยี่ยมชมเว็บไซต์ของเรา',
+  'shareMessage':
+      'ดาวน์โหลด Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'การแจ้งเตือนนาฬิกาปลุก',
   'alarmNotificationsDesc': 'การแจ้งเตือนสำหรับนาฬิกาปลุก',
   'dismiss': 'ปิด',
@@ -105,13 +108,16 @@ const Map<String, String> thTranslations = {
   'ratingContent': 'แตะดาวเพื่อให้คะแนนเราบน\nGoogle Play',
   'submit': 'ส่ง',
   'allowBackgroundRunning': 'อนุญาตให้ทำงานในพื้นหลัง',
-  'batteryDialogContent': 'เลือก "เปิดการตั้งค่าแอป" → แบตเตอรี่ → จัดการการใช้แบตเตอรี่ → อนุญาตให้ใช้แบตเตอรี่ในพื้นหลัง',
+  'batteryDialogContent':
+      'เลือก "เปิดการตั้งค่าแอป" → แบตเตอรี่ → จัดการการใช้แบตเตอรี่ → อนุญาตให้ใช้แบตเตอรี่ในพื้นหลัง',
   'openAppSettings': 'เปิดการตั้งค่าแอป',
   'close': 'ปิด',
   'allowDisplayOverOtherApps': 'อนุญาต "แสดงทับแอปอื่น"',
-  'overlayDialogContent': 'เลือก "เปิดการตั้งค่า" → Alarm Phone 17 OS 26 → อนุญาตให้แสดงทับแอปอื่น',
+  'overlayDialogContent':
+      'เลือก "เปิดการตั้งค่า" → Alarm Phone 17 OS 26 → อนุญาตให้แสดงทับแอปอื่น',
   'openSettings': 'เปิดการตั้งค่า',
-  'guideIntro': 'เพื่อให้นาฬิกาปลุกทำงานได้อย่างถูกต้อง เราแนะนำให้ทำตามขั้นตอนเหล่านี้:',
+  'guideIntro':
+      'เพื่อให้นาฬิกาปลุกทำงานได้อย่างถูกต้อง เราแนะนำให้ทำตามขั้นตอนเหล่านี้:',
   'guideStep1Title': 'ให้สิทธิ์ "แสดงทับแอปอื่น"',
   'guideStep1Sub1': 'ไปที่ การตั้งค่า → แอป → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'เลือก "แสดงทับแอปอื่น"',
@@ -122,15 +128,19 @@ const Map<String, String> thTranslations = {
   'guideStep2Sub3': 'จัดการการใช้แบตเตอรี่ → อนุญาตให้ใช้แบตเตอรี่ในพื้นหลัง',
   'gotIt': 'เข้าใจแล้ว',
   'proOneTime': 'ครั้งหนึ่ง • ตลอดไป',
-  'proRestoreDesc': 'เมื่อซื้อแล้ว Pro จะถูกปลดล็อคอย่างถาวรบนอุปกรณ์นี้ หากคุณเข้าสู่ระบบอีกครั้งด้วยบัญชีร้านค้าเดิมที่คุณใช้ซื้อสินค้าบนอุปกรณ์อื่น เพียงคลิกกู้คืนการซื้อ',
+  'proRestoreDesc':
+      'เมื่อซื้อแล้ว Pro จะถูกปลดล็อคอย่างถาวรบนอุปกรณ์นี้ หากคุณเข้าสู่ระบบอีกครั้งด้วยบัญชีร้านค้าเดิมที่คุณใช้ซื้อสินค้าบนอุปกรณ์อื่น เพียงคลิกกู้คืนการซื้อ',
   'proRestoreBtn': 'คืนค่าการซื้อ',
   'proNoPurchasesFound': 'ไม่พบการซื้อ!',
   'proActivated': 'เปิดใช้งาน Pro สำเร็จแล้ว!',
   'proActivatedStatus': 'เปิดใช้งาน Pro แล้ว',
   'upgradePro': 'อัปเกรดโปร',
   'proIntro': 'รับประสบการณ์ที่ดีที่สุด',
-  'proLifetimeNote': '✓ ลบโฆษณา
+  'proLifetimeNote': '''✓ ลบโฆษณา
 ✓ การเร่งความเร็วแอปพลิเคชัน
 ✓ เสียงพิเศษ
-✓ ปลดล็อคคุณสมบัติทั้งหมด',
+✓ ปลดล็อคคุณสมบัติทั้งหมด''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'ซื้อเลย',
+  'checkForUpdates': 'ตรวจสอบการอัปเดต',
 };

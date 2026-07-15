@@ -17,7 +17,8 @@ const Map<String, String> bnTranslations = {
   'noAlarm': 'কোনো অ্যালার্ম নেই',
   'settings': 'সেটিংস',
   'noAlarmData': 'কোনো অ্যালার্ম ডেটা নেই',
-  'tipKeepAppRunning': 'টিপ: অ্যালার্ম সঠিকভাবে কাজ করার জন্য মাল্টিটাস্কিংয়ে অ্যাপটি বন্ধ না করার পরামর্শ দেওয়া হচ্ছে।',
+  'tipKeepAppRunning':
+      'টিপ: অ্যালার্ম সঠিকভাবে কাজ করার জন্য মাল্টিটাস্কিংয়ে অ্যাপটি বন্ধ না করার পরামর্শ দেওয়া হচ্ছে।',
   'days': 'দিন',
   'hours': 'ঘণ্টা',
   'minutes': 'মিনিট',
@@ -94,8 +95,10 @@ const Map<String, String> bnTranslations = {
   'shareApp': 'অ্যাপ শেয়ার করুন',
   'rateApp': 'অ্যাপ রেটিং দিন',
   'privacyPolicy': 'গোপনীয়তা নীতি',
-  'privacyPolicyError': 'গোপনীয়তা নীতি খোলা যাচ্ছে না। অনুগ্রহ করে আমাদের ওয়েবসাইট দেখুন।',
-  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UI ডাউনলোড করুন:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'গোপনীয়তা নীতি খোলা যাচ্ছে না। অনুগ্রহ করে আমাদের ওয়েবসাইট দেখুন।',
+  'shareMessage':
+      'Alarm Phone 17 OS 26 - Liquid Glass UI ডাউনলোড করুন:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'অ্যালার্ম বিজ্ঞপ্তি',
   'alarmNotificationsDesc': 'অ্যালার্মের জন্য বিজ্ঞপ্তি',
   'dismiss': 'খারিজ',
@@ -109,17 +112,20 @@ const Map<String, String> bnTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'ব্যাকগ্রাউন্ডে চালানোর অনুমতি দিন',
-  'batteryDialogContent': '"অ্যাপ সেটিংস খুলুন" নির্বাচন করুন → ব্যাটারি → ব্যাটারি ব্যবহার পরিচালনা করুন → ব্যাকগ্রাউন্ডে ব্যাটারি ব্যবহারের অনুমতি দিন',
+  'batteryDialogContent':
+      '"অ্যাপ সেটিংস খুলুন" নির্বাচন করুন → ব্যাটারি → ব্যাটারি ব্যবহার পরিচালনা করুন → ব্যাকগ্রাউন্ডে ব্যাটারি ব্যবহারের অনুমতি দিন',
   'openAppSettings': 'অ্যাপ সেটিংস খুলুন',
   'close': 'বন্ধ',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': '"অন্যান্য অ্যাপের উপরে প্রদর্শন" অনুমতি দিন',
-  'overlayDialogContent': '"সেটিংস খুলুন" নির্বাচন করুন → Alarm Phone 17 OS 26 → অন্যান্য অ্যাপের উপরে প্রদর্শনের অনুমতি দিন',
+  'overlayDialogContent':
+      '"সেটিংস খুলুন" নির্বাচন করুন → Alarm Phone 17 OS 26 → অন্যান্য অ্যাপের উপরে প্রদর্শনের অনুমতি দিন',
   'openSettings': 'সেটিংস খুলুন',
 
   // Guide screen
-  'guideIntro': 'অ্যালার্ম সঠিকভাবে কাজ করার জন্য, আমরা এই পদক্ষেপগুলি অনুসরণ করার পরামর্শ দিই:',
+  'guideIntro':
+      'অ্যালার্ম সঠিকভাবে কাজ করার জন্য, আমরা এই পদক্ষেপগুলি অনুসরণ করার পরামর্শ দিই:',
   'guideStep1Title': '"অন্যান্য অ্যাপের উপরে প্রদর্শন" অনুমতি প্রদান করুন',
   'guideStep1Sub1': 'সেটিংস → অ্যাপস → Alarm Phone 17 OS 26 এ যান',
   'guideStep1Sub2': '"অন্যান্য অ্যাপের উপরে প্রদর্শন" নির্বাচন করুন',
@@ -127,18 +133,23 @@ const Map<String, String> bnTranslations = {
   'guideStep2Title': 'ব্যাকগ্রাউন্ডে ব্যাটারি ব্যবহারের অনুমতি দিন',
   'guideStep2Sub1': 'সেটিংস → অ্যাপস → Alarm Phone 17 OS 26 এ যান',
   'guideStep2Sub2': '"অ্যাপ ব্যাটারি ব্যবহার" নির্বাচন করুন',
-  'guideStep2Sub3': 'ব্যাটারি ব্যবহার পরিচালনা করুন → ব্যাকগ্রাউন্ডে ব্যাটারি ব্যবহারের অনুমতি দিন',
+  'guideStep2Sub3':
+      'ব্যাটারি ব্যবহার পরিচালনা করুন → ব্যাকগ্রাউন্ডে ব্যাটারি ব্যবহারের অনুমতি দিন',
   'gotIt': 'বুঝেছি',
   'proOneTime': 'একবার • চিরকাল',
-  'proRestoreDesc': 'একবার কেনা হলে, এই ডিভাইসে Pro স্থায়ীভাবে আনলক হয়ে যাবে। আপনি যদি অন্য ডিভাইসে কেনাকাটা করতে ব্যবহার করেন সেই একই স্টোর অ্যাকাউন্ট দিয়ে আবার লগ ইন করলে, শুধু ক্রয় পুনরুদ্ধার করুন ক্লিক করুন।',
+  'proRestoreDesc':
+      'একবার কেনা হলে, এই ডিভাইসে Pro স্থায়ীভাবে আনলক হয়ে যাবে। আপনি যদি অন্য ডিভাইসে কেনাকাটা করতে ব্যবহার করেন সেই একই স্টোর অ্যাকাউন্ট দিয়ে আবার লগ ইন করলে, শুধু ক্রয় পুনরুদ্ধার করুন ক্লিক করুন।',
   'proRestoreBtn': 'ক্রয় পুনরুদ্ধার করুন',
   'proNoPurchasesFound': 'কোন কেনাকাটা পাওয়া যায়নি!',
   'proActivated': 'প্রো সফলভাবে সক্রিয়!',
   'proActivatedStatus': 'প্রো সক্রিয়',
   'upgradePro': 'প্রো আপগ্রেড করুন',
   'proIntro': 'সেরা অভিজ্ঞতা পান',
-  'proLifetimeNote': '✓ বিজ্ঞাপনগুলি সরান৷
+  'proLifetimeNote': '''✓ বিজ্ঞাপনগুলি সরান৷
 ✓ অ্যাপ্লিকেশন ত্বরণ
 ✓ একচেটিয়া শব্দ
-✓ সমস্ত বৈশিষ্ট্য আনলক করুন',
+✓ সমস্ত বৈশিষ্ট্য আনলক করুন''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'এখনই কিনুন',
+  'checkForUpdates': 'আপডেট চেক করুন',
 };

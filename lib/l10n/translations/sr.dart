@@ -19,7 +19,8 @@ final Map<String, String> srTranslations = mergeTranslations({
   'noAlarm': 'Nema alarma',
   'settings': 'Podešavanja',
   'noAlarmData': 'Nema podataka o alarmu',
-  'tipKeepAppRunning': 'Savet: Preporučuje se da ne zatvarate aplikaciju u multitaskingu kako bi alarm bolje radio.',
+  'tipKeepAppRunning':
+      'Savet: Preporučuje se da ne zatvarate aplikaciju u multitaskingu kako bi alarm bolje radio.',
   'days': 'dana',
   'hours': 'sati',
   'minutes': 'minuta',
@@ -94,15 +95,19 @@ final Map<String, String> srTranslations = mergeTranslations({
   'openSettings': 'Otvori podešavanja',
   'gotIt': 'Razumem',
   'proOneTime': 'Једном • заувек',
-  'proRestoreDesc': 'Када се купи, Про ће бити трајно откључан на овом уређају. Ако се поново пријавите са истим налогом продавнице који сте користили за куповину на другом уређају, само кликните на Врати куповину.',
+  'proRestoreDesc':
+      'Када се купи, Про ће бити трајно откључан на овом уређају. Ако се поново пријавите са истим налогом продавнице који сте користили за куповину на другом уређају, само кликните на Врати куповину.',
   'proRestoreBtn': 'Вратите куповину',
   'proNoPurchasesFound': 'Нису пронађене куповине!',
   'proActivated': 'Про је успешно активиран!',
   'proActivatedStatus': 'Про енаблед',
   'upgradePro': 'Упграде Про',
   'proIntro': 'Добијте најбоље искуство',
-  'proLifetimeNote': '✓ Уклоните огласе
+  'proLifetimeNote': '''✓ Уклоните огласе
 ✓ Убрзање апликације
 ✓ Ексклузивни звуци
-✓ Откључајте све функције',
+✓ Откључајте све функције''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Купи сада',
+  'checkForUpdates': 'Провери ажурирања',
 });

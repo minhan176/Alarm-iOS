@@ -95,7 +95,8 @@ const Map<String, String> jaTranslations = {
   'rateApp': 'アプリを評価',
   'privacyPolicy': 'プライバシーポリシー',
   'privacyPolicyError': 'プライバシーポリシーを開けません。ウェブサイトをご覧ください。',
-  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UIをダウンロード：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'shareMessage':
+      'Alarm Phone 17 OS 26 - Liquid Glass UIをダウンロード：\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'アラーム通知',
   'alarmNotificationsDesc': 'アラームの通知',
   'dismiss': '閉じる',
@@ -105,7 +106,8 @@ const Map<String, String> jaTranslations = {
   'ratingContent': '星をタップして\nGoogle Playで評価してください。',
   'submit': '送信',
   'allowBackgroundRunning': 'バックグラウンド実行を許可',
-  'batteryDialogContent': '「アプリ設定を開く」を選択 → バッテリー → バッテリー使用量の管理 → バックグラウンドでのバッテリー使用を許可',
+  'batteryDialogContent':
+      '「アプリ設定を開く」を選択 → バッテリー → バッテリー使用量の管理 → バックグラウンドでのバッテリー使用を許可',
   'openAppSettings': 'アプリ設定を開く',
   'close': '閉じる',
   'allowDisplayOverOtherApps': '「他のアプリの上に表示」を許可',
@@ -122,15 +124,19 @@ const Map<String, String> jaTranslations = {
   'guideStep2Sub3': 'バッテリー使用量の管理 → バックグラウンドでのバッテリー使用を許可',
   'gotIt': '了解',
   'proOneTime': '一度だけ • 永遠に',
-  'proRestoreDesc': '購入すると、このデバイスで Pro のロックが永久に解除されます。別のデバイスでの購入に使用したのと同じストア アカウントで再度ログインする場合は、[購入を復元] をクリックするだけです。',
+  'proRestoreDesc':
+      '購入すると、このデバイスで Pro のロックが永久に解除されます。別のデバイスでの購入に使用したのと同じストア アカウントで再度ログインする場合は、[購入を復元] をクリックするだけです。',
   'proRestoreBtn': '購入を復元する',
   'proNoPurchasesFound': '購入した商品が見つかりません!',
   'proActivated': 'プロは正常にアクティベートされました。',
   'proActivatedStatus': 'プロ対応',
   'upgradePro': 'アップグレードプロ',
   'proIntro': '最高の体験を得る',
-  'proLifetimeNote': '✓ 広告を削除する
+  'proLifetimeNote': '''✓ 広告を削除する
 ✓ アプリケーションの高速化
 ✓ 独自のサウンド
-✓ すべての機能のロックを解除します',
+✓ すべての機能のロックを解除します''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': '今すぐ購入',
+  'checkForUpdates': 'アップデートを確認',
 };

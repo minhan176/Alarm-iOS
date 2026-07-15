@@ -17,7 +17,8 @@ const Map<String, String> mrTranslations = {
   'noAlarm': 'अलार्म नाही',
   'settings': 'सेटिंग्ज',
   'noAlarmData': 'अलार्म डेटा नाही',
-  'tipKeepAppRunning': 'टीप: अलार्मची कार्यक्षमता चांगली राहण्यासाठी मल्टीटास्किंगमध्ये अॅप बंद न करण्याची शिफारस केली जाते.',
+  'tipKeepAppRunning':
+      'टीप: अलार्मची कार्यक्षमता चांगली राहण्यासाठी मल्टीटास्किंगमध्ये अॅप बंद न करण्याची शिफारस केली जाते.',
   'days': 'दिवस',
   'hours': 'तास',
   'minutes': 'मिनिटे',
@@ -94,8 +95,10 @@ const Map<String, String> mrTranslations = {
   'shareApp': 'अॅप शेअर करा',
   'rateApp': 'अॅपला रेट करा',
   'privacyPolicy': 'गोपनीयता धोरण',
-  'privacyPolicyError': 'गोपनीयता धोरण उघडता आले नाही. कृपया आमच्या वेबसाइटला भेट द्या.',
-  'shareMessage': 'Alarm Phone 17 OS 26 - Liquid Glass UI डाउनलोड करा:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'गोपनीयता धोरण उघडता आले नाही. कृपया आमच्या वेबसाइटला भेट द्या.',
+  'shareMessage':
+      'Alarm Phone 17 OS 26 - Liquid Glass UI डाउनलोड करा:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'अलार्म सूचना',
   'alarmNotificationsDesc': 'अलार्मसाठी सूचना',
   'dismiss': 'बंद करा',
@@ -105,13 +108,16 @@ const Map<String, String> mrTranslations = {
   'ratingContent': 'Google Play वर आम्हाला रेट करण्यासाठी\nएक तारा टॅप करा.',
   'submit': 'सबमिट करा',
   'allowBackgroundRunning': 'पार्श्वभूमीत चालवण्याची अनुमती द्या',
-  'batteryDialogContent': '"अ‍ॅप सेटिंग्ज उघडा" → बॅटरी → बॅटरी वापर व्यवस्थापित करा → पार्श्वभूमीत बॅटरी वापराची अनुमती द्या निवडा',
+  'batteryDialogContent':
+      '"अ‍ॅप सेटिंग्ज उघडा" → बॅटरी → बॅटरी वापर व्यवस्थापित करा → पार्श्वभूमीत बॅटरी वापराची अनुमती द्या निवडा',
   'openAppSettings': 'अ‍ॅप सेटिंग्ज उघडा',
   'close': 'बंद करा',
   'allowDisplayOverOtherApps': '"इतर अ‍ॅप्सवर दाखवा" अनुमती द्या',
-  'overlayDialogContent': '"सेटिंग्ज उघडा" → Alarm Phone 17 OS 26 → इतर अ‍ॅप्सवर दाखवण्याची अनुमती द्या निवडा',
+  'overlayDialogContent':
+      '"सेटिंग्ज उघडा" → Alarm Phone 17 OS 26 → इतर अ‍ॅप्सवर दाखवण्याची अनुमती द्या निवडा',
   'openSettings': 'सेटिंग्ज उघडा',
-  'guideIntro': 'अलार्म योग्यरित्या कार्य करण्यासाठी, आम्ही या चरणांचे अनुसरण करण्याची शिफारस करतो:',
+  'guideIntro':
+      'अलार्म योग्यरित्या कार्य करण्यासाठी, आम्ही या चरणांचे अनुसरण करण्याची शिफारस करतो:',
   'guideStep1Title': '"इतर अ‍ॅप्सवर दाखवा" परवानगी द्या',
   'guideStep1Sub1': 'सेटिंग्ज → अ‍ॅप्स → Alarm Phone 17 OS 26 वर जा',
   'guideStep1Sub2': '"इतर अ‍ॅप्सवर दाखवा" निवडा',
@@ -119,18 +125,23 @@ const Map<String, String> mrTranslations = {
   'guideStep2Title': 'पार्श्वभूमीत बॅटरी वापराची अनुमती द्या',
   'guideStep2Sub1': 'सेटिंग्ज → अ‍ॅप्स → Alarm Phone 17 OS 26 वर जा',
   'guideStep2Sub2': '"अ‍ॅप बॅटरी वापर" निवडा',
-  'guideStep2Sub3': 'बॅटरी वापर व्यवस्थापित करा → पार्श्वभूमीत बॅटरी वापराची अनुमती द्या',
+  'guideStep2Sub3':
+      'बॅटरी वापर व्यवस्थापित करा → पार्श्वभूमीत बॅटरी वापराची अनुमती द्या',
   'gotIt': 'समजले',
   'proOneTime': 'एकदा • कायमचे',
-  'proRestoreDesc': 'एकदा खरेदी केल्यानंतर, प्रो या डिव्हाइसवर कायमचे अनलॉक केले जाईल. तुम्ही दुसऱ्या डिव्हाइसवर खरेदी करण्यासाठी वापरण्यासाठी वापरलेल्या त्याच स्टोअर खात्याने पुन्हा लॉग इन करत असल्यास, खरेदी पुनर्संचयित करा वर क्लिक करा.',
+  'proRestoreDesc':
+      'एकदा खरेदी केल्यानंतर, प्रो या डिव्हाइसवर कायमचे अनलॉक केले जाईल. तुम्ही दुसऱ्या डिव्हाइसवर खरेदी करण्यासाठी वापरण्यासाठी वापरलेल्या त्याच स्टोअर खात्याने पुन्हा लॉग इन करत असल्यास, खरेदी पुनर्संचयित करा वर क्लिक करा.',
   'proRestoreBtn': 'खरेदी पुनर्संचयित करा',
   'proNoPurchasesFound': 'कोणतीही खरेदी आढळली नाही!',
   'proActivated': 'प्रो यशस्वीरित्या सक्रिय केले!',
   'proActivatedStatus': 'प्रो सक्षम',
   'upgradePro': 'प्रो अपग्रेड करा',
   'proIntro': 'सर्वोत्तम अनुभव मिळवा',
-  'proLifetimeNote': '✓ जाहिराती काढा
+  'proLifetimeNote': '''✓ जाहिराती काढा
 ✓ अर्ज प्रवेग
 ✓ अनन्य ध्वनी
-✓ सर्व वैशिष्ट्ये अनलॉक करा',
+✓ सर्व वैशिष्ट्ये अनलॉक करा''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'आता खरेदी करा',
+  'checkForUpdates': 'अपडेट तपासा',
 };

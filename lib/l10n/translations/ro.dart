@@ -17,7 +17,8 @@ const Map<String, String> roTranslations = {
   'noAlarm': 'Nicio Alarmă',
   'settings': 'Setări',
   'noAlarmData': 'Nu Există Date despre Alarme',
-  'tipKeepAppRunning': 'Sfat: Se recomandă să nu închideți aplicația din multitasking pentru a asigura o funcționare mai bună a alarmei.',
+  'tipKeepAppRunning':
+      'Sfat: Se recomandă să nu închideți aplicația din multitasking pentru a asigura o funcționare mai bună a alarmei.',
   'days': 'zile',
   'hours': 'ore',
   'minutes': 'minute',
@@ -94,8 +95,10 @@ const Map<String, String> roTranslations = {
   'shareApp': 'Distribuie Aplicația',
   'rateApp': 'Evaluează Aplicația',
   'privacyPolicy': 'Politica de Confidențialitate',
-  'privacyPolicyError': 'Nu se poate deschide politica de confidențialitate. Vă rugăm să vizitați site-ul nostru.',
-  'shareMessage': 'Descarcă Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Nu se poate deschide politica de confidențialitate. Vă rugăm să vizitați site-ul nostru.',
+  'shareMessage':
+      'Descarcă Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notificări Alarmă',
   'alarmNotificationsDesc': 'Notificări pentru alarme',
   'dismiss': 'Respingere',
@@ -105,13 +108,16 @@ const Map<String, String> roTranslations = {
   'ratingContent': 'Atingeți o stea pentru a ne evalua pe\nGoogle Play.',
   'submit': 'Trimite',
   'allowBackgroundRunning': 'Permiteți rularea în fundal',
-  'batteryDialogContent': 'Selectați "Deschide setările aplicației" → Baterie → Gestionați utilizarea bateriei → Permiteți utilizarea bateriei în fundal',
+  'batteryDialogContent':
+      'Selectați "Deschide setările aplicației" → Baterie → Gestionați utilizarea bateriei → Permiteți utilizarea bateriei în fundal',
   'openAppSettings': 'Deschide setările aplicației',
   'close': 'Închide',
   'allowDisplayOverOtherApps': 'Permiteți "Afișare peste alte aplicații"',
-  'overlayDialogContent': 'Selectați "Deschide setări" → Alarm Phone 17 OS 26 → Permiteți afișarea peste alte aplicații',
+  'overlayDialogContent':
+      'Selectați "Deschide setări" → Alarm Phone 17 OS 26 → Permiteți afișarea peste alte aplicații',
   'openSettings': 'Deschide setări',
-  'guideIntro': 'Pentru ca alarma să funcționeze corect, vă recomandăm să urmați acești pași:',
+  'guideIntro':
+      'Pentru ca alarma să funcționeze corect, vă recomandăm să urmați acești pași:',
   'guideStep1Title': 'Acordați permisiunea "Afișare peste alte aplicații"',
   'guideStep1Sub1': 'Accesați Setări → Aplicații → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Selectați "Afișare peste alte aplicații"',
@@ -119,18 +125,23 @@ const Map<String, String> roTranslations = {
   'guideStep2Title': 'Permiteți utilizarea bateriei în fundal',
   'guideStep2Sub1': 'Accesați Setări → Aplicații → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Selectați "Utilizarea bateriei aplicației"',
-  'guideStep2Sub3': 'Gestionați utilizarea bateriei → Permiteți utilizarea bateriei în fundal',
+  'guideStep2Sub3':
+      'Gestionați utilizarea bateriei → Permiteți utilizarea bateriei în fundal',
   'gotIt': 'Am înțeles',
   'proOneTime': 'O dată • pentru totdeauna',
-  'proRestoreDesc': 'Odată achiziționat, Pro va fi deblocat permanent pe acest dispozitiv. Dacă vă conectați din nou cu același cont de magazin pe care l-ați folosit pentru a face o achiziție pe alt dispozitiv, faceți clic pe Restabiliți achiziția.',
+  'proRestoreDesc':
+      'Odată achiziționat, Pro va fi deblocat permanent pe acest dispozitiv. Dacă vă conectați din nou cu același cont de magazin pe care l-ați folosit pentru a face o achiziție pe alt dispozitiv, faceți clic pe Restabiliți achiziția.',
   'proRestoreBtn': 'Restabiliți achiziția',
   'proNoPurchasesFound': 'Nu s-au găsit achiziții!',
   'proActivated': 'Pro activat cu succes!',
   'proActivatedStatus': 'Pro activat',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Obțineți cea mai bună experiență',
-  'proLifetimeNote': '✓ Eliminați reclamele
+  'proLifetimeNote': '''✓ Eliminați reclamele
 ✓ Accelerarea aplicației
 ✓ Sunete exclusive
-✓ Deblocați toate funcțiile',
+✓ Deblocați toate funcțiile''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Cumpără acum',
+  'checkForUpdates': 'Verificați actualizările',
 };

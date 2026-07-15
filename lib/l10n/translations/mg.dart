@@ -68,15 +68,19 @@ final Map<String, String> mgTranslations = mergeTranslations({
   'openSettings': 'Sokafy ny fikirana',
   'gotIt': 'Azoko',
   'proOneTime': 'Indray mandeha • mandrakizay',
-  'proRestoreDesc': 'Rehefa novidina dia ho voahidy tanteraka amin\'ity fitaovana ity ny Pro. Raha miditra indray miaraka amin\'ny kaonty fivarotana izay nampiasainao nividianana fitaovana hafa ianao, tsindrio fotsiny ny Avereno ny fividianana.',
+  'proRestoreDesc':
+      'Rehefa novidina dia ho voahidy tanteraka amin\'ity fitaovana ity ny Pro. Raha miditra indray miaraka amin\'ny kaonty fivarotana izay nampiasainao nividianana fitaovana hafa ianao, tsindrio fotsiny ny Avereno ny fividianana.',
   'proRestoreBtn': 'Avereno ny fividianana',
   'proNoPurchasesFound': 'Tsy hita ny fividianana!',
   'proActivated': 'Navitrika soa aman-tsara ny Pro!',
   'proActivatedStatus': 'Nalefa ny pro',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Mahazoa traikefa tsara indrindra',
-  'proLifetimeNote': '✓ Esory ny doka
+  'proLifetimeNote': '''✓ Esory ny doka
 ✓ Fanafainganana ny fampiharana
 ✓ Feo manokana
-✓ Sokafy ny endri-javatra rehetra',
+✓ Sokafy ny endri-javatra rehetra''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Vidio izao',
+  'checkForUpdates': 'Hamarino ny fanavaozana',
 });

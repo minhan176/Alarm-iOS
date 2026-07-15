@@ -19,7 +19,8 @@ final Map<String, String> bsTranslations = mergeTranslations({
   'noAlarm': 'Nema alarma',
   'settings': 'Postavke',
   'noAlarmData': 'Nema podataka o alarmu',
-  'tipKeepAppRunning': 'Savjet: Preporučuje se da ne zatvarate aplikaciju u multitaskingu kako bi alarm bolje radio.',
+  'tipKeepAppRunning':
+      'Savjet: Preporučuje se da ne zatvarate aplikaciju u multitaskingu kako bi alarm bolje radio.',
   'days': 'dana',
   'hours': 'sati',
   'minutes': 'minuta',
@@ -96,7 +97,8 @@ final Map<String, String> bsTranslations = mergeTranslations({
   'shareApp': 'Podijeli aplikaciju',
   'rateApp': 'Ocijeni aplikaciju',
   'privacyPolicy': 'Pravila privatnosti',
-  'privacyPolicyError': 'Nije moguće otvoriti pravila privatnosti. Posjetite našu web stranicu.',
+  'privacyPolicyError':
+      'Nije moguće otvoriti pravila privatnosti. Posjetite našu web stranicu.',
   'alarmNotifications': 'Obavještenja alarma',
   'alarmNotificationsDesc': 'Obavještenja za alarme',
   'dismiss': 'Odbaci',
@@ -108,15 +110,19 @@ final Map<String, String> bsTranslations = mergeTranslations({
   'openSettings': 'Otvori postavke',
   'gotIt': 'Razumijem',
   'proOneTime': 'Jednom • zauvijek',
-  'proRestoreDesc': 'Nakon kupovine, Pro će biti trajno otključan na ovom uređaju. Ako se ponovo prijavite s istim računom trgovine koji ste koristili za kupovinu na drugom uređaju, samo kliknite na Vrati kupovinu.',
+  'proRestoreDesc':
+      'Nakon kupovine, Pro će biti trajno otključan na ovom uređaju. Ako se ponovo prijavite s istim računom trgovine koji ste koristili za kupovinu na drugom uređaju, samo kliknite na Vrati kupovinu.',
   'proRestoreBtn': 'Vratite kupovinu',
   'proNoPurchasesFound': 'Nisu pronađene kupovine!',
   'proActivated': 'Pro uspješno aktiviran!',
   'proActivatedStatus': 'Pro enabled',
   'upgradePro': 'Upgrade Pro',
   'proIntro': 'Dobijte najbolje iskustvo',
-  'proLifetimeNote': '✓ Uklonite oglase
+  'proLifetimeNote': '''✓ Uklonite oglase
 ✓ Ubrzanje aplikacije
 ✓ Ekskluzivni zvuci
-✓ Otključajte sve funkcije',
+✓ Otključajte sve funkcije''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Kupite sada',
+  'checkForUpdates': 'Provjeri ažuriranja',
 });

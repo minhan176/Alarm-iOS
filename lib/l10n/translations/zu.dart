@@ -88,7 +88,7 @@ const Map<String, String> zuTranslations = {
   'timeFormat': 'IFOMETHI YESIKHATHI',
   'twentyFourHourFormat': 'Ifomethi Yamahora angu-24',
   'supportAndFeedback': 'UKUSEKELA NEMPENDULO',
-    'UPGRADE_PRO': 'THUTHUKELA KU-PRO',
+  'UPGRADE_PRO': 'THUTHUKELA KU-PRO',
   'guide': 'Umhlahlandlela',
   'sendFeedback': 'Thumela Impendulo',
   'about': 'MAYELANA',
@@ -105,16 +105,20 @@ const Map<String, String> zuTranslations = {
   'am': 'AM',
   'pm': 'PM',
   'ratingTitle': 'Uyakuthanda Alarm Phone 17 OS 26?',
-  'ratingContent': 'Thepha inkanyezi ukuze usibeke isilinganiso ku-\nGoogle Play.',
+  'ratingContent':
+      'Thepha inkanyezi ukuze usibeke isilinganiso ku-\nGoogle Play.',
   'submit': 'Thumela',
   'allowBackgroundRunning': 'Vumela Ukusebenza Ngemuva',
-  'batteryDialogContent': 'Khetha "Vula Izilungiselelo Ze-App" → Ibhethri → Phatha ukusetshenziswa kwebhethri → Vumela ukusetshenziswa kwebhethri ngemuva',
+  'batteryDialogContent':
+      'Khetha "Vula Izilungiselelo Ze-App" → Ibhethri → Phatha ukusetshenziswa kwebhethri → Vumela ukusetshenziswa kwebhethri ngemuva',
   'openAppSettings': 'Vula Izilungiselelo Ze-App',
   'close': 'Vala',
   'allowDisplayOverOtherApps': 'Vumela "Bonisa Phezu Kwezinye Izi-App"',
-  'overlayDialogContent': 'Khetha "Vula Izilungiselelo" → Alarm Phone 17 OS 26 → Vumela ukubonisa phezu kwezinye izi-app',
+  'overlayDialogContent':
+      'Khetha "Vula Izilungiselelo" → Alarm Phone 17 OS 26 → Vumela ukubonisa phezu kwezinye izi-app',
   'openSettings': 'Vula Izilungiselelo',
-  'guideIntro': 'Ukuze i-alamu isebenze kahle, sincoma ukulandela lezi zinyathelo:',
+  'guideIntro':
+      'Ukuze i-alamu isebenze kahle, sincoma ukulandela lezi zinyathelo:',
   'guideStep1Title': 'Nika imvume yokuthi "Bonisa Phezu Kwezinye Izi-App"',
   'guideStep1Sub1': 'Iya ku-Izilungiselelo → Izi-App → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Khetha "Bonisa phezu kwezinye izi-app"',
@@ -122,18 +126,23 @@ const Map<String, String> zuTranslations = {
   'guideStep2Title': 'Vumela ukusetshenziswa kwebhethri ngemuva',
   'guideStep2Sub1': 'Iya ku-Izilungiselelo → Izi-App → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Khetha "Ukusetshenziswa Kwebhethri Ye-App"',
-  'guideStep2Sub3': 'Phatha ukusetshenziswa kwebhethri → Vumela ukusetshenziswa kwebhethri ngemuva',
+  'guideStep2Sub3':
+      'Phatha ukusetshenziswa kwebhethri → Vumela ukusetshenziswa kwebhethri ngemuva',
   'gotIt': 'Ngiyezwa',
   'proOneTime': 'Kanye • phakade',
-  'proRestoreDesc': 'Uma isithengiwe, i-Pro izovulwa unomphela kule divayisi. Uma uphinda ungena ngemvume nge-akhawunti yesitolo oyisebenzisele ukuthenga kwenye idivayisi, vele uchofoze okuthi Buyisela Ukuthenga.',
+  'proRestoreDesc':
+      'Uma isithengiwe, i-Pro izovulwa unomphela kule divayisi. Uma uphinda ungena ngemvume nge-akhawunti yesitolo oyisebenzisele ukuthenga kwenye idivayisi, vele uchofoze okuthi Buyisela Ukuthenga.',
   'proRestoreBtn': 'Buyisela ukuthenga',
   'proNoPurchasesFound': 'Akukho ukuthenga okutholiwe!',
   'proActivated': 'I-Pro yenziwe yasebenza ngempumelelo!',
   'proActivatedStatus': 'I-Pro inikwe amandla',
   'upgradePro': 'Thuthukisa i-Pro',
   'proIntro': 'Thola ukuzizwisa okungcono kakhulu',
-  'proLifetimeNote': '✓ Susa izikhangiso
+  'proLifetimeNote': '''✓ Susa izikhangiso
 ✓ Ukusheshisa isicelo
 ✓ Imisindo Ekhethekile
-✓ Vula zonke izici',
+✓ Vula zonke izici''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Thenga Manje',
+  'checkForUpdates': 'Hlola izibuyekezo',
 };

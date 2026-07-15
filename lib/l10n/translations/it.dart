@@ -17,7 +17,8 @@ const Map<String, String> itTranslations = {
   'noAlarm': 'Nessuna sveglia',
   'settings': 'Impostazioni',
   'noAlarmData': 'Nessun dato sveglia',
-  'tipKeepAppRunning': 'Suggerimento: Si consiglia di non chiudere l\'app nel multitasking per garantire un migliore funzionamento della sveglia.',
+  'tipKeepAppRunning':
+      'Suggerimento: Si consiglia di non chiudere l\'app nel multitasking per garantire un migliore funzionamento della sveglia.',
   'days': 'giorni',
   'hours': 'ore',
   'minutes': 'minuti',
@@ -94,8 +95,10 @@ const Map<String, String> itTranslations = {
   'shareApp': 'Condividi app',
   'rateApp': 'Valuta app',
   'privacyPolicy': 'Informativa sulla privacy',
-  'privacyPolicyError': 'Impossibile aprire l\'informativa sulla privacy. Visita il nostro sito web.',
-  'shareMessage': 'Scarica Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Impossibile aprire l\'informativa sulla privacy. Visita il nostro sito web.',
+  'shareMessage':
+      'Scarica Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Notifiche sveglia',
   'alarmNotificationsDesc': 'Notifiche per le sveglie',
   'dismiss': 'Ignora',
@@ -105,32 +108,41 @@ const Map<String, String> itTranslations = {
   'ratingContent': 'Tocca una stella per valutarci su\nGoogle Play.',
   'submit': 'Invia',
   'allowBackgroundRunning': 'Consenti esecuzione in background',
-  'batteryDialogContent': 'Seleziona "Apri impostazioni app" → Batteria → Gestisci utilizzo batteria → Consenti utilizzo batteria in background',
+  'batteryDialogContent':
+      'Seleziona "Apri impostazioni app" → Batteria → Gestisci utilizzo batteria → Consenti utilizzo batteria in background',
   'openAppSettings': 'Apri impostazioni app',
   'close': 'Chiudi',
   'allowDisplayOverOtherApps': 'Consenti "Visualizzazione sopra altre app"',
-  'overlayDialogContent': 'Seleziona "Apri impostazioni" → Alarm Phone 17 OS 26 → Consenti visualizzazione sopra altre app',
+  'overlayDialogContent':
+      'Seleziona "Apri impostazioni" → Alarm Phone 17 OS 26 → Consenti visualizzazione sopra altre app',
   'openSettings': 'Apri impostazioni',
-  'guideIntro': 'Per il corretto funzionamento della sveglia, consigliamo di seguire questi passaggi:',
-  'guideStep1Title': 'Concedi l\'autorizzazione "Visualizzazione sopra altre app"',
+  'guideIntro':
+      'Per il corretto funzionamento della sveglia, consigliamo di seguire questi passaggi:',
+  'guideStep1Title':
+      'Concedi l\'autorizzazione "Visualizzazione sopra altre app"',
   'guideStep1Sub1': 'Vai su Impostazioni → App → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Seleziona "Visualizzazione sopra altre app"',
   'guideStep1Sub3': 'Consenti la visualizzazione sopra altre app',
   'guideStep2Title': 'Consenti utilizzo batteria in background',
   'guideStep2Sub1': 'Vai su Impostazioni → App → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Seleziona "Utilizzo batteria app"',
-  'guideStep2Sub3': 'Gestisci utilizzo batteria → Consenti utilizzo batteria in background',
+  'guideStep2Sub3':
+      'Gestisci utilizzo batteria → Consenti utilizzo batteria in background',
   'gotIt': 'Ho capito',
   'proOneTime': 'Una volta • per sempre',
-  'proRestoreDesc': 'Una volta acquistato, Pro verrà sbloccato in modo permanente su questo dispositivo. Se accedi di nuovo con lo stesso account del negozio utilizzato per effettuare un acquisto su un altro dispositivo, fai semplicemente clic su Ripristina acquisto.',
+  'proRestoreDesc':
+      'Una volta acquistato, Pro verrà sbloccato in modo permanente su questo dispositivo. Se accedi di nuovo con lo stesso account del negozio utilizzato per effettuare un acquisto su un altro dispositivo, fai semplicemente clic su Ripristina acquisto.',
   'proRestoreBtn': 'Ripristina l\'acquisto',
   'proNoPurchasesFound': 'Nessun acquisto trovato!',
   'proActivated': 'Pro attivato con successo!',
   'proActivatedStatus': 'Abilitato per la versione professionale',
   'upgradePro': 'Aggiorna Pro',
   'proIntro': 'Ottieni la migliore esperienza',
-  'proLifetimeNote': '✓ Rimuovi gli annunci
+  'proLifetimeNote': '''✓ Rimuovi gli annunci
 ✓ Accelerazione delle applicazioni
 ✓ Suoni esclusivi
-✓ Sblocca tutte le funzionalità',
+✓ Sblocca tutte le funzionalità''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Acquista ora',
+  'checkForUpdates': 'Controlla aggiornamenti',
 };

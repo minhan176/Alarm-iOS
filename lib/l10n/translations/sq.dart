@@ -70,15 +70,19 @@ final Map<String, String> sqTranslations = mergeTranslations({
   'openSettings': 'Hap cilësimet',
   'gotIt': 'E kuptova',
   'proOneTime': 'Një herë • përgjithmonë',
-  'proRestoreDesc': 'Pasi të blihet, Pro do të shkyçet përgjithmonë në këtë pajisje. Nëse identifikoheni përsëri me të njëjtën llogari dyqani që keni përdorur për të bërë një blerje në një pajisje tjetër, thjesht klikoni "Rivendo blerjen".',
+  'proRestoreDesc':
+      'Pasi të blihet, Pro do të shkyçet përgjithmonë në këtë pajisje. Nëse identifikoheni përsëri me të njëjtën llogari dyqani që keni përdorur për të bërë një blerje në një pajisje tjetër, thjesht klikoni "Rivendo blerjen".',
   'proRestoreBtn': 'Rivendos blerjen',
   'proNoPurchasesFound': 'Nuk u gjet asnjë blerje!',
   'proActivated': 'Pro u aktivizua me sukses!',
   'proActivatedStatus': 'Pro i aktivizuar',
   'upgradePro': 'Përmirëso Pro',
   'proIntro': 'Merrni përvojën më të mirë',
-  'proLifetimeNote': '✓ Hiqni reklamat
+  'proLifetimeNote': '''✓ Hiqni reklamat
 ✓ Përshpejtimi i aplikimit
 ✓ Tinguj ekskluzivë
-✓ Zhbllokoni të gjitha veçoritë',
+✓ Zhbllokoni të gjitha veçoritë''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Bli tani',
+  'checkForUpdates': 'Kontrollo për përditësime',
 });

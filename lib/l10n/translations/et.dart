@@ -17,7 +17,8 @@ const Map<String, String> etTranslations = {
   'noAlarm': 'Äratusi pole',
   'settings': 'Seaded',
   'noAlarmData': 'Äratuse andmed puuduvad',
-  'tipKeepAppRunning': 'Nõuanne: Äratuse parema toimimise tagamiseks on soovitatav mitte sulgeda rakendust multitegumtöös.',
+  'tipKeepAppRunning':
+      'Nõuanne: Äratuse parema toimimise tagamiseks on soovitatav mitte sulgeda rakendust multitegumtöös.',
   'days': 'päeva',
   'hours': 'tundi',
   'minutes': 'minutit',
@@ -94,8 +95,10 @@ const Map<String, String> etTranslations = {
   'shareApp': 'Jaga rakendust',
   'rateApp': 'Hinda rakendust',
   'privacyPolicy': 'Privaatsuspoliitika',
-  'privacyPolicyError': 'Privaatsuspoliitikat ei saa avada. Palun külastage meie veebisaiti.',
-  'shareMessage': 'Laadige alla Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Privaatsuspoliitikat ei saa avada. Palun külastage meie veebisaiti.',
+  'shareMessage':
+      'Laadige alla Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Äratuse teavitused',
   'alarmNotificationsDesc': 'Teavitused äratuste kohta',
   'dismiss': 'Lõpeta',
@@ -109,13 +112,15 @@ const Map<String, String> etTranslations = {
 
   // Battery optimization dialog
   'allowBackgroundRunning': 'Luba taustal töötamine',
-  'batteryDialogContent': 'Valige "Ava rakenduse seaded" → Aku → Halda akukasutust → Luba akukasutus taustal',
+  'batteryDialogContent':
+      'Valige "Ava rakenduse seaded" → Aku → Halda akukasutust → Luba akukasutus taustal',
   'openAppSettings': 'Ava rakenduse seaded',
   'close': 'Sulge',
 
   // Overlay permission dialog
   'allowDisplayOverOtherApps': 'Luba "Kuva teiste rakenduste peal"',
-  'overlayDialogContent': 'Valige "Ava seaded" → Alarm Phone 17 OS 26 → Luba kuva teiste rakenduste peal',
+  'overlayDialogContent':
+      'Valige "Ava seaded" → Alarm Phone 17 OS 26 → Luba kuva teiste rakenduste peal',
   'openSettings': 'Ava seaded',
 
   // Guide screen
@@ -130,15 +135,19 @@ const Map<String, String> etTranslations = {
   'guideStep2Sub3': 'Halda akukasutust → Luba akukasutus taustal',
   'gotIt': 'Selge',
   'proOneTime': 'Üks kord • igavesti',
-  'proRestoreDesc': 'Pärast ostmist avatakse Pro selles seadmes jäädavalt. Kui logite uuesti sisse sama poekontoga, mida kasutasite teises seadmes ostu sooritamiseks, klõpsake lihtsalt nuppu Taasta ost.',
+  'proRestoreDesc':
+      'Pärast ostmist avatakse Pro selles seadmes jäädavalt. Kui logite uuesti sisse sama poekontoga, mida kasutasite teises seadmes ostu sooritamiseks, klõpsake lihtsalt nuppu Taasta ost.',
   'proRestoreBtn': 'Taasta ost',
   'proNoPurchasesFound': 'Ühtegi ostu ei leitud!',
   'proActivated': 'Pro aktiveeriti edukalt!',
   'proActivatedStatus': 'Pro lubatud',
   'upgradePro': 'Uuendage Pro',
   'proIntro': 'Hankige parim kogemus',
-  'proLifetimeNote': '✓ Eemaldage reklaamid
+  'proLifetimeNote': '''✓ Eemaldage reklaamid
 ✓ Rakenduse kiirendus
 ✓ Eksklusiivsed helid
-✓ Avage kõik funktsioonid',
+✓ Avage kõik funktsioonid''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Osta kohe',
+  'checkForUpdates': 'Kontrolli uuendusi',
 };

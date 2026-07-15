@@ -88,7 +88,7 @@ const Map<String, String> trTranslations = {
   'timeFormat': 'SAAT BİÇİMİ',
   'twentyFourHourFormat': '24 Saat Biçimi',
   'supportAndFeedback': 'DESTEK VE GERİ BİLDİRİM',
-    'UPGRADE_PRO': 'PRO’YA YÜKSELT',
+  'UPGRADE_PRO': 'PRO’YA YÜKSELT',
   'guide': 'Kılavuz',
   'sendFeedback': 'Geri Bildirim Gönder',
   'about': 'HAKKINDA',
@@ -105,35 +105,46 @@ const Map<String, String> trTranslations = {
   'am': 'ÖÖ',
   'pm': 'ÖS',
   'ratingTitle': 'Alarm Phone 17 OS 26\'dan memnun musunuz?',
-  'ratingContent': 'Google Play\'de bizi değerlendirmek için\nbir yıldıza dokunun.',
+  'ratingContent':
+      'Google Play\'de bizi değerlendirmek için\nbir yıldıza dokunun.',
   'submit': 'Gönder',
   'allowBackgroundRunning': 'Arka Planda Çalışmaya İzin Ver',
-  'batteryDialogContent': '"Uygulama Ayarlarını Aç" → Pil → Pil kullanımını yönet → Arka planda pil kullanımına izin ver seçeneğini seçin',
+  'batteryDialogContent':
+      '"Uygulama Ayarlarını Aç" → Pil → Pil kullanımını yönet → Arka planda pil kullanımına izin ver seçeneğini seçin',
   'openAppSettings': 'Uygulama Ayarlarını Aç',
   'close': 'Kapat',
   'allowDisplayOverOtherApps': '"Diğer Uygulamaların Üzerinde Göster" İzni Ver',
-  'overlayDialogContent': '"Ayarları Aç" → Alarm Phone 17 OS 26 → Diğer uygulamaların üzerinde göstermeye izin ver seçeneğini seçin',
+  'overlayDialogContent':
+      '"Ayarları Aç" → Alarm Phone 17 OS 26 → Diğer uygulamaların üzerinde göstermeye izin ver seçeneğini seçin',
   'openSettings': 'Ayarları Aç',
-  'guideIntro': 'Alarmın düzgün çalışması için bu adımları izlemenizi öneririz:',
+  'guideIntro':
+      'Alarmın düzgün çalışması için bu adımları izlemenizi öneririz:',
   'guideStep1Title': '"Diğer Uygulamaların Üzerinde Göster" iznini verin',
-  'guideStep1Sub1': 'Ayarlar → Uygulamalar → Alarm Phone 17 OS 26 yolunu izleyin',
+  'guideStep1Sub1':
+      'Ayarlar → Uygulamalar → Alarm Phone 17 OS 26 yolunu izleyin',
   'guideStep1Sub2': '"Diğer uygulamaların üzerinde göster" seçeneğini seçin',
   'guideStep1Sub3': 'Diğer uygulamaların üzerinde göstermeye izin verin',
   'guideStep2Title': 'Arka planda pil kullanımına izin verin',
-  'guideStep2Sub1': 'Ayarlar → Uygulamalar → Alarm Phone 17 OS 26 yolunu izleyin',
+  'guideStep2Sub1':
+      'Ayarlar → Uygulamalar → Alarm Phone 17 OS 26 yolunu izleyin',
   'guideStep2Sub2': '"Uygulama Pil Kullanımı" seçeneğini seçin',
-  'guideStep2Sub3': 'Pil kullanımını yönet → Arka planda pil kullanımına izin ver',
+  'guideStep2Sub3':
+      'Pil kullanımını yönet → Arka planda pil kullanımına izin ver',
   'gotIt': 'Anladım',
   'proOneTime': 'Bir kez • sonsuza kadar',
-  'proRestoreDesc': 'Satın alındıktan sonra Pro\'nun kilidi bu cihazda kalıcı olarak açılacaktır. Başka bir cihazda alışveriş yaparken kullandığınız mağaza hesabıyla tekrar oturum açarsanız Satın Alma İşlemini Geri Yükle\'ye tıklamanız yeterlidir.',
+  'proRestoreDesc':
+      'Satın alındıktan sonra Pro\'nun kilidi bu cihazda kalıcı olarak açılacaktır. Başka bir cihazda alışveriş yaparken kullandığınız mağaza hesabıyla tekrar oturum açarsanız Satın Alma İşlemini Geri Yükle\'ye tıklamanız yeterlidir.',
   'proRestoreBtn': 'Satın alma işlemini geri yükle',
   'proNoPurchasesFound': 'Hiçbir satın alma bulunamadı!',
   'proActivated': 'Pro başarıyla etkinleştirildi!',
   'proActivatedStatus': 'Profesyonel etkin',
   'upgradePro': 'Pro\'yu Yükselt',
   'proIntro': 'En iyi deneyimi yaşayın',
-  'proLifetimeNote': '✓ Reklamları kaldırın
+  'proLifetimeNote': '''✓ Reklamları kaldırın
 ✓ Uygulama hızlandırma
 ✓ Özel sesler
-✓ Tüm özelliklerin kilidini aç',
+✓ Tüm özelliklerin kilidini aç''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Şimdi Satın Al',
+  'checkForUpdates': 'Güncellemeleri Kontrol Et',
 };

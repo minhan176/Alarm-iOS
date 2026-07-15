@@ -17,7 +17,8 @@ const Map<String, String> isTranslations = {
   'noAlarm': 'Enginn vekjari',
   'settings': 'Stillingar',
   'noAlarmData': 'Engin vekjaragögn',
-  'tipKeepAppRunning': 'Ábending: Mælt er með að loka ekki forritinu í fjölverki til að tryggja betri virkni vekjara.',
+  'tipKeepAppRunning':
+      'Ábending: Mælt er með að loka ekki forritinu í fjölverki til að tryggja betri virkni vekjara.',
   'days': 'dagar',
   'hours': 'klukkustundir',
   'minutes': 'mínútur',
@@ -94,8 +95,10 @@ const Map<String, String> isTranslations = {
   'shareApp': 'Deila forriti',
   'rateApp': 'Gefa einkunn',
   'privacyPolicy': 'Persónuverndarstefna',
-  'privacyPolicyError': 'Ekki tókst að opna persónuverndarstefnu. Vinsamlegast heimsæktu vefsíðu okkar.',
-  'shareMessage': 'Sæktu Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
+  'privacyPolicyError':
+      'Ekki tókst að opna persónuverndarstefnu. Vinsamlegast heimsæktu vefsíðu okkar.',
+  'shareMessage':
+      'Sæktu Alarm Phone 17 OS 26 - Liquid Glass UI:\nhttps://play.google.com/store/apps/details?id=com.oaptech.clock',
   'alarmNotifications': 'Vekjaratilkynningar',
   'alarmNotificationsDesc': 'Tilkynningar fyrir vekjara',
   'dismiss': 'Hunsa',
@@ -105,13 +108,16 @@ const Map<String, String> isTranslations = {
   'ratingContent': 'Ýttu á stjörnu til að gefa okkur einkunn á\nGoogle Play.',
   'submit': 'Senda',
   'allowBackgroundRunning': 'Leyfa keyrslu í bakgrunni',
-  'batteryDialogContent': 'Veldu "Opna forritastillingar" → Rafhlaða → Stjórna rafhlöðunotkun → Leyfa rafhlöðunotkun í bakgrunni',
+  'batteryDialogContent':
+      'Veldu "Opna forritastillingar" → Rafhlaða → Stjórna rafhlöðunotkun → Leyfa rafhlöðunotkun í bakgrunni',
   'openAppSettings': 'Opna forritastillingar',
   'close': 'Loka',
   'allowDisplayOverOtherApps': 'Leyfa "Birta ofan á öðrum forritum"',
-  'overlayDialogContent': 'Veldu "Opna stillingar" → Alarm Phone 17 OS 26 → Leyfa birtingu ofan á öðrum forritum',
+  'overlayDialogContent':
+      'Veldu "Opna stillingar" → Alarm Phone 17 OS 26 → Leyfa birtingu ofan á öðrum forritum',
   'openSettings': 'Opna stillingar',
-  'guideIntro': 'Til að vekjarinn virki rétt, mælum við með að fylgja þessum skrefum:',
+  'guideIntro':
+      'Til að vekjarinn virki rétt, mælum við með að fylgja þessum skrefum:',
   'guideStep1Title': 'Veita heimild "Birta ofan á öðrum forritum"',
   'guideStep1Sub1': 'Farðu í Stillingar → Forrit → Alarm Phone 17 OS 26',
   'guideStep1Sub2': 'Veldu "Birta ofan á öðrum forritum"',
@@ -122,15 +128,19 @@ const Map<String, String> isTranslations = {
   'guideStep2Sub3': 'Stjórna rafhlöðunotkun → Leyfa rafhlöðunotkun í bakgrunni',
   'gotIt': 'Ég skil',
   'proOneTime': 'Einu sinni • að eilífu',
-  'proRestoreDesc': 'Þegar búið er að kaupa Pro verður varanlega opnað á þessu tæki. Ef þú skráir þig aftur inn með sama verslunarreikningi og þú notaðir til að kaupa í öðru tæki, smelltu bara á Endurheimta kaup.',
+  'proRestoreDesc':
+      'Þegar búið er að kaupa Pro verður varanlega opnað á þessu tæki. Ef þú skráir þig aftur inn með sama verslunarreikningi og þú notaðir til að kaupa í öðru tæki, smelltu bara á Endurheimta kaup.',
   'proRestoreBtn': 'Endurheimta kaup',
   'proNoPurchasesFound': 'Engin kaup fundust!',
   'proActivated': 'Pro virkjað með góðum árangri!',
   'proActivatedStatus': 'Pro virkt',
   'upgradePro': 'Uppfærsla Pro',
   'proIntro': 'Fáðu bestu upplifunina',
-  'proLifetimeNote': '✓ Fjarlægðu auglýsingar
+  'proLifetimeNote': '''✓ Fjarlægðu auglýsingar
 ✓ Umsókn hröðun
 ✓ Einkahljóð
-✓ Opnaðu alla eiginleika',
+✓ Opnaðu alla eiginleika''',
+  'bestExperience': 'Best experience',
+  'proBuyNow': 'Kaupa núna',
+  'checkForUpdates': 'Athuga með uppfærslur',
 };
