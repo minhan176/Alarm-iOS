@@ -52,25 +52,10 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
         if (_minuteController.hasClients) _minuteController.jumpToItem(_minutes);
         if (_secondController.hasClients) _secondController.jumpToItem(_seconds);
       });
-      _checkRestartPending();
+      
     });
     _loadTimerVibrate();
     WidgetsBinding.instance.addObserver(this);
-  }
-
-  Future<void> _checkRestartPending() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final pending = prefs.getBool('timer_restart_pending') ?? false;
-      if (pending) {
-        await prefs.setBool('timer_restart_pending', false);
-        if (mounted && !_isRunning) {
-          _startTimer();
-        }
-      }
-    } catch (e) {
-      print('Error checking timer restart: $e');
-    }
   }
 
   @override
@@ -82,7 +67,7 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
           if (_minuteController.hasClients) _minuteController.jumpToItem(_minutes);
           if (_secondController.hasClients) _secondController.jumpToItem(_seconds);
         });
-        _checkRestartPending();
+        
       });
     }
   }
