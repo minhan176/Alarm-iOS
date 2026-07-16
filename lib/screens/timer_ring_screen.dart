@@ -172,8 +172,42 @@ class _TimerRingScreenState extends State<TimerRingScreen>
 
   void _repeatTimer() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('timer_restart_pending', true);
-    _stopTimer();
+    final hours = prefs.getInt('timer_hours') ?? 0;
+    final minutes = prefs.getInt('timer_minutes') ?? 45;
+    final seconds = prefs.getInt('timer_seconds') ?? 0;
+    final totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+    await _stopTimerRing();
+    try {
+      await _alarmChannel.invokeMethod('stopSystemRingtone');
+    } catch (e) {
+      print('Error stopping native sound: $e');
+    }
+
+    setState(() {
+      _currentRemainingSeconds = totalSeconds;
+    });
+
+    _countdownTimer?.cancel();
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_currentRemainingSeconds > 0) {
+          _currentRemainingSeconds--;
+        } else {
+          _countdownTimer?.cancel();
+          _showTimerEndDialog();
+        }
+      });
+    });
+  }
+
+  void _showTimerEndDialog() {
+    _alarmChannel.invokeMethod('startTimerRingActivity', {
+      'remaining_seconds': 0,
+      'selected_sound': widget.selectedSound,
+      'selected_vibrate': widget.selectedVibrate,
+    });
+    SystemNavigator.pop();
   }
 
   @override
