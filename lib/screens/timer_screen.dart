@@ -17,7 +17,8 @@ class TimerScreen extends StatefulWidget {
   State<TimerScreen> createState() => _TimerScreenState();
 }
 
-class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin, WidgetsBindingObserver {
+class _TimerScreenState extends State<TimerScreen>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   static const String _timerSoundKey = 'timer_sound';
   static const String _timerSoundDisplayNameKey = 'timer_sound_display_name';
   static const String _timerHoursKey = 'timer_hours';
@@ -49,8 +50,10 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     _loadTimerDuration().then((_) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (_hourController.hasClients) _hourController.jumpToItem(_hours);
-        if (_minuteController.hasClients) _minuteController.jumpToItem(_minutes);
-        if (_secondController.hasClients) _secondController.jumpToItem(_seconds);
+        if (_minuteController.hasClients)
+          _minuteController.jumpToItem(_minutes);
+        if (_secondController.hasClients)
+          _secondController.jumpToItem(_seconds);
       });
       _checkRestartPending();
     });
@@ -79,8 +82,10 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
       _loadTimerDuration().then((_) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (_hourController.hasClients) _hourController.jumpToItem(_hours);
-          if (_minuteController.hasClients) _minuteController.jumpToItem(_minutes);
-          if (_secondController.hasClients) _secondController.jumpToItem(_seconds);
+          if (_minuteController.hasClients)
+            _minuteController.jumpToItem(_minutes);
+          if (_secondController.hasClients)
+            _secondController.jumpToItem(_seconds);
         });
         _checkRestartPending();
       });
@@ -110,7 +115,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
       if (savedSound != null) {
         setState(() {
           _selectedSound = savedSound;
-          _selectedSoundDisplayName = savedSoundDisplayName ?? _truncateSoundName(path.basename(savedSound));
+          _selectedSoundDisplayName =
+              savedSoundDisplayName ??
+              _truncateSoundName(path.basename(savedSound));
         });
       } else {
         // Set default sound if none saved
@@ -262,7 +269,10 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   void _showSoundDialog() async {
     final result = await Navigator.of(context).push<Map<String, dynamic>>(
       CupertinoPageRoute(
-        builder: (context) => SoundSelector(currentSound: _selectedSound, currentVibrate: _selectedVibrate),
+        builder: (context) => SoundSelector(
+          currentSound: _selectedSound,
+          currentVibrate: _selectedVibrate,
+        ),
       ),
     );
     if (result != null) {
@@ -288,7 +298,6 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     return '${soundName.substring(0, maxLength - 3)}...';
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -321,10 +330,13 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
   String _getEndTime() {
     final now = DateTime.now();
     final endTime = now.add(Duration(seconds: _remainingSeconds));
-    final is24h = Provider.of<SettingsProvider>(context, listen: false).is24HourFormat;
+    final is24h = Provider.of<SettingsProvider>(
+      context,
+      listen: false,
+    ).is24HourFormat;
     final hour = endTime.hour;
     final minute = endTime.minute;
-    
+
     if (is24h) {
       return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
     } else {
@@ -338,20 +350,22 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
     final hours = _remainingSeconds ~/ 3600;
     final minutes = (_remainingSeconds % 3600) ~/ 60;
     final seconds = _remainingSeconds % 60;
-    
+
     // If total time is less than 60 minutes, show only MM:SS
     if (_totalSeconds < 3600) {
       final totalMinutes = _remainingSeconds ~/ 60;
       return '${totalMinutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
     }
-    
+
     // Otherwise show HH:MM:SS
     return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
   Widget _buildRunningTimer() {
-    final progress = _totalSeconds > 0 ? _remainingSeconds / _totalSeconds : 0.0;
-    
+    final progress = _totalSeconds > 0
+        ? _remainingSeconds / _totalSeconds
+        : 0.0;
+
     return Column(
       children: [
         const SizedBox(height: 60),
@@ -442,7 +456,9 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
                 onPressed: _isPaused ? _resumeTimer : _pauseTimer,
                 backgroundColor: const Color(0xFF0A3A1F),
                 foregroundColor: CupertinoColors.systemGreen,
-                label: _isPaused ? AppLocalizations.of(context).resume : AppLocalizations.of(context).pause,
+                label: _isPaused
+                    ? AppLocalizations.of(context).resume
+                    : AppLocalizations.of(context).pause,
               ),
             ],
           ),
@@ -464,17 +480,19 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
               children: [
                 Flexible(
                   child: FittedBox(
-                  fit: BoxFit.scaleDown, child: Text(
-                    AppLocalizations.of(context).whenTimerEnds,
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 16,
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      AppLocalizations.of(context).whenTimerEnds,
+                      style: const TextStyle(
+                        color: CupertinoColors.white,
+                        fontSize: 16,
+                      ),
                     ),
-                  )),
+                  ),
                 ),
                 Row(
                   children: [
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Container(
                       constraints: const BoxConstraints(maxWidth: 120),
                       child: Text(
@@ -528,130 +546,133 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
               ),
               // Pickers
               Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Hours
-              SizedBox(
-                width: 70,
-                child: CupertinoPicker(
-                  backgroundColor: CupertinoColors.transparent,
-                  selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
-                    background: CupertinoColors.transparent,
-                  ),
-                  scrollController: _hourController,
-                  itemExtent: 35,
-                  diameterRatio: 1.2,
-                  squeeze: 1.1,
-                  onSelectedItemChanged: (index) {
-                    setState(() => _hours = index);
-                    _saveTimerDuration();
-                  },
-                  children: List.generate(
-                    24,
-                    (index) => Center(
-                      child: Text(
-                        index.toString(),
-                        style: const TextStyle(
-                          color: CupertinoColors.white,
-                          fontSize: 24,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Hours
+                  SizedBox(
+                    width: 70,
+                    child: CupertinoPicker(
+                      backgroundColor: CupertinoColors.transparent,
+                      selectionOverlay:
+                          const CupertinoPickerDefaultSelectionOverlay(
+                            background: CupertinoColors.transparent,
+                          ),
+                      scrollController: _hourController,
+                      itemExtent: 35,
+                      diameterRatio: 1.2,
+                      squeeze: 1.1,
+                      onSelectedItemChanged: (index) {
+                        setState(() => _hours = index);
+                        _saveTimerDuration();
+                      },
+                      children: List.generate(
+                        24,
+                        (index) => Center(
+                          child: Text(
+                            index.toString(),
+                            style: const TextStyle(
+                              color: CupertinoColors.white,
+                              fontSize: 24,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text(
-                  AppLocalizations.of(context).hoursLabel,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 15,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Text(
+                      AppLocalizations.of(context).hoursLabel,
+                      style: const TextStyle(
+                        color: CupertinoColors.white,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              // Minutes
-              SizedBox(
-                width: 70,
-                child: CupertinoPicker(
-                  backgroundColor: CupertinoColors.transparent,
-                  selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
-                    background: CupertinoColors.transparent,
-                  ),
-                  scrollController: _minuteController,
-                  itemExtent: 35,
-                  diameterRatio: 1.2,
-                  squeeze: 1.1,
-                  onSelectedItemChanged: (index) {
-                    setState(() => _minutes = index);
-                    _saveTimerDuration();
-                  },
-                  children: List.generate(
-                    60,
-                    (index) => Center(
-                      child: Text(
-                        index.toString(),
-                        style: const TextStyle(
-                          color: CupertinoColors.white,
-                          fontSize: 24,
+                  // Minutes
+                  SizedBox(
+                    width: 70,
+                    child: CupertinoPicker(
+                      backgroundColor: CupertinoColors.transparent,
+                      selectionOverlay:
+                          const CupertinoPickerDefaultSelectionOverlay(
+                            background: CupertinoColors.transparent,
+                          ),
+                      scrollController: _minuteController,
+                      itemExtent: 35,
+                      diameterRatio: 1.2,
+                      squeeze: 1.1,
+                      onSelectedItemChanged: (index) {
+                        setState(() => _minutes = index);
+                        _saveTimerDuration();
+                      },
+                      children: List.generate(
+                        60,
+                        (index) => Center(
+                          child: Text(
+                            index.toString(),
+                            style: const TextStyle(
+                              color: CupertinoColors.white,
+                              fontSize: 24,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text(
-                  AppLocalizations.of(context).minLabel,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 15,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Text(
+                      AppLocalizations.of(context).minLabel,
+                      style: const TextStyle(
+                        color: CupertinoColors.white,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              // Seconds
-              SizedBox(
-                width: 70,
-                child: CupertinoPicker(
-                  backgroundColor: CupertinoColors.transparent,
-                  selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
-                    background: CupertinoColors.transparent,
-                  ),
-                  scrollController: _secondController,
-                  itemExtent: 35,
-                  diameterRatio: 1.2,
-                  squeeze: 1.1,
-                  onSelectedItemChanged: (index) {
-                    setState(() => _seconds = index);
-                    _saveTimerDuration();
-                  },
-                  children: List.generate(
-                    60,
-                    (index) => Center(
-                      child: Text(
-                        index.toString(),
-                        style: const TextStyle(
-                          color: CupertinoColors.white,
-                          fontSize: 24,
+                  // Seconds
+                  SizedBox(
+                    width: 70,
+                    child: CupertinoPicker(
+                      backgroundColor: CupertinoColors.transparent,
+                      selectionOverlay:
+                          const CupertinoPickerDefaultSelectionOverlay(
+                            background: CupertinoColors.transparent,
+                          ),
+                      scrollController: _secondController,
+                      itemExtent: 35,
+                      diameterRatio: 1.2,
+                      squeeze: 1.1,
+                      onSelectedItemChanged: (index) {
+                        setState(() => _seconds = index);
+                        _saveTimerDuration();
+                      },
+                      children: List.generate(
+                        60,
+                        (index) => Center(
+                          child: Text(
+                            index.toString(),
+                            style: const TextStyle(
+                              color: CupertinoColors.white,
+                              fontSize: 24,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text(
-                  AppLocalizations.of(context).secLabel,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 15,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Text(
+                      AppLocalizations.of(context).secLabel,
+                      style: const TextStyle(
+                        color: CupertinoColors.white,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
             ],
           ),
         ),
@@ -696,17 +717,19 @@ class _TimerScreenState extends State<TimerScreen> with TickerProviderStateMixin
               children: [
                 Flexible(
                   child: FittedBox(
-                  fit: BoxFit.scaleDown, child: Text(
-                    AppLocalizations.of(context).whenTimerEnds,
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 16,
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      AppLocalizations.of(context).whenTimerEnds,
+                      style: const TextStyle(
+                        color: CupertinoColors.white,
+                        fontSize: 16,
+                      ),
                     ),
-                  )),
+                  ),
                 ),
                 Row(
                   children: [
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Container(
                       constraints: const BoxConstraints(maxWidth: 120),
                       child: Text(
@@ -759,10 +782,7 @@ class _StopwatchStyleButton extends StatelessWidget {
         height: 70,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(
-            color: backgroundColor,
-            width: 2,
-          ),
+          border: Border.all(color: backgroundColor, width: 2),
         ),
         child: Container(
           margin: const EdgeInsets.all(3),
@@ -809,7 +829,7 @@ class _CircularProgressPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width / 2) - strokeWidth / 2;
-    
+
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
@@ -833,4 +853,3 @@ class _CircularProgressPainter extends CustomPainter {
     return oldDelegate.progress != progress;
   }
 }
-
