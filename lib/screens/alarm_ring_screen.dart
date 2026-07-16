@@ -171,6 +171,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       final alarmProvider = Provider.of<AlarmProvider>(context, listen: false);
       final updatedAlarm = widget.alarm.copyWith(isEnabled: false);
       await alarmProvider.updateAlarm(widget.alarm.id, updatedAlarm);
+      AdService.shouldSuppressAppOpenAd = true;
       Navigator.of(context).pop();
     }
   }
@@ -188,6 +189,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     widget.onSnooze?.call();
 
     if (mounted) {
+      AdService.shouldSuppressAppOpenAd = true;
       Navigator.of(context).pop();
 
       // // Show snooze message

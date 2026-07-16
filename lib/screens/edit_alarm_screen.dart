@@ -12,6 +12,7 @@ import '../l10n/app_localizations.dart';
 import '../models/alarm_model.dart';
 import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
+import '../services/ad_service.dart';
 import '../widgets/custom_buttons.dart';
 import '../widgets/settings_large_banner_ad.dart';
 import '../widgets/settings_banner_ad.dart';
@@ -130,6 +131,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     // Set last saved alarm for toast on list screen
     provider.setLastSavedAlarm(alarm);
 
+    AdService.showInterstitialAdIfAvailable();
     Navigator.of(context, rootNavigator: true).pop();
 
     // Check and show review dialog after adding new alarm
@@ -217,8 +219,10 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               leading: NavIconButton(
                 icon: CupertinoIcons.xmark,
                 iconColor: CupertinoColors.white,
-                onPressed: () =>
-                    Navigator.of(context, rootNavigator: true).pop(),
+                onPressed: () {
+                  AdService.showInterstitialAdIfAvailable();
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
               ),
               middle: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -730,6 +734,7 @@ class _SoundSelectorState extends State<SoundSelector> {
   late AudioPlayer _previewPlayer;
   late String? _currentlyPreviewingUri;
   late String? _selectedCustomSound;
+  bool _isLoading = true;
 
   static const MethodChannel _alarmChannel = MethodChannel(
     'com.oaptech.clock/alarm',
@@ -747,7 +752,13 @@ class _SoundSelectorState extends State<SoundSelector> {
         widget.currentSound.contains('\\')) {
       _selectedCustomSound = widget.currentSound;
     }
-    _loadSystemRingtones();
+
+    // Delay loading ringtones to avoid jank during screen transition
+    Future.delayed(const Duration(milliseconds: 700), () {
+      if (mounted) {
+        _loadSystemRingtones();
+      }
+    });
   }
 
   Future<void> _loadSystemRingtones() async {
@@ -783,6 +794,7 @@ class _SoundSelectorState extends State<SoundSelector> {
 
         // Combine system ringtones with custom ringtones
         _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
+        _isLoading = false;
       });
     } catch (e) {
       // If loading fails, try requesting permission and retry once
@@ -822,14 +834,19 @@ class _SoundSelectorState extends State<SoundSelector> {
               alarmOS26,
               ...uniqueSounds.values,
             ];
+            _isLoading = false;
           });
         } else {
           // Permission denied, just use built-in sounds
-          setState(() {});
+          setState(() {
+            _isLoading = false;
+          });
         }
       } catch (e2) {
         // If still fails, just use built-in sounds
-        setState(() {});
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -943,6 +960,7 @@ class _SoundSelectorState extends State<SoundSelector> {
   }
 
   void _pickFromDevice() async {
+    AdService.shouldSuppressAppOpenAd = true;
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['mp3', 'wav', 'm4a', 'aac', 'flac', 'ogg', 'aiff'],
@@ -1194,7 +1212,12 @@ class _SoundSelectorState extends State<SoundSelector> {
                 ),
               ),
               // Section 2: System Ringtones
-              if (_systemRingtones.isNotEmpty) ...[
+              if (_isLoading)
+                const Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: Center(child: CupertinoActivityIndicator()),
+                )
+              else if (_systemRingtones.isNotEmpty) ...[
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 16,
@@ -1223,7 +1246,7 @@ class _SoundSelectorState extends State<SoundSelector> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListView.separated(
-                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
                       //physics: const ClampingScrollPhysics(),
                       itemCount: _systemRingtones.length,
                       separatorBuilder: (context, index) => Divider(

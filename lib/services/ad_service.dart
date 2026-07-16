@@ -8,6 +8,11 @@ class AdService {
   static bool _isShowingAd = false;
   static DateTime? _lastAdShowedTime;
   static int _activeRingingScreensCount = 0;
+  static bool shouldSuppressAppOpenAd = false;
+
+  static InterstitialAd? _interstitialAd;
+  static bool _isShowingInterstitialAd = false;
+  static DateTime? _lastInterstitialAdShowedTime;
 
   static bool get isRingingScreenActive => _activeRingingScreensCount > 0;
 
@@ -15,6 +20,8 @@ class AdService {
   static void clearAd() {
     _appOpenAd?.dispose();
     _appOpenAd = null;
+    _interstitialAd?.dispose();
+    _interstitialAd = null;
   }
 
   static void incrementRingingScreens() {
@@ -37,8 +44,13 @@ class AdService {
   static String get _appOpenAdUnitId {
     if (Platform.isAndroid) {
       return 'ca-app-pub-3940256099942544/9257395921';
-    } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/5662855259';
+    }
+    return '';
+  }
+
+  static String get _interstitialAdUnitId {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-3940256099942544/1033173712';
     }
     return '';
   }
@@ -66,7 +78,36 @@ class AdService {
     );
   }
 
+  static void loadInterstitialAd() async {
+    final isPro = await ProAccessService.isUnlocked();
+    if (isPro) return;
+
+    final adUnitId = _interstitialAdUnitId;
+    if (adUnitId.isEmpty) return;
+
+    InterstitialAd.load(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          debugPrint('AdInterstitial: Loaded successfully.');
+        },
+        onAdFailedToLoad: (error) {
+          debugPrint('AdInterstitial: Failed to load: $error');
+          _interstitialAd = null;
+        },
+      ),
+    );
+  }
+
   static void showAppOpenAdIfAvailable() async {
+    if (shouldSuppressAppOpenAd) {
+      debugPrint('AdOpenApp: Suppressed due to shouldSuppressAppOpenAd flag.');
+      shouldSuppressAppOpenAd = false; // Reset sau khi chặn
+      return;
+    }
+
     final isPro = await ProAccessService.isUnlocked();
     if (isPro) return;
 
@@ -86,7 +127,7 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 30) {
+        now.difference(_lastAdShowedTime!).inSeconds < 1) {
       debugPrint(
         'AdOpenApp: Suppressed showing ad because of 30s interval limit.',
       );
@@ -111,5 +152,45 @@ class AdService {
     );
 
     _appOpenAd!.show();
+  }
+
+  static void showInterstitialAdIfAvailable() async {
+    final isPro = await ProAccessService.isUnlocked();
+    if (isPro) return;
+
+    if (_isShowingInterstitialAd) return;
+
+    if (_interstitialAd == null) {
+      loadInterstitialAd();
+      return;
+    }
+
+    final now = DateTime.now();
+    if (_lastInterstitialAdShowedTime != null &&
+        now.difference(_lastInterstitialAdShowedTime!).inSeconds < 1) {
+      debugPrint(
+        'AdInterstitial: Suppressed showing ad because of 60s interval limit.',
+      );
+      return;
+    }
+
+    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (ad) {
+        _isShowingInterstitialAd = true;
+        _lastInterstitialAdShowedTime = DateTime.now();
+      },
+      onAdDismissedFullScreenContent: (ad) {
+        _isShowingInterstitialAd = false;
+        _interstitialAd = null;
+        loadInterstitialAd();
+      },
+      onAdFailedToShowFullScreenContent: (ad, error) {
+        _isShowingInterstitialAd = false;
+        _interstitialAd = null;
+        loadInterstitialAd();
+      },
+    );
+
+    _interstitialAd!.show();
   }
 }

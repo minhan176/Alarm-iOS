@@ -1,3 +1,4 @@
+import 'package:clock_os_26/services/ad_service.dart';
 import 'package:clock_os_26/widgets/settings_banner_ad.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,11 @@ class _SoundSelectorState extends State<SoundSelector> {
   late AudioPlayer _previewPlayer;
   late String? _currentlyPreviewingUri;
   late String? _selectedCustomSound;
+  bool _isLoading = true;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel(
+    'com.oaptech.clock/alarm',
+  );
 
   @override
   void initState() {
@@ -42,10 +46,17 @@ class _SoundSelectorState extends State<SoundSelector> {
     _previewPlayer = AudioPlayer();
     _currentlyPreviewingUri = null;
     _selectedCustomSound = null;
-    if (widget.currentSound.startsWith('/') || widget.currentSound.contains('\\')) {
+    if (widget.currentSound.startsWith('/') ||
+        widget.currentSound.contains('\\')) {
       _selectedCustomSound = widget.currentSound;
     }
-    _loadSystemRingtones();
+
+    // Delay loading ringtones to avoid jank during screen transition
+    Future.delayed(const Duration(milliseconds: 700), () {
+      if (mounted) {
+        _loadSystemRingtones();
+      }
+    });
   }
 
   Future<void> _loadSystemRingtones() async {
@@ -67,21 +78,18 @@ class _SoundSelectorState extends State<SoundSelector> {
           uniqueSounds[sound.uri] = sound;
         }
       }
-      
 
       setState(() {
         // Create the custom ringtones
-        final noneRingtone = CustomRingtone(
-          displayTitle: 'None',
-          uri: 'None',
-        );
+        final noneRingtone = CustomRingtone(displayTitle: 'None', uri: 'None');
         final alarmOS26 = CustomRingtone(
           displayTitle: 'Alarm Phone 17 OS 26',
           uri: 'assets/sounds/alarm.mp3',
         );
-        
+
         // Combine system ringtones with custom ringtones
         _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
+        _isLoading = false;
       });
     } catch (e) {
       // If loading fails, try requesting permission and retry once
@@ -114,18 +122,25 @@ class _SoundSelectorState extends State<SoundSelector> {
               displayTitle: 'Alarm Phone 17 OS 26',
               uri: 'assets/sounds/alarm.mp3',
             );
-            
+
             // Combine system ringtones with custom ringtones
-            _systemRingtones = [noneRingtone, alarmOS26, ...uniqueSounds.values];
+            _systemRingtones = [
+              noneRingtone,
+              alarmOS26,
+              ...uniqueSounds.values,
+            ];
+            _isLoading = false;
           });
         } else {
           // Permission denied, just use built-in sounds
           setState(() {
+            _isLoading = false;
           });
         }
       } catch (e2) {
         // If still fails, just use built-in sounds
         setState(() {
+          _isLoading = false;
         });
       }
     }
@@ -152,7 +167,9 @@ class _SoundSelectorState extends State<SoundSelector> {
         // Handle JbhRingtoneModel and other objects with uri property
         try {
           soundUri = (ringtone as dynamic).uri as String?;
-          print('🎵 Dynamic URI: $soundUri, type: ${soundUri?.startsWith('assets/')}, ringtone type: ${ringtone.runtimeType}');
+          print(
+            '🎵 Dynamic URI: $soundUri, type: ${soundUri?.startsWith('assets/')}, ringtone type: ${ringtone.runtimeType}',
+          );
         } catch (e) {
           print('❌ Could not extract URI from ringtone: $e');
         }
@@ -180,14 +197,18 @@ class _SoundSelectorState extends State<SoundSelector> {
 
           if (soundUri.startsWith('content://')) {
             // It's a system ringtone URI - use native RingtoneManager like alarm ring screen
-            await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': soundUri});
+            await _alarmChannel.invokeMethod('playSystemRingtone', {
+              'uri': soundUri,
+            });
             print('Playing system ringtone preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
 
             // Auto-stop after 5 seconds (since playSystemRingtone loops)
             Future.delayed(const Duration(seconds: 5), () {
               if (_currentlyPreviewingUri == soundUri) {
-                print('🎵 Auto-stopping system ringtone preview after 5 seconds');
+                print(
+                  '🎵 Auto-stopping system ringtone preview after 5 seconds',
+                );
                 _stopRingtonePreview();
               }
             });
@@ -200,13 +221,12 @@ class _SoundSelectorState extends State<SoundSelector> {
             await _previewPlayer.play(audioSource);
             print('Playing asset sound preview: $soundUri');
             _currentlyPreviewingUri = soundUri;
-            
+
             Future.delayed(const Duration(seconds: 3), () {
               if (_currentlyPreviewingUri == soundUri) {
                 _stopRingtonePreview();
               }
             });
-
           } else {
             // Use audioplayers for other sounds
             await _previewPlayer.setReleaseMode(ReleaseMode.stop);
@@ -229,7 +249,10 @@ class _SoundSelectorState extends State<SoundSelector> {
           }
         } catch (e) {
           print('Could not play preview sound "$soundUri": $e');
-          if (!soundUri.startsWith('content://') && !soundUri.startsWith('/') && !soundUri.startsWith('assets/') && !soundUri.contains('\\')) {
+          if (!soundUri.startsWith('content://') &&
+              !soundUri.startsWith('/') &&
+              !soundUri.startsWith('assets/') &&
+              !soundUri.contains('\\')) {
             print(
               'Make sure the file assets/sounds/${soundUri.toLowerCase()}.mp3 exists',
             );
@@ -249,7 +272,8 @@ class _SoundSelectorState extends State<SoundSelector> {
       await _previewPlayer.stop();
 
       // Also stop system ringtone if playing
-      if (_currentlyPreviewingUri != null && _currentlyPreviewingUri!.startsWith('content://')) {
+      if (_currentlyPreviewingUri != null &&
+          _currentlyPreviewingUri!.startsWith('content://')) {
         await _alarmChannel.invokeMethod('stopSystemRingtone');
         print('🛑 Stopped system ringtone');
       }
@@ -261,9 +285,8 @@ class _SoundSelectorState extends State<SoundSelector> {
     }
   }
 
-
-
   void _pickFromDevice() async {
+    AdService.shouldSuppressAppOpenAd = true;
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['mp3', 'wav', 'm4a', 'aac', 'flac', 'ogg', 'aiff'],
@@ -289,16 +312,16 @@ class _SoundSelectorState extends State<SoundSelector> {
       (r) => r.uri == _selectedSound,
       orElse: () => null,
     );
-    
+
     if (ringtone != null) {
       return ringtone.displayTitle;
     }
-    
+
     // For custom sounds from device
     if (_selectedSound.startsWith('/') || _selectedSound.contains('\\')) {
       return _truncateSoundName(path.basename(_selectedSound));
     }
-    
+
     // For built-in sounds
     return _selectedSound;
   }
@@ -315,9 +338,9 @@ class _SoundSelectorState extends State<SoundSelector> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pop({
-          'sound': _selectedSound, 
+          'sound': _selectedSound,
           'soundDisplayName': _getSelectedSoundDisplayName(),
-          'vibrate': _vibrate
+          'vibrate': _vibrate,
         });
         return false;
       },
@@ -336,9 +359,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                   iconColor: CupertinoColors.white,
                   textColor: CupertinoColors.white,
                   onPressed: () => Navigator.of(context).pop({
-                    'sound': _selectedSound, 
+                    'sound': _selectedSound,
                     'soundDisplayName': _getSelectedSoundDisplayName(),
-                    'vibrate': _vibrate
+                    'vibrate': _vibrate,
                   }),
                 ),
                 middle: Text(
@@ -352,26 +375,38 @@ class _SoundSelectorState extends State<SoundSelector> {
               ),
               // Make the rest of the content scrollable
               Container(
-                margin: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                margin: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                  bottom: 8,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFF2C2C2E),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         AppLocalizations.of(context).vibrate,
-                        style: const TextStyle(color: CupertinoColors.white, fontSize: 16),
+                        style: const TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 16,
+                        ),
                       ),
                       Transform.scale(
                         scale: 0.8,
                         child: CupertinoSwitch(
                           value: _vibrate,
                           activeColor: CupertinoColors.systemGreen,
-                          onChanged: (value) => setState(() => _vibrate = value),
+                          onChanged: (value) =>
+                              setState(() => _vibrate = value),
                         ),
                       ),
                     ],
@@ -380,7 +415,12 @@ class _SoundSelectorState extends State<SoundSelector> {
               ),
               // Section 1: Add from device
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                  bottom: 8,
+                ),
                 child: Text(
                   AppLocalizations.of(context).songs,
                   style: const TextStyle(
@@ -399,7 +439,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                 child: ListView.separated(
                   shrinkWrap: true,
                   //physics: const ClampingScrollPhysics(),
-                  itemCount: _selectedCustomSound != null ? 2 : 1, // Show custom song (if selected) and pick button
+                  itemCount: _selectedCustomSound != null
+                      ? 2
+                      : 1, // Show custom song (if selected) and pick button
                   separatorBuilder: (context, index) => Divider(
                     color: const Color(0xFF3C3C3E),
                     height: 0.5,
@@ -412,7 +454,10 @@ class _SoundSelectorState extends State<SoundSelector> {
                       // Selected custom song
                       final isSelected = _selectedSound == _selectedCustomSound;
                       return CupertinoButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         pressedOpacity: 1.0,
                         onPressed: () {
                           setState(() {
@@ -437,9 +482,13 @@ class _SoundSelectorState extends State<SoundSelector> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Container(
-                                  constraints: const BoxConstraints(maxWidth: 200),
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 200,
+                                  ),
                                   child: Text(
-                                    _truncateSoundName(path.basename(_selectedCustomSound!)),
+                                    _truncateSoundName(
+                                      path.basename(_selectedCustomSound!),
+                                    ),
                                     style: const TextStyle(
                                       color: CupertinoColors.white,
                                       fontSize: 16,
@@ -455,7 +504,10 @@ class _SoundSelectorState extends State<SoundSelector> {
                     } else if (index == 0 || index == 1) {
                       // Pick a song button
                       return CupertinoButton(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         pressedOpacity: 1.0,
                         onPressed: _pickFromDevice,
                         child: SizedBox(
@@ -486,9 +538,19 @@ class _SoundSelectorState extends State<SoundSelector> {
                 ),
               ),
               // Section 2: System Ringtones
-              if (_systemRingtones.isNotEmpty) ...[
+              if (_isLoading)
+                const Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: Center(child: CupertinoActivityIndicator()),
+                )
+              else if (_systemRingtones.isNotEmpty) ...[
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    top: 16,
+                    bottom: 8,
+                  ),
                   child: Text(
                     AppLocalizations.of(context).systemRingtones,
                     style: const TextStyle(
@@ -500,13 +562,17 @@ class _SoundSelectorState extends State<SoundSelector> {
                 ),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                    margin: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFF2C2C2E),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListView.separated(
-                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
                       //physics: const ClampingScrollPhysics(),
                       itemCount: _systemRingtones.length,
                       separatorBuilder: (context, index) => Divider(
@@ -519,7 +585,10 @@ class _SoundSelectorState extends State<SoundSelector> {
                         final ringtone = _systemRingtones[index];
                         final isSelected = _selectedSound == ringtone.uri;
                         return CupertinoButton(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
                           pressedOpacity: 1.0,
                           onPressed: () {
                             setState(() {
@@ -542,7 +611,9 @@ class _SoundSelectorState extends State<SoundSelector> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Container(
-                                  constraints: const BoxConstraints(maxWidth: 200),
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 200,
+                                  ),
                                   child: Text(
                                     _truncateSoundName(ringtone.displayTitle),
                                     style: const TextStyle(
@@ -570,10 +641,9 @@ class _SoundSelectorState extends State<SoundSelector> {
   }
 }
 
-
 class CustomRingtone {
   final String displayTitle;
   final String uri;
-  
+
   CustomRingtone({required this.displayTitle, required this.uri});
 }

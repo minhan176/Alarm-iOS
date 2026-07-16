@@ -166,6 +166,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
     }
     widget.onStop();
     if (mounted) {
+      AdService.shouldSuppressAppOpenAd = true;
       SystemNavigator.pop(); // Finish the activity
     }
   }
@@ -207,6 +208,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
       'selected_sound': widget.selectedSound,
       'selected_vibrate': widget.selectedVibrate,
     });
+    AdService.shouldSuppressAppOpenAd = true;
     SystemNavigator.pop();
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 
 class RatingDialog extends StatefulWidget {
   const RatingDialog({super.key});
@@ -71,6 +72,7 @@ class _RatingDialogState extends State<RatingDialog> {
     // Open Google Play link directly
     final Uri playStoreUri = Uri.parse('https://play.google.com/store/apps/details?id=com.oaptech.clock');
     if (await canLaunchUrl(playStoreUri)) {
+      AdService.shouldSuppressAppOpenAd = true;
       await launchUrl(playStoreUri);
     }
 

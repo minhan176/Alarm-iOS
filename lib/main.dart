@@ -193,6 +193,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     AdService.loadAppOpenAd();
+    AdService.loadInterstitialAd();
 
     // Skip permission checks if app is opened from ring screen
     if (!_skipPermissionCheck) {
@@ -301,6 +302,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         actions: [
           CupertinoDialogAction(
             onPressed: () async {
+              AdService.shouldSuppressAppOpenAd = true;
               await BatteryOptimizationService.openBatterySettings();
               Navigator.of(context).pop();
             },
@@ -334,6 +336,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           ),
           CupertinoDialogAction(
             onPressed: () async {
+              AdService.shouldSuppressAppOpenAd = true;
               const AndroidIntent intent = AndroidIntent(
                 action: 'android.settings.action.MANAGE_OVERLAY_PERMISSION',
                 data: 'package:com.oaptech.clock',
@@ -465,6 +468,7 @@ class MainTabScreen extends StatefulWidget {
 class _MainTabScreenState extends State<MainTabScreen>
     with WidgetsBindingObserver {
   int _currentIndex = 1; // Start with Alarm tab
+  bool _wasPaused = false;
 
   final List<Widget> _screens = const [
     WorldClockScreen(),
@@ -492,7 +496,9 @@ class _MainTabScreenState extends State<MainTabScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.paused) {
+      _wasPaused = true;
+    } else if (state == AppLifecycleState.resumed) {
       _checkPendingAlarm();
       // Update time format from system if user hasn't changed it
       final mediaQuery = MediaQueryData.fromWindow(
@@ -503,7 +509,11 @@ class _MainTabScreenState extends State<MainTabScreen>
         context,
         listen: false,
       ).updateFromSystem(currentSystem24HourFormat);
-      AdService.showAppOpenAdIfAvailable();
+      
+      if (_wasPaused) {
+        AdService.showAppOpenAdIfAvailable();
+        _wasPaused = false;
+      }
     }
   }
 

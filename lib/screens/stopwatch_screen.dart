@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import '../l10n/app_localizations.dart';
+import '../services/ad_service.dart';
 
 class StopwatchScreen extends StatefulWidget {
   const StopwatchScreen({super.key});
@@ -13,6 +14,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
   Timer? _timer;
   int _milliseconds = 0;
   bool _isRunning = false;
+  bool _hasBeenRunning = false; // true once the stopwatch has actually ticked
   List<int> _laps = [];
 
   @override
@@ -33,6 +35,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     }
     setState(() {
       _isRunning = !_isRunning;
+      if (_isRunning) _hasBeenRunning = true;
     });
   }
 
@@ -43,10 +46,14 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
         _laps.insert(0, _milliseconds);
       });
     } else {
-      // Reset
+      // Reset - show interstitial only if the stopwatch has actually been used
+      if (_hasBeenRunning) {
+        AdService.showInterstitialAdIfAvailable();
+      }
       setState(() {
         _milliseconds = 0;
         _laps.clear();
+        _hasBeenRunning = false;
       });
     }
   }

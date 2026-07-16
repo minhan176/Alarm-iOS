@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import '../services/ad_service.dart';
 import '../providers/world_clock_provider.dart';
 import '../models/world_clock_model.dart';
 import '../widgets/custom_buttons.dart';
@@ -88,6 +89,7 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
     if (result != null) {
       if (mounted) {
         Provider.of<WorldClockProvider>(context, listen: false).addClock(result);
+        AdService.showInterstitialAdIfAvailable();
       }
     }
   }
