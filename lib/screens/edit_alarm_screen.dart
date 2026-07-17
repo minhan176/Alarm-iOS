@@ -39,6 +39,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late Duration _snoozeDuration;
   late bool _showDurationOptions;
   late AudioPlayer _previewPlayer;
+  bool _wasKeyboardVisible = false;
 
   static const MethodChannel _alarmChannel = MethodChannel(
     'com.oaptech.clock/alarm',
@@ -207,6 +208,16 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_wasKeyboardVisible && !keyboardVisible) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      }
+
+      _wasKeyboardVisible = keyboardVisible;
+    });
+
     return CupertinoPageScaffold(
       backgroundColor: const Color(0xFF1C1C1E),
       child: SafeArea(
@@ -269,14 +280,21 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                     _buildSettingItem(
                       AppLocalizations.of(context).repeat,
                       _getRepeatText(AppLocalizations.of(context)),
-                      () => _showRepeatDialog(),
+                      () { 
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        _showRepeatDialog();
+                                           
+                      },
                       valueColor: CupertinoColors.white,
                     ),
                     _buildLabelItem(),
                     _buildSettingItem(
                       AppLocalizations.of(context).sound,
                       _soundDisplayName,
-                      () => _showSoundPage(),
+                      () { 
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        _showSoundPage();
+                      },
                       valueColor: CupertinoColors.white,
                     ),
                     _buildSwitchItem(
@@ -372,7 +390,12 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 ],
               ),
             ),
-            const SettingsBannerAd(),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1000),
+              child: keyboardVisible
+                  ? const SizedBox.shrink()
+                  : SettingsBannerAd(),
+            )
           ],
         ),
       ),
@@ -447,7 +470,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   Widget _buildSwitchItem(String title, bool value, Function(bool) onChanged) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -470,7 +493,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   Widget _buildLabelItem() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -537,6 +560,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   void _showRepeatDialog() async {
     final result = await Navigator.of(context).push<List<int>>(
       CupertinoPageRoute(
+        requestFocus: false,
         builder: (context) => RepeatSelector(selectedDays: _repeatDays),
       ),
     );
@@ -551,6 +575,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   void _showSoundPage() async {
     final result = await Navigator.of(context).push<Map<String, dynamic>>(
       CupertinoPageRoute(
+        requestFocus: false,
         builder: (context) =>
             SoundSelector(currentSound: _sound, currentVibrate: _vibrate),
       ),
@@ -754,7 +779,7 @@ class _SoundSelectorState extends State<SoundSelector> {
     }
 
     // Delay loading ringtones to avoid jank during screen transition
-    Future.delayed(const Duration(milliseconds: 700), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       if (mounted) {
         _loadSystemRingtones();
       }

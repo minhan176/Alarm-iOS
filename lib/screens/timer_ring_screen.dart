@@ -296,7 +296,7 @@ class _TimerRingScreenState extends State<TimerRingScreen>
                 height: 75,
                 child: CupertinoButton(
                   padding: EdgeInsets.zero,
-                  color: CupertinoColors.darkBackgroundGray.withOpacity(0.5),
+                  color: CupertinoColors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(32),
                   onPressed: _repeatTimer,
                   child: Text(

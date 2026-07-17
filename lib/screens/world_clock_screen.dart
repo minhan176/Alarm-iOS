@@ -47,43 +47,11 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
   void _addCity() async {
     final result = await showCupertinoSheet<WorldClockModel>(
       context: context,
-      builder: (BuildContext context) => CupertinoPageScaffold(
-        backgroundColor: CupertinoColors.systemGrey6,
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Custom Navigation Bar
-              SizedBox(height: 5,),
-              CustomNavBar(
-                backgroundColor: Color(0xFF1C1C1E),
-                leading: NavIconButton(
-                  icon: CupertinoIcons.xmark,
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                middle: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    AppLocalizations.of(context).chooseACity,
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
+      builder: (BuildContext context) => _AddCityContent(
+                onCitySelected: (WorldClockModel clock) {
+                  Navigator.of(context).pop(clock);
+                },
               ),
-              // Search bar and cities list content
-              Expanded(
-                child: _AddCityContent(
-                  onCitySelected: (WorldClockModel clock) {
-                    Navigator.of(context).pop(clock);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
     
     if (result != null) {
@@ -350,7 +318,7 @@ class _WorldClockItem extends StatelessWidget {
                   clock.city,
                   style: const TextStyle(
                     color: CupertinoColors.white,
-                    fontSize: 28,
+                    fontSize: 26,
                     fontWeight: FontWeight.w300,
                   ),
                 ),
@@ -370,7 +338,7 @@ class _WorldClockItem extends StatelessWidget {
                 TextSpan(
                   text: periodText,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.w300,
                   ),
                 ),
@@ -562,176 +530,211 @@ class _AddCityContentState extends State<_AddCityContent> {
         _sectionKeys[key] = GlobalKey();
       }
     }
+    final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
 
-    return Column(
-      children: [
-        // Search bar
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: CupertinoSearchTextField(
-            controller: _searchController,
-            placeholder: AppLocalizations.of(context).search,
-            backgroundColor: const Color(0xFF2C2C2E),
-            style: const TextStyle(color: CupertinoColors.white),
-            placeholderStyle: const TextStyle(
-              color: CupertinoColors.systemGrey,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        // Cities list with index
-        Expanded(
-          child: Row(
-            children: [
-              // Cities list
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount: sortedKeys.length,
-                  itemBuilder: (context, _sectionIndex) {
-                    final letter = sortedKeys[_sectionIndex];
-                    final cities = groupedCities[letter]!;
-                    
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    return CupertinoPageScaffold(
+      backgroundColor: CupertinoColors.systemGrey6,
+      child: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 5,),
+              CustomNavBar(
+                backgroundColor: Color(0xFF1C1C1E),
+                leading: NavIconButton(
+                  icon: CupertinoIcons.xmark,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                middle: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    AppLocalizations.of(context).chooseACity,
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            Expanded(
+              child: Column(
+                children: [
+                  // Search bar
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: CupertinoSearchTextField(
+                      controller: _searchController,
+                      placeholder: AppLocalizations.of(context).search,
+                      backgroundColor: const Color(0xFF2C2C2E),
+                      style: const TextStyle(color: CupertinoColors.white),
+                      placeholderStyle: const TextStyle(
+                        color: CupertinoColors.systemGrey,
+                        fontSize: 16,
+                      ),
+                      
+                    ),
+                  ),
+                  // Cities list with index
+                  Expanded(
+                    child: Row(
                       children: [
-                        // Section header
-                        Container(
-                          key: _sectionKeys[letter],
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          //color: CupertinoColors.systemGrey6.withOpacity(0.5),
-                          child: Text(
-                            letter,
-                            style: const TextStyle(
-                              color: CupertinoColors.systemGrey,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        // Cities in this section
-                        ...cities.map((cityData) => CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () => _selectCity(cityData),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
+                        // Cities list
+                        Expanded(
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: sortedKeys.length,
+                            itemBuilder: (context, _sectionIndex) {
+                              final letter = sortedKeys[_sectionIndex];
+                              final cities = groupedCities[letter]!;
+                              
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Section header
+                                  Container(
+                                    key: _sectionKeys[letter],
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                    //color: CupertinoColors.systemGrey6.withOpacity(0.5),
+                                    child: Text(
+                                      letter,
+                                      style: const TextStyle(
+                                        color: CupertinoColors.systemGrey,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  // Cities in this section
+                                  ...cities.map((cityData) => CupertinoButton(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () => _selectCity(cityData),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 12,
+                                      ),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            cityData.city,
-                                            style: const TextStyle(
-                                              color: CupertinoColors.white,
-                                              fontSize: 16,
-                                            ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      cityData.city,
+                                                      style: const TextStyle(
+                                                        color: CupertinoColors.white,
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    Text(
+                                                      cityData.country,
+                                                      style: const TextStyle(
+                                                        color: CupertinoColors.systemGrey,
+                                                        fontSize: 13,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            cityData.country,
-                                            style: const TextStyle(
-                                              color: CupertinoColors.systemGrey,
-                                              fontSize: 13,
-                                            ),
+                                          // Divider aligned with text content
+                                          Container(
+                                            margin: const EdgeInsets.only(top: 12),
+                                            height: 0.5,
+                                            color: CupertinoColors.darkBackgroundGray,
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ],
+                                  )),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        // Index bar
+                        Container(
+                          width: 30,
+                          padding: const EdgeInsets.only(top: 16, bottom: 16, right: 4),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: sortedKeys.map((letter) => MouseRegion(
+                              onEnter: (_) => setState(() => _hoveredLetter = letter),
+                              onExit: (_) => setState(() => _hoveredLetter = null),
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  final key = _sectionKeys[letter];
+                                  if (key?.currentContext != null) {
+                                    Scrollable.ensureVisible(
+                                      key!.currentContext!,
+                                      duration: const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                      alignment: 0.0,
+                                    );
+                                  } else {
+                                    // Fallback: calculate precise position based on previous sections
+                                    final sectionIndex = sortedKeys.indexOf(letter);
+                                    double scrollPosition = 0.0;
+                                    for (int i = 0; i < sectionIndex; i++) {
+                                      final prevLetter = sortedKeys[i];
+                                      final prevCities = groupedCities[prevLetter]!;
+                                      scrollPosition += 38.0 + (prevCities.length * 64.0); // header + cities
+                                    }
+                                    _scrollController.animateTo(
+                                      scrollPosition.clamp(0.0, _scrollController.position.maxScrollExtent),
+                                      duration: const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  }
+                                },
+                                onVerticalDragStart: (_) {}, // Prevent sheet drag
+                                onHorizontalDragStart: (_) {}, // Prevent sheet drag
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Text(
+                                    letter,
+                                    style: TextStyle(
+                                      color: _activeLetter == letter 
+                                        ? CupertinoColors.systemYellow
+                                        : CupertinoColors.systemOrange,
+                                      fontSize: _activeLetter == letter ? 16 : 14,
+                                      fontWeight: _activeLetter == letter 
+                                        ? FontWeight.w900 
+                                        : (_hoveredLetter == letter ? FontWeight.w700 : FontWeight.w500),
+                                    ),
+                                  ),
                                 ),
-                                // Divider aligned with text content
-                                Container(
-                                  margin: const EdgeInsets.only(top: 12),
-                                  height: 0.5,
-                                  color: CupertinoColors.darkBackgroundGray,
-                                ),
-                              ],
+                              ),
+                            )).toList(),
                             ),
                           ),
-                        )),
+                        ),
                       ],
-                    );
-                  },
-                ),
-              ),
-              // Index bar
-              Container(
-                width: 30,
-                padding: const EdgeInsets.only(top: 16, bottom: 16, right: 4),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: sortedKeys.map((letter) => MouseRegion(
-                    onEnter: (_) => setState(() => _hoveredLetter = letter),
-                    onExit: (_) => setState(() => _hoveredLetter = null),
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        final key = _sectionKeys[letter];
-                        if (key?.currentContext != null) {
-                          Scrollable.ensureVisible(
-                            key!.currentContext!,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                            alignment: 0.0,
-                          );
-                        } else {
-                          // Fallback: calculate precise position based on previous sections
-                          final sectionIndex = sortedKeys.indexOf(letter);
-                          double scrollPosition = 0.0;
-                          for (int i = 0; i < sectionIndex; i++) {
-                            final prevLetter = sortedKeys[i];
-                            final prevCities = groupedCities[prevLetter]!;
-                            scrollPosition += 38.0 + (prevCities.length * 64.0); // header + cities
-                          }
-                          _scrollController.animateTo(
-                            scrollPosition.clamp(0.0, _scrollController.position.maxScrollExtent),
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        }
-                      },
-                      onVerticalDragStart: (_) {}, // Prevent sheet drag
-                      onHorizontalDragStart: (_) {}, // Prevent sheet drag
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          letter,
-                          style: TextStyle(
-                            color: _activeLetter == letter 
-                              ? CupertinoColors.systemYellow
-                              : CupertinoColors.systemOrange,
-                            fontSize: _activeLetter == letter ? 16 : 14,
-                            fontWeight: _activeLetter == letter 
-                              ? FontWeight.w900 
-                              : (_hoveredLetter == letter ? FontWeight.w700 : FontWeight.w500),
-                          ),
-                        ),
-                      ),
                     ),
-                  )).toList(),
                   ),
-                ),
+                  AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 1000),
+                        child: keyboardVisible
+                            ? const SizedBox.shrink()
+                            : SettingsBannerAd(),
+                      )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        
-        const SettingsBannerAd(),
-       
-      ],
+      ),
     );
   }
 }

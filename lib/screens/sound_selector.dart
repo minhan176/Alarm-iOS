@@ -52,7 +52,7 @@ class _SoundSelectorState extends State<SoundSelector> {
     }
 
     // Delay loading ringtones to avoid jank during screen transition
-    Future.delayed(const Duration(milliseconds: 700), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       if (mounted) {
         _loadSystemRingtones();
       }

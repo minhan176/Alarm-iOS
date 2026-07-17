@@ -336,11 +336,26 @@ class AlarmListItem extends StatelessWidget {
                             color: alarm.isEnabled
                                 ? CupertinoColors.white
                                 : CupertinoColors.systemGrey,
-                            fontSize: 56,
+                            fontSize: 54,
                             fontWeight: FontWeight.w200,
                             height: 1,
                           ),
                         ),
+                        use24HourFormat
+                            ? const SizedBox.shrink()
+                            : Padding(
+                                padding: const EdgeInsets.only(left: 4, bottom: 8),
+                                child: Text(
+                                  alarm.time.hour >= 12 ? 'PM' : 'AM',
+                                  style: TextStyle(
+                                    color: alarm.isEnabled
+                                        ? CupertinoColors.white
+                                        : CupertinoColors.systemGrey,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                     //const SizedBox(height: 0),

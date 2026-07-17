@@ -127,7 +127,7 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 1) {
+        now.difference(_lastAdShowedTime!).inSeconds < 60) {
       debugPrint(
         'AdOpenApp: Suppressed showing ad because of 30s interval limit.',
       );
@@ -167,7 +167,7 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastInterstitialAdShowedTime != null &&
-        now.difference(_lastInterstitialAdShowedTime!).inSeconds < 1) {
+        now.difference(_lastInterstitialAdShowedTime!).inSeconds < 60) {
       debugPrint(
         'AdInterstitial: Suppressed showing ad because of 60s interval limit.',
       );
@@ -177,11 +177,13 @@ class AdService {
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
         _isShowingInterstitialAd = true;
+        shouldSuppressAppOpenAd = true;
         _lastInterstitialAdShowedTime = DateTime.now();
       },
       onAdDismissedFullScreenContent: (ad) {
         _isShowingInterstitialAd = false;
         _interstitialAd = null;
+        shouldSuppressAppOpenAd = false;
         loadInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {

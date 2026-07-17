@@ -786,8 +786,8 @@ class _StopwatchStyleButton extends StatelessWidget {
                     color: onPressed == null
                         ? foregroundColor.withOpacity(0.3)
                         : foregroundColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
