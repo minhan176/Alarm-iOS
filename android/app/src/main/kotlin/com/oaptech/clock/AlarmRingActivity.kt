@@ -1,4 +1,6 @@
 package com.oaptech.clock
+import android.os.Build
+import android.os.VibratorManager
 
 import android.content.Intent
 import android.os.Bundle
@@ -24,6 +26,7 @@ class AlarmRingActivity : FlutterActivity() {
     private var isDismissed = false
     private var screenOffReceiver: BroadcastReceiver? = null
     private var isReceiverRegistered = false
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,7 +174,14 @@ class AlarmRingActivity : FlutterActivity() {
             // Cancel vibration in background thread
             Thread {
                 try {
-                    val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+                    //val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        val vibratorManager = getSystemService(VibratorManager::class.java)
+                        vibrator = vibratorManager.defaultVibrator
+                    } else {
+                        @Suppress("DEPRECATION")
+                        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    }
                     if (vibrator != null) {
                         vibrator.cancel()
                         println("DEBUG: Force cancelled vibration with native vibrator")
