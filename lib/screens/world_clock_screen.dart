@@ -726,7 +726,7 @@ class _AddCityContentState extends State<_AddCityContent> {
                   AnimatedSwitcher(
                         duration: const Duration(milliseconds: 1000),
                         child: keyboardVisible
-                            ? const SizedBox.shrink()
+                            ? const SizedBox(height: 8)
                             : SettingsBannerAd(),
                       )
                 ],

@@ -177,13 +177,13 @@ class AdService {
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
         _isShowingInterstitialAd = true;
-        shouldSuppressAppOpenAd = true;
+        //shouldSuppressAppOpenAd = true;
         _lastInterstitialAdShowedTime = DateTime.now();
       },
       onAdDismissedFullScreenContent: (ad) {
         _isShowingInterstitialAd = false;
         _interstitialAd = null;
-        shouldSuppressAppOpenAd = false;
+        shouldSuppressAppOpenAd = true;
         loadInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {

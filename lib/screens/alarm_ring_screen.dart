@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   late AnimationController _pulseController;
   late AnimationController _rotationController;
   late AnimationController _shakeController;
+  Timer? _vibrateTimer;
 
   static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
 
@@ -86,11 +88,10 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
       // Start vibration pattern only if enabled
       if (widget.alarm.vibrate && await Vibration.hasVibrator()) {
-        // Vibrate in pattern: wait 1000ms, vibrate 500ms, repeat (less intense)
-        Vibration.vibrate(
-          pattern: [1000, 500, 1000, 500],
-          repeat: 0, // Repeat from index 0
-        );
+        Vibration.vibrate(duration: 500);
+        _vibrateTimer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
+          Vibration.vibrate(duration: 500);
+        });
         print('Vibration enabled for alarm');
       } else {
         print('Vibration disabled for alarm');
@@ -148,6 +149,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
   Future<void> _stopAlarm() async {
     await _audioPlayer.stop();
+    _vibrateTimer?.cancel();
     await Vibration.cancel();
     // Stop system ringtone if playing
     try {

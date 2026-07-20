@@ -470,7 +470,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   Widget _buildSwitchItem(String title, bool value, Function(bool) onChanged) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
