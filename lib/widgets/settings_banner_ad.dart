@@ -31,7 +31,7 @@ class _SettingsBannerAdState extends State<SettingsBannerAd> {
 
   String? get _adUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-3940256099942544/6300978111';
+      return 'ca-app-pub-9002559574859995/8435777809';
     }
     return null;
   }

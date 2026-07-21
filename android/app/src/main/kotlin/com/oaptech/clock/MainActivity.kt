@@ -23,11 +23,7 @@ class MainActivity : FlutterActivity() {
         super.onCreate(savedInstanceState)
         println("DEBUG: MainActivity onCreate called")
 
-        // Set window flags to show over lock screen and other apps
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
 
         // Check for alarm data from Intent (when started by alarm)
         val alarmJson = intent.getStringExtra("alarm_data")

@@ -166,7 +166,6 @@ class _TimerRingScreenState extends State<TimerRingScreen>
     }
     widget.onStop();
     if (mounted) {
-      AdService.shouldSuppressAppOpenAd = true;
       SystemNavigator.pop(); // Finish the activity
     }
   }

@@ -42,14 +42,14 @@ class AdService {
   // Google Test App Open Ad IDs
   static String get _appOpenAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-3940256099942544/9257395921';
+      return 'ca-app-pub-9002559574859995/2881188471';
     }
     return '';
   }
 
   static String get _interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-3940256099942544/1033173712';
+      return 'ca-app-pub-9002559574859995/5493751828';
     }
     return '';
   }
