@@ -39,7 +39,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   late AnimationController _shakeController;
   Timer? _vibrateTimer;
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
+  static const MethodChannel _alarmChannel = MethodChannel(
+    'com.oaptech.clock/alarm',
+  );
 
   @override
   void initState() {
@@ -89,7 +91,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       // Start vibration pattern only if enabled
       if (widget.alarm.vibrate && await Vibration.hasVibrator()) {
         Vibration.vibrate(duration: 500);
-        _vibrateTimer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
+        _vibrateTimer = Timer.periodic(const Duration(milliseconds: 1500), (
+          timer,
+        ) {
           Vibration.vibrate(duration: 500);
         });
         print('Vibration enabled for alarm');
@@ -102,7 +106,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
         try {
           if (widget.alarm.sound.startsWith('content://')) {
             // It's a system ringtone URI - use native RingtoneManager
-            await _alarmChannel.invokeMethod('playSystemRingtone', {'uri': widget.alarm.sound});
+            await _alarmChannel.invokeMethod('playSystemRingtone', {
+              'uri': widget.alarm.sound,
+            });
             print('Playing system ringtone: ${widget.alarm.sound}');
           } else if (widget.alarm.sound.startsWith('assets/')) {
             // It's an asset file (like our custom Alarm Phone 17 OS 26)
@@ -118,7 +124,8 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
             await _audioPlayer.setVolume(1.0);
 
             Source audioSource;
-            if (widget.alarm.sound.startsWith('/') || widget.alarm.sound.contains('\\')) {
+            if (widget.alarm.sound.startsWith('/') ||
+                widget.alarm.sound.contains('\\')) {
               // It's a file path from device
               audioSource = DeviceFileSource(widget.alarm.sound);
             } else {
@@ -133,7 +140,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
           }
         } catch (e) {
           print('Could not play alarm sound "${widget.alarm.sound}": $e');
-          if (!widget.alarm.sound.startsWith('content://') && !widget.alarm.sound.startsWith('/') && !widget.alarm.sound.contains('\\')) {
+          if (!widget.alarm.sound.startsWith('content://') &&
+              !widget.alarm.sound.startsWith('/') &&
+              !widget.alarm.sound.contains('\\')) {
             print(
               'Make sure the file assets/sounds/${widget.alarm.sound.toLowerCase()}.mp3 exists',
             );
@@ -227,7 +236,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
         child: Column(
           children: [
             const Spacer(),
-        
+
             // Alarm icon and label above clock
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -236,7 +245,8 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                   animation: _shakeController,
                   builder: (context, child) {
                     return Transform.rotate(
-                      angle: math.sin(_shakeController.value * 2 * math.pi) * 0.1,
+                      angle:
+                          math.sin(_shakeController.value * 2 * math.pi) * 0.1,
                       child: const Icon(
                         CupertinoIcons.alarm_fill,
                         color: CupertinoColors.systemGrey,
@@ -247,7 +257,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  widget.alarm.label.isNotEmpty ? widget.alarm.label : AppLocalizations.of(context).alarm,
+                  widget.alarm.label.isNotEmpty
+                      ? widget.alarm.label
+                      : AppLocalizations.of(context).alarm,
                   style: const TextStyle(
                     color: CupertinoColors.systemGrey,
                     fontSize: 24,
@@ -256,9 +268,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                 ),
               ],
             ),
-        
+
             const SizedBox(height: 40),
-        
+
             // Large digital clock
             Text(
               _getCurrentTime(),
@@ -269,12 +281,17 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                 height: 1,
               ),
             ),
-        
+
             const Spacer(),
-        
+
             // Action buttons - vertical stack
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 40),
+              padding: const EdgeInsets.only(
+                left: 35,
+                right: 35,
+                top: 40,
+                bottom: 60,
+              ),
               child: Column(
                 children: [
                   // Snooze button - orange (only if snooze is enabled)
@@ -298,7 +315,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                         ),
                       ),
                     ),
-        
+
                   // Slide to stop button
                   Container(
                     width: double.infinity,
@@ -320,17 +337,21 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
   String _getCurrentTime() {
     final now = DateTime.now();
-    final is24h = Provider.of<SettingsProvider>(context, listen: false).is24HourFormat;
+    final is24h = Provider.of<SettingsProvider>(
+      context,
+      listen: false,
+    ).is24HourFormat;
     final minute = now.minute.toString().padLeft(2, '0');
-    
+
     if (is24h) {
       return '${now.hour.toString().padLeft(2, '0')}:$minute';
     } else {
-      final hour = now.hour == 0 ? 12 : (now.hour > 12 ? now.hour - 12 : now.hour);
+      final hour = now.hour == 0
+          ? 12
+          : (now.hour > 12 ? now.hour - 12 : now.hour);
       return '$hour:$minute';
     }
   }
-
 }
 
 class SlideToStopButton extends StatefulWidget {
@@ -366,7 +387,7 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
   LiquidGlassSettings _getGlassSettings(BuildContext context) {
     final brightness = MediaQuery.platformBrightnessOf(context);
     final isDark = brightness == Brightness.dark;
-    
+
     return LiquidGlassSettings(
       refractiveIndex: 1.21,
       thickness: 30,
@@ -375,7 +396,9 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
       lightIntensity: isDark ? .7 : 1,
       ambientStrength: isDark ? .2 : .5,
       lightAngle: math.pi / 4,
-      glassColor: CupertinoTheme.of(context).barBackgroundColor.withValues(alpha: 0.2),
+      glassColor: CupertinoTheme.of(
+        context,
+      ).barBackgroundColor.withValues(alpha: 0.2),
     );
   }
 
@@ -385,7 +408,8 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
       builder: (context, constraints) {
         final containerWidth = constraints.maxWidth;
         final buttonSize = 60.0;
-        final slideThreshold = containerWidth - buttonSize - 20; // Leave some margin
+        final slideThreshold =
+            containerWidth - buttonSize - 20; // Leave some margin
         final completionThreshold = slideThreshold * (2 / 3);
 
         return LiquidGlassLayer(
@@ -402,10 +426,13 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
                     builder: (context, child) {
                       return ShaderMask(
                         shaderCallback: (bounds) {
-                          final double shimmerWidth = bounds.width * 0.5; // Width of the shimmer effect
-                          final double start = (bounds.width - shimmerWidth) * _shimmerController.value;
+                          final double shimmerWidth =
+                              bounds.width * 0.5; // Width of the shimmer effect
+                          final double start =
+                              (bounds.width - shimmerWidth) *
+                              _shimmerController.value;
                           final double end = start + shimmerWidth;
-                          
+
                           return LinearGradient(
                             colors: [
                               CupertinoColors.white.withOpacity(0.3),
@@ -414,7 +441,10 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
                             ],
                             stops: [
                               (start / bounds.width).clamp(0.0, 1.0),
-                              ((start + shimmerWidth / 2) / bounds.width).clamp(0.0, 1.0),
+                              ((start + shimmerWidth / 2) / bounds.width).clamp(
+                                0.0,
+                                1.0,
+                              ),
                               (end / bounds.width).clamp(0.0, 1.0),
                             ],
                           ).createShader(bounds);
@@ -443,7 +473,10 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
 
                       setState(() {
                         _dragPosition += details.delta.dx;
-                        _dragPosition = _dragPosition.clamp(0.0, slideThreshold);
+                        _dragPosition = _dragPosition.clamp(
+                          0.0,
+                          slideThreshold,
+                        );
                       });
                     },
                     onHorizontalDragEnd: (details) {
@@ -464,7 +497,9 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
                     },
                     child: LiquidStretch(
                       child: LiquidGlass.grouped(
-                        shape: const LiquidRoundedSuperellipse(borderRadius: 9000),
+                        shape: const LiquidRoundedSuperellipse(
+                          borderRadius: 9000,
+                        ),
                         child: GlassGlow(
                           child: Container(
                             width: buttonSize,

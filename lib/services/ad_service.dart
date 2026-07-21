@@ -12,7 +12,6 @@ class AdService {
 
   static InterstitialAd? _interstitialAd;
   static bool _isShowingInterstitialAd = false;
-  static DateTime? _lastInterstitialAdShowedTime;
 
   static bool get isRingingScreenActive => _activeRingingScreensCount > 0;
 
@@ -102,6 +101,7 @@ class AdService {
   }
 
   static void showAppOpenAdIfAvailable() async {
+    print('DEBUG: ABCABCABCabcabcabc');
     if (shouldSuppressAppOpenAd) {
       debugPrint('AdOpenApp: Suppressed due to shouldSuppressAppOpenAd flag.');
       shouldSuppressAppOpenAd = false; // Reset sau khi chặn
@@ -129,7 +129,7 @@ class AdService {
     if (_lastAdShowedTime != null &&
         now.difference(_lastAdShowedTime!).inSeconds < 60) {
       debugPrint(
-        'AdOpenApp: Suppressed showing ad because of 30s interval limit.',
+        'AdOpenApp: Suppressed showing ad because of 60s interval limit.',
       );
       return;
     }
@@ -137,11 +137,11 @@ class AdService {
     _appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
         _isShowingAd = true;
-        _lastAdShowedTime = DateTime.now();
       },
       onAdDismissedFullScreenContent: (ad) {
         _isShowingAd = false;
         _appOpenAd = null;
+        _lastAdShowedTime = DateTime.now();
         loadAppOpenAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
@@ -166,8 +166,8 @@ class AdService {
     }
 
     final now = DateTime.now();
-    if (_lastInterstitialAdShowedTime != null &&
-        now.difference(_lastInterstitialAdShowedTime!).inSeconds < 60) {
+    if (_lastAdShowedTime != null &&
+        now.difference(_lastAdShowedTime!).inSeconds < 60) {
       debugPrint(
         'AdInterstitial: Suppressed showing ad because of 60s interval limit.',
       );
@@ -178,12 +178,13 @@ class AdService {
       onAdShowedFullScreenContent: (ad) {
         _isShowingInterstitialAd = true;
         //shouldSuppressAppOpenAd = true;
-        _lastInterstitialAdShowedTime = DateTime.now();
+        //_lastAdShowedTime = DateTime.now();
       },
       onAdDismissedFullScreenContent: (ad) {
         _isShowingInterstitialAd = false;
         _interstitialAd = null;
         shouldSuppressAppOpenAd = true;
+        _lastAdShowedTime = DateTime.now();
         loadInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
