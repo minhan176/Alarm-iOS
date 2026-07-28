@@ -193,7 +193,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     AdService.loadAppOpenAd();
-    AdService.loadInterstitialAd();
 
     // Skip permission checks if app is opened from ring screen
     if (!_skipPermissionCheck) {

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../constants/ad_units.dart';
 import 'pro_access_service.dart';
 
 class AdService {
@@ -39,20 +40,9 @@ class AdService {
     );
   }
 
-  // Google Test App Open Ad IDs
-  static String get _appOpenAdUnitId {
-    if (Platform.isAndroid) {
-      return 'ca-app-pub-9002559574859995/2881188471';
-    }
-    return '';
-  }
+  static String get _appOpenAdUnitId => AdUnits.appOpenAdUnitId;
 
-  static String get _interstitialAdUnitId {
-    if (Platform.isAndroid) {
-      return 'ca-app-pub-9002559574859995/5493751828';
-    }
-    return '';
-  }
+  static String get _interstitialAdUnitId => AdUnits.interstitialAdUnitId;
 
   static void loadAppOpenAd() async {
     final isPro = await ProAccessService.isUnlocked();

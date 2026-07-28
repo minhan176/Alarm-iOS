@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/ad_units.dart';
 import '../providers/settings_provider.dart';
 
 class SettingsLargeBannerAd extends StatefulWidget {
@@ -30,10 +31,8 @@ class _SettingsLargeBannerAdState extends State<SettingsLargeBannerAd> {
   }
 
   String? get _adUnitId {
-    if (Platform.isAndroid) {
-      return 'ca-app-pub-9002559574859995/8435777809';
-    }
-    return null;
+    final id = AdUnits.largeBannerAdUnitId;
+    return id.isNotEmpty ? id : null;
   }
 
   void _loadAd() {

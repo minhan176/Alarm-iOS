@@ -48,6 +48,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   @override
   void initState() {
     super.initState();
+    AdService.loadInterstitialAd();
     if (widget.alarm != null) {
       _selectedTime = widget.alarm!.time;
       _label = widget.alarm!.label;

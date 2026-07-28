@@ -27,6 +27,7 @@ class _StopwatchScreenState extends State<StopwatchScreen> {
     if (_isRunning) {
       _timer?.cancel();
     } else {
+      AdService.loadInterstitialAd();
       _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
         setState(() {
           _milliseconds += 10;
