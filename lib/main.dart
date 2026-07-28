@@ -192,8 +192,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    AdService.loadAppOpenAd();
-
+    
     // Skip permission checks if app is opened from ring screen
     if (!_skipPermissionCheck) {
       _checkOverlayPermission();
@@ -497,6 +496,7 @@ class _MainTabScreenState extends State<MainTabScreen>
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused) {
       _wasPaused = true;
+      AdService.loadAppOpenAd();
     } else if (state == AppLifecycleState.resumed) {
       _checkPendingAlarm();
       // Update time format from system if user hasn't changed it
