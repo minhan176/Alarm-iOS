@@ -158,6 +158,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
     // Show dialog after 3rd alarm
     if (addCount >= 3 && mounted) {
+      prefs.setBool('request_open_ad', true);
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
