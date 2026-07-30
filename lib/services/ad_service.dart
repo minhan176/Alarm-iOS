@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../constants/ad_units.dart';
+import '../main.dart';
 import 'pro_access_service.dart';
 
 class AdService {
@@ -15,6 +18,7 @@ class AdService {
   static bool _isShowingInterstitialAd = false;
 
   static bool get isRingingScreenActive => _activeRingingScreensCount > 0;
+  static bool get isInterstitialAdLoaded => _interstitialAd != null;
 
   /// Called when Pro is purchased to immediately discard any loaded ad.
   static void clearAd() {
@@ -44,12 +48,14 @@ class AdService {
 
   static String get _interstitialAdUnitId => AdUnits.interstitialAdUnitId;
 
-  static void loadAppOpenAd() async {
+  static Future<bool> loadAppOpenAd() async {
     final isPro = await ProAccessService.isUnlocked();
-    if (isPro) return;
+    if (isPro) return false;
+
+    if (_appOpenAd != null) return true;
 
     final adUnitId = _appOpenAdUnitId;
-    if (adUnitId.isEmpty) return;
+    if (adUnitId.isEmpty) return false;
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
@@ -57,8 +63,10 @@ class AdService {
       debugPrint(
         'AdOpenApp: Suppressed showing ad because of 55s interval limit.',
       );
-      return;
+      return false;
     }
+
+    final completer = Completer<bool>();
 
     AppOpenAd.load(
       adUnitId: adUnitId,
@@ -67,21 +75,27 @@ class AdService {
         onAdLoaded: (ad) {
           _appOpenAd = ad;
           debugPrint('AdOpenApp: Loaded successfully.');
+          if (!completer.isCompleted) completer.complete(true);
         },
         onAdFailedToLoad: (error) {
           debugPrint('AdOpenApp: Failed to load: $error');
           _appOpenAd = null;
+          if (!completer.isCompleted) completer.complete(false);
         },
       ),
     );
+
+    return completer.future;
   }
 
-  static void loadInterstitialAd() async {
+  static Future<bool> loadInterstitialAd() async {
     final isPro = await ProAccessService.isUnlocked();
-    if (isPro) return;
+    if (isPro) return false;
+
+    if (_interstitialAd != null) return true;
 
     final adUnitId = _interstitialAdUnitId;
-    if (adUnitId.isEmpty) return;
+    if (adUnitId.isEmpty) return false;
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
@@ -89,8 +103,10 @@ class AdService {
       debugPrint(
         'AdInterstitial: Suppressed showing ad because of 55s interval limit.',
       );
-      return;
+      return false;
     }
+
+    final completer = Completer<bool>();
 
     InterstitialAd.load(
       adUnitId: adUnitId,
@@ -99,13 +115,75 @@ class AdService {
         onAdLoaded: (ad) {
           _interstitialAd = ad;
           debugPrint('AdInterstitial: Loaded successfully.');
+          if (!completer.isCompleted) completer.complete(true);
         },
         onAdFailedToLoad: (error) {
           debugPrint('AdInterstitial: Failed to load: $error');
           _interstitialAd = null;
+          if (!completer.isCompleted) completer.complete(false);
         },
       ),
     );
+
+    return completer.future;
+  }
+
+  static Future<bool> _showLoadingDialogAndLoad(
+    BuildContext context,
+    Future<bool> Function() loadFunction,
+  ) async {
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => WillPopScope(
+        onWillPop: () async => false,
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            decoration: BoxDecoration(
+              color: const Color(0xEE1C1C1E),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CupertinoActivityIndicator(
+                  color: CupertinoColors.systemOrange,
+                  radius: 12,
+                ),
+                const SizedBox(width: 14),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 16,
+                    //fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none,
+                  ),
+                  child: Text('3s cho quảng cáo'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    bool loaded = false;
+    try {
+      loaded = await Future.any([
+        loadFunction(),
+        Future.delayed(const Duration(seconds: 3), () => false),
+      ]);
+    } catch (_) {
+      loaded = false;
+    }
+
+    final navContext = navigatorKey.currentContext;
+    if (navContext != null && Navigator.canPop(navContext)) {
+      Navigator.pop(navContext);
+    }
+
+    return loaded;
   }
 
   static void showAppOpenAdIfAvailable() async {
@@ -121,11 +199,6 @@ class AdService {
 
     if (_isShowingAd) return;
 
-    if (_appOpenAd == null) {
-      loadAppOpenAd();
-      return;
-    }
-
     if (isRingingScreenActive) {
       debugPrint(
         'AdOpenApp: Suppressed showing ad because alarm/timer is ringing.',
@@ -133,7 +206,26 @@ class AdService {
       return;
     }
 
-    
+    final now = DateTime.now();
+    if (_lastAdShowedTime != null &&
+        now.difference(_lastAdShowedTime!).inSeconds < 55) {
+      debugPrint(
+        'AdOpenApp: Suppressed showing ad because of 55s interval limit.',
+      );
+      return;
+    }
+
+    if (_appOpenAd == null) {
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        final loaded = await _showLoadingDialogAndLoad(context, loadAppOpenAd);
+        if (!loaded || _appOpenAd == null) {
+          return;
+        }
+      } else {
+        return;
+      }
+    }
 
     _appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
@@ -160,17 +252,33 @@ class AdService {
 
     if (_isShowingInterstitialAd) return;
 
-    if (_interstitialAd == null) {
-      loadInterstitialAd();
+    final now = DateTime.now();
+    if (_lastAdShowedTime != null &&
+        now.difference(_lastAdShowedTime!).inSeconds < 55) {
+      debugPrint(
+        'AdInterstitial: Suppressed showing ad because of 55s interval limit.',
+      );
       return;
     }
 
-    
+    if (_interstitialAd == null) {
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        final loaded = await _showLoadingDialogAndLoad(
+          context,
+          loadInterstitialAd,
+        );
+        if (!loaded || _interstitialAd == null) {
+          return;
+        }
+      } else {
+        return;
+      }
+    }
+
     _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
         _isShowingInterstitialAd = true;
-        //shouldSuppressAppOpenAd = true;
-        //_lastAdShowedTime = DateTime.now();
       },
       onAdDismissedFullScreenContent: (ad) {
         _isShowingInterstitialAd = false;

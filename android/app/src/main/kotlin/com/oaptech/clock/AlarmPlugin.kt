@@ -83,6 +83,19 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
                 startTimerRingActivity(remainingSeconds, selectedSound, selectedVibrate)
                 result.success(null)
             }
+            "scheduleTimer" -> {
+                val triggerAtMillis = call.argument<Long>("triggerAtMillis") ?: 0L
+                val selectedSound = call.argument<String>("selected_sound") ?: "Radar"
+                val selectedVibrate = call.argument<Boolean>("selected_vibrate") ?: false
+                if (triggerAtMillis > 0) {
+                    scheduleTimer(triggerAtMillis, selectedSound, selectedVibrate)
+                }
+                result.success(null)
+            }
+            "cancelTimer" -> {
+                cancelTimer()
+                result.success(null)
+            }
             "playSystemRingtone" -> {
                 val uriString = call.argument<String>("uri")
                 if (uriString != null) {
@@ -301,6 +314,39 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
         println("DEBUG: AlarmPlugin starting TimerRingActivity")
         context.startActivity(intent)
         println("DEBUG: AlarmPlugin startActivity completed")
+    }
+
+    private fun scheduleTimer(triggerAtMillis: Long, selectedSound: String, selectedVibrate: Boolean) {
+        val intent = Intent(context, TimerReceiver::class.java).apply {
+            putExtra("selected_sound", selectedSound)
+            putExtra("selected_vibrate", selectedVibrate)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            88888,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val alarmManager = this.alarmManager ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val alarmInfo = AlarmManager.AlarmClockInfo(triggerAtMillis, pendingIntent)
+            alarmManager.setAlarmClock(alarmInfo, pendingIntent)
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+        }
+        println("DEBUG: Timer scheduled for ${java.util.Date(triggerAtMillis)}")
+    }
+
+    private fun cancelTimer() {
+        val intent = Intent(context, TimerReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            88888,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager?.cancel(pendingIntent)
+        println("DEBUG: Timer cancelled")
     }
 
     private fun stopSystemRingtone() {

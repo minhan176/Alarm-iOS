@@ -192,7 +192,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    
+
     // Skip permission checks if app is opened from ring screen
     if (!_skipPermissionCheck) {
       _checkOverlayPermission();
@@ -508,7 +508,7 @@ class _MainTabScreenState extends State<MainTabScreen>
         context,
         listen: false,
       ).updateFromSystem(currentSystem24HourFormat);
-      
+
       if (_wasPaused) {
         AdService.showAppOpenAdIfAvailable();
         _wasPaused = false;
@@ -561,6 +561,19 @@ class _MainTabScreenState extends State<MainTabScreen>
             ],
             selectedIndex: _currentIndex,
             onTabSelected: (index) {
+              if (index == _currentIndex) return;
+
+              if (index == 2) {
+                // Tab Stopwatch: load Interstitial Ad
+                AdService.loadInterstitialAd();
+              } else {
+                // Tab khác: kiểm tra nếu quảng cáo khả dụng thì hiển thị
+                if (AdService.isInterstitialAdLoaded) {
+                  // _interstitialAd không null
+                  AdService.showInterstitialAdIfAvailable();
+                }
+              }
+
               setState(() {
                 _currentIndex = index;
               });

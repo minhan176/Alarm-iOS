@@ -36,6 +36,9 @@ class _TimerScreenState extends State<TimerScreen>
   String _selectedSound = 'assets/sounds/alarm.mp3';
   String _selectedSoundDisplayName = 'Alarm Phone 17 OS 26';
   bool _selectedVibrate = false;
+  DateTime? _timerEndTime; // Thời điểm timer kết thúc (để đồng bộ khi resumed)
+
+  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
   late FixedExtentScrollController _hourController;
   late FixedExtentScrollController _minuteController;
   late FixedExtentScrollController _secondController;
@@ -64,16 +67,42 @@ class _TimerScreenState extends State<TimerScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _loadTimerDuration().then((_) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (_hourController.hasClients) _hourController.jumpToItem(_hours);
-          if (_minuteController.hasClients)
-            _minuteController.jumpToItem(_minutes);
-          if (_secondController.hasClients)
-            _secondController.jumpToItem(_seconds);
+      // Đồng bộ thời gian còn lại khi app quay lại từ nền
+      if (_isRunning && !_isPaused && _timerEndTime != null) {
+        final now = DateTime.now();
+        final remaining = _timerEndTime!.difference(now).inSeconds;
+        if (remaining <= 0) {
+          // Timer đã hết trong khi ở nền (Android đã xử lý native, reset UI)
+          _timer?.cancel();
+          setState(() {
+            _isRunning = false;
+            _isPaused = false;
+            _remainingSeconds = 0;
+            _totalSeconds = 0;
+            _timerEndTime = null;
+          });
+        } else {
+          // Cập nhật thời gian còn lại chính xác
+          _timer?.cancel();
+          setState(() {
+            _remainingSeconds = remaining;
+          });
+          _startUiCountdown();
+        }
+      }
+
+      if (!_isRunning) {
+        _loadTimerDuration().then((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (_hourController.hasClients) _hourController.jumpToItem(_hours);
+            if (_minuteController.hasClients) _minuteController.jumpToItem(_minutes);
+            if (_secondController.hasClients) _secondController.jumpToItem(_seconds);
+          });
         });
-        
-      });
+      }
+    } else if (state == AppLifecycleState.paused) {
+      // App về nền: chỉ dừng UI countdown (native AlarmManager vẫn chạy)
+      _timer?.cancel();
     }
   }
 
@@ -181,6 +210,20 @@ class _TimerScreenState extends State<TimerScreen>
 
     await _saveTimerDuration();
 
+    final endTime = DateTime.now().add(Duration(seconds: totalSeconds));
+    _timerEndTime = endTime;
+
+    // Đặt lịch native AlarmManager (hoạt động ngay cả khi app ở nền)
+    try {
+      await _alarmChannel.invokeMethod('scheduleTimer', {
+        'triggerAtMillis': endTime.millisecondsSinceEpoch,
+        'selected_sound': _selectedSound,
+        'selected_vibrate': _selectedVibrate,
+      });
+    } catch (e) {
+      print('Error scheduling native timer: $e');
+    }
+
     setState(() {
       _remainingSeconds = totalSeconds;
       _totalSeconds = totalSeconds;
@@ -188,6 +231,11 @@ class _TimerScreenState extends State<TimerScreen>
       _isPaused = false;
     });
 
+    _startUiCountdown();
+  }
+
+  void _startUiCountdown() {
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_remainingSeconds > 0) {
@@ -203,36 +251,51 @@ class _TimerScreenState extends State<TimerScreen>
 
   void _pauseTimer() {
     _timer?.cancel();
+    // Huỷ lịch native khi pause
+    try {
+      _alarmChannel.invokeMethod('cancelTimer');
+    } catch (e) {
+      print('Error cancelling native timer: $e');
+    }
     setState(() {
       _isPaused = true;
+      _timerEndTime = null;
     });
   }
 
   void _resumeTimer() {
+    final endTime = DateTime.now().add(Duration(seconds: _remainingSeconds));
+    _timerEndTime = endTime;
+    // Đặt lại lịch native khi resume
+    try {
+      _alarmChannel.invokeMethod('scheduleTimer', {
+        'triggerAtMillis': endTime.millisecondsSinceEpoch,
+        'selected_sound': _selectedSound,
+        'selected_vibrate': _selectedVibrate,
+      });
+    } catch (e) {
+      print('Error rescheduling native timer: $e');
+    }
     setState(() {
       _isPaused = false;
     });
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_remainingSeconds > 0) {
-          _remainingSeconds--;
-        } else {
-          _timer?.cancel();
-          _isRunning = false;
-          _showTimerEndDialog();
-        }
-      });
-    });
+    _startUiCountdown();
   }
 
   void _cancelTimer() {
     _timer?.cancel();
+    // Huỷ lịch native khi cancel
+    try {
+      _alarmChannel.invokeMethod('cancelTimer');
+    } catch (e) {
+      print('Error cancelling native timer: $e');
+    }
     setState(() {
       _isRunning = false;
       _isPaused = false;
       _remainingSeconds = 0;
       _totalSeconds = 0;
+      _timerEndTime = null;
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _hourController.jumpToItem(_hours);
