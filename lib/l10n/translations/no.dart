@@ -143,4 +143,5 @@ const Map<String, String> noTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Kjøp nå',
   'checkForUpdates': 'Se etter oppdateringer',
+  'adCountdown': '3 sekunder for annonsering',
 };

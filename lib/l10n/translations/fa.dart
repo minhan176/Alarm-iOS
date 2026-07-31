@@ -145,4 +145,5 @@ const Map<String, String> faTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'اکنون بخرید',
   'checkForUpdates': 'بررسی برای به‌روزرسانی',
+  'adCountdown': '3 ثانیه برای تبلیغات',
 };

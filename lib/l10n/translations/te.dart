@@ -145,4 +145,5 @@ const Map<String, String> teTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'ఇప్పుడే కొనండి',
   'checkForUpdates': 'నవీకరణల కోసం తనిఖీ చేయండి',
+  'adCountdown': 'ప్రకటనల కోసం 3 సెకన్లు',
 };

@@ -144,4 +144,5 @@ const Map<String, String> swTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Nunua Sasa',
   'checkForUpdates': 'Angalia masasisho',
+  'adCountdown': 'Sekunde 3 za matangazo',
 };

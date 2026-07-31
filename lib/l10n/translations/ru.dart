@@ -146,4 +146,5 @@ const Map<String, String> ruTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Купить сейчас',
   'checkForUpdates': 'Проверить обновления',
+  'adCountdown': '3 секунды на рекламу',
 };

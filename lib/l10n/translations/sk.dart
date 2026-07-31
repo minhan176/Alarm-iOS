@@ -144,4 +144,5 @@ const Map<String, String> skTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Kúpiť teraz',
   'checkForUpdates': 'Skontrolovať aktualizácie',
+  'adCountdown': '3 sekundy na reklamu',
 };

@@ -148,4 +148,5 @@ const Map<String, String> elTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Αγοράστε τώρα',
   'checkForUpdates': 'Έλεγχος για ενημερώσεις',
+  'adCountdown': '3 δευτερόλεπτα για διαφήμιση',
 };

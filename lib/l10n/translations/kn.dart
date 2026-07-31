@@ -148,4 +148,5 @@ const Map<String, String> knTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'ಈಗ ಖರೀದಿಸಿ',
   'checkForUpdates': 'ಅಪ್‌ಡೇಟ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ',
+  'adCountdown': 'ಜಾಹೀರಾತಿಗಾಗಿ 3 ಸೆಕೆಂಡುಗಳು',
 };

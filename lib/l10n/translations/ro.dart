@@ -144,4 +144,5 @@ const Map<String, String> roTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Cumpără acum',
   'checkForUpdates': 'Verificați actualizările',
+  'adCountdown': '3 secunde pentru publicitate',
 };

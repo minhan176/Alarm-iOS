@@ -145,4 +145,5 @@ const Map<String, String> svTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Köp nu',
   'checkForUpdates': 'Sök efter uppdateringar',
+  'adCountdown': '3 sekunder för reklam',
 };

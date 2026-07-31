@@ -36,9 +36,14 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         // Check if first alarm advice should be shown
         final prefs = await SharedPreferences.getInstance();
-        final hasShownFirstAlarmToast = prefs.getBool('first_alarm_toast_shown') ?? false;
+        final hasShownFirstAlarmToast =
+            prefs.getBool('first_alarm_toast_shown') ?? false;
         if (!hasShownFirstAlarmToast && alarm.isEnabled) {
-          AlarmToast.showAlarmToast(alarm, context, customMessage: AppLocalizations.of(context).tipKeepAppRunning);
+          AlarmToast.showAlarmToast(
+            alarm,
+            context,
+            customMessage: AppLocalizations.of(context).tipKeepAppRunning,
+          );
           await prefs.setBool('first_alarm_toast_shown', true);
         } else if (alarm.isEnabled) {
           AlarmToast.showAlarmToast(alarm, context);
@@ -72,16 +77,18 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     final minutes = difference.inMinutes % 60;
 
     final parts = <String>[];
-    
+
     if (days > 0) {
       // Show days, hours, minutes
       parts.add(AppLocalizations.of(context).daysText(days));
       if (hours > 0) parts.add(AppLocalizations.of(context).hoursText(hours));
-      if (minutes > 0) parts.add(AppLocalizations.of(context).minutesText(minutes));
+      if (minutes > 0)
+        parts.add(AppLocalizations.of(context).minutesText(minutes));
     } else if (hours > 0) {
       // Show hours, minutes only
       parts.add(AppLocalizations.of(context).hoursText(hours));
-      if (minutes > 0) parts.add(AppLocalizations.of(context).minutesText(minutes));
+      if (minutes > 0)
+        parts.add(AppLocalizations.of(context).minutesText(minutes));
     } else {
       // Show minutes only
       if (minutes > 0) {
@@ -107,7 +114,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
               CustomNavBar(
                 backgroundColor: CupertinoColors.black,
                 leading: NavTextButton(
-                  text: _isEditMode ? AppLocalizations.of(context).done : AppLocalizations.of(context).edit,
+                  text: _isEditMode
+                      ? AppLocalizations.of(context).done
+                      : AppLocalizations.of(context).edit,
                   onPressed: () {
                     setState(() {
                       _isEditMode = !_isEditMode;
@@ -117,11 +126,12 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                 trailing: NavIconButton(
                   icon: CupertinoIcons.add,
                   onPressed: () {
-                     showCupertinoSheet<void>(
+                    showCupertinoSheet<void>(
                       context: context,
                       useNestedNavigation: true,
-                      builder: (BuildContext context) => const EditAlarmScreen(),
-                );
+                      builder: (BuildContext context) =>
+                          const EditAlarmScreen(),
+                    );
                   },
                 ),
               ),
@@ -129,8 +139,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                 padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -145,16 +154,24 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         ),
                         if (_isEditMode) ...[
                           const SizedBox(width: 10),
-                          if (!Provider.of<SettingsProvider>(context).isProUnlocked)
+                          if (!Provider.of<SettingsProvider>(
+                            context,
+                          ).isProUnlocked)
                             CupertinoButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
                               minSize: 0,
-                              color: CupertinoColors.systemOrange.withOpacity(0.15),
+                              color: CupertinoColors.systemOrange.withOpacity(
+                                0.15,
+                              ),
                               borderRadius: BorderRadius.circular(999),
                               onPressed: () {
                                 Navigator.of(context).push(
                                   CupertinoPageRoute(
-                                    builder: (context) => const UpgradeProScreen(),
+                                    builder: (context) =>
+                                        const UpgradeProScreen(),
                                     fullscreenDialog: true,
                                   ),
                                 );
@@ -191,7 +208,11 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                           ),
                         ),
                       )
-                    else if (_getNextAlarmTimeText(alarmProvider.alarms, context) != null)
+                    else if (_getNextAlarmTimeText(
+                          alarmProvider.alarms,
+                          context,
+                        ) !=
+                        null)
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: Text(
@@ -217,39 +238,67 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         ),
                       )
                     : ListView.builder(
-            itemCount: alarmProvider.alarms.length + 1,
-            itemBuilder: (context, index) {
-              if (index == alarmProvider.alarms.length) {
-                // Add extra space at the bottom to avoid tab bar overlap
-                return const SizedBox(height: 100);
-              }
-              final alarm = alarmProvider.alarms[index];
-              return AlarmListItem(
-                alarm: alarm,
-                isEditMode: _isEditMode,
-                use24HourFormat: Provider.of<SettingsProvider>(context).is24HourFormat,
-                onTap: () {
-                  if (!_isEditMode) {
-                    showCupertinoSheet<void>(
-                      context: context,
-                      useNestedNavigation: true,
-                      builder: (BuildContext context) => EditAlarmScreen(alarm: alarm),
-                    );
-                  }
-                },
-                onToggle: () async {
-                  await alarmProvider.toggleAlarm(alarm.id);
-                  final updatedAlarm = alarmProvider.alarms.firstWhere((a) => a.id == alarm.id);
-                  if (updatedAlarm.isEnabled) {
-                    AlarmToast.showAlarmToast(updatedAlarm, context);
-                  }
-                },
-                onDelete: () {
-                  alarmProvider.deleteAlarm(alarm.id);
-                },
-              );
-            },
-          ),
+                        itemCount: alarmProvider.alarms.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == alarmProvider.alarms.length) {
+                            // Add extra space at the bottom to avoid tab bar overlap
+                            return const SizedBox(height: 100);
+                          }
+                          final alarm = alarmProvider.alarms[index];
+                          final listItem = AlarmListItem(
+                            alarm: alarm,
+                            isEditMode: _isEditMode,
+                            use24HourFormat: Provider.of<SettingsProvider>(
+                              context,
+                            ).is24HourFormat,
+                            onTap: () {
+                              if (!_isEditMode) {
+                                showCupertinoSheet<void>(
+                                  context: context,
+                                  useNestedNavigation: true,
+                                  builder: (BuildContext context) =>
+                                      EditAlarmScreen(alarm: alarm),
+                                );
+                              }
+                            },
+                            onToggle: () async {
+                              await alarmProvider.toggleAlarm(alarm.id);
+                              final updatedAlarm = alarmProvider.alarms
+                                  .firstWhere((a) => a.id == alarm.id);
+                              if (updatedAlarm.isEnabled) {
+                                AlarmToast.showAlarmToast(
+                                  updatedAlarm,
+                                  context,
+                                );
+                              }
+                            },
+                            onDelete: () {
+                              alarmProvider.deleteAlarm(alarm.id);
+                            },
+                          );
+
+                          if (_isEditMode) {
+                            return Dismissible(
+                              key: Key('alarm_${alarm.id}'),
+                              direction: DismissDirection.endToStart,
+                              background: Container(
+                                color: CupertinoColors.systemRed,
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.only(right: 24.0),
+                                child: const Icon(
+                                  CupertinoIcons.trash,
+                                  color: CupertinoColors.white,
+                                ),
+                              ),
+                              onDismissed: (direction) {
+                                alarmProvider.deleteAlarm(alarm.id);
+                              },
+                              child: listItem,
+                            );
+                          }
+                          return listItem;
+                        },
+                      ),
               ),
             ],
           );
@@ -285,7 +334,9 @@ class AlarmListItem extends StatelessWidget {
     // Create combined label for repeat alarms
     final displayLabel = repeatDescription.isNotEmpty
         ? '${alarm.label.isNotEmpty ? alarm.label : AppLocalizations.of(context).alarm}, $repeatDescription'
-        : (alarm.label.isNotEmpty ? alarm.label : AppLocalizations.of(context).alarm);
+        : (alarm.label.isNotEmpty
+              ? alarm.label
+              : AppLocalizations.of(context).alarm);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -331,7 +382,9 @@ class AlarmListItem extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          alarm.getFormattedTime(use24HourFormat: use24HourFormat),
+                          alarm.getFormattedTime(
+                            use24HourFormat: use24HourFormat,
+                          ),
                           style: TextStyle(
                             color: alarm.isEnabled
                                 ? CupertinoColors.white
@@ -344,7 +397,10 @@ class AlarmListItem extends StatelessWidget {
                         use24HourFormat
                             ? const SizedBox.shrink()
                             : Padding(
-                                padding: const EdgeInsets.only(left: 4, bottom: 8),
+                                padding: const EdgeInsets.only(
+                                  left: 4,
+                                  bottom: 8,
+                                ),
                                 child: Text(
                                   alarm.time.hour >= 12 ? 'PM' : 'AM',
                                   style: TextStyle(
@@ -381,9 +437,11 @@ class AlarmListItem extends StatelessWidget {
                 child: CupertinoSwitch(
                   value: alarm.isEnabled,
                   activeColor: CupertinoColors.systemGreen,
-                  onChanged: isEditMode ? null : (value) {
-                    onToggle();
-                  },
+                  onChanged: isEditMode
+                      ? null
+                      : (value) {
+                          onToggle();
+                        },
                 ),
               ),
             ],

@@ -91,8 +91,7 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
               padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.min,

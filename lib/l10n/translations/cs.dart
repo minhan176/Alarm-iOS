@@ -152,4 +152,5 @@ const Map<String, String> csTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Koupit nyní',
   'checkForUpdates': 'Zkontrolovat aktualizace',
+  'adCountdown': '3 sekundy na reklamu',
 };

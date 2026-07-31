@@ -154,4 +154,5 @@ const Map<String, String> bgTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Купи сега',
   'checkForUpdates': 'Провери за актуализации',
+  'adCountdown': '3 секунди за реклама',
 };

@@ -146,4 +146,5 @@ const Map<String, String> ukTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Купити зараз',
   'checkForUpdates': 'Перевірити оновлення',
+  'adCountdown': '3 секунди для реклами',
 };

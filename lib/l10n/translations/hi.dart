@@ -144,4 +144,5 @@ const Map<String, String> hiTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'अभी खरीदें',
   'checkForUpdates': 'अपडेट जांचें',
+  'adCountdown': 'विज्ञापन के लिए 3 सेकंड',
 };

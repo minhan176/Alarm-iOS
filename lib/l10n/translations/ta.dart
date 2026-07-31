@@ -147,4 +147,5 @@ const Map<String, String> taTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'இப்போது வாங்கு',
   'checkForUpdates': 'புதுப்பிப்புகளை சரிபார்க்கவும்',
+  'adCountdown': 'விளம்பரத்திற்கு 3 வினாடிகள்',
 };

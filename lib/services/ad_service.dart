@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../constants/ad_units.dart';
 import '../main.dart';
+import '../l10n/app_localizations.dart';
 import 'pro_access_service.dart';
 
 class AdService {
@@ -61,7 +62,7 @@ class AdService {
     if (_lastAdShowedTime != null &&
         now.difference(_lastAdShowedTime!).inSeconds < 30) {
       debugPrint(
-        'AdOpenApp: Suppressed showing ad because of 30s interval limit.',
+        'AdOpenApp: Suppressed loading ad because of 30s interval limit.',
       );
       return false;
     }
@@ -109,7 +110,7 @@ class AdService {
     if (_lastAdShowedTime != null &&
         now.difference(_lastAdShowedTime!).inSeconds < 30) {
       debugPrint(
-        'AdInterstitial: Suppressed showing ad because of 30s interval limit.',
+        'AdInterstitial: Suppressed loading ad because of 30s interval limit.',
       );
       return false;
     }
@@ -167,7 +168,7 @@ class AdService {
                   color: CupertinoColors.systemOrange,
                   radius: 12,
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(height: 16),
                 DefaultTextStyle(
                   style: TextStyle(
                     color: CupertinoColors.white,
@@ -175,7 +176,7 @@ class AdService {
                     //fontWeight: FontWeight.w500,
                     decoration: TextDecoration.none,
                   ),
-                  child: Text('3s cho quảng cáo'),
+                  child: Text(AppLocalizations.of(context).adCountdown),
                 ),
               ],
             ),

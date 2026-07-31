@@ -145,4 +145,5 @@ const Map<String, String> zuTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Thenga Manje',
   'checkForUpdates': 'Hlola izibuyekezo',
+  'adCountdown': '3 imizuzwana yokukhangisa',
 };

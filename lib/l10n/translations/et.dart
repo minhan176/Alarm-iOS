@@ -150,4 +150,5 @@ const Map<String, String> etTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Osta kohe',
   'checkForUpdates': 'Kontrolli uuendusi',
+  'adCountdown': '3 sekundit reklaami jaoks',
 };

@@ -153,4 +153,5 @@ const Map<String, String> fiTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Osta nyt',
   'checkForUpdates': 'Tarkista päivitykset',
+  'adCountdown': '3 sekuntia mainontaan',
 };

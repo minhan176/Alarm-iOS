@@ -147,4 +147,5 @@ const Map<String, String> trTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Şimdi Satın Al',
   'checkForUpdates': 'Güncellemeleri Kontrol Et',
+  'adCountdown': 'Reklam için 3 saniye',
 };

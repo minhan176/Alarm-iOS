@@ -149,4 +149,5 @@ const Map<String, String> mlTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'ഇപ്പോൾ വാങ്ങുക',
   'checkForUpdates': 'അപ്‌ഡേറ്റുകൾ പരിശോധിക്കുക',
+  'adCountdown': 'പരസ്യത്തിനായി 3 സെക്കൻഡ്',
 };

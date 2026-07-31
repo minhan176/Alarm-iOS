@@ -184,4 +184,5 @@ const Map<String, String> enTranslations = {
 ✓ Exclusive sounds
 ✓ Unlock all features''',
   'bestExperience': 'Best experience',
+  'adCountdown': '3s for ads',
 };

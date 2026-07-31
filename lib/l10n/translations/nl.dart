@@ -152,4 +152,5 @@ const Map<String, String> nlTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Nu kopen',
   'checkForUpdates': 'Controleer op updates',
+  'adCountdown': '3 seconden voor reclame',
 };

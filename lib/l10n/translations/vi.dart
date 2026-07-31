@@ -149,4 +149,5 @@ const Map<String, String> viTranslations = {
   'proActivated': 'Đã kích hoạt Pro thành công!',
   'proActivatedStatus': 'Đã kích hoạt Pro',
   'bestExperience': 'Trải nghiệm tốt nhất',
+  'adCountdown': '3s cho quảng cáo',
 };

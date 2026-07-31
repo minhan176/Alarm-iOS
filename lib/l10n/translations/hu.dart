@@ -150,4 +150,5 @@ const Map<String, String> huTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Vásárolj most',
   'checkForUpdates': 'Frissítések keresése',
+  'adCountdown': '3 másodperc a reklámozásra',
 };

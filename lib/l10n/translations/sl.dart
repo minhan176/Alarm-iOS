@@ -144,4 +144,5 @@ const Map<String, String> slTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Kupi zdaj',
   'checkForUpdates': 'Preveri posodobitve',
+  'adCountdown': '3 sekunde za oglaševanje',
 };

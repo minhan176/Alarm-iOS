@@ -146,4 +146,5 @@ const Map<String, String> zhCnTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': '立即购买',
   'checkForUpdates': '检查更新',
+  'adCountdown': '3秒广告',
 };

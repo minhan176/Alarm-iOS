@@ -142,4 +142,5 @@ const Map<String, String> heTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'קנה עכשיו',
   'checkForUpdates': 'בדוק עדכונים',
+  'adCountdown': '3 שניות לפרסום',
 };

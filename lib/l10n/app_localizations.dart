@@ -399,6 +399,7 @@ class AppLocalizations {
   String get proActivated => _t('proActivated');
   String get proActivatedStatus => _t('proActivatedStatus');
   String get bestExperience => _t('bestExperience');
+  String get adCountdown => _t('adCountdown');
   String get guide => _t('guide');
   String get sendFeedback => _t('sendFeedback');
   String get about => _t('about');

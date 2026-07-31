@@ -188,6 +188,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                   context,
                   listen: false,
                 ).deleteAlarm(widget.alarm!.id);
+                AdService.showInterstitialAdIfAvailable();
                 Navigator.of(context).pop(); // Close dialog
                 Navigator.of(
                   context,

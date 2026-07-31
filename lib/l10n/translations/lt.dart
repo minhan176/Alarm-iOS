@@ -144,4 +144,5 @@ const Map<String, String> ltTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Pirkti dabar',
   'checkForUpdates': 'Tikrinti atnaujinimus',
+  'adCountdown': '3 sekundės reklamai',
 };

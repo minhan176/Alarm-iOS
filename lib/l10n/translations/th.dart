@@ -143,4 +143,5 @@ const Map<String, String> thTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'ซื้อเลย',
   'checkForUpdates': 'ตรวจสอบการอัปเดต',
+  'adCountdown': '3 วินาทีสำหรับการโฆษณา',
 };

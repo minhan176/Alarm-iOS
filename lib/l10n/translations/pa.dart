@@ -144,4 +144,5 @@ const Map<String, String> paTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'ਹੁਣੇ ਖਰੀਦੋ',
   'checkForUpdates': 'ਅੱਪਡੇਟ ਲਈ ਜਾਂਚੋ',
+  'adCountdown': 'ਇਸ਼ਤਿਹਾਰਬਾਜ਼ੀ ਲਈ 3 ਸਕਿੰਟ',
 };

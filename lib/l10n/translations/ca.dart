@@ -152,4 +152,5 @@ const Map<String, String> caTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Compra ara',
   'checkForUpdates': 'Comprovar actualitzacions',
+  'adCountdown': '3 segons per a publicitat',
 };

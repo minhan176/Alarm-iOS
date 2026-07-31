@@ -152,4 +152,5 @@ const Map<String, String> bnTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'এখনই কিনুন',
   'checkForUpdates': 'আপডেট চেক করুন',
+  'adCountdown': 'বিজ্ঞাপনের জন্য 3 সেকেন্ড',
 };

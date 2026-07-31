@@ -144,4 +144,5 @@ const Map<String, String> guTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'હવે ખરીદો',
   'checkForUpdates': 'અપડેટ્સ તપાસો',
+  'adCountdown': 'જાહેરાત માટે 3 સેકન્ડ',
 };

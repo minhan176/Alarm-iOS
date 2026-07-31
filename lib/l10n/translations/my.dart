@@ -161,4 +161,5 @@ final Map<String, String> myTranslations = mergeTranslations({
   'guideStep2Sub1': 'Go to Settings → Apps → Alarm Phone 17 OS 26',
   'guideStep2Sub2': 'Select "App Battery Usage"',
   'guideStep2Sub3': 'Manage battery usage → Allow battery usage in background',
+  'adCountdown': 'ကြော်ငြာအတွက် 3 စက္ကန့်',
 });

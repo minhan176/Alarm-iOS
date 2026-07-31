@@ -144,4 +144,5 @@ const Map<String, String> esTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Comprar ahora',
   'checkForUpdates': 'Buscar actualizaciones',
+  'adCountdown': '3 segundos para publicidad',
 };

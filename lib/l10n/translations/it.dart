@@ -145,4 +145,5 @@ const Map<String, String> itTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Acquista ora',
   'checkForUpdates': 'Controlla aggiornamenti',
+  'adCountdown': '3 secondi per la pubblicità',
 };

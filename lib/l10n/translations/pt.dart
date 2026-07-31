@@ -144,4 +144,5 @@ const Map<String, String> ptTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Comprar agora',
   'checkForUpdates': 'Verificar atualizações',
+  'adCountdown': '3 segundos para publicidade',
 };

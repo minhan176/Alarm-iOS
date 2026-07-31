@@ -145,4 +145,5 @@ const Map<String, String> urTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'ابھی خریدیں',
   'checkForUpdates': 'اپ ڈیٹس چیک کریں',
+  'adCountdown': 'اشتہار کے لیے 3 سیکنڈ',
 };

@@ -145,4 +145,5 @@ const Map<String, String> deTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Jetzt kaufen',
   'checkForUpdates': 'Nach Updates suchen',
+  'adCountdown': '3 Sekunden für Werbung',
 };

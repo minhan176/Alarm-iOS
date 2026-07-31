@@ -152,4 +152,5 @@ const Map<String, String> daTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Køb nu',
   'checkForUpdates': 'Søg efter opdateringer',
+  'adCountdown': '3 sekunder til annoncering',
 };

@@ -139,4 +139,5 @@ const Map<String, String> jaTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': '今すぐ購入',
   'checkForUpdates': 'アップデートを確認',
+  'adCountdown': '広告は 3 秒',
 };

@@ -143,4 +143,5 @@ const Map<String, String> isTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Kaupa núna',
   'checkForUpdates': 'Athuga með uppfærslur',
+  'adCountdown': '3 sekúndur fyrir auglýsingar',
 };

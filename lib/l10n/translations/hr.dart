@@ -152,4 +152,5 @@ const Map<String, String> hrTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Kupi sada',
   'checkForUpdates': 'Provjerite ažuriranja',
+  'adCountdown': '3 sekunde za oglašavanje',
 };

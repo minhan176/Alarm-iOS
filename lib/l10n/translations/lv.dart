@@ -146,4 +146,5 @@ const Map<String, String> lvTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Pirkt tagad',
   'checkForUpdates': 'Pārbaudīt atjauninājumus',
+  'adCountdown': '3 sekundes reklāmai',
 };

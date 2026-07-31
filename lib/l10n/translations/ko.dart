@@ -140,4 +140,5 @@ const Map<String, String> koTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': '지금 구매',
   'checkForUpdates': '업데이트 확인',
+  'adCountdown': '광고는 3초',
 };

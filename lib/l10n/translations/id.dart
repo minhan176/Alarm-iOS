@@ -144,4 +144,5 @@ const Map<String, String> idTranslations = {
   'bestExperience': 'Best experience',
   'proBuyNow': 'Beli Sekarang',
   'checkForUpdates': 'Periksa Pembaruan',
+  'adCountdown': '3 detik untuk iklan',
 };

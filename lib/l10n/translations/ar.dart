@@ -151,4 +151,5 @@ const Map<String, String> arTranslations = {
 ✓ فتح كافة الميزات''',
   'bestExperience': 'Best experience',
   'checkForUpdates': 'التحقق من وجود تحديثات',
+  'adCountdown': '3 ثواني للإعلان',
 };
