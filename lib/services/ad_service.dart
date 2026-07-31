@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../constants/ad_units.dart';
 import '../main.dart';
@@ -16,6 +14,8 @@ class AdService {
 
   static InterstitialAd? _interstitialAd;
   static bool _isShowingInterstitialAd = false;
+  static bool _isLoadingAppOpenAd = false;
+  static bool _isLoadingInterstitialAd = false;
 
   static bool get isRingingScreenActive => _activeRingingScreensCount > 0;
   static bool get isInterstitialAdLoaded => _interstitialAd != null;
@@ -59,12 +59,18 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 55) {
+        now.difference(_lastAdShowedTime!).inSeconds < 30) {
       debugPrint(
-        'AdOpenApp: Suppressed showing ad because of 55s interval limit.',
+        'AdOpenApp: Suppressed showing ad because of 30s interval limit.',
       );
       return false;
     }
+
+    if (_isLoadingAppOpenAd) {
+      return false;
+    }
+
+    _isLoadingAppOpenAd = true;
 
     final completer = Completer<bool>();
 
@@ -76,11 +82,13 @@ class AdService {
           _appOpenAd = ad;
           debugPrint('AdOpenApp: Loaded successfully.');
           if (!completer.isCompleted) completer.complete(true);
+          _isLoadingAppOpenAd = false;
         },
         onAdFailedToLoad: (error) {
           debugPrint('AdOpenApp: Failed to load: $error');
           _appOpenAd = null;
           if (!completer.isCompleted) completer.complete(false);
+          _isLoadingAppOpenAd = false;
         },
       ),
     );
@@ -99,12 +107,18 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 55) {
+        now.difference(_lastAdShowedTime!).inSeconds < 30) {
       debugPrint(
-        'AdInterstitial: Suppressed showing ad because of 55s interval limit.',
+        'AdInterstitial: Suppressed showing ad because of 30s interval limit.',
       );
       return false;
     }
+
+    if (_isLoadingInterstitialAd) {
+      return false;
+    }
+
+    _isLoadingInterstitialAd = true;
 
     final completer = Completer<bool>();
 
@@ -116,11 +130,13 @@ class AdService {
           _interstitialAd = ad;
           debugPrint('AdInterstitial: Loaded successfully.');
           if (!completer.isCompleted) completer.complete(true);
+          _isLoadingInterstitialAd = false;
         },
         onAdFailedToLoad: (error) {
           debugPrint('AdInterstitial: Failed to load: $error');
           _interstitialAd = null;
           if (!completer.isCompleted) completer.complete(false);
+          _isLoadingInterstitialAd = false;
         },
       ),
     );
@@ -187,7 +203,6 @@ class AdService {
   }
 
   static void showAppOpenAdIfAvailable() async {
-    print('DEBUG: ABCABCABCabcabcabc');
     if (shouldSuppressAppOpenAd) {
       debugPrint('AdOpenApp: Suppressed due to shouldSuppressAppOpenAd flag.');
       shouldSuppressAppOpenAd = false; // Reset sau khi chặn
@@ -208,9 +223,9 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 55) {
+        now.difference(_lastAdShowedTime!).inSeconds < 30) {
       debugPrint(
-        'AdOpenApp: Suppressed showing ad because of 55s interval limit.',
+        'AdOpenApp: Suppressed showing ad because of 30s interval limit.',
       );
       return;
     }
@@ -254,9 +269,9 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 55) {
+        now.difference(_lastAdShowedTime!).inSeconds < 30) {
       debugPrint(
-        'AdInterstitial: Suppressed showing ad because of 55s interval limit.',
+        'AdInterstitial: Suppressed showing ad because of 30s interval limit.',
       );
       return;
     }

@@ -187,17 +187,11 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   bool _shouldDismissBatteryDialog = false;
   bool _batteryDialogDisplayedOnce = false;
   bool _skipBatteryAfterOverlayGrant = false;
-  bool _shouldRequestOpenAd = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    final prefs = await SharedPreferences.getInstance();
-    _shouldRequestOpenAd = prefs.getBool('request_open_ad') ?? false;
-    if(!_shouldRequestOpenAd) {
-      AdService.loadAppOpenAd();
-    }
     // Skip permission checks if app is opened from ring screen
     if (!_skipPermissionCheck) {
       _checkOverlayPermission();
@@ -239,9 +233,6 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused && _shouldRequestOpenAd) {
-      AdService.loadAppOpenAd();
-    }
     if (state == AppLifecycleState.resumed && _dialogShown) {
       _checkPermissionAgain();
     }
@@ -475,6 +466,7 @@ class _MainTabScreenState extends State<MainTabScreen>
     with WidgetsBindingObserver {
   int _currentIndex = 1; // Start with Alarm tab
   bool _wasPaused = false;
+  bool _isFirstLaunch = true;
 
   final List<Widget> _screens = const [
     WorldClockScreen(),
@@ -486,6 +478,7 @@ class _MainTabScreenState extends State<MainTabScreen>
   @override
   void initState() {
     super.initState();
+    _loadFirstLaunchState();
     WidgetsBinding.instance.addObserver(this);
     // Check for pending alarm when screen initializes
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -504,6 +497,7 @@ class _MainTabScreenState extends State<MainTabScreen>
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused) {
       _wasPaused = true;
+      AdService.loadAppOpenAd();
     } else if (state == AppLifecycleState.resumed) {
       _checkPendingAlarm();
       // Update time format from system if user hasn't changed it
@@ -520,6 +514,14 @@ class _MainTabScreenState extends State<MainTabScreen>
         AdService.showAppOpenAdIfAvailable();
         _wasPaused = false;
       }
+    }
+  }
+
+  Future<void> _loadFirstLaunchState() async {
+    final prefs = await SharedPreferences.getInstance();
+    _isFirstLaunch = prefs.getBool('is_first_launch_ad') ?? true;
+    if (_isFirstLaunch) {
+      await prefs.setBool('is_first_launch_ad', false);
     }
   }
 
@@ -575,16 +577,11 @@ class _MainTabScreenState extends State<MainTabScreen>
                 AdService.loadInterstitialAd();
               } else {
                 // Tab khác: kiểm tra nếu quảng cáo khả dụng thì hiển thị
-                
-                if (AdService.isInterstitialAdLoaded) {
+
+                if (AdService.isInterstitialAdLoaded && !_isFirstLaunch) {
                   // _interstitialAd không null
-                  final prefs = await SharedPreferences.getInstance();
-                  bool isFirstLaunch = prefs.getBool('is_first_launch') ?? true;
-                  if (isFirstLaunch) {
-                    await prefs.setBool('is_first_launch', false);
-                  } else {
-                    AdService.showInterstitialAdIfAvailable();
-                  }
+
+                  AdService.showInterstitialAdIfAvailable();
                 }
               }
 

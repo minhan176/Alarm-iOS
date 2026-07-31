@@ -158,7 +158,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
     // Show dialog after 3rd alarm
     if (addCount >= 3 && mounted) {
-      prefs.setBool('request_open_ad', true);
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
@@ -220,185 +219,195 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       _wasKeyboardVisible = keyboardVisible;
     });
 
-    return CupertinoPageScaffold(
-      backgroundColor: const Color(0xFF1C1C1E),
-      child: SafeArea(
-        child: Column(
-          children: [
-            // Custom Navigation Bar
-            SizedBox(height: 5),
-            CustomNavBar(
-              backgroundColor: const Color(0xFF1C1C1E),
-              leading: NavIconButton(
-                icon: CupertinoIcons.xmark,
-                iconColor: CupertinoColors.white,
-                onPressed: () {
-                  AdService.showInterstitialAdIfAvailable();
-                  Navigator.of(context, rootNavigator: true).pop();
-                },
-              ),
-              middle: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  widget.alarm != null
-                      ? AppLocalizations.of(context).editAlarm
-                      : AppLocalizations.of(context).addAlarm,
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) {
+        if (didPop) return;
+        AdService.showInterstitialAdIfAvailable();
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+      },
+      child: CupertinoPageScaffold(
+        backgroundColor: const Color(0xFF1C1C1E),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Custom Navigation Bar
+              SizedBox(height: 5),
+              CustomNavBar(
+                backgroundColor: const Color(0xFF1C1C1E),
+                leading: NavIconButton(
+                  icon: CupertinoIcons.xmark,
+                  iconColor: CupertinoColors.white,
+                  onPressed: () {
+                    AdService.showInterstitialAdIfAvailable();
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                ),
+                middle: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    widget.alarm != null
+                        ? AppLocalizations.of(context).editAlarm
+                        : AppLocalizations.of(context).addAlarm,
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
+                trailing: NavIconButton(
+                  icon: CupertinoIcons.checkmark,
+                  iconColor: CupertinoColors.white,
+                  backgroundColor: CupertinoColors.systemOrange,
+                  onPressed: _saveAlarm,
+                ),
               ),
-              trailing: NavIconButton(
-                icon: CupertinoIcons.checkmark,
-                iconColor: CupertinoColors.white,
-                backgroundColor: CupertinoColors.systemOrange,
-                onPressed: _saveAlarm,
+              // Time Picker
+              SizedBox(
+                height: 216,
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.time,
+                  initialDateTime: _selectedTime,
+                  use24hFormat: Provider.of<SettingsProvider>(
+                    context,
+                  ).is24HourFormat,
+                  onDateTimeChanged: (DateTime newTime) {
+                    setState(() {
+                      _selectedTime = newTime;
+                    });
+                  },
+                ),
               ),
-            ),
-            // Time Picker
-            SizedBox(
-              height: 216,
-              child: CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.time,
-                initialDateTime: _selectedTime,
-                use24hFormat: Provider.of<SettingsProvider>(
-                  context,
-                ).is24HourFormat,
-                onDateTimeChanged: (DateTime newTime) {
-                  setState(() {
-                    _selectedTime = newTime;
-                  });
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Settings List
-            Expanded(
-              child: ListView(
-                children: [
-                  _buildSettingGroup([
-                    _buildSettingItem(
-                      AppLocalizations.of(context).repeat,
-                      _getRepeatText(AppLocalizations.of(context)),
-                      () { 
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        _showRepeatDialog();
-                                           
-                      },
-                      valueColor: CupertinoColors.white,
-                    ),
-                    _buildLabelItem(),
-                    _buildSettingItem(
-                      AppLocalizations.of(context).sound,
-                      _soundDisplayName,
-                      () { 
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        _showSoundPage();
-                      },
-                      valueColor: CupertinoColors.white,
-                    ),
-                    _buildSwitchItem(
-                      AppLocalizations.of(context).snooze,
-                      _snooze,
-                      (value) => setState(() => _snooze = value),
-                    ),
-                    Column(
-                      children: [
-                        _buildSettingItem(
-                          AppLocalizations.of(context).snoozeDuration,
-                          AppLocalizations.of(
-                            context,
-                          ).minutesValue(_snoozeDuration.inMinutes),
-                          () => setState(
-                            () => _showDurationOptions = !_showDurationOptions,
+              const SizedBox(height: 20),
+              // Settings List
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildSettingGroup([
+                      _buildSettingItem(
+                        AppLocalizations.of(context).repeat,
+                        _getRepeatText(AppLocalizations.of(context)),
+                        () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          _showRepeatDialog();
+                        },
+                        valueColor: CupertinoColors.white,
+                      ),
+                      _buildLabelItem(),
+                      _buildSettingItem(
+                        AppLocalizations.of(context).sound,
+                        _soundDisplayName,
+                        () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          _showSoundPage();
+                        },
+                        valueColor: CupertinoColors.white,
+                      ),
+                      _buildSwitchItem(
+                        AppLocalizations.of(context).snooze,
+                        _snooze,
+                        (value) => setState(() => _snooze = value),
+                      ),
+                      Column(
+                        children: [
+                          _buildSettingItem(
+                            AppLocalizations.of(context).snoozeDuration,
+                            AppLocalizations.of(
+                              context,
+                            ).minutesValue(_snoozeDuration.inMinutes),
+                            () => setState(
+                              () =>
+                                  _showDurationOptions = !_showDurationOptions,
+                            ),
+                            valueColor: CupertinoColors.systemOrange,
+                            showArrow: false,
+                            pressedOpacity: 1.0,
                           ),
-                          valueColor: CupertinoColors.systemOrange,
-                          showArrow: false,
-                          pressedOpacity: 1.0,
-                        ),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          height: _showDurationOptions ? 216 : 0,
-                          curve: Curves.easeInOut,
-                          child: _showDurationOptions
-                              ? Container(
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF2C2C2E),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(16),
-                                      bottomRight: Radius.circular(16),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            height: _showDurationOptions ? 216 : 0,
+                            curve: Curves.easeInOut,
+                            child: _showDurationOptions
+                                ? Container(
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF2C2C2E),
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(16),
+                                        bottomRight: Radius.circular(16),
+                                      ),
                                     ),
-                                  ),
-                                  child: CupertinoPicker(
-                                    backgroundColor: Colors.transparent,
-                                    itemExtent: 40,
-                                    scrollController:
-                                        FixedExtentScrollController(
-                                          initialItem:
-                                              _snoozeDuration.inMinutes - 1,
-                                        ),
-                                    onSelectedItemChanged: (index) {
-                                      setState(() {
-                                        _snoozeDuration = Duration(
-                                          minutes: index + 1,
-                                        );
-                                      });
-                                    },
-                                    children: List.generate(15, (index) {
-                                      final minutes = index + 1;
-                                      return Center(
-                                        child: Text(
-                                          AppLocalizations.of(
-                                            context,
-                                          ).minutesValue(minutes),
-                                          style: const TextStyle(
-                                            color: CupertinoColors.white,
-                                            fontSize: 16,
+                                    child: CupertinoPicker(
+                                      backgroundColor: Colors.transparent,
+                                      itemExtent: 40,
+                                      scrollController:
+                                          FixedExtentScrollController(
+                                            initialItem:
+                                                _snoozeDuration.inMinutes - 1,
                                           ),
-                                        ),
-                                      );
-                                    }),
-                                  ),
-                                )
-                              : null,
-                        ),
-                      ],
-                    ),
-                  ]),
-
-                  if (widget.alarm != null) ...[
-                    const SizedBox(height: 40),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF2C2C2E),
-                        borderRadius: BorderRadius.circular(16),
+                                      onSelectedItemChanged: (index) {
+                                        setState(() {
+                                          _snoozeDuration = Duration(
+                                            minutes: index + 1,
+                                          );
+                                        });
+                                      },
+                                      children: List.generate(15, (index) {
+                                        final minutes = index + 1;
+                                        return Center(
+                                          child: Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            ).minutesValue(minutes),
+                                            style: const TextStyle(
+                                              color: CupertinoColors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                    ),
+                                  )
+                                : null,
+                          ),
+                        ],
                       ),
-                      child: CupertinoButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: _deleteAlarm,
-                        child: Text(
-                          AppLocalizations.of(context).deleteAlarm,
-                          style: const TextStyle(
-                            color: CupertinoColors.systemRed,
-                            fontSize: 16,
+                    ]),
+
+                    if (widget.alarm != null) ...[
+                      const SizedBox(height: 40),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2C2C2E),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: _deleteAlarm,
+                          child: Text(
+                            AppLocalizations.of(context).deleteAlarm,
+                            style: const TextStyle(
+                              color: CupertinoColors.systemRed,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ],
-                ],
+                ),
               ),
-            ),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 1000),
-              child: keyboardVisible
-                  ? const SizedBox.shrink()
-                  : SettingsBannerAd(),
-            )
-          ],
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 1000),
+                child: keyboardVisible
+                    ? const SizedBox.shrink()
+                    : SettingsBannerAd(),
+              ),
+            ],
+          ),
         ),
       ),
     );

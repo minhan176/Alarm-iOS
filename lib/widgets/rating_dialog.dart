@@ -32,25 +32,28 @@ class _RatingDialogState extends State<RatingDialog> {
                   onTap: () {
                     setState(() {
                       if (_selectedRating == index + 1) {
-                        _selectedRating = 0; // Deselect if tapping the same star
+                        _selectedRating =
+                            0; // Deselect if tapping the same star
                       } else {
                         _selectedRating = index + 1;
                       }
                     });
                   },
                   child: Icon(
-                    index < _selectedRating ? CupertinoIcons.star_fill : CupertinoIcons.star,
+                    index < _selectedRating
+                        ? CupertinoIcons.star_fill
+                        : CupertinoIcons.star,
                     color: CupertinoColors.systemYellow,
                     size: 36,
                   ),
                 ),
                 if (index < 4) const SizedBox(width: 8),
-              ]
+              ],
             ],
           ),
         ],
       ),
-      actions: [           
+      actions: [
         CupertinoDialogAction(
           onPressed: _dismissForever,
           child: Text(AppLocalizations.of(context).cancel),
@@ -59,7 +62,6 @@ class _RatingDialogState extends State<RatingDialog> {
           onPressed: _selectedRating > 0 ? _rateOnPlayStore : null,
           child: Text(AppLocalizations.of(context).submit),
         ),
-        
       ],
     );
   }
@@ -70,9 +72,11 @@ class _RatingDialogState extends State<RatingDialog> {
     await prefs.setBool('has_rated_app', true);
 
     // Open Google Play link directly
-    final Uri playStoreUri = Uri.parse('https://play.google.com/store/apps/details?id=com.oaptech.clock');
+    final Uri playStoreUri = Uri.parse(
+      'https://play.google.com/store/apps/details?id=com.oaptech.clock',
+    );
     if (await canLaunchUrl(playStoreUri)) {
-      AdService.shouldSuppressAppOpenAd = true;
+      //AdService.shouldSuppressAppOpenAd = true;
       await launchUrl(playStoreUri);
     }
 

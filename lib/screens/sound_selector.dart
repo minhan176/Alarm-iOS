@@ -41,6 +41,7 @@ class _SoundSelectorState extends State<SoundSelector> {
   @override
   void initState() {
     super.initState();
+    AdService.loadInterstitialAd();
     _selectedSound = widget.currentSound;
     _vibrate = widget.currentVibrate;
     _previewPlayer = AudioPlayer();
@@ -337,6 +338,7 @@ class _SoundSelectorState extends State<SoundSelector> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        AdService.showInterstitialAdIfAvailable();
         Navigator.of(context).pop({
           'sound': _selectedSound,
           'soundDisplayName': _getSelectedSoundDisplayName(),
@@ -358,11 +360,14 @@ class _SoundSelectorState extends State<SoundSelector> {
                   text: AppLocalizations.of(context).back,
                   iconColor: CupertinoColors.white,
                   textColor: CupertinoColors.white,
-                  onPressed: () => Navigator.of(context).pop({
-                    'sound': _selectedSound,
-                    'soundDisplayName': _getSelectedSoundDisplayName(),
-                    'vibrate': _vibrate,
-                  }),
+                  onPressed: () {
+                    AdService.showInterstitialAdIfAvailable();
+                    Navigator.of(context).pop({
+                      'sound': _selectedSound,
+                      'soundDisplayName': _getSelectedSoundDisplayName(),
+                      'vibrate': _vibrate,
+                    });
+                  },
                 ),
                 middle: Text(
                   AppLocalizations.of(context).sound,
