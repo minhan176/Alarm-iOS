@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -106,9 +106,9 @@ class _WorldClockScreenState extends State<WorldClockScreen> {
                       ),
                       if (_isEditMode) ...[
                         const SizedBox(width: 10),
-                        if (!Provider.of<SettingsProvider>(
-                          context,
-                        ).isProUnlocked)
+                        if (false)
+
+
                           CupertinoButton(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 12,
@@ -399,7 +399,7 @@ class _AddCityContentState extends State<_AddCityContent> {
     _CityData(city: 'Barcelona', country: 'Spain', timezone: 'Europe/Madrid'),
     _CityData(city: 'Beijing', country: 'China', timezone: 'Asia/Shanghai'),
     _CityData(city: 'Berlin', country: 'Germany', timezone: 'Europe/Berlin'),
-    _CityData(city: 'Bogotá', country: 'Colombia', timezone: 'America/Bogota'),
+    _CityData(city: 'BogotÃ¡', country: 'Colombia', timezone: 'America/Bogota'),
     _CityData(
       city: 'Boston',
       country: 'United States',
@@ -526,7 +526,7 @@ class _AddCityContentState extends State<_AddCityContent> {
     ),
     _CityData(city: 'Santiago', country: 'Chile', timezone: 'America/Santiago'),
     _CityData(
-      city: 'São Paulo',
+      city: 'SÃ£o Paulo',
       country: 'Brazil',
       timezone: 'America/Sao_Paulo',
     ),
@@ -935,3 +935,4 @@ class _CityData {
     required this.timezone,
   });
 }
+

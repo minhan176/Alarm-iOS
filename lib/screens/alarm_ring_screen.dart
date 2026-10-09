@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +38,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   late AnimationController _rotationController;
   late AnimationController _shakeController;
   Timer? _vibrateTimer;
+  Timer? _clockTimer;
 
   static const MethodChannel _alarmChannel = MethodChannel(
     'com.oaptech.clock/alarm',
@@ -47,6 +48,11 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   void initState() {
     super.initState();
     AdService.incrementRingingScreens();
+
+    // Update clock display every second
+    _clockTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) setState(() {});
+    });
 
     // Setup animations
     _pulseController = AnimationController(
@@ -203,7 +209,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
       // // Show snooze message
       // Fluttertoast.showToast(
-      //   msg: 'Báo lại sau ${widget.alarm.snoozeDuration.inMinutes} phút',
+      //   msg: 'BÃ¡o láº¡i sau ${widget.alarm.snoozeDuration.inMinutes} phÃºt',
       //   toastLength: Toast.LENGTH_SHORT,
       //   gravity: ToastGravity.BOTTOM,
       //   timeInSecForIosWeb: 1,
@@ -216,6 +222,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
   @override
   void dispose() {
+    _clockTimer?.cancel();
     _stopAlarm();
     _audioPlayer.dispose();
     _pulseController.dispose();
@@ -335,10 +342,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
   String _getCurrentTime() {
     final now = DateTime.now();
-    final is24h = Provider.of<SettingsProvider>(
-      context,
-      listen: false,
-    ).is24HourFormat;
+    final is24h = Provider.of<SettingsProvider>(context).is24HourFormat;
     final minute = now.minute.toString().padLeft(2, '0');
 
     if (is24h) {
@@ -525,3 +529,5 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
     );
   }
 }
+
+

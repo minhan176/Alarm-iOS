@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
-import 'package:jbh_ringtone/jbh_ringtone.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 import '../widgets/custom_buttons.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -64,19 +64,14 @@ class _SoundSelectorState extends State<SoundSelector> {
     try {
       // Try to load system ringtones without requesting permissions first
       // jbh_ringtone package may handle permissions internally
-      final jbhRingtone = JbhRingtone();
+            final List<dynamic> result = await _alarmChannel.invokeMethod('getSystemRingtones');
+      final uniqueSounds = <String, CustomRingtone>{};
 
-      // Get both ringtone and alarm sounds
-      final ringtoneSounds = await jbhRingtone.getRingtoneOnly();
-      final alarmSounds = await jbhRingtone.getAlarmRingtones();
-
-      // Combine and remove duplicates based on URI
-      final allSounds = [...ringtoneSounds, ...alarmSounds];
-      final uniqueSounds = <String, JbhRingtoneModel>{};
-
-      for (final sound in allSounds) {
-        if (!uniqueSounds.containsKey(sound.uri)) {
-          uniqueSounds[sound.uri] = sound;
+      for (var item in result) {
+        final uri = item['uri'] as String;
+        final title = item['title'] as String;
+        if (!uniqueSounds.containsKey(uri)) {
+          uniqueSounds[uri] = CustomRingtone(displayTitle: title, uri: uri);
         }
       }
 
@@ -97,21 +92,16 @@ class _SoundSelectorState extends State<SoundSelector> {
       try {
         PermissionStatus status = await Permission.storage.request();
         if (status.isGranted) {
-          final jbhRingtone = JbhRingtone();
+                final List<dynamic> result = await _alarmChannel.invokeMethod('getSystemRingtones');
+      final uniqueSounds = <String, CustomRingtone>{};
 
-          // Get both ringtone and alarm sounds
-          final ringtoneSounds = await jbhRingtone.getRingtoneOnly();
-          final alarmSounds = await jbhRingtone.getAlarmRingtones();
-
-          // Combine and remove duplicates based on URI
-          final allSounds = [...ringtoneSounds, ...alarmSounds];
-          final uniqueSounds = <String, JbhRingtoneModel>{};
-
-          for (final sound in allSounds) {
-            if (!uniqueSounds.containsKey(sound.uri)) {
-              uniqueSounds[sound.uri] = sound;
-            }
-          }
+      for (var item in result) {
+        final uri = item['uri'] as String;
+        final title = item['title'] as String;
+        if (!uniqueSounds.containsKey(uri)) {
+          uniqueSounds[uri] = CustomRingtone(displayTitle: title, uri: uri);
+        }
+      }
 
           setState(() {
             // Create the custom ringtones
@@ -652,3 +642,6 @@ class CustomRingtone {
 
   CustomRingtone({required this.displayTitle, required this.uri});
 }
+
+
+

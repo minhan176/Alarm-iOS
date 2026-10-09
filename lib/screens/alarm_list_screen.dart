@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -154,9 +154,9 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         ),
                         if (_isEditMode) ...[
                           const SizedBox(width: 10),
-                          if (!Provider.of<SettingsProvider>(
-                            context,
-                          ).isProUnlocked)
+                          if (false)
+
+
                             CupertinoButton(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,
@@ -451,3 +451,4 @@ class AlarmListItem extends StatelessWidget {
     );
   }
 }
+

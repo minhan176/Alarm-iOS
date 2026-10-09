@@ -23,9 +23,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9002559574859995~9926888642" />
         <!-- Disable Impeller to prevent SIGSEGV crashes with custom graphics renderers -->
-        <meta-data
-            android:name="flutter_impeller"
-            android:value="false" />
+        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="false" />
         <!-- Additional Impeller disable flags for different architectures -->
         <meta-data
             android:name="io.flutter.impeller.enabled"
@@ -157,3 +155,4 @@
         </intent>
     </queries>
 </manifest>
+

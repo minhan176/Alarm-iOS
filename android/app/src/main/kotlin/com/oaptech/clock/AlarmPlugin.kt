@@ -39,6 +39,30 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
+            "getSystemRingtones" -> {
+                Thread {
+                    try {
+                        val manager = RingtoneManager(context)
+                        manager.setType(RingtoneManager.TYPE_RINGTONE or RingtoneManager.TYPE_ALARM)
+                        val cursor = manager.cursor
+                        val list = mutableListOf<Map<String, String>>()
+                        if (cursor != null) {
+                            while (cursor.moveToNext()) {
+                                val title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX)
+                                val uriStr = cursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/" + cursor.getString(RingtoneManager.ID_COLUMN_INDEX)
+                                list.add(mapOf("title" to title, "uri" to uriStr))
+                            }
+                        }
+                        android.os.Handler(android.os.Looper.getMainLooper()).post {
+                            result.success(list)
+                        }
+                    } catch (e: Exception) {
+                        android.os.Handler(android.os.Looper.getMainLooper()).post {
+                            result.error("ERROR", e.message, null)
+                        }
+                    }
+                }.start()
+            }
             "showAlarmIcon" -> {
                 val alarmId = call.argument<Int>("alarmId") ?: 0
                 val timestamp = call.argument<Long>("timestamp") ?: 0L

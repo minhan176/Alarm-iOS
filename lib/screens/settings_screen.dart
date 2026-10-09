@@ -1,4 +1,4 @@
-import 'package:clock_os_26/screens/upgrade_pro_screen.dart';
+﻿import 'package:clock_os_26/screens/upgrade_pro_screen.dart';
 import 'package:clock_os_26/widgets/settings_large_banner_ad.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -201,7 +201,7 @@ Please describe your feedback below:
                           ),
                           child: Column(
                             children: [
-                              CupertinoButton(
+                              if (false) CupertinoButton(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 0,
                                   vertical: 0,
@@ -292,7 +292,7 @@ Please describe your feedback below:
                                   ],
                                 ),
                               ),
-                              Divider(
+                              if (false) Divider(
                                 color: const Color(0xFF3C3C3E),
                                 height: 0.5,
                                 indent: 32,

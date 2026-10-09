@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
-import '../services/ad_service.dart';
 
 class RatingDialog extends StatefulWidget {
   const RatingDialog({super.key});
@@ -32,8 +31,7 @@ class _RatingDialogState extends State<RatingDialog> {
                   onTap: () {
                     setState(() {
                       if (_selectedRating == index + 1) {
-                        _selectedRating =
-                            0; // Deselect if tapping the same star
+                        _selectedRating = 0;
                       } else {
                         _selectedRating = index + 1;
                       }
