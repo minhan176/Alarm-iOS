@@ -278,7 +278,7 @@ class _SoundSelectorState extends State<SoundSelector> {
 
   void _pickFromDevice() async {
     AdService.shouldSuppressAppOpenAd = true;
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['mp3', 'wav', 'm4a', 'aac', 'flac', 'ogg', 'aiff'],
     );
