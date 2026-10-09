@@ -1,5 +1,5 @@
 class AdUnits {
-  // App ID Real
+  //App ID Real
   static const String androidAppId = 'ca-app-pub-9002559574859995~9926888642';
   static const String _androidAppOpenAdId =
       'ca-app-pub-9002559574859995/2881188471';
@@ -10,10 +10,10 @@ class AdUnits {
   static const String _androidLargeBannerAdId =
       'ca-app-pub-9002559574859995/8435777809';
 
-  // App ID Real
+  //App ID Test
   // static const String androidAppId = 'ca-app-pub-3940256099942544~3347511713';
 
-  // // Ad Unit IDs Real
+  // // Ad Unit IDs Test
   // static const String _androidAppOpenAdId =
   //     'ca-app-pub-3940256099942544/9257395921';
   // static const String _androidInterstitialAdId =

@@ -60,9 +60,9 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 30) {
+        now.difference(_lastAdShowedTime!).inSeconds < 45) {
       debugPrint(
-        'AdOpenApp: Suppressed loading ad because of 30s interval limit.',
+        'AdOpenApp: Suppressed loading ad because of 45s interval limit.',
       );
       return false;
     }
@@ -108,9 +108,9 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 30) {
+        now.difference(_lastAdShowedTime!).inSeconds < 45) {
       debugPrint(
-        'AdInterstitial: Suppressed loading ad because of 30s interval limit.',
+        'AdInterstitial: Suppressed loading ad because of 45s interval limit.',
       );
       return false;
     }
@@ -224,9 +224,9 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 30) {
+        now.difference(_lastAdShowedTime!).inSeconds < 45) {
       debugPrint(
-        'AdOpenApp: Suppressed showing ad because of 30s interval limit.',
+        'AdOpenApp: Suppressed showing ad because of 45s interval limit.',
       );
       return;
     }
@@ -270,9 +270,9 @@ class AdService {
 
     final now = DateTime.now();
     if (_lastAdShowedTime != null &&
-        now.difference(_lastAdShowedTime!).inSeconds < 30) {
+        now.difference(_lastAdShowedTime!).inSeconds < 45) {
       debugPrint(
-        'AdInterstitial: Suppressed showing ad because of 30s interval limit.',
+        'AdInterstitial: Suppressed showing ad because of 45s interval limit.',
       );
       return;
     }

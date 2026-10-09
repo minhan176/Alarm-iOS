@@ -237,10 +237,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: "57d9a1dd5063f85fa3107fb42d1faffda52fdc948cefd5fe5ea85267a5fc7343"
+      sha256: "29cc1fdb20613876cc7afc529738c1c0f11a9ca159b010edad0c566ac330847e"
       url: "https://pub.dev"
     source: hosted
-    version: "10.3.10"
+    version: "11.0.3"
   fixnum:
     dependency: transitive
     description:
@@ -589,14 +589,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.5.0"
-  oc_liquid_glass:
-    dependency: "direct main"
-    description:
-      name: oc_liquid_glass
-      sha256: "94c858a3abde3ec4a060bca5d317c15e53f9fdb873809b1740e0e65bd861284e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.2"
   package_config:
     dependency: transitive
     description:
