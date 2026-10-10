@@ -27,7 +27,7 @@ class AlarmRingScreen extends StatefulWidget {
     required this.alarm,
     this.onDismiss,
     this.onSnooze,
-  });
+  });  
 
   @override
   State<AlarmRingScreen> createState() => _AlarmRingScreenState();
