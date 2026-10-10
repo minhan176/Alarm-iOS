@@ -108,13 +108,13 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     super.dispose();
   }
 
-  void _saveAlarm() async {
+  Future<void> _saveAlarm() async {
     final provider = Provider.of<AlarmProvider>(context, listen: false);
     final alarm = AlarmModel(
       id: widget.alarm?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       time: _selectedTime,
       label: _label,
-      isEnabled: true, // Always enable the alarm when saving
+      isEnabled: widget.alarm?.isEnabled ?? true,
       repeatDays: _repeatDays,
       sound: _sound,
       snooze: _snooze,
@@ -125,9 +125,9 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     final isNewAlarm = widget.alarm == null;
 
     if (widget.alarm != null) {
-      provider.updateAlarm(widget.alarm!.id, alarm);
+      await provider.updateAlarm(widget.alarm!.id, alarm);
     } else {
-      provider.addAlarm(alarm);
+      await provider.addAlarm(alarm);
     }
 
     // Set last saved alarm for toast on list screen
@@ -167,7 +167,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     }
   }
 
-  void _deleteAlarm() {
+  Future<void> _deleteAlarm() async {
     if (widget.alarm != null) {
       showCupertinoDialog(
         context: context,
@@ -183,8 +183,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
             CupertinoDialogAction(
               isDestructiveAction: true,
               child: Text(AppLocalizations.of(context).delete),
-              onPressed: () {
-                Provider.of<AlarmProvider>(
+              onPressed: () async {
+                await Provider.of<AlarmProvider>(
                   context,
                   listen: false,
                 ).deleteAlarm(widget.alarm!.id);
@@ -1333,6 +1333,5 @@ class _SoundSelectorState extends State<SoundSelector> {
     );
   }
 }
-
 
 

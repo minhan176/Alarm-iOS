@@ -1,9 +1,11 @@
 ﻿import 'dart:async';
 import 'dart:math' as math;
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
 import 'package:provider/provider.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
@@ -34,11 +36,13 @@ class AlarmRingScreen extends StatefulWidget {
 class _AlarmRingScreenState extends State<AlarmRingScreen>
     with TickerProviderStateMixin {
   final AudioPlayer _audioPlayer = AudioPlayer();
+  late AlarmModel _alarm;
   late AnimationController _pulseController;
   late AnimationController _rotationController;
   late AnimationController _shakeController;
   Timer? _vibrateTimer;
   Timer? _clockTimer;
+  bool _isDismissing = false;
 
   static const MethodChannel _alarmChannel = MethodChannel(
     'com.oaptech.clock/alarm',
@@ -47,6 +51,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   @override
   void initState() {
     super.initState();
+    _alarm = widget.alarm;
     AdService.incrementRingingScreens();
 
     // Update clock display every second
@@ -70,8 +75,30 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       duration: const Duration(milliseconds: 500),
     )..repeat(reverse: true);
 
-    // Start playing alarm sound and vibration
-    _startAlarm();
+    // Resolve the latest saved options before starting playback.
+    unawaited(_initializeAlarm());
+  }
+
+  Future<void> _initializeAlarm() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final alarmsJson = prefs.getString('alarms');
+      if (alarmsJson != null) {
+        final alarms = (json.decode(alarmsJson) as List<dynamic>)
+            .map((item) => AlarmModel.fromJson(item as Map<String, dynamic>))
+            .where((alarm) => alarm.id == widget.alarm.id)
+            .toList();
+        if (alarms.isNotEmpty) {
+          _alarm = alarms.first;
+          if (mounted) setState(() {});
+        }
+      }
+    } catch (error) {
+      debugPrint('Error loading latest alarm options: $error');
+    }
+    if (mounted) {
+      await _startAlarm();
+    }
   }
 
   Future<void> _startAlarm() async {
@@ -95,7 +122,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       await _audioPlayer.setAudioContext(audioContext);
 
       // Start vibration pattern only if enabled
-      if (widget.alarm.vibrate && await Vibration.hasVibrator()) {
+      if (_alarm.vibrate && await Vibration.hasVibrator()) {
         Vibration.vibrate(duration: 500);
         _vibrateTimer = Timer.periodic(const Duration(milliseconds: 1500), (
           timer,
@@ -108,49 +135,48 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
       }
 
       // Play alarm sound based on user selection
-      if (widget.alarm.sound != 'None') {
+      if (_alarm.sound != 'None') {
         try {
-          if (widget.alarm.sound.startsWith('content://')) {
+          if (_alarm.sound.startsWith('content://')) {
             // It's a system ringtone URI - use native RingtoneManager
             await _alarmChannel.invokeMethod('playSystemRingtone', {
-              'uri': widget.alarm.sound,
+              'uri': _alarm.sound,
             });
-            print('Playing system ringtone: ${widget.alarm.sound}');
-          } else if (widget.alarm.sound.startsWith('assets/')) {
+            print('Playing system ringtone: ${_alarm.sound}');
+          } else if (_alarm.sound.startsWith('assets/')) {
             // It's an asset file (like our custom Alarm Phone 17 OS 26)
             await _audioPlayer.setReleaseMode(ReleaseMode.loop);
             await _audioPlayer.setVolume(1.0);
-            final assetPath = widget.alarm.sound.replaceFirst('assets/', '');
+            final assetPath = _alarm.sound.replaceFirst('assets/', '');
             final audioSource = AssetSource(assetPath);
             await _audioPlayer.play(audioSource);
-            print('Playing asset sound: ${widget.alarm.sound}');
+            print('Playing asset sound: ${_alarm.sound}');
           } else {
             // Use audioplayers for other sounds
             await _audioPlayer.setReleaseMode(ReleaseMode.loop);
             await _audioPlayer.setVolume(1.0);
 
             Source audioSource;
-            if (widget.alarm.sound.startsWith('/') ||
-                widget.alarm.sound.contains('\\')) {
+            if (_alarm.sound.startsWith('/') || _alarm.sound.contains('\\')) {
               // It's a file path from device
-              audioSource = DeviceFileSource(widget.alarm.sound);
+              audioSource = DeviceFileSource(_alarm.sound);
             } else {
               // It's a built-in sound
-              final soundFileName = widget.alarm.sound.toLowerCase();
+              final soundFileName = _alarm.sound.toLowerCase();
               final soundPath = 'sounds/$soundFileName.mp3';
               audioSource = AssetSource(soundPath);
             }
 
             await _audioPlayer.play(audioSource);
-            print('Playing alarm sound: ${widget.alarm.sound}');
+            print('Playing alarm sound: ${_alarm.sound}');
           }
         } catch (e) {
-          print('Could not play alarm sound "${widget.alarm.sound}": $e');
-          if (!widget.alarm.sound.startsWith('content://') &&
-              !widget.alarm.sound.startsWith('/') &&
-              !widget.alarm.sound.contains('\\')) {
+          print('Could not play alarm sound "${_alarm.sound}": $e');
+          if (!_alarm.sound.startsWith('content://') &&
+              !_alarm.sound.startsWith('/') &&
+              !_alarm.sound.contains('\\')) {
             print(
-              'Make sure the file assets/sounds/${widget.alarm.sound.toLowerCase()}.mp3 exists',
+              'Make sure the file assets/sounds/${_alarm.sound.toLowerCase()}.mp3 exists',
             );
           }
         }
@@ -174,21 +200,22 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     }
   }
 
-  void _dismissAlarm() async {
+  Future<void> _dismissAlarm() async {
+    if (_isDismissing) return;
+    _isDismissing = true;
+
     await _stopAlarm();
 
-    // Cancel the notification and handle one-time alarms
-    await AlarmService.dismissAlarm(widget.alarm);
-
-    // Call onDismiss callback if provided (for AlarmRingActivity)
-    widget.onDismiss?.call();
-
-    // Update alarm to disabled in provider immediately
-    if (mounted) {
+    try {
       final alarmProvider = Provider.of<AlarmProvider>(context, listen: false);
-      final updatedAlarm = widget.alarm.copyWith(isEnabled: false);
-      await alarmProvider.updateAlarm(widget.alarm.id, updatedAlarm);
-      Navigator.of(context).pop();
+      final updatedAlarm = _alarm.copyWith(isEnabled: false);
+      await alarmProvider.updateAlarm(_alarm.id, updatedAlarm);
+      await AlarmService.dismissAlarm(updatedAlarm);
+      widget.onDismiss?.call();
+    } finally {
+      if (mounted && Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      }
     }
   }
 
@@ -196,8 +223,8 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     await _stopAlarm();
 
     // Schedule snooze based on alarm's snooze duration
-    final snoozeTime = DateTime.now().add(widget.alarm.snoozeDuration);
-    final snoozeAlarm = widget.alarm.copyWith(time: snoozeTime);
+    final snoozeTime = DateTime.now().add(_alarm.snoozeDuration);
+    final snoozeAlarm = _alarm.copyWith(time: snoozeTime);
 
     await AlarmService.scheduleAlarm(snoozeAlarm);
 
@@ -262,8 +289,8 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  widget.alarm.label.isNotEmpty
-                      ? widget.alarm.label
+                  _alarm.label.isNotEmpty
+                      ? _alarm.label
                       : AppLocalizations.of(context).alarm,
                   style: const TextStyle(
                     color: CupertinoColors.systemGrey,
@@ -300,7 +327,7 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
               child: Column(
                 children: [
                   // Snooze button - orange (only if snooze is enabled)
-                  if (widget.alarm.snooze)
+                  if (_alarm.snooze)
                     Container(
                       width: double.infinity,
                       height: 75,
@@ -470,6 +497,7 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
                   top: 9,
                   //bottom: 0,
                   child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onHorizontalDragUpdate: (details) {
                       if (_isCompleted) return;
 
@@ -529,5 +557,3 @@ class _SlideToStopButtonState extends State<SlideToStopButton>
     );
   }
 }
-
-

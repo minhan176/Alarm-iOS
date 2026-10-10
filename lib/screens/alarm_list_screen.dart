@@ -155,8 +155,6 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         if (_isEditMode) ...[
                           const SizedBox(width: 10),
                           if (false)
-
-
                             CupertinoButton(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,
@@ -272,8 +270,8 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                                 );
                               }
                             },
-                            onDelete: () {
-                              alarmProvider.deleteAlarm(alarm.id);
+                            onDelete: () async {
+                              await alarmProvider.deleteAlarm(alarm.id);
                             },
                           );
 
@@ -290,8 +288,8 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                                   color: CupertinoColors.white,
                                 ),
                               ),
-                              onDismissed: (direction) {
-                                alarmProvider.deleteAlarm(alarm.id);
+                              onDismissed: (direction) async {
+                                await alarmProvider.deleteAlarm(alarm.id);
                               },
                               child: listItem,
                             );
@@ -345,10 +343,9 @@ class AlarmListItem extends StatelessWidget {
           bottom: BorderSide(color: Color(0xFF3C3C3E), width: 0.5),
         ),
       ),
-      child: CupertinoButton(
-        padding: EdgeInsets.zero,
-        pressedOpacity: 1.0,
-        onPressed: onTap,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: isEditMode ? null : onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
@@ -356,8 +353,10 @@ class AlarmListItem extends StatelessWidget {
               if (isEditMode)
                 Padding(
                   padding: const EdgeInsets.only(right: 12),
-                  child: GestureDetector(
-                    onTap: onDelete,
+                  child: CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    minSize: 24,
+                    onPressed: onDelete,
                     child: Container(
                       width: 24,
                       height: 24,
@@ -437,11 +436,7 @@ class AlarmListItem extends StatelessWidget {
                 child: CupertinoSwitch(
                   value: alarm.isEnabled,
                   activeColor: CupertinoColors.systemGreen,
-                  onChanged: isEditMode
-                      ? null
-                      : (value) {
-                          onToggle();
-                        },
+                  onChanged: isEditMode ? null : (_) => onToggle(),
                 ),
               ),
             ],
@@ -451,4 +446,3 @@ class AlarmListItem extends StatelessWidget {
     );
   }
 }
-

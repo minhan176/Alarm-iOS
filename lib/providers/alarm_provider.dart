@@ -81,6 +81,7 @@ class AlarmProvider with ChangeNotifier {
   Future<void> addAlarm(AlarmModel alarm) async {
     _alarms.add(alarm);
     _sortAlarms();
+    notifyListeners();
     await _saveAlarms();
 
     // Schedule the alarm if enabled
@@ -93,20 +94,19 @@ class AlarmProvider with ChangeNotifier {
 
     // Check if rating dialog should be shown (after 3rd alarm)
     await _checkAndShowRatingDialog();
-
-    notifyListeners();
   }
 
   // Update existing alarm
   Future<void> updateAlarm(String id, AlarmModel updatedAlarm) async {
     final index = _alarms.indexWhere((alarm) => alarm.id == id);
     if (index != -1) {
-      // Cancel old alarm
-      await AlarmService.cancelAlarm(id);
-
       _alarms[index] = updatedAlarm;
       _sortAlarms();
+      notifyListeners();
       await _saveAlarms();
+
+      // Cancel the old native schedule before creating the updated one.
+      await AlarmService.cancelAlarm(id);
 
       // Schedule new alarm if enabled
       if (updatedAlarm.isEnabled) {
@@ -115,23 +115,20 @@ class AlarmProvider with ChangeNotifier {
 
       // Update system alarm icon
       await AlarmService.updateSystemAlarmIcon();
-
-      notifyListeners();
     }
   }
 
   // Delete alarm
   Future<void> deleteAlarm(String id) async {
-    // Cancel scheduled alarm
-    await AlarmService.cancelAlarm(id);
-
     _alarms.removeWhere((alarm) => alarm.id == id);
+    notifyListeners();
     await _saveAlarms();
+
+    // Cancel the native schedule after the deletion is persisted.
+    await AlarmService.cancelAlarm(id);
 
     // Update system alarm icon
     await AlarmService.updateSystemAlarmIcon();
-
-    notifyListeners();
   }
 
   // Toggle alarm enabled/disabled
@@ -140,6 +137,7 @@ class AlarmProvider with ChangeNotifier {
     if (index != -1) {
       final newEnabled = !_alarms[index].isEnabled;
       _alarms[index] = _alarms[index].copyWith(isEnabled: newEnabled);
+      notifyListeners();
       await _saveAlarms();
 
       // Schedule or cancel alarm based on enabled state
@@ -152,8 +150,6 @@ class AlarmProvider with ChangeNotifier {
       // Update system alarm icon
       print('DEBUG: toggleAlarm calling updateSystemAlarmIcon');
       await AlarmService.updateSystemAlarmIcon();
-
-      notifyListeners();
     }
   }
 

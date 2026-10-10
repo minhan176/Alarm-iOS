@@ -1,4 +1,4 @@
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+﻿import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -83,7 +83,7 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
   );
 
   await notificationsPlugin.show(
-    alarm.id.hashCode,
+    AlarmService.getStableId(alarm.id),
     alarm.label.isEmpty ? 'Alarm' : alarm.label,
     alarm.getFormattedTime(),
     notificationDetails,
@@ -94,6 +94,18 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
 }
 
 class AlarmService {
+  // Generate a stable 32-bit integer ID from a string
+  static int getStableId(String id) {
+    var parsed = int.tryParse(id);
+    if (parsed != null) {
+      return parsed & 0x7FFFFFFF;
+    }
+    int hash = 5381;
+    for (int i = 0; i < id.length; i++) {
+      hash = ((hash << 5) + hash) + id.codeUnitAt(i);
+    }
+    return hash.abs() & 0x7FFFFFFF;
+  }
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -111,7 +123,7 @@ class AlarmService {
     tz.initializeTimeZones();
 
     // Initialize android alarm manager
-    await AndroidAlarmManager.initialize();
+    try { await AndroidAlarmManager.initialize(); } catch(e) { print('AndroidAlarmManager.initialize error: $e'); }
 
     // Initialize notifications
     const androidSettings = AndroidInitializationSettings(
@@ -293,7 +305,7 @@ class AlarmService {
         final alarm = alarms.firstWhere((a) => a.id == alarmId);
 
         // Cancel the alarm
-        await AndroidAlarmManager.cancel(alarm.id.hashCode);
+        try { await AndroidAlarmManager.cancel(AlarmService.getStableId(alarm.id)); } catch(e) { print('cancel error: $e'); }
 
         // For one-time alarms, disable them
         if (alarm.repeatDays.isEmpty) {
@@ -400,20 +412,20 @@ class AlarmService {
         final alarm = alarms.firstWhere((a) => a.id == alarmId);
 
         // Cancel current alarm
-        await AndroidAlarmManager.cancel(alarm.id.hashCode);
+        try { await AndroidAlarmManager.cancel(AlarmService.getStableId(alarm.id)); } catch(e) { print('cancel error: $e'); }
 
         // Schedule snooze based on alarm's snooze duration
         final snoozeTime = DateTime.now().add(alarm.snoozeDuration);
-        await AndroidAlarmManager.oneShotAt(
+        try { await AndroidAlarmManager.oneShotAt(
           snoozeTime,
-          alarm.id.hashCode,
+          AlarmService.getStableId(alarm.id),
           alarmCallback,
           exact: true,
           wakeup: true,
           rescheduleOnReboot: true,
           allowWhileIdle: true,
           params: alarm.toJson(),
-        );
+        ); } catch(e) { print('AndroidAlarmManager.oneShotAt error: $e'); }
 
         // Update system alarm icon after snoozing (alarm is still enabled)
         await updateSystemAlarmIcon();
@@ -508,8 +520,8 @@ class AlarmService {
 
   // Cancel an alarm
   static Future<void> cancelAlarm(String alarmId) async {
-    final id = alarmId.hashCode;
-    await AndroidAlarmManager.cancel(id);
+    final id = AlarmService.getStableId(alarmId);
+    try { await AndroidAlarmManager.cancel(id); } catch(e) { print('AndroidAlarmManager.cancel error: $e'); }
     await _notificationsPlugin.cancel(id);
     
     // Also cancel through AlarmPlugin for one-time alarms
@@ -524,13 +536,13 @@ class AlarmService {
 
   // Dismiss alarm (called when user dismisses the alarm ring screen)
   static Future<void> dismissAlarm(AlarmModel alarm) async {
-    final id = alarm.id.hashCode;
+    final id = AlarmService.getStableId(alarm.id);
 
     // Cancel the notification
     await _notificationsPlugin.cancel(id);
 
     // Always disable the alarm after dismissing
-    await AndroidAlarmManager.cancel(id);
+    try { await AndroidAlarmManager.cancel(id); } catch(e) { print('AndroidAlarmManager.cancel error: $e'); }
 
     // Update alarm to disabled in storage
     try {
@@ -612,7 +624,7 @@ class AlarmService {
     );
 
     await _notificationsPlugin.show(
-      alarm.id.hashCode,
+      AlarmService.getStableId(alarm.id),
       alarm.label.isEmpty ? 'Alarm' : alarm.label,
       alarm.getFormattedTime(),
       notificationDetails,
@@ -649,7 +661,7 @@ class AlarmService {
       if (scheduledTime != null) {
         print('DEBUG: showSystemAlarmIcon called for alarm: ${alarm.label}');
         await _alarmChannel.invokeMethod('showAlarmIcon', {
-          'alarmId': alarm.id.hashCode,
+          'alarmId': AlarmService.getStableId(alarm.id),
           'timestamp': scheduledTime.millisecondsSinceEpoch,
           'label': alarm.label.isEmpty ? 'Alarm' : alarm.label,
         });
@@ -715,3 +727,7 @@ class AlarmService {
     }
   }
 }
+
+
+
+
