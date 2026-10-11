@@ -128,7 +128,6 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                   onPressed: () {
                     showCupertinoSheet<void>(
                       context: context,
-                      useNestedNavigation: true,
                       builder: (BuildContext context) =>
                           const EditAlarmScreen(),
                     );
@@ -253,7 +252,6 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                               if (!_isEditMode) {
                                 showCupertinoSheet<void>(
                                   context: context,
-                                  useNestedNavigation: true,
                                   builder: (BuildContext context) =>
                                       EditAlarmScreen(alarm: alarm),
                                 );

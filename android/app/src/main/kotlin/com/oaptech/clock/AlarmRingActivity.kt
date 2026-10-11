@@ -88,25 +88,20 @@ class AlarmRingActivity : FlutterActivity() {
                         // Close the activity when alarm is dismissed
                         println("DEBUG: AlarmRingActivity dismissAlarm called from Flutter")
                         isDismissed = true
+                        finish()
                         result.success(null)
                         
-                        // Finish activity on main thread immediately after result sent
-                        runOnUiThread {
-                            println("DEBUG: Finishing activity after dismissAlarm")
-                            finish()
-                        }
+                        
                     }
                     "snoozeAlarm" -> {
                         // Close the activity when alarm is snoozed
                         println("DEBUG: AlarmRingActivity snoozeAlarm called from Flutter")
                         isDismissed = true
+                        finish()
                         result.success(null)
                         
                         // Finish activity on main thread immediately after result sent
-                        runOnUiThread {
-                            println("DEBUG: Finishing activity after snoozeAlarm")
-                            finish()
-                        }
+                       
                     }
                     else -> {
                         result.notImplemented()
@@ -161,7 +156,7 @@ class AlarmRingActivity : FlutterActivity() {
         }
 
         // Run heavy operations asynchronously to avoid ANR
-        if (!isDismissed) {
+        if (!isDismissed && !isChangingConfigurations) {
             println("DEBUG: Snoozing alarm asynchronously")
             Thread {
                 try {

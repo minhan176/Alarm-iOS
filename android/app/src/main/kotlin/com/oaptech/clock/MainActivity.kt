@@ -52,6 +52,18 @@ class MainActivity : FlutterActivity() {
         val timerRingChannel = MethodChannel(binaryMessenger!!, "com.oaptech.clock/timer_ring")
         timerRingChannel.setMethodCallHandler(alarmPlugin)
 
+        val ringChannel = MethodChannel(binaryMessenger!!, "com.oaptech.clock/ring")
+        ringChannel.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "dismissAlarm", "snoozeAlarm" -> {
+                    finish()
+                    result.success(null)
+                    
+                }
+                else -> result.notImplemented()
+            }
+        }
+
         // Register navigation method channel
         val navChannel = MethodChannel(binaryMessenger!!, CHANNEL)
         navChannel.setMethodCallHandler { call, result ->

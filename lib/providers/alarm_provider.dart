@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,13 @@ class AlarmProvider with ChangeNotifier {
   List<AlarmModel> _alarms = [];
   AlarmModel? _lastSavedAlarm;
   static const String _storageKey = 'alarms';
+  late final Future<void> _ready;
 
   List<AlarmModel> get alarms => _alarms;
   AlarmModel? get lastSavedAlarm => _lastSavedAlarm;
 
   AlarmProvider() {
-    loadAlarms();
+    _ready = loadAlarms();
   }
 
   // Load alarms from storage
@@ -27,19 +29,24 @@ class AlarmProvider with ChangeNotifier {
         final List<dynamic> decoded = json.decode(alarmsJson);
         _alarms = decoded.map((item) => AlarmModel.fromJson(item)).toList();
         _sortAlarms();
-
-        // Reschedule all enabled alarms
-        await AlarmService.rescheduleAllAlarms(
-          _alarms.where((alarm) => alarm.isEnabled).toList(),
-        );
-
-        // Update system alarm icon
-        await AlarmService.updateSystemAlarmIcon();
-
         notifyListeners();
+
+        // Native rescheduling must not block the provider readiness future.
+        unawaited(_syncNativeAlarms());
       }
     } catch (e) {
       debugPrint('Error loading alarms: $e');
+    }
+  }
+
+  Future<void> _syncNativeAlarms() async {
+    try {
+      await AlarmService.rescheduleAllAlarms(
+        _alarms.where((alarm) => alarm.isEnabled).toList(),
+      );
+      await AlarmService.updateSystemAlarmIcon();
+    } catch (e) {
+      debugPrint('Error syncing native alarms: $e');
     }
   }
 
@@ -79,6 +86,7 @@ class AlarmProvider with ChangeNotifier {
 
   // Add new alarm
   Future<void> addAlarm(AlarmModel alarm) async {
+    await _ready;
     _alarms.add(alarm);
     _sortAlarms();
     notifyListeners();
@@ -98,9 +106,11 @@ class AlarmProvider with ChangeNotifier {
 
   // Update existing alarm
   Future<void> updateAlarm(String id, AlarmModel updatedAlarm) async {
+    await _ready;
     final index = _alarms.indexWhere((alarm) => alarm.id == id);
     if (index != -1) {
-      _alarms[index] = updatedAlarm;
+      final alarmToSave = updatedAlarm.copyWith(id: id);
+      _alarms[index] = alarmToSave;
       _sortAlarms();
       notifyListeners();
       await _saveAlarms();
@@ -109,8 +119,8 @@ class AlarmProvider with ChangeNotifier {
       await AlarmService.cancelAlarm(id);
 
       // Schedule new alarm if enabled
-      if (updatedAlarm.isEnabled) {
-        await AlarmService.scheduleAlarm(updatedAlarm);
+      if (alarmToSave.isEnabled) {
+        await AlarmService.scheduleAlarm(alarmToSave);
       }
 
       // Update system alarm icon
@@ -120,6 +130,7 @@ class AlarmProvider with ChangeNotifier {
 
   // Delete alarm
   Future<void> deleteAlarm(String id) async {
+    await _ready;
     _alarms.removeWhere((alarm) => alarm.id == id);
     notifyListeners();
     await _saveAlarms();
@@ -133,6 +144,7 @@ class AlarmProvider with ChangeNotifier {
 
   // Toggle alarm enabled/disabled
   Future<void> toggleAlarm(String id) async {
+    await _ready;
     final index = _alarms.indexWhere((alarm) => alarm.id == id);
     if (index != -1) {
       final newEnabled = !_alarms[index].isEnabled;

@@ -40,6 +40,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   late bool _showDurationOptions;
   late AudioPlayer _previewPlayer;
   bool _wasKeyboardVisible = false;
+  bool _isSaving = false;
 
   static const MethodChannel _alarmChannel = MethodChannel(
     'com.oaptech.clock/alarm',
@@ -109,12 +110,15 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
   }
 
   Future<void> _saveAlarm() async {
+    if (_isSaving) return;
+    setState(() => _isSaving = true);
+
     final provider = Provider.of<AlarmProvider>(context, listen: false);
     final alarm = AlarmModel(
       id: widget.alarm?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       time: _selectedTime,
       label: _label,
-      isEnabled: widget.alarm?.isEnabled ?? true,
+      isEnabled: true,
       repeatDays: _repeatDays,
       sound: _sound,
       snooze: _snooze,
@@ -124,21 +128,31 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
     final isNewAlarm = widget.alarm == null;
 
-    if (widget.alarm != null) {
-      await provider.updateAlarm(widget.alarm!.id, alarm);
-    } else {
-      await provider.addAlarm(alarm);
-    }
+    try {
+      if (widget.alarm != null) {
+        AdService.showInterstitialAdIfAvailable();
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
+        await provider.updateAlarm(widget.alarm!.id, alarm);
+      } else {
+        await provider.addAlarm(alarm);
+        AdService.showInterstitialAdIfAvailable();
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
+      }
 
-    // Set last saved alarm for toast on list screen
-    provider.setLastSavedAlarm(alarm);
+      provider.setLastSavedAlarm(alarm);
+      
 
-    AdService.showInterstitialAdIfAvailable();
-    Navigator.of(context, rootNavigator: true).pop();
-
-    // Check and show review dialog after adding new alarm
-    if (isNewAlarm) {
-      await _checkAndShowReviewDialog();
+      if (isNewAlarm) {
+        await _checkAndShowReviewDialog();
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
     }
   }
 
@@ -169,31 +183,34 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
 
   Future<void> _deleteAlarm() async {
     if (widget.alarm != null) {
+      final editContext = context;
       showCupertinoDialog(
         context: context,
-        builder: (context) => CupertinoAlertDialog(
+        builder: (dialogContext) => CupertinoAlertDialog(
           title: Text(AppLocalizations.of(context).deleteAlarm),
           content: Text(AppLocalizations.of(context).deleteAlarmConfirm),
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
               child: Text(AppLocalizations.of(context).cancel),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(dialogContext).pop(),
             ),
             CupertinoDialogAction(
               isDestructiveAction: true,
               child: Text(AppLocalizations.of(context).delete),
               onPressed: () async {
+                AdService.showInterstitialAdIfAvailable();
+                if (dialogContext.mounted) {
+                  Navigator.of(dialogContext).pop();
+                }
+                if (editContext.mounted) {
+                  Navigator.of(editContext).pop();
+                }
                 await Provider.of<AlarmProvider>(
                   context,
                   listen: false,
                 ).deleteAlarm(widget.alarm!.id);
-                AdService.showInterstitialAdIfAvailable();
-                Navigator.of(context).pop(); // Close dialog
-                Navigator.of(
-                  context,
-                  rootNavigator: true,
-                ).pop(); // Close edit screen
+                
               },
             ),
           ],
@@ -234,7 +251,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 iconColor: CupertinoColors.white,
                 onPressed: () {
                   AdService.showInterstitialAdIfAvailable();
-                  Navigator.of(context, rootNavigator: true).pop();
+                  Navigator.of(context).pop();
                 },
               ),
               middle: FittedBox(
@@ -254,7 +271,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                 icon: CupertinoIcons.checkmark,
                 iconColor: CupertinoColors.white,
                 backgroundColor: CupertinoColors.systemOrange,
-                onPressed: _saveAlarm,
+                enabled: !_isSaving,
+                onPressed: _isSaving ? null : _saveAlarm,
               ),
             ),
             // Time Picker

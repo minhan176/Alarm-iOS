@@ -521,7 +521,6 @@ class AlarmService {
   // Cancel an alarm
   static Future<void> cancelAlarm(String alarmId) async {
     final id = AlarmService.getStableId(alarmId);
-    try { await AndroidAlarmManager.cancel(id); } catch(e) { print('AndroidAlarmManager.cancel error: $e'); }
     await _notificationsPlugin.cancel(id);
     
     // Also cancel through AlarmPlugin for one-time alarms
@@ -541,8 +540,12 @@ class AlarmService {
     // Cancel the notification
     await _notificationsPlugin.cancel(id);
 
-    // Always disable the alarm after dismissing
-    try { await AndroidAlarmManager.cancel(id); } catch(e) { print('AndroidAlarmManager.cancel error: $e'); }
+    // The active schedule is owned by AlarmPlugin on Android.
+    try {
+      await _alarmChannel.invokeMethod('cancelAlarm', {'alarmId': alarm.id});
+    } catch (e) {
+      print('Native alarm cancellation error: $e');
+    }
 
     // Update alarm to disabled in storage
     try {

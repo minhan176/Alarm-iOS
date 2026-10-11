@@ -47,6 +47,9 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
   static const MethodChannel _alarmChannel = MethodChannel(
     'com.oaptech.clock/alarm',
   );
+  static const MethodChannel _ringChannel = MethodChannel(
+    'com.oaptech.clock/ring',
+  );
 
   @override
   void initState() {
@@ -206,15 +209,25 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
     await _stopAlarm();
 
+    var nativeActivityClosed = false;
     try {
       final alarmProvider = Provider.of<AlarmProvider>(context, listen: false);
       final updatedAlarm = _alarm.copyWith(isEnabled: false);
       await alarmProvider.updateAlarm(_alarm.id, updatedAlarm);
       await AlarmService.dismissAlarm(updatedAlarm);
       widget.onDismiss?.call();
+
+      // AlarmRingActivity must finish itself; popping the Flutter route alone
+      // leaves the native activity alive and its onDestroy path can snooze it.
+      try {
+        await _ringChannel.invokeMethod('dismissAlarm');
+        nativeActivityClosed = true;
+      } on MissingPluginException {
+        // iOS and in-app previews do not have AlarmRingActivity.
+      }
     } finally {
-      if (mounted && Navigator.of(context).canPop()) {
-        Navigator.of(context).pop();
+      if (!nativeActivityClosed && mounted && Navigator.of(context).canPop()) {
+        SystemNavigator.pop();
       }
     }
   }

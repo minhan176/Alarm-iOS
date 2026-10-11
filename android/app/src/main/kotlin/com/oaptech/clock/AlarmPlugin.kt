@@ -29,6 +29,17 @@ class DummyAlarmReceiver : BroadcastReceiver() {
     }
 }
 
+private fun stableAlarmRequestCode(id: String): Int {
+    val parsed = id.toLongOrNull()
+    if (parsed != null) return (parsed and 0x7FFFFFFF).toInt()
+
+    var hash = 5381L
+    for (character in id) {
+        hash = hash * 33 + character.code
+    }
+    return kotlin.math.abs(hash).toInt() and 0x7FFFFFFF
+}
+
 class AlarmPlugin(private val context: Context) : MethodCallHandler {
     private var alarmManager: AlarmManager? = null
     private var currentRingtone: Ringtone? = null
@@ -283,7 +294,7 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
         
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            alarmId.hashCode(), // Use alarm ID hash as request code
+            stableAlarmRequestCode(alarmId),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -302,13 +313,24 @@ class AlarmPlugin(private val context: Context) : MethodCallHandler {
 
     private fun cancelAlarm(alarmId: String) {
         val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
+        val stablePendingIntent = PendingIntent.getBroadcast(
+            context,
+            stableAlarmRequestCode(alarmId),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager?.cancel(stablePendingIntent)
+        stablePendingIntent.cancel()
+
+        // Also remove schedules created by older releases that used String.hashCode().
+        val legacyPendingIntent = PendingIntent.getBroadcast(
             context,
             alarmId.hashCode(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        alarmManager?.cancel(pendingIntent)
+        alarmManager?.cancel(legacyPendingIntent)
+        legacyPendingIntent.cancel()
         println("DEBUG: Alarm cancelled for ID: $alarmId")
     }
 
@@ -521,7 +543,7 @@ class AlarmReceiver : BroadcastReceiver() {
                     }
                     val pendingIntent = PendingIntent.getBroadcast(
                         context,
-                        alarmJson.hashCode(),
+                        stableAlarmRequestCode(JSONObject(alarmJson).getString("id")),
                         nextIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                     )
