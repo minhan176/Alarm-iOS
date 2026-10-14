@@ -27,7 +27,7 @@ class AlarmRingScreen extends StatefulWidget {
     required this.alarm,
     this.onDismiss,
     this.onSnooze,
-  });  
+  });
 
   @override
   State<AlarmRingScreen> createState() => _AlarmRingScreenState();
@@ -211,20 +211,18 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
 
     var nativeActivityClosed = false;
     try {
-      final alarmProvider = Provider.of<AlarmProvider>(context, listen: false);
-      final updatedAlarm = _alarm.copyWith(isEnabled: false);
-      await alarmProvider.updateAlarm(_alarm.id, updatedAlarm);
-      await AlarmService.dismissAlarm(updatedAlarm);
-      widget.onDismiss?.call();
-
-      // AlarmRingActivity must finish itself; popping the Flutter route alone
-      // leaves the native activity alive and its onDestroy path can snooze it.
       try {
         await _ringChannel.invokeMethod('dismissAlarm');
         nativeActivityClosed = true;
       } on MissingPluginException {
         // iOS and in-app previews do not have AlarmRingActivity.
       }
+
+      final alarmProvider = Provider.of<AlarmProvider>(context, listen: false);
+      final updatedAlarm = _alarm.copyWith(isEnabled: false);
+      await alarmProvider.updateAlarm(_alarm.id, updatedAlarm);
+      await AlarmService.dismissAlarm(updatedAlarm);
+      widget.onDismiss?.call();
     } finally {
       if (!nativeActivityClosed && mounted && Navigator.of(context).canPop()) {
         SystemNavigator.pop();
@@ -232,31 +230,27 @@ class _AlarmRingScreenState extends State<AlarmRingScreen>
     }
   }
 
-  void _snoozeAlarm() async {
+  Future<void> _snoozeAlarm() async {
     await _stopAlarm();
 
-    // Schedule snooze based on alarm's snooze duration
     final snoozeTime = DateTime.now().add(_alarm.snoozeDuration);
-    final snoozeAlarm = _alarm.copyWith(time: snoozeTime);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(
+      'snoozed_alarm_${_alarm.id}',
+      snoozeTime.millisecondsSinceEpoch,
+    );
 
-    await AlarmService.scheduleAlarm(snoozeAlarm);
+    // AlarmRingActivity owns the reliable native snooze path. Its onDestroy
+    // fallback is also the path used when the user leaves the ringing screen.
+    if (widget.onSnooze != null) {
+      widget.onSnooze!();
+    } else {
+      final snoozeAlarm = _alarm.copyWith(time: snoozeTime);
+      await AlarmService.scheduleAlarm(snoozeAlarm);
+    }
 
-    // Call onSnooze callback if provided (for AlarmRingActivity)
-    widget.onSnooze?.call();
-
-    if (mounted) {
+    if (widget.onSnooze == null && mounted) {
       Navigator.of(context).pop();
-
-      // // Show snooze message
-      // Fluttertoast.showToast(
-      //   msg: 'BÃ¡o láº¡i sau ${widget.alarm.snoozeDuration.inMinutes} phÃºt',
-      //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
-      //   timeInSecForIosWeb: 1,
-      //   backgroundColor: Colors.white,
-      //   textColor: Colors.black,
-      //   fontSize: 16.0,
-      // );
     }
   }
 

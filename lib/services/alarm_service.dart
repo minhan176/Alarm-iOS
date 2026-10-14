@@ -33,8 +33,9 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
   }
 
   // Initialize notifications plugin for isolate
-  final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
-  
+  final FlutterLocalNotificationsPlugin notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   // Show notification (this will trigger the ring screen via full screen intent)
   final androidDetails = AndroidNotificationDetails(
     'alarm_channel',
@@ -43,7 +44,10 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
     importance: Importance.max,
     priority: Priority.max,
     playSound: true,
-    sound: alarm.sound.startsWith('content://') || alarm.sound.startsWith('/') || alarm.sound.contains('\\')
+    sound:
+        alarm.sound.startsWith('content://') ||
+            alarm.sound.startsWith('/') ||
+            alarm.sound.contains('\\')
         ? UriAndroidNotificationSound(alarm.sound)
         : null,
     enableVibration: alarm.vibrate,
@@ -89,7 +93,7 @@ void alarmCallback(int id, Map<String, dynamic> params) async {
     notificationDetails,
     payload: alarm.id,
   );
-  
+
   print('Alarm notification shown for: ${alarm.label}');
 }
 
@@ -106,11 +110,16 @@ class AlarmService {
     }
     return hash.abs() & 0x7FFFFFFF;
   }
+
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
-  static const MethodChannel _navigationChannel = MethodChannel('com.oaptech.clock/navigation');
+  static const MethodChannel _alarmChannel = MethodChannel(
+    'com.oaptech.clock/alarm',
+  );
+  static const MethodChannel _navigationChannel = MethodChannel(
+    'com.oaptech.clock/navigation',
+  );
 
   static bool _isInitialized = false;
   static Function(AlarmModel)? onAlarmRing;
@@ -123,7 +132,11 @@ class AlarmService {
     tz.initializeTimeZones();
 
     // Initialize android alarm manager
-    try { await AndroidAlarmManager.initialize(); } catch(e) { print('AndroidAlarmManager.initialize error: $e'); }
+    try {
+      await AndroidAlarmManager.initialize();
+    } catch (e) {
+      print('AndroidAlarmManager.initialize error: $e');
+    }
 
     // Initialize notifications
     const androidSettings = AndroidInitializationSettings(
@@ -187,8 +200,10 @@ class AlarmService {
       ledColor: const Color(0xFFFF9500), // Orange color
     );
 
-    final androidPlugin = _notificationsPlugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    final androidPlugin = _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
 
     if (androidPlugin != null) {
       await androidPlugin.createNotificationChannel(androidChannel);
@@ -305,7 +320,11 @@ class AlarmService {
         final alarm = alarms.firstWhere((a) => a.id == alarmId);
 
         // Cancel the alarm
-        try { await AndroidAlarmManager.cancel(AlarmService.getStableId(alarm.id)); } catch(e) { print('cancel error: $e'); }
+        try {
+          await AndroidAlarmManager.cancel(AlarmService.getStableId(alarm.id));
+        } catch (e) {
+          print('cancel error: $e');
+        }
 
         // For one-time alarms, disable them
         if (alarm.repeatDays.isEmpty) {
@@ -361,7 +380,9 @@ class AlarmService {
             .toList();
 
         final enabledAlarms = alarms.where((alarm) => alarm.isEnabled).toList();
-        print('DEBUG: updateSystemAlarmIcon - enabled alarms count: ${enabledAlarms.length}');
+        print(
+          'DEBUG: updateSystemAlarmIcon - enabled alarms count: ${enabledAlarms.length}',
+        );
 
         if (enabledAlarms.isNotEmpty) {
           // Find next alarm
@@ -377,15 +398,21 @@ class AlarmService {
           }
 
           if (nextAlarm != null) {
-            print('DEBUG: updateSystemAlarmIcon - showing icon for: ${nextAlarm.label}');
+            print(
+              'DEBUG: updateSystemAlarmIcon - showing icon for: ${nextAlarm.label}',
+            );
             await showSystemAlarmIcon(nextAlarm);
           } else {
-            print('DEBUG: updateSystemAlarmIcon - no next alarm found, hiding icon');
+            print(
+              'DEBUG: updateSystemAlarmIcon - no next alarm found, hiding icon',
+            );
             await hideSystemAlarmIcon();
           }
         } else {
           // No enabled alarms, hide icon
-          print('DEBUG: updateSystemAlarmIcon - no enabled alarms, hiding icon');
+          print(
+            'DEBUG: updateSystemAlarmIcon - no enabled alarms, hiding icon',
+          );
           await hideSystemAlarmIcon();
         }
       } else {
@@ -412,25 +439,35 @@ class AlarmService {
         final alarm = alarms.firstWhere((a) => a.id == alarmId);
 
         // Cancel current alarm
-        try { await AndroidAlarmManager.cancel(AlarmService.getStableId(alarm.id)); } catch(e) { print('cancel error: $e'); }
+        try {
+          await AndroidAlarmManager.cancel(AlarmService.getStableId(alarm.id));
+        } catch (e) {
+          print('cancel error: $e');
+        }
 
         // Schedule snooze based on alarm's snooze duration
         final snoozeTime = DateTime.now().add(alarm.snoozeDuration);
-        try { await AndroidAlarmManager.oneShotAt(
-          snoozeTime,
-          AlarmService.getStableId(alarm.id),
-          alarmCallback,
-          exact: true,
-          wakeup: true,
-          rescheduleOnReboot: true,
-          allowWhileIdle: true,
-          params: alarm.toJson(),
-        ); } catch(e) { print('AndroidAlarmManager.oneShotAt error: $e'); }
+        try {
+          await AndroidAlarmManager.oneShotAt(
+            snoozeTime,
+            AlarmService.getStableId(alarm.id),
+            alarmCallback,
+            exact: true,
+            wakeup: true,
+            rescheduleOnReboot: true,
+            allowWhileIdle: true,
+            params: alarm.toJson(),
+          );
+        } catch (e) {
+          print('AndroidAlarmManager.oneShotAt error: $e');
+        }
 
         // Update system alarm icon after snoozing (alarm is still enabled)
         await updateSystemAlarmIcon();
 
-        print('Alarm snoozed for ${alarm.snoozeDuration.inMinutes} minutes: $alarmId');
+        print(
+          'Alarm snoozed for ${alarm.snoozeDuration.inMinutes} minutes: $alarmId',
+        );
       }
     } catch (e) {
       print('Error snoozing alarm from notification: $e');
@@ -487,7 +524,13 @@ class AlarmService {
       );
     }
 
-    
+    await _scheduleAlarmAt(alarm, scheduledTime);
+  }
+
+  static Future<void> _scheduleAlarmAt(
+    AlarmModel alarm,
+    DateTime scheduledTime,
+  ) async {
     // Use AlarmPlugin for both one-time and repeating alarms
     // For repeating alarms, AlarmReceiver will reschedule after each trigger
     await _alarmChannel.invokeMethod('scheduleAlarm', {
@@ -522,14 +565,14 @@ class AlarmService {
   static Future<void> cancelAlarm(String alarmId) async {
     final id = AlarmService.getStableId(alarmId);
     await _notificationsPlugin.cancel(id);
-    
+
     // Also cancel through AlarmPlugin for one-time alarms
     try {
       await _alarmChannel.invokeMethod('cancelAlarm', {'alarmId': alarmId});
     } catch (e) {
       // Ignore if method not available
     }
-    
+
     print('Alarm cancelled: $alarmId');
   }
 
@@ -670,7 +713,9 @@ class AlarmService {
         });
         print('DEBUG: showSystemAlarmIcon completed');
       } else {
-        print('DEBUG: showSystemAlarmIcon - no scheduled time for alarm: ${alarm.label}');
+        print(
+          'DEBUG: showSystemAlarmIcon - no scheduled time for alarm: ${alarm.label}',
+        );
       }
     } catch (e) {
       print('Error showing system alarm icon: $e');
@@ -680,7 +725,9 @@ class AlarmService {
   // Hide system alarm icon from status bar
   static Future<void> hideSystemAlarmIcon() async {
     try {
-      print('DEBUG: hideSystemAlarmIcon called - attempting to hide alarm icon');
+      print(
+        'DEBUG: hideSystemAlarmIcon called - attempting to hide alarm icon',
+      );
       await _alarmChannel.invokeMethod('hideAlarmIcon');
       print('DEBUG: hideSystemAlarmIcon completed');
     } catch (e) {
@@ -723,14 +770,21 @@ class AlarmService {
 
   // Reschedule all alarms (useful after reboot)
   static Future<void> rescheduleAllAlarms(List<AlarmModel> alarms) async {
+    final prefs = await SharedPreferences.getInstance();
     for (final alarm in alarms) {
       if (alarm.isEnabled) {
+        final snoozeKey = 'snoozed_alarm_${alarm.id}';
+        final snoozeMillis = prefs.getInt(snoozeKey);
+        if (snoozeMillis != null) {
+          final snoozeTime = DateTime.fromMillisecondsSinceEpoch(snoozeMillis);
+          if (snoozeTime.isAfter(DateTime.now())) {
+            await _scheduleAlarmAt(alarm, snoozeTime);
+            continue;
+          }
+          await prefs.remove(snoozeKey);
+        }
         await scheduleAlarm(alarm);
       }
     }
   }
 }
-
-
-
-

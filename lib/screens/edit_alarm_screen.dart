@@ -2,21 +2,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../widgets/rating_dialog.dart';
 import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import '../l10n/app_localizations.dart';
 import '../models/alarm_model.dart';
-import '../providers/alarm_provider.dart';
 import '../providers/settings_provider.dart';
 import '../services/ad_service.dart';
 import '../widgets/custom_buttons.dart';
 import '../widgets/settings_large_banner_ad.dart';
 import '../widgets/settings_banner_ad.dart';
 import 'package:audioplayers/audioplayers.dart';
+
+enum EditAlarmAction { save, delete }
+
+class EditAlarmResult {
+  final EditAlarmAction action;
+  final AlarmModel? alarm;
+  final String? alarmId;
+
+  const EditAlarmResult.save(this.alarm)
+    : action = EditAlarmAction.save,
+      alarmId = null;
+
+  const EditAlarmResult.delete(this.alarmId)
+    : action = EditAlarmAction.delete,
+      alarm = null;
+}
 
 class EditAlarmScreen extends StatefulWidget {
   final AlarmModel? alarm;
@@ -113,7 +126,6 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
     if (_isSaving) return;
     setState(() => _isSaving = true);
 
-    final provider = Provider.of<AlarmProvider>(context, listen: false);
     final alarm = AlarmModel(
       id: widget.alarm?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       time: _selectedTime,
@@ -126,58 +138,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       snoozeDuration: _snoozeDuration,
     );
 
-    final isNewAlarm = widget.alarm == null;
-
-    try {
-      if (widget.alarm != null) {
-        AdService.showInterstitialAdIfAvailable();
-        if (mounted) {
-          Navigator.of(context).pop();
-        }
-        await provider.updateAlarm(widget.alarm!.id, alarm);
-      } else {
-        await provider.addAlarm(alarm);
-        AdService.showInterstitialAdIfAvailable();
-        if (mounted) {
-          Navigator.of(context).pop();
-        }
-      }
-
-      provider.setLastSavedAlarm(alarm);
-      
-
-      if (isNewAlarm) {
-        await _checkAndShowReviewDialog();
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isSaving = false);
-      }
-    }
-  }
-
-  Future<void> _checkAndShowReviewDialog() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    // Check if user already rated or dismissed
-    final hasRated = prefs.getBool('has_rated_app') ?? false;
-    final dismissed = prefs.getBool('rating_dialog_dismissed') ?? false;
-
-    if (hasRated || dismissed) return;
-
-    // Increment add alarm count
-    int addCount = prefs.getInt('add_alarm_count') ?? 0;
-    addCount++;
-    await prefs.setInt('add_alarm_count', addCount);
-
-    // Show dialog after 3rd alarm
-    if (addCount >= 3 && mounted) {
-      showCupertinoDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const RatingDialog();
-        },
-      );
+    if (mounted) {
+      Navigator.of(context).pop(EditAlarmResult.save(alarm));
     }
   }
 
@@ -199,18 +161,14 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
               isDestructiveAction: true,
               child: Text(AppLocalizations.of(context).delete),
               onPressed: () async {
-                AdService.showInterstitialAdIfAvailable();
                 if (dialogContext.mounted) {
                   Navigator.of(dialogContext).pop();
                 }
                 if (editContext.mounted) {
-                  Navigator.of(editContext).pop();
+                  Navigator.of(
+                    editContext,
+                  ).pop(EditAlarmResult.delete(widget.alarm!.id));
                 }
-                await Provider.of<AlarmProvider>(
-                  context,
-                  listen: false,
-                ).deleteAlarm(widget.alarm!.id);
-                
               },
             ),
           ],
@@ -329,8 +287,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                             context,
                           ).minutesValue(_snoozeDuration.inMinutes),
                           () => setState(
-                            () =>
-                                _showDurationOptions = !_showDurationOptions,
+                            () => _showDurationOptions = !_showDurationOptions,
                           ),
                           valueColor: CupertinoColors.systemOrange,
                           showArrow: false,
@@ -385,7 +342,7 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
                       ],
                     ),
                   ]),
-    
+
                   if (widget.alarm != null) ...[
                     const SizedBox(height: 40),
                     Container(
@@ -810,8 +767,12 @@ class _SoundSelectorState extends State<SoundSelector> {
     try {
       // Try to load system ringtones without requesting permissions first
       // jbh_ringtone package may handle permissions internally
-            const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
-      final List<dynamic> result = await _alarmChannel.invokeMethod('getSystemRingtones');
+      const MethodChannel _alarmChannel = MethodChannel(
+        'com.oaptech.clock/alarm',
+      );
+      final List<dynamic> result = await _alarmChannel.invokeMethod(
+        'getSystemRingtones',
+      );
       final uniqueSounds = <String, CustomRingtone>{};
 
       for (var item in result) {
@@ -842,17 +803,21 @@ class _SoundSelectorState extends State<SoundSelector> {
       try {
         PermissionStatus status = await Permission.storage.request();
         if (status.isGranted) {
-                const MethodChannel _alarmChannel = MethodChannel('com.oaptech.clock/alarm');
-      final List<dynamic> result = await _alarmChannel.invokeMethod('getSystemRingtones');
-      final uniqueSounds = <String, CustomRingtone>{};
+          const MethodChannel _alarmChannel = MethodChannel(
+            'com.oaptech.clock/alarm',
+          );
+          final List<dynamic> result = await _alarmChannel.invokeMethod(
+            'getSystemRingtones',
+          );
+          final uniqueSounds = <String, CustomRingtone>{};
 
-      for (var item in result) {
-        final uri = item['uri'] as String;
-        final title = item['title'] as String;
-        if (!uniqueSounds.containsKey(uri)) {
-          uniqueSounds[uri] = CustomRingtone(displayTitle: title, uri: uri);
-        }
-      }
+          for (var item in result) {
+            final uri = item['uri'] as String;
+            final title = item['title'] as String;
+            if (!uniqueSounds.containsKey(uri)) {
+              uniqueSounds[uri] = CustomRingtone(displayTitle: title, uri: uri);
+            }
+          }
 
           setState(() {
             // Create the custom ringtones
@@ -1351,5 +1316,3 @@ class _SoundSelectorState extends State<SoundSelector> {
     );
   }
 }
-
-

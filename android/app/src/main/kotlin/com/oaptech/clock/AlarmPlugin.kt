@@ -29,7 +29,7 @@ class DummyAlarmReceiver : BroadcastReceiver() {
     }
 }
 
-private fun stableAlarmRequestCode(id: String): Int {
+fun stableAlarmRequestCode(id: String): Int {
     val parsed = id.toLongOrNull()
     if (parsed != null) return (parsed and 0x7FFFFFFF).toInt()
 
@@ -463,6 +463,11 @@ class AlarmReceiver : BroadcastReceiver() {
         if (alarmJson != null) {
             println("DEBUG: AlarmReceiver triggered with alarm data: $alarmJson")
 
+            if (!isCurrentEnabledAlarm(context, alarmJson)) {
+                println("DEBUG: Ignoring stale, deleted, or disabled alarm payload")
+                return
+            }
+
             // Acquire wake lock to ensure screen turns on
             val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
             val wakeLock = powerManager.newWakeLock(
@@ -564,6 +569,33 @@ class AlarmReceiver : BroadcastReceiver() {
             wakeLock.release()
         } else {
             println("DEBUG: AlarmReceiver triggered but no alarm data found")
+        }
+    }
+
+    private fun isCurrentEnabledAlarm(context: Context, alarmJson: String): Boolean {
+        return try {
+            val incoming = JSONObject(alarmJson)
+            val alarmId = incoming.getString("id")
+            val prefs = context.getSharedPreferences(
+                "FlutterSharedPreferences",
+                Context.MODE_PRIVATE
+            )
+            val storedJson = prefs.getString("flutter.alarms", null) ?: return false
+            val alarms = org.json.JSONArray(storedJson)
+            for (index in 0 until alarms.length()) {
+                val stored = alarms.getJSONObject(index)
+                if (stored.optString("id") == alarmId) {
+                    if (!stored.optBoolean("isEnabled", false)) return false
+                    if (stored.optString("time") != incoming.optString("time")) return false
+                    val storedDays = stored.optJSONArray("repeatDays")?.toString() ?: "[]"
+                    val incomingDays = incoming.optJSONArray("repeatDays")?.toString() ?: "[]"
+                    return storedDays == incomingDays
+                }
+            }
+            false
+        } catch (error: Exception) {
+            println("DEBUG: Could not validate alarm payload: ${error.message}")
+            false
         }
     }
 

@@ -94,8 +94,10 @@ class AlarmRingActivity : FlutterActivity() {
                         
                     }
                     "snoozeAlarm" -> {
-                        // Close the activity when alarm is snoozed
+                        // Schedule first, then mark the activity as handled so
+                        // onDestroy does not schedule a second alarm.
                         println("DEBUG: AlarmRingActivity snoozeAlarm called from Flutter")
+                        snoozeAlarm()
                         isDismissed = true
                         finish()
                         result.success(null)
@@ -211,7 +213,7 @@ class AlarmRingActivity : FlutterActivity() {
                 
                 val pendingIntent = PendingIntent.getBroadcast(
                     this,
-                    alarmJson.hashCode(),
+                    stableAlarmRequestCode(alarmObj.getString("id")),
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )

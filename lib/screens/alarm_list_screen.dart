@@ -53,6 +53,31 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     }
   }
 
+  Future<void> _openEditAlarm([AlarmModel? alarm]) async {
+    final result = await showCupertinoSheet<EditAlarmResult>(
+      context: context,
+      builder: (BuildContext context) => EditAlarmScreen(alarm: alarm),
+    );
+    if (!mounted || result == null) return;
+
+    final provider = Provider.of<AlarmProvider>(context, listen: false);
+    switch (result.action) {
+      case EditAlarmAction.save:
+        final updatedAlarm = result.alarm;
+        if (updatedAlarm == null) return;
+        if (alarm == null) {
+          await provider.addAlarm(updatedAlarm);
+        } else {
+          await provider.updateAlarm(alarm.id, updatedAlarm);
+        }
+        provider.setLastSavedAlarm(updatedAlarm);
+      case EditAlarmAction.delete:
+        final alarmId = result.alarmId;
+        if (alarmId == null) return;
+        await provider.deleteAlarm(alarmId);
+    }
+  }
+
   String? _getNextAlarmTimeText(List<AlarmModel> alarms, BuildContext context) {
     final enabledAlarms = alarms.where((alarm) => alarm.isEnabled).toList();
     if (enabledAlarms.isEmpty) return null;
@@ -126,11 +151,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                 trailing: NavIconButton(
                   icon: CupertinoIcons.add,
                   onPressed: () {
-                    showCupertinoSheet<void>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          const EditAlarmScreen(),
-                    );
+                    _openEditAlarm();
                   },
                 ),
               ),
@@ -250,11 +271,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                             ).is24HourFormat,
                             onTap: () {
                               if (!_isEditMode) {
-                                showCupertinoSheet<void>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      EditAlarmScreen(alarm: alarm),
-                                );
+                                _openEditAlarm(alarm);
                               }
                             },
                             onToggle: () async {
