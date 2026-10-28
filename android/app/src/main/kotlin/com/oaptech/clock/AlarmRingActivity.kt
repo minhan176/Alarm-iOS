@@ -94,16 +94,15 @@ class AlarmRingActivity : FlutterActivity() {
                         
                     }
                     "snoozeAlarm" -> {
-                        // Schedule first, then mark the activity as handled so
-                        // onDestroy does not schedule a second alarm.
                         println("DEBUG: AlarmRingActivity snoozeAlarm called from Flutter")
-                        snoozeAlarm()
                         isDismissed = true
-                        finish()
-                        result.success(null)
-                        
-                        // Finish activity on main thread immediately after result sent
-                       
+                        Thread {
+                            snoozeAlarm()
+                            runOnUiThread {
+                                finishAndRemoveTask()
+                                result.success(null)
+                            }
+                        }.start()
                     }
                     else -> {
                         result.notImplemented()

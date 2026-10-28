@@ -115,12 +115,11 @@ class AlarmProvider with ChangeNotifier {
       notifyListeners();
       await _saveAlarms();
 
-      // Cancel the old native schedule before creating the updated one.
-      await AlarmService.cancelAlarm(id);
-
-      // Schedule new alarm if enabled
+      // Reusing the stable PendingIntent replaces the existing native alarm.
       if (alarmToSave.isEnabled) {
         await AlarmService.scheduleAlarm(alarmToSave);
+      } else {
+        await AlarmService.cancelAlarm(id);
       }
 
       // Update system alarm icon
