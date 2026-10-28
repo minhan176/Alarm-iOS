@@ -50,7 +50,6 @@ class AdService {
   static String get _interstitialAdUnitId => AdUnits.interstitialAdUnitId;
 
   static Future<bool> loadAppOpenAd() async {
-    return false;
     final isPro = await ProAccessService.isUnlocked();
     if (isPro) return false;
 
@@ -99,7 +98,6 @@ class AdService {
   }
 
   static Future<bool> loadInterstitialAd() async {
-    return false;
     final isPro = await ProAccessService.isUnlocked();
     if (isPro) return false;
 
@@ -206,7 +204,6 @@ class AdService {
   }
 
   static void showAppOpenAdIfAvailable() async {
-    return;
     if (shouldSuppressAppOpenAd) {
       debugPrint('AdOpenApp: Suppressed due to shouldSuppressAppOpenAd flag.');
       shouldSuppressAppOpenAd = false; // Reset sau khi chặn
@@ -266,7 +263,6 @@ class AdService {
   }
 
   static void showInterstitialAdIfAvailable() async {
-    return;
     final isPro = await ProAccessService.isUnlocked();
     if (isPro) return;
 

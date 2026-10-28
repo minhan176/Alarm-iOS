@@ -1,4 +1,4 @@
-﻿import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -174,35 +174,39 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                         ),
                         if (_isEditMode) ...[
                           const SizedBox(width: 10),
-                          if (false)
-                            CupertinoButton(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              minSize: 0,
-                              color: CupertinoColors.systemOrange.withOpacity(
-                                0.15,
-                              ),
-                              borderRadius: BorderRadius.circular(999),
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (context) =>
-                                        const UpgradeProScreen(),
-                                    fullscreenDialog: true,
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                AppLocalizations.of(context).UPGRADE_PRO,
-                                style: const TextStyle(
-                                  color: CupertinoColors.systemOrange,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
+                          Consumer<SettingsProvider>(
+                            builder: (context, settings, _) {
+                              if (settings.isProUnlocked) return const SizedBox.shrink();
+                              return CupertinoButton(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 6,
                                 ),
-                              ),
-                            ),
+                                minSize: 0,
+                                color: CupertinoColors.systemOrange.withOpacity(
+                                  0.15,
+                                ),
+                                borderRadius: BorderRadius.circular(999),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (context) =>
+                                          const UpgradeProScreen(),
+                                      fullscreenDialog: true,
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  AppLocalizations.of(context).UPGRADE_PRO,
+                                  style: const TextStyle(
+                                    color: CupertinoColors.systemOrange,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ],
                     ),

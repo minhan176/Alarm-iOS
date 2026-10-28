@@ -21,7 +21,7 @@ class UpgradeProScreen extends StatefulWidget {
 }
 
 class _UpgradeProScreenState extends State<UpgradeProScreen> {
-  static const String _productId = 'com.oaptech.clock_unlockpro';
+  static const String _productId = 'com.oaptech.clock_unlockproversion';
 
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
@@ -214,16 +214,21 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
   String _getOriginalPrice(ProductDetails product) {
     try {
       final double doubledPrice = product.rawPrice * 2;
-      
+
       final String originalString = product.price;
-      
-      String currencyUnit = originalString.replaceAll(RegExp(r'[0-9.,\s\u00A0]'), '');
+
+      String currencyUnit = originalString.replaceAll(
+        RegExp(r'[0-9.,\s\u00A0]'),
+        '',
+      );
       if (currencyUnit.isEmpty) {
         currencyUnit = product.currencySymbol.trim();
       }
-      
+
       // Simple heuristic for VND
-      if (product.currencyCode == 'VND' || originalString.contains('₫') || originalString.contains('đ')) {
+      if (product.currencyCode == 'VND' ||
+          originalString.contains('₫') ||
+          originalString.contains('đ')) {
         final str = doubledPrice.toInt().toString();
         String formatted = '';
         for (int i = 0; i < str.length; i++) {
@@ -232,13 +237,14 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
           }
           formatted += str[i];
         }
-        
-        if (originalString.trim().startsWith(currencyUnit) && currencyUnit.isNotEmpty) {
+
+        if (originalString.trim().startsWith(currencyUnit) &&
+            currencyUnit.isNotEmpty) {
           return '$currencyUnit $formatted';
         }
         return '$formatted $currencyUnit';
       }
-      
+
       // Try using intl if it's not VND
       final format = NumberFormat.currency(
         symbol: currencyUnit.isNotEmpty ? currencyUnit : product.currencySymbol,
@@ -246,10 +252,14 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
       );
       return format.format(doubledPrice);
     } catch (e) {
-      String currencyUnit = product.price.replaceAll(RegExp(r'[0-9.,\s\u00A0]'), '');
+      String currencyUnit = product.price.replaceAll(
+        RegExp(r'[0-9.,\s\u00A0]'),
+        '',
+      );
       if (currencyUnit.isEmpty) currencyUnit = product.currencySymbol;
-      
-      if (product.price.trim().startsWith(currencyUnit) && currencyUnit.isNotEmpty) {
+
+      if (product.price.trim().startsWith(currencyUnit) &&
+          currencyUnit.isNotEmpty) {
         return '$currencyUnit${(product.rawPrice * 2).toStringAsFixed(2)}';
       }
       return '${(product.rawPrice * 2).toStringAsFixed(2)}$currencyUnit';
@@ -386,7 +396,6 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    
                                     Text(
                                       product?.price ?? '--',
                                       style: const TextStyle(
@@ -399,11 +408,15 @@ class _UpgradeProScreenState extends State<UpgradeProScreen> {
                                       Text(
                                         _getOriginalPrice(product),
                                         style: TextStyle(
-                                          color: CupertinoColors.systemGrey.withOpacity(0.8),
+                                          color: CupertinoColors.systemGrey
+                                              .withOpacity(0.8),
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
-                                          decoration: TextDecoration.lineThrough,
-                                          decorationColor: CupertinoColors.systemGrey.withOpacity(0.8),
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          decorationColor: CupertinoColors
+                                              .systemGrey
+                                              .withOpacity(0.8),
                                           decorationThickness: 1.5,
                                         ),
                                       ),

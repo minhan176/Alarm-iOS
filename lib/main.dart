@@ -40,14 +40,13 @@ bool _skipPermissionCheck = false;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  unawaited(MobileAds.instance.initialize());
 
-  // Log graphics renderer information for debugging
+  // Initialize AdMob non-blocking — don't await on main thread
+  // (avoid blocking older devices like OPPO Android 9)
   try {
-    final renderer = WidgetsBinding.instance.platformDispatcher;
-    print('Flutter renderer info: ${renderer.toString()}');
+    unawaited(MobileAds.instance.initialize());
   } catch (e) {
-    print('Could not get renderer info: $e');
+    print('MobileAds init error: $e');
   }
 
   // Set up global error handling for graphics issues
@@ -69,9 +68,24 @@ void main() {
   // Lock orientation to portrait only
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  // Get system time format
-  final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
-  final system24HourFormat = mediaQuery.alwaysUse24HourFormat;
+  // Get system time format — use platformDispatcher instead of deprecated
+  // MediaQueryData.fromWindow() which can block on Android 9 (SDK 28) devices
+  bool system24HourFormat = false;
+  try {
+    // Safe way compatible with all Flutter versions & old Android devices
+    final dispatcher = WidgetsBinding.instance.platformDispatcher;
+    system24HourFormat = dispatcher.views.first.platformDispatcher
+        .alwaysUse24HourFormat;
+  } catch (e) {
+    // Fallback: try legacy API — acceptable since we already guard with try/catch
+    try {
+      // ignore: deprecated_member_use
+      final mq = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+      system24HourFormat = mq.alwaysUse24HourFormat;
+    } catch (_) {
+      system24HourFormat = false;
+    }
+  }
 
   // Check if app is opened from ring screen intent
   final initialRoute =
@@ -91,12 +105,18 @@ void main() {
 
   runApp(MainApp(system24HourFormat: system24HourFormat));
 
-  // Initialize services after the first Flutter frame can start rendering.
-  unawaited(_initializeServices());
+  // Defer heavy service initialization until after first frame is rendered.
+  // This prevents ANR on slow/old devices (e.g. OPPO Android 9) where
+  // blocking operations in main() can cause "Input dispatching timed out".
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    unawaited(_initializeServices());
+  });
 }
 
 Future<void> _initializeServices() async {
   await AlarmService.initialize();
+  // Delay IAP restore by 3s so it never races with UI init on slow devices
+  await Future<void>.delayed(const Duration(seconds: 3));
   await _restorePurchasesIfFirstLaunch();
 }
 
@@ -237,15 +257,18 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       _checkPermissionAgain();
     }
     if (state == AppLifecycleState.resumed) {
-      // Update time format from system if user hasn't changed it
-      final mediaQuery = MediaQueryData.fromWindow(
-        WidgetsBinding.instance.window,
-      );
-      final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
-      Provider.of<SettingsProvider>(
-        navigatorKey.currentContext!,
-        listen: false,
-      ).updateFromSystem(currentSystem24HourFormat);
+      // Update time format — use platformDispatcher (not deprecated fromWindow)
+      // to avoid potential ANR on Android 9 (SDK 28) older devices
+      final currentSystem24HourFormat = WidgetsBinding
+          .instance.platformDispatcher.alwaysUse24HourFormat;
+      // Guard against null context (can happen on slow-booting old devices)
+      final ctx = navigatorKey.currentContext;
+      if (ctx != null) {
+        Provider.of<SettingsProvider>(
+          ctx,
+          listen: false,
+        ).updateFromSystem(currentSystem24HourFormat);
+      }
     }
   }
 
@@ -500,11 +523,10 @@ class _MainTabScreenState extends State<MainTabScreen>
       AdService.loadAppOpenAd();
     } else if (state == AppLifecycleState.resumed) {
       _checkPendingAlarm();
-      // Update time format from system if user hasn't changed it
-      final mediaQuery = MediaQueryData.fromWindow(
-        WidgetsBinding.instance.window,
-      );
-      final currentSystem24HourFormat = mediaQuery.alwaysUse24HourFormat;
+      // Update time format — use platformDispatcher (not deprecated fromWindow)
+      // to avoid potential ANR on Android 9 (SDK 28) older devices
+      final currentSystem24HourFormat = WidgetsBinding
+          .instance.platformDispatcher.alwaysUse24HourFormat;
       Provider.of<SettingsProvider>(
         context,
         listen: false,
