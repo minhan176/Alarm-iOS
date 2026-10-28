@@ -36,7 +36,6 @@ class _SettingsLargeBannerAdState extends State<SettingsLargeBannerAd> {
   }
 
   void _loadAd() {
-    return;
     final adUnitId = _adUnitId;
     if (adUnitId == null) {
       return;

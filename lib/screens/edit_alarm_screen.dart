@@ -138,6 +138,8 @@ class _EditAlarmScreenState extends State<EditAlarmScreen> {
       snoozeDuration: _snoozeDuration,
     );
 
+    AdService.showInterstitialAdIfAvailable();
+
     if (mounted) {
       Navigator.of(context).pop(EditAlarmResult.save(alarm));
     }
